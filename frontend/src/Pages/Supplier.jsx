@@ -8,20 +8,26 @@ const Supplier = () => {
         { id: 1, name: 'Supplier 1' },
         { id: 2, name: 'Supplier 2' },
         { id: 3, name: 'Supplier 3' },
-        // Add more suppliers as needed
+        { id: 4, name: 'Supplier 4' },
+        { id: 5, name: 'Supplier 5' },
+
+    
     ];
 
     return (
         <div>
             <AppBar />
-            <Menu />
+                <Menu/>
+        
 
-            <h1>List of Suppliers</h1>
-            <ul>
-                {suppliers.map((supplier) => (
-                    <li key={supplier.id}>{supplier.name}</li>
-                ))}
-            </ul>
+            <div style={{ marginLeft: '255px', paddingTop: '80px' }}>
+                <h1>List of Suppliers sample page</h1>
+                <ul>
+                    {suppliers.map((supplier) => (
+                        <li key={supplier.id}>{supplier.name}</li>
+                    ))}
+                </ul>
+            </div>
         </div>
     );
 };
