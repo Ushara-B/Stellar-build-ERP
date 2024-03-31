@@ -89,7 +89,7 @@ export default function NestedList() {
     { name: 'Vehicle', path: '/vehicle', subMenus: ['View Vehicles', 'Add Vehicle', 'Assign drivers'] },
     { name: 'Loans Management', path: '/loan-management', subMenus: ['Add loans', 'Bank/Bussines Loans', 'Vehicle finance'] },
     { name: 'User Management', path: '/user-management', subMenus: ['View users', 'Add users'] },
-    { name: 'Employee Management', path: '/employee-management', subMenus: ['View employees', 'Leaves', 'Attendance'] },
+    { name: 'Employee Management', path: '/employee-management', subMenus: ['Pay Slip', 'Leaves', 'Attendance'] },
   ];
 
   return (

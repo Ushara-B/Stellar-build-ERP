@@ -1,0 +1,75 @@
+
+
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  monospace;
+}
+.wrapper {
+  display: flex; /* Use flexbox to create a flexible layout */
+}
+
+.sidebar {
+  width: 200px; /* Adjust sidebar width as needed */
+  background-color: #f2f2f2; /* Example background color */
+  padding: 20px;
+}
+
+.content {
+  flex: 1; /* Make content div flex to occupy remaining space */
+}
+
+.container {
+  max-width: 1100px;
+  width: 100%;
+  margin: 0 0 0 50px ; /* Center the container horizontally */
+  padding: 0 20px 20px 20px; /* Add padding to the sides for better readability */
+  align-items: left; /* Adjust as needed */
+
+}
+
+section {
+  display: flex;
+  flex-direction: column;
+  align-items: left; /* Adjust as needed */
+  margin-left: 20px; /* Add a margin to separate from the left side */
+  margin-top: 180px; /* Adjust the top margin to move the section down */
+}
+
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around; /* Use space-around for better responsiveness */
+  margin-top: 20px; /* Adjust the top margin to move the cards down */
+  
+}
+
+.card {
+  flex: 1; /* Allow cards to grow/shrink based on available space */
+  max-width: 300px;
+  width: 100%;
+  margin: 10px; /* Add some margin between cards */
+  background-color: #D9D9D9;
+  border-radius: 25px;
+  padding: 20px;
+}
+
+h3{
+  color: #636363;
+}
+
+@media (max-width: 768px) {
+  .container {
+      margin-top: 100px; /* Adjust top margin to give space for the sidebar */
+  }
+}
+

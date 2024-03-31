@@ -5,7 +5,7 @@ import AllUsers from './Pages/AllUsers';
 import AddUsers from './Pages/AddUsers';
 import NoPages from './Pages/NoPages';
 import Supplier from './Pages/Supplier';
-
+import EmpManagement from './Pages/EmpManagement';
 
 
 
@@ -24,6 +24,8 @@ function App() {
         <Route path = '/user/allusers' element = {<AllUsers/>}/>
         <Route path = '/supplier' element = {<Supplier/>}/>
         <Route path = '*' element = {<NoPages/>}/>
+        <Route path = '/employee-management' element = {<EmpManagement/>}/>
+
 
 
 
