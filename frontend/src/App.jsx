@@ -6,6 +6,9 @@ import AddUsers from './Pages/AddUsers';
 import NoPages from './Pages/NoPages';
 import Supplier from './Pages/Supplier';
 import EmpManagement from './Pages/EmpManagement';
+import PaySlip from './Pages/PaySlip';
+import LeaveMng from './Pages/leavemng';
+import Attendance from './Pages/Attendance';
 
 
 
@@ -25,6 +28,12 @@ function App() {
         <Route path = '/supplier' element = {<Supplier/>}/>
         <Route path = '*' element = {<NoPages/>}/>
         <Route path = '/employee-management' element = {<EmpManagement/>}/>
+        <Route path = '/employee-management/PaySlip' element = {<PaySlip/>}/>
+        <Route path = '/employee-management/Leaves' element = {<LeaveMng/>}/>
+        <Route path = '/employee-management/Attendace' element = {<Attendance/>}/>
+        
+
+
 
 
 

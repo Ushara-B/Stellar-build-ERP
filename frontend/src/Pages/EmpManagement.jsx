@@ -1,25 +1,17 @@
 import AppBar from '../Components/Appbar';
 import Drawer from '../Components/menu';
-import { useState } from 'react';
 import '../EmpManagement.css';
 
 function EmpManagement(){
-    const [cards] = useState([
-        {
-            title: 'Leave Management',
-            text: 'sd'
-        },
-
-        {
-            title: 'Attendance Management',
-            text: 'sd'
-        },
-
-        {
-            title: 'Pay Slips ',
-            text: 'sd'
-        },
-    ])
+    const payslip = () => {
+        window.location.href = "/employee-management/PaySlip";
+    };
+    const leave = () => {
+        window.location.href = "/employee-management/Leaves";
+    };
+    const att = () => {
+        window.location.href = "/employee-management/Attendance";
+    };
     return(
         <div className='wrapper'>
         <div className='sidebar'>
@@ -29,20 +21,20 @@ function EmpManagement(){
         <div className='content'>
             <section>
                 <div className="container">
-                    <div className="cards">
-                        {
-                            cards.map((card, i) => (
-
-                        <div key={i} className="card">
-                            <h3>
-                                {card.title}
-                            </h3>
-                            <p>
-                                {card.text}
-                            </p>
+                <div className="cards">
+                        <div className='card' onClick={payslip}>
+                            <h3>Pay slips</h3>
+                            <p>a</p>
                         </div>
-                        ))
-                            }
+                        <div className='card' onClick={leave}>
+                            <h3>Leave Management</h3>
+                            <p>a</p>
+                        </div>
+                        <div className='card' onClick={att}>
+                            <h3>Attendance </h3>
+                            <p>a</p>
+                        </div>
+                            
                     </div>
                 </div>
             </section>
