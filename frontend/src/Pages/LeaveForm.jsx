@@ -23,9 +23,9 @@ function LeaveForm() {
         <Drawer />
       </div>
       
-      <div className="content">
+      <div className="content-form">
       
-        <section>
+        <section className="container-form">
         <h1>Apply for a leave</h1>
           <form onSubmit={handleSubmit}>
             <div className="form-group">
