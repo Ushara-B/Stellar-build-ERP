@@ -1,12 +1,12 @@
 import AppBar from "../Components/Appbar";
 import Drawer from "../Components/menu";
 
-function PaySlip() {
+function Attendance() {
   return (
-    <div>
+    <div className="wrapper">
       <AppBar />
       <Drawer />
     </div>
   );
 }
-export default PaySlip;
+export default Attendance;
