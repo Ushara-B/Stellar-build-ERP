@@ -4,10 +4,10 @@ import "../leave-mng.css";
 
 function LeaveMng() {
   const ActiveLeaves = () => {
-    window.location.href = "/employee-management/Leaves/LeaveForm";
+    window.location.href = "LeaveForm";
   };
   const AddLeave = () => {
-    window.location.href = "/employee-management/Leaves/LeaveForm";
+    window.location.href = "/LeaveForm";
   };
 
   return (

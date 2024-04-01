@@ -9,7 +9,7 @@ import EmpManagement from "./Pages/EmpManagement";
 import PaySlip from "./Pages/PaySlip";
 import LeaveMng from "./Pages/leavemng";
 import Attendance from "./Pages/Attendance-mng";
-import newLeave from "./Pages/LeaveForm";
+import LeaveForm from "./Pages/LeaveForm";
 
 function App() {
   return (
@@ -27,7 +27,7 @@ function App() {
           <Route path="/employee-management/PaySlip" element={<PaySlip />} />
           <Route path="/employee-management/Leaves" element={<LeaveMng />} />
           <Route path="/employee-management/Attendance"element={<Attendance />}/>
-          <Route path="/employee-management/Leaves/LeaveForm"element={<newLeave />}/>
+          <Route path="/LeaveForm"element={<LeaveForm />}/>
 
         </Routes>
       </BrowserRouter>
