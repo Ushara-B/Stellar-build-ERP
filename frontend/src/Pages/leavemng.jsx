@@ -4,7 +4,7 @@ import "../leave-mng.css";
 
 function LeaveMng() {
   const ActiveLeaves = () => {
-    window.location.href = "LeaveForm";
+    window.location.href = "/ActiveLeaves";
   };
   const AddLeave = () => {
     window.location.href = "/LeaveForm";

@@ -25,7 +25,7 @@ function LeaveForm() {
       
       <div className="content-form">
       
-        <section className="container-form">
+        <section>
         <h1>Apply for a leave</h1>
           <form onSubmit={handleSubmit}>
             <div className="form-group">
