@@ -5,12 +5,14 @@ const app = express();
 
 const dotenv =require("dotenv").config();
 const mongoose =require("mongoose");
-const bodyparser = require("body-parser");
+const bodyParser = require("body-parser");
 
 const PORT = process.env.PORT || 5000;
 
 //middlewares
-app.use(express.json())
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 app.use(cors())
 
 //routes
