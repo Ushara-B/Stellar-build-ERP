@@ -33,7 +33,7 @@ const inventorySchema = mongoose.Schema({
     
 
 
-})
+});
 
 const Inventory = mongoose.model("Inventory", inventorySchema)
-module.exports = Inventory
+module.exports = Inventory;
