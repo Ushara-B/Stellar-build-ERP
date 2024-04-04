@@ -17,10 +17,16 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors())
+
+
 app.use("/api/inventory", inventoryRoute);
 
 //routes
 readdirSync('./routes').map((route) => app.use('/api/v1', require('./routes/' + route)))
+
+app.get("/", (req, res) => {
+    res.send("Home Page");
+  });
 
 
 //connect to DB and start server

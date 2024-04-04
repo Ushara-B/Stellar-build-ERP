@@ -12,7 +12,7 @@ const inventorySchema = mongoose.Schema({
         default: "https://i.ibb.co/4pDNDk1/avatar.png",
       },
 
-    product_catagory: {
+    product_category: {
         type: String,
         default: "+234",
       },
