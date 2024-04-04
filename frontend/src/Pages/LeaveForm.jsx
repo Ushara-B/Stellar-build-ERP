@@ -5,14 +5,14 @@ import '../LeaveForm.css'
 
 function LeaveForm() {
   const [employeeId, setEmployeeId] = useState("");
-  const [employeeName, setEmployeeName] = useState("");
+  const [date, setDate] = useState("");
   const [leaveType, setLeaveType] = useState("");
   const [reasonForLeave, setReasonForLeave] = useState("");
   const handleSubmit = (event) => {
     event.preventDefault();
     // Submit the form data here
     console.log("Employee ID:", employeeId);
-    console.log("Employee Name:", employeeName);
+    console.log("Date:", Date);
     console.log("Leave Type:", leaveType);
     console.log("Reason for Leave:", reasonForLeave);
   };
@@ -40,13 +40,13 @@ function LeaveForm() {
               />
             </div>
             <div className="form-group">
-              <label htmlFor="employeeName">Employee Name:</label>
+              <label htmlFor="date">Date:</label>
               <input
-                type="text"
+                type="date"
                 className="form-control"
-                id="employeeName"
-                value={employeeName}
-                onChange={(event) => setEmployeeName(event.target.value)}
+                id="date"
+                value={date}
+                onChange={(event) => setDate(event.target.value)}
                 required
               />
             </div>

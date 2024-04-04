@@ -11,8 +11,10 @@ import LeaveMng from "./Pages/leavemng";
 import Attendance from "./Pages/Attendance-mng";
 import LeaveForm from "./Pages/LeaveForm";
 import ActiveLeaves from "./Pages/ActiveLeaves";
+import UpdateLeave from "./Pages/UpdateLeave";
 
 function App() {
+  
   return (
     <div>
       <BrowserRouter>
@@ -30,6 +32,7 @@ function App() {
           <Route path="/employee-management/Attendance"element={<Attendance />}/>
           <Route path="/LeaveForm"element={<LeaveForm />}/>
           <Route path="/ActiveLeaves"element={<ActiveLeaves />}/>
+          <Route path="/updateLeave" element={<UpdateLeave/>}/>
 
 
         </Routes>
