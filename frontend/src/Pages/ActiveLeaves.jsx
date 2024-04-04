@@ -1,7 +1,7 @@
 import { useState } from "react";
 import AppBar from "../Components/Appbar";
 import Drawer from "../Components/menu";
-import "../ActiveLeave.css"
+import "../css/ActiveLeave.css"
 
 function ActiveLeave() {
     const [emps] = useState([{

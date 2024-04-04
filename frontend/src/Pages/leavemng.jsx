@@ -1,6 +1,6 @@
 import AppBar from "../Components/Appbar";
 import Drawer from "../Components/menu";
-import "../leave-mng.css";
+import "../css/leave-mng.css";
 
 function LeaveMng() {
   const ActiveLeaves = () => {

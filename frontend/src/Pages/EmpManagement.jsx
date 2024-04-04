@@ -1,6 +1,6 @@
 import AppBar from "../Components/Appbar";
 import Drawer from "../Components/menu";
-import "../EmpManagement.css";
+import "../css/EmpManagement.css";
 
 function EmpManagement() {
   const payslip = () => {

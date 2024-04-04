@@ -1,7 +1,7 @@
 import AppBar from "../Components/Appbar";
 import Drawer from "../Components/menu";
 import { useState } from "react";
-import '../LeaveForm.css'
+import '../css/LeaveForm.css'
 
 function LeaveForm() {
   const [employeeId, setEmployeeId] = useState("");
