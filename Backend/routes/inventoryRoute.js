@@ -19,6 +19,7 @@ router.get("/",inventoryController.getAllInventory);
 router.post("/",inventoryController.addProduct);
 router.get("/:id",inventoryController.getById);
 router.put("/:id",inventoryController.updateInventory);
+router.delete("/:id",inventoryController.deleteInventory);
 
 
 

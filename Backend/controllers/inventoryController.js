@@ -79,10 +79,36 @@ const updateInventory = async (req, res, next) =>{
       return res.status(200).json({inventories}); 
 }
 
+//delete inventory
+const deleteInventory = async (req, res, next) =>{
+    const id = req.params.id;
+    let inventories;
+
+   try {
+    inventories = await Inventory.findByIdAndDelete(id);
+    
+   } catch (err) {
+    console.log(err);    
+   }
+
+
+if (!inventories) {
+    return res.status(400).json({message:"Unable to delete inventory Details"});
+  }
+  return res.status(200).json({inventories}); 
+        
+
+
+
+}
+
+
+
 module.exports ={
     addProduct,
     getAllInventory,
     getById,
     updateInventory,
+    deleteInventory,
 
 }
