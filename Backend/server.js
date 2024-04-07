@@ -7,6 +7,7 @@ const dotenv =require("dotenv").config();
 const mongoose =require("mongoose");
 const bodyParser = require("body-parser");
 const Inventory = require("./models/InventoryModel");
+const errorHandler = require("./middleWare/errorMiddleware")
 
 const inventoryRoute = require("./routes/inventoryRoute")
 
@@ -21,12 +22,17 @@ app.use(cors())
 
 app.use("/api/inventory", inventoryRoute);
 
+
 //routes
 readdirSync('./routes').map((route) => app.use('/api/v1', require('./routes/' + route)))
 
 app.get("/", (req, res) => {
     res.send("Home Page");
   });
+
+
+//Error Middleware
+app.use(errorHandler)
 
 
 //connect to DB and start server

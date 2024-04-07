@@ -1,39 +1,45 @@
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
 const inventorySchema = mongoose.Schema({
-    product_name: {
+    name: {
         type: String,
-        required: [true, "Please add a product name"],
+        required: true,
+        trim: true,
       },
 
-    product_image: {
+    category: {
         type: String,
-        required: [true, "Please add a photo"],
-        default: "https://i.ibb.co/4pDNDk1/avatar.png",
+        required: true,
+        trim: true,
+      }, 
+
+    quantity: {
+        type: String,
+        required: true,
+        trim: true,
       },
 
-    product_category: {
-        type: String,
-        default: "+234",
-      },
-
-    product_qty: {
-        type: String,
-        default: "+234",
-      },
-
-    product_discription: {
+    discription: {
         type: String,
         maxLength: [250, "Bio must not be more than 250 characters"],
-        default: "bio",
+        required: true, 
+        trim: true,
       },
 
+    suppliers: {
+        type: String,
+        required: true,
+        trim: true,
+      },
+ },
+      {
+        timestamps: true,
+      },
 
+);
 
-    
-
-
-});
-
-const Inventory = mongoose.model("Inventory", inventorySchema)
-module.exports = Inventory;
+module.exports = mongoose.model(
+  "Inventory",
+   inventorySchema
+   );
