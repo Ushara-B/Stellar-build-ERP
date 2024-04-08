@@ -5,6 +5,7 @@ import AllUsers from './Pages/AllUsers';
 import AddUsers from './Pages/AddUsers';
 import NoPages from './Pages/NoPages';
 import Supplier from './Pages/Supplier';
+import AddProduct from './Pages/AddProduct';
 
 
 
@@ -21,8 +22,8 @@ function App() {
         <Route path = '/dashboard' element = {<Home/>}/>
         <Route path = '/user' element = {<UserManage/>}/>
         <Route path = '/user/addusers' element = {<AddUsers/>}/>
-        <Route path = '/user/allusers' element = {<AllUsers/>}/>
-        <Route path = '/supplier' element = {<Supplier/>}/>
+        <Route path = '/user/allusers' element = {<Supplier/>}/>
+        <Route path = '/supplier' element = {<AddProduct/>}/>
         <Route path = '*' element = {<NoPages/>}/>
 
 
