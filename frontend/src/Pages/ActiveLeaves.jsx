@@ -39,7 +39,7 @@ function ActiveLeave() {
                             <td>{emp.Name}</td>
                             <td>{emp.Type}</td>
                             <td>{emp.Reason}</td>
-                            <td>
+                            <td className="btn">
                                 <button className="editbtn" onClick={handleEditClick}>Edit</button>
                                 <button className="delbtn">Delete</button>
                             </td>
