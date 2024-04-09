@@ -1,10 +1,12 @@
-const express = require("express")
+const express = require("express");
 const cors = require("cors");
-const {readdirSync} = require('fs');
+const { readdirSync } = require("fs");
+const router = require("./routes/userRouters");
+
 const app = express();
 
-const dotenv =require("dotenv").config();
-const mongoose =require("mongoose");
+const dotenv = require("dotenv").config();
+const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 
 const PORT = process.env.PORT || 5000;
@@ -13,18 +15,21 @@ const PORT = process.env.PORT || 5000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(cors())
+app.use("/users", router);
+app.use(cors());
 
 //routes
-readdirSync('./routes').map((route) => app.use('/api/v1', require('./routes/' + route)))
-
+readdirSync("./routes").map((route) =>
+  app.use("/api/v1", require("./routes/" + route))
+);
 
 //connect to DB and start server
 mongoose
-.connect(process.env.MONGO_URI)
-.then(() => {
- app.listen(PORT, () => {
-   console.log(`Server Running on port ${PORT}`);
- });
-})
-.catch((err) => console.log(err));
+  .connect(process.env.MONGO_URI)
+  .then(() => {
+    console.log("Connected to MongoDB");
+    app.listen(PORT, () => {
+      console.log(`Server Running on port ${PORT}`);
+    });
+  })
+  .catch((err) => console.log(err));
