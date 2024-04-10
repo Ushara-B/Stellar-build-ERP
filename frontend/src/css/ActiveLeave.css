@@ -1,0 +1,73 @@
+.container-all{
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+}
+.container-table{
+    width: 50%;
+    background-color: #bdbbbb;
+    border-radius: 1.5rem;
+    padding: 1rem;
+    
+}
+
+.table{
+    margin: auto;
+    width: 100%;
+    border-color: black;
+}
+
+th{
+    background-color: #7a7878;
+    width: auto;
+    border-radius: 10px;
+    padding: 10px;
+    cursor: pointer;
+    
+}
+thead tr{
+    cursor: pointer;
+}
+
+thead tr:hover{
+    background-color: #8d8d8d;
+
+}
+th:hover{
+    background-color: #8d8d8d;
+}
+
+td{
+    width: auto;
+    align-content: center;
+    padding: 8px;
+    background-color: #adabab;
+    border-radius: 10px;
+
+}
+
+.editbtn{
+    background-color: rgb(33, 128, 55);
+    border-radius: 10px;
+    padding: 8px;
+    margin: auto;
+    border: 0;
+    width: 50%;
+}
+.delbtn{
+    background-color: rgb(174, 44, 44);
+    width: 50%;
+    border-radius: 10px;
+    border: 0;
+    padding: 8px;
+}
+
+
+.delbtn:hover{
+    background-color: rgb(176, 89, 89);
+}
+
+.editbtn:hover{
+    background-color:rgba(65, 147, 84, 0.975) ;
+}
