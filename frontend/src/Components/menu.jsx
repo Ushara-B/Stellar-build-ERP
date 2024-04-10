@@ -69,6 +69,7 @@ export default function NestedList() {
       window.location.href = '/new-projects';
     } else if (menuName === 'Projects' && subMenuName === 'Project categories') {
       window.location.href = '/project-categories';
+    
     }
     // Add more else if conditions for other sub menus and their respective URLs
     else {
