@@ -13,7 +13,6 @@ import Attendance from "./Pages/Attendance-mng";
 import LeaveForm from "./Pages/LeaveForm";
 import ActiveLeaves from "./Pages/ActiveLeaves";
 import UpdateLeave from "./Pages/UpdateLeave";
-import Projects from "./Pages/projects";
 
 function App() {
   
@@ -23,6 +22,7 @@ function App() {
         <Routes>
           <Route index element={<Home />} />
           <Route path="/dashboard" element={<Home />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/user" element={<UserManage />} />
           <Route path="/user/addusers" element={<AddUsers />} />
           <Route path="/user/allusers" element={<AllUsers />} />
