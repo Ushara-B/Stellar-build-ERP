@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const { readdirSync } = require("fs");
-const router = require("./routes/userRouters");
+const userrouter = require("./routes/userRouters");
 
 const app = express();
 
@@ -15,7 +15,7 @@ const PORT = process.env.PORT || 5000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use("/users", router);
+app.use("/users", userrouter);
 app.use(cors());
 
 //routes
