@@ -16,7 +16,6 @@ import UpdateLeave from "./Pages/UpdateLeave";
 import Login from "./Pages/Login";
 import Projects from "./Pages/Projects";
 
-
 function App() {
   
   return (
@@ -38,8 +37,7 @@ function App() {
           <Route path="/LeaveForm"element={<LeaveForm />}/>
           <Route path="/ActiveLeaves"element={<ActiveLeaves />}/>
           <Route path="/updateLeave" element={<UpdateLeave/>}/>
-          <Route path="/Projects" element={<Projects/>}/>
-
+          <Route path="/projects" element={<Projects/>}/>
 
 
         </Routes>
