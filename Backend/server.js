@@ -3,7 +3,7 @@ const cors = require("cors");
 const { readdirSync } = require("fs");
 const projectrouter = require("./routes/projectRoute");
 const userrouter = require("./routes/userRouters");
-
+const vehiclerouter = require("./routes/VehicleRoutes");
 
 
 
@@ -23,7 +23,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use("/users", userrouter);
 app.use("/projects", projectrouter);
-
+app.use("/vehicles", vehiclerouter);
 
 //routes
 readdirSync("./routes").map((route) =>
