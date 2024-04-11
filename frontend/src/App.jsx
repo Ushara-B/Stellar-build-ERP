@@ -1,3 +1,4 @@
+
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./Pages/Home";
 import UserManage from "./Pages/UserManage";
@@ -12,7 +13,6 @@ import Attendance from "./Pages/Attendance-mng";
 import LeaveForm from "./Pages/LeaveForm";
 import ActiveLeaves from "./Pages/ActiveLeaves";
 import UpdateLeave from "./Pages/UpdateLeave";
-import Login from "./Pages/Login";
 
 function App() {
   
@@ -35,6 +35,7 @@ function App() {
           <Route path="/LeaveForm"element={<LeaveForm />}/>
           <Route path="/ActiveLeaves"element={<ActiveLeaves />}/>
           <Route path="/updateLeave" element={<UpdateLeave/>}/>
+          <Route path="/projects" element={<Projects/>}/>
 
 
         </Routes>
