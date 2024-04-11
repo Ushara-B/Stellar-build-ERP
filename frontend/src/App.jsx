@@ -19,6 +19,8 @@ import AddVehicle from './Pages/AddVehicle';
 import Vehicles from './Pages/Vehicles';
 import UpdateVehicles from './Pages/UpdateVehicle'
 import VehicleDash from './Pages/VehicleDashBoard';
+import Login from "./Pages/Login";
+
 
 function App() {
   
@@ -46,6 +48,8 @@ function App() {
           <Route path = '/addvehicle' element = {<AddVehicle/>}/>
           <Route path = '/viewvehicles' element = {<Vehicles/>}/>
           <Route path = '/viewvehicles/:id' element = {<UpdateVehicles/>}/>
+          <Route path="/projects" element={<Projects/>}/>
+
 
 
         </Routes>
