@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import {
   Grid,
   TextField,
@@ -8,7 +8,6 @@ import {
   FormControl,
   InputLabel,
 } from "@mui/material";
-import "../css/LeaveForm.css";
 import AppBar from "../Components/Appbar";
 import Drawer from "../Components/menu";
 
@@ -25,6 +24,8 @@ function LeaveForm() {
     console.log("Date:", date);
     console.log("Leave Type:", leaveType);
     console.log("Reason for Leave:", reasonForLeave);
+
+
   };
 
   return (
