@@ -1,7 +1,12 @@
 const express = require("express");
 const cors = require("cors");
 const { readdirSync } = require("fs");
-const userrouter = require("./routes/userRouters");
+const projectrouter = require("./routes/projectRoute");
+const router = require("./routes/userRouters");
+
+
+
+
 
 const app = express();
 
@@ -12,11 +17,13 @@ const bodyParser = require("body-parser");
 const PORT = process.env.PORT || 5000;
 
 //middlewares
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use("/users", userrouter);
-app.use(cors());
+app.use("/users", router);
+app.use("/projects", projectrouter);
+
 
 //routes
 readdirSync("./routes").map((route) =>
