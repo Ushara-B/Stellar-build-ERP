@@ -7,7 +7,6 @@ import {
   MenuItem,
   FormControl,
   InputLabel,
-  TextareaAutosize,
 } from "@mui/material";
 import "../css/LeaveForm.css";
 import AppBar from "../Components/Appbar";
