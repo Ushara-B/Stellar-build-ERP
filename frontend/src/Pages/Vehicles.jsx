@@ -4,6 +4,7 @@ import AppBar from '../Components/Appbar';
 import axios from "axios";
 import Vehicle from './Vehicle';
 import { useReactToPrint } from 'react-to-print';
+import {useNavigate} from 'react-router-dom';
 
 const URL = "http://localhost:5000/Vehicles";
 
@@ -14,7 +15,7 @@ const fetchHandler = async () => {
 function Vehicles(){
 
     const [vehicles, setVehicles] = useState();
-
+    const navigate = useNavigate();
     useEffect(() => {
         fetchHandler().then((data) => setVehicles(data.vehicle));
     },[]);   
@@ -33,7 +34,6 @@ function Vehicles(){
     const[searchQuery, setSearchQuery] = useState("");
     const [noResults, setNoResults] = useState(false);
    
-    
     const handlesearch = () => {
         fetchHandler().then((data) => {
             
@@ -43,8 +43,13 @@ function Vehicles(){
             ));
             setVehicles(filteredVehicles);
             setNoResults(filteredVehicles.length === 0);
-        });                   
-    }//using ref function relevent section print
+        });   
+    };
+
+    const handleAddClick = () => {
+        navigate(`/addvehicle`);
+    };                
+
     return (
        <div style={{ marginLeft: '255px', paddingTop: '80px' }}> 
             <AppBar/>
@@ -58,6 +63,11 @@ function Vehicles(){
             </input>
 
             <button onClick={handlesearch}>Search</button>
+            <button onClick={handleAddClick}>Add Vehicle</button>
+
+
+
+
             {noResults ?(
                 <div>
                     <p>No results found</p>
