@@ -50,9 +50,9 @@ export default function SignIn() {
           >
             <Typography component="h1" variant="h5" color={'white'} >
               Sign In
-              
+          
             </Typography>
-            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 20}}>
+            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 20, maxWidth:400 }}>
               <TextField
                 margin="normal"
                 required
@@ -63,10 +63,10 @@ export default function SignIn() {
                 autoComplete="email"
                 autoFocus
                 sx={{
-                  borderRadius: '25px',
+                  borderRadius: '21px',
                   backgroundColor: 'white',
                   '& .MuiOutlinedInput-root': {
-                    borderRadius: '25px',
+                    borderRadius: '21px',
                     backgroundColor: 'white',
                     height: '50px',
                   },
@@ -82,10 +82,10 @@ export default function SignIn() {
                 id="password"
                 autoComplete="current-password"
                 sx={{
-                  borderRadius: '25px',
+                  borderRadius: '21px',
                   backgroundColor: 'white',
                   '& .MuiOutlinedInput-root': {
-                    borderRadius: '25px',
+                    borderRadius: '21px',
                     backgroundColor: 'white',
                     height: '50px',
                   },
