@@ -13,6 +13,8 @@ import Attendance from "./Pages/Attendance-mng";
 import LeaveForm from "./Pages/LeaveForm";
 import ActiveLeaves from "./Pages/ActiveLeaves";
 import UpdateLeave from "./Pages/UpdateLeave";
+import Login from "./Pages/Login";
+import Projects from "./Pages/Projects";
 
 function App() {
   
