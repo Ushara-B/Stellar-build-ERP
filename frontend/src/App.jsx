@@ -1,3 +1,4 @@
+
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./Pages/Home";
 import UserManage from "./Pages/UserManage";
@@ -16,6 +17,8 @@ import AddVehicle from './Pages/AddVehicle';
 import Vehicles from './Pages/Vehicles';
 import UpdateVehicles from './Pages/UpdateVehicle'
 import VehicleDash from './Pages/VehicleDashBoard';
+import Login from "./Pages/Login";
+
 
 function App() {
   
@@ -25,6 +28,7 @@ function App() {
         <Routes>
           <Route index element={<Home />} />
           <Route path="/dashboard" element={<Home />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/user" element={<UserManage />} />
           <Route path="/user/addusers" element={<AddUsers />} />
           <Route path="/user/allusers" element={<AllUsers />} />
@@ -41,6 +45,8 @@ function App() {
           <Route path = '/addvehicle' element = {<AddVehicle/>}/>
           <Route path = '/viewvehicles' element = {<Vehicles/>}/>
           <Route path = '/viewvehicles/:id' element = {<UpdateVehicles/>}/>
+          <Route path="/projects" element={<Projects/>}/>
+
 
 
         </Routes>
