@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 //Insert Model
-const Vehicle = require("../Model/VehicleModel");
+const Vehicle = require("../models/VehicleModel");
 //Insert Vehicle Controller
 const VehicleController = require("../controllers/VehicleControllers");
 
