@@ -69,12 +69,6 @@ export default function NestedList() {
       window.location.href = '/new-projects';
     } else if (menuName === 'Projects' && subMenuName === 'Project categories') {
       window.location.href = '/project-categories';
-    }else if (menuName === 'Vehicle' && subMenuName === 'View Vehicles'){
-      window.location.href = '/viewvehicles';
-    }else if (menuName === 'Vehicle' && subMenuName === 'Add Vehicle'){
-      window.location.href = '/addvehicle';
-    }else if (menuName === 'Vehicle'){
-      window.location.href = '/vehicle';
     }
     // Add more else if conditions for other sub menus and their respective URLs
     else {
