@@ -19,9 +19,6 @@ import AddVehicle from './Pages/AddVehicle';
 import Vehicles from './Pages/Vehicles';
 import UpdateVehicles from './Pages/UpdateVehicle'
 import VehicleDash from './Pages/VehicleDashBoard';
-import Login from "./Pages/Login";
-import Projects from "./Pages/Projects";
-
 
 function App() {
   
@@ -44,13 +41,11 @@ function App() {
           <Route path="/LeaveForm"element={<LeaveForm />}/>
           <Route path="/ActiveLeaves"element={<ActiveLeaves />}/>
           <Route path="/updateLeave" element={<UpdateLeave/>}/>
+          <Route path="/projects" element={<Projects/>}/>
           <Route path = '/vehicle' element = {<VehicleDash/>}/>
           <Route path = '/addvehicle' element = {<AddVehicle/>}/>
           <Route path = '/viewvehicles' element = {<Vehicles/>}/>
           <Route path = '/viewvehicles/:id' element = {<UpdateVehicles/>}/>
-          <Route path="/Projects" element={<Projects/>}/>
-
-
 
 
         </Routes>
