@@ -66,7 +66,7 @@ export default function NestedList() {
     } else if (menuName === 'Projects' && subMenuName === 'All projects') {
       window.location.href = '/AllProjects';
     } else if (menuName === 'Projects' && subMenuName === 'New projects') {
-      window.location.href = '/new-projects';
+      window.location.href = '/Newprojects';
     } else if (menuName === 'Projects' && subMenuName === 'Project categories') {
       window.location.href = '/project-categories';
     }else if (menuName === 'Vehicle' && subMenuName === 'View Vehicles'){
