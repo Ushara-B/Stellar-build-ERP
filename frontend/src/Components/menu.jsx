@@ -75,6 +75,8 @@ export default function NestedList() {
       window.location.href = '/addvehicle';
     }else if (menuName === 'Vehicle'){
       window.location.href = '/vehicle';
+    }else if (menuName === 'User Management' && subMenuName === 'View users'){
+      window.location.href = '/allusers';
     }
     // Add more else if conditions for other sub menus and their respective URLs
     else {
@@ -94,7 +96,7 @@ export default function NestedList() {
     { name: 'Financial', path: '/financial', subMenus: ['Financial Dashboard', 'Expenses', 'Incomes', 'Categories'] },
     { name: 'Vehicle', path: '/vehicle', subMenus: ['View Vehicles', 'Add Vehicle', 'Assign drivers'] },
     { name: 'Loans Management', path: '/loan-management', subMenus: ['Add loans', 'Bank/Bussines Loans', 'Vehicle finance'] },
-    { name: 'User Management', path: '/user-management', subMenus: ['View users', 'Add users'] },
+    { name: 'User Management', path: '/allusers', subMenus: ['View users', 'Add users'] },
     { name: 'Employee Management', path: '/employee-management', subMenus: ['PaySlip', 'Leaves', 'Attendance'] },
   ];
 
