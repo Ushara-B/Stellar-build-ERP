@@ -1,72 +1,81 @@
-import React, { useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-import IconButton from '@material-ui/core/IconButton';
-import SearchIcon from '@material-ui/icons/Search';
-import InputBase from '@material-ui/core/InputBase';
-import AddIcon from '@material-ui/icons/Add';
-import EditIcon from '@material-ui/icons/Edit';
-import DeleteIcon from '@material-ui/icons/Delete';
-import VisibilityIcon from '@material-ui/icons/Visibility';
+import * as React from 'react';
+import Paper from '@mui/material/Paper';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TablePagination from '@mui/material/TablePagination';
+import TableRow from '@mui/material/TableRow';
+import TableSortLabel from '@mui/material/TableSortLabel';
+import IconButton from '@mui/material/IconButton';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import PrintIcon from '@mui/icons-material/Print';
+import AddIcon from '@mui/icons-material/Add';
+import SearchIcon from '@mui/icons-material/Search';
+import InputBase from '@mui/material/InputBase';
+import Box from '@mui/material/Box';
+import AppBar from '../Components/Appbar';
+import Drawer from '../Components/menu';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    width: '100%',
-  },
-  paper: {
-    width: '100%',
-    marginBottom: theme.spacing(2),
-  },
-  table: {
-    minWidth: 750,
-  },
-  visuallyHidden: {
-    border: 0,
-    clip: 'rect(0 0 0 0)',
-    height: 1,
-    margin: -1,
-    overflow: 'hidden',
-    padding: 0,
-    position: 'absolute',
-    top: 20,
-    width: 1,
-  },
-  searchRoot: {
-    padding: '2px 4px',
-    display: 'flex',
-    alignItems: 'center',
-  },
-  searchInput: {
-    marginLeft: theme.spacing(1),
-    flex: 1,
-  },
-  searchIconButton: {
-    padding: 10,
-  },
-}));
+const columns = [
+  { id: 'username', label: 'Username', minWidth: 170 },
+  { id: 'name', label: 'Name', minWidth: 170 },
+  { id: 'age', label: 'Age', minWidth: 100, },
+  { id: 'role', label: 'Role', minWidth: 170 },
+  { id: 'nic', label: 'NIC', minWidth: 170 },
+  { id: 'actions', label: 'Actions', minWidth: 170, align: 'center' },
+];
 
-const AllUsers = () => {
-  const classes = useStyles();
-  const [searchTerm, setSearchTerm] = useState('');
+const userRows = [
+  { id: 1, username: 'useraa', name: 'John Doe', age: 25, role: 'Admin', nic: '123456789V' },
+  { id: 2, username: 'userf', name: 'Jane Smith', age: 30, role: 'User', nic: '987654321V' },
+  { id: 3, username: 'userdd', name: 'Bob Johnson', age: 35, role: 'User', nic: '456789123V' },
+  { id: 4, username: 'user1', name: 'Alice Johnson', age: 28, role: 'User', nic: '111111111V' },
 
-  const userRows = [
-    { id: 1, username: 'user1', name: 'John Doe', age: 25, role: 'Admin', nic: '123456789V' },
-    { id: 2, username: 'user2', name: 'Jane Smith', age: 30, role: 'User', nic: '987654321V' },
-    { id: 3, username: 'user3', name: 'Bob Johnson', age: 35, role: 'User', nic: '456789123V' },
-    // Add more user data here
-  ];
+];
+
+export default function AllUsers() {
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [searchTerm, setSearchTerm] = React.useState('');
+  const [orderBy, setOrderBy] = React.useState('username');
+  const [order, setOrder] = React.useState('asc');
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(+event.target.value);
+    setPage(0);
+  };
 
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
   };
 
-  const filteredUsers = userRows.filter(
+  const handleSort = (property) => {
+    const isAsc = orderBy === property && order === 'asc';
+    setOrder(isAsc ? 'desc' : 'asc');
+    setOrderBy(property);
+  };
+
+  const handlePrintToPdf = () => {
+    //  logic to print the table data to a PDF
+    console.log('Printing to PDF...');
+  };
+
+  const sortedUsers = userRows.sort((a, b) => {
+    const isAsc = order === 'asc';
+    return (
+      (isAsc ? a[orderBy].localeCompare(b[orderBy]) : b[orderBy].localeCompare(a[orderBy])) * (order === 'asc' ? 1 : -1)
+    );
+  });
+
+  const filteredUsers = sortedUsers.filter(
     (user) =>
       user.username.toLowerCase().includes(searchTerm.toLowerCase()) ||
       user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -75,63 +84,153 @@ const AllUsers = () => {
   );
 
   return (
-    <div className={classes.root}>
-      <Paper className={classes.paper}>
-        <div className={classes.searchRoot}>
-          <InputBase
-            className={classes.searchInput}
-            placeholder="Search users..."
-            value={searchTerm}
-            onChange={handleSearchChange}
-          />
-          <IconButton className={classes.searchIconButton} aria-label="search">
-            <SearchIcon />
-          </IconButton>
-          <IconButton color="primary" aria-label="add">
-            <AddIcon />
-          </IconButton>
-        </div>
-        <TableContainer component={Paper}>
-          <Table className={classes.table} aria-label="users table">
-            <TableHead>
-              <TableRow>
-                <TableCell>Username</TableCell>
-                <TableCell>Name</TableCell>
-                <TableCell>Age</TableCell>
-                <TableCell>Role</TableCell>
-                <TableCell>NIC</TableCell>
-                <TableCell>Actions</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {filteredUsers.map((row) => (
-                <TableRow key={row.id}>
-                  <TableCell component="th" scope="row">
-                    {row.username}
-                  </TableCell>
-                  <TableCell>{row.name}</TableCell>
-                  <TableCell>{row.age}</TableCell>
-                  <TableCell>{row.role}</TableCell>
-                  <TableCell>{row.nic}</TableCell>
-                  <TableCell>
-                    <IconButton color="primary" aria-label="view">
-                      <VisibilityIcon />
-                    </IconButton>
-                    <IconButton color="primary" aria-label="edit">
-                      <EditIcon />
-                    </IconButton>
-                    <IconButton color="secondary" aria-label="delete">
-                      <DeleteIcon />
-                    </IconButton>
-                  </TableCell>
+    <>
+      <AppBar />
+      <Drawer />
+      <div style={{ marginLeft: '260px', paddingTop: '100px' }}>
+        <Paper sx={{ width: '100%', boxShadow: 'none' }}>
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+            <InputBase
+              sx={{ ml: 1, flex: 1 }}
+              placeholder="Search users.."
+              value={searchTerm}
+              onChange={handleSearchChange}
+              startAdornment={<SearchIcon fontSize="small" />}
+            />
+            <Box>
+              <IconButton color="primary" aria-label="print" onClick={handlePrintToPdf}>
+                <PrintIcon />
+              </IconButton>
+              <IconButton color="primary" aria-label="add">
+                <AddIcon />
+              </IconButton>
+            </Box>
+          </Box>
+          <TableContainer>
+            <Table stickyHeader aria-label="sticky table" sx={{ borderCollapse: 'collapse' }}>
+              <TableHead>
+                <TableRow>
+                  {columns.map((column) => (
+                    <TableCell
+                      key={column.id}
+                      align={column.align}
+                      sortDirection={orderBy === column.id ? order : false}
+                      sx={{
+                        backgroundColor: '#e0f2f1',
+                        fontWeight: 'bold',
+                        border: 'none',
+                        padding: '5px 10px',
+                        '&:hover': {
+                          backgroundColor: '#e0f2f1'},
+                      }}
+                    >
+                      <TableSortLabel
+                        active={orderBy === column.id}
+                        direction={orderBy === column.id ? order : 'asc'}
+                        onClick={() => handleSort(column.id)}
+                      >
+                        {column.label}
+                      </TableSortLabel>
+                    </TableCell>
+                  ))}
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Paper>
-    </div>
+              </TableHead>
+              <TableBody>
+                {filteredUsers
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((row) => {
+                    return (
+                      <TableRow
+                        hover
+                        role="checkbox"
+                        tabIndex={-1}
+                        key={row.id}
+                        sx={{
+                          '&:hover': {
+                            backgroundColor: '#f5f5f5',
+                          },
+                          border: 'none',
+                          padding: '8px 16px',
+                        }}
+                      >
+                        {columns.map((column) => {
+                          const value = row[column.id];
+                          return (
+                            <TableCell
+                              key={column.id}
+                              align={column.align}
+                              sx={{
+                                border: 'none',
+                                padding: '10px 12px',
+                                backgroundColor:'white',
+                              }}
+                            >
+                              {column.id === 'actions' ? (
+                                <>
+                                  <IconButton
+                                    color="primary"
+                                    aria-label="view"
+                                    sx={{
+                                      '&:hover': {
+                                        color: '#00008b',
+                                      },
+                                      color: '',
+                                    }}
+                                  >
+                                    <VisibilityIcon />
+                                  </IconButton>
+                                  <IconButton
+                                    color="primary"
+                                    aria-label="edit"
+                                    sx={{
+                                      '&:hover': {
+                                        color: '#00008b',
+                                      },
+                                      color: '',
+                                    }}
+                                  >
+                                    <EditIcon />
+                                  </IconButton>
+                                  <IconButton
+                                    color="secondary"
+                                    aria-label="delete"
+                                    sx={{
+                                      '&:hover': {
+                                        color: '#FF1B1B',
+                                      },
+                                      color: '#CF5C5C',
+                                    }}
+                                  >
+                                    <DeleteIcon />
+                                  </IconButton>
+                                </>
+                              ) : (
+                                value
+                              )}
+                            </TableCell>
+                          );
+                        })}
+                      </TableRow>
+                    );
+                  })}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <TablePagination
+            rowsPerPageOptions={[10, 25, 100]}
+            component="div"
+            count={filteredUsers.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+            sx={{
+              borderTop: 'none',
+              padding: '12px 16px',
+            }}
+          />
+        </Paper>
+      </div>
+    </>
   );
-};
-
-export default AllUsers;
+}
