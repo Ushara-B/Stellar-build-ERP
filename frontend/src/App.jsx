@@ -46,6 +46,7 @@ function App() {
           <Route path = '/addvehicle' element = {<AddVehicle/>}/>
           <Route path = '/viewvehicles' element = {<Vehicles/>}/>
           <Route path = '/viewvehicles/:id' element = {<UpdateVehicles/>}/>
+          <Route path = '/allusers' element ={<AllUsers/>}/>
 
 
         </Routes>
