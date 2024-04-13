@@ -66,7 +66,7 @@ export default function NestedList() {
     } else if (menuName === 'Projects' && subMenuName === 'All projects') {
       window.location.href = '/AllProjects';
     } else if (menuName === 'Projects' && subMenuName === 'New projects') {
-      window.location.href = '/new-projects';
+      window.location.href = '/Newprojects';
     } else if (menuName === 'Projects' && subMenuName === 'Project categories') {
       window.location.href = '/project-categories';
     }else if (menuName === 'Vehicle' && subMenuName === 'View Vehicles'){
@@ -99,7 +99,7 @@ export default function NestedList() {
     { name: 'Financial', path: '/financial', subMenus: ['Financial Dashboard', 'Expenses', 'Incomes', 'Categories'] },
     { name: 'Vehicle', path: '/vehicle', subMenus: ['View Vehicles', 'Add Vehicle', 'Assign drivers'] },
     { name: 'Loans Management', path: '/loan-management', subMenus: ['Add loans', 'Bank/Bussines Loans', 'Vehicle finance'] },
-    { name: 'User Management', path: '/user-management', subMenus: ['View users', 'Add users'] },
+    { name: 'User Management', path: '/allusers', subMenus: ['View users', 'Add users'] },
     { name: 'Employee Management', path: '/employee-management', subMenus: ['PaySlip', 'Leaves', 'Attendance'] },
   ];
 

@@ -14,7 +14,6 @@ import LeaveForm from "./Pages/LeaveForm";
 import ActiveLeaves from "./Pages/ActiveLeaves";
 import UpdateLeave from "./Pages/UpdateLeave";
 import Login from "./Pages/Login";
-//import Projects from "./Pages/Projects";
 import AddVehicle from './Pages/AddVehicle';
 import Vehicles from './Pages/Vehicles';
 import UpdateVehicles from './Pages/UpdateVehicle'
@@ -49,6 +48,14 @@ function App() {
           <Route path = '/addvehicle' element = {<AddVehicle/>}/>
           <Route path = '/viewvehicles' element = {<Vehicles/>}/>
           <Route path = '/viewvehicles/:id' element = {<UpdateVehicles/>}/>
+          <Route path = '/allusers' element ={<AllUsers/>}/>
+          <Route path = '/Allprojects' element = {<Allprojects/>}/>
+          <Route path = '/Addprojects' element = {<Addprojects/>}/>
+          <Route path = '/Newprojects' element = {<Newprojects/>}/>
+
+          <Route path = '/viewinventorylist' element = {<ViewInventoryList/>}/>
+          <Route path = '/inventory' element = {<Inventory/>}/>
+          <Route path = '/addinventory' element = {<AddInventory/>}/>
 
           <Route path = '/viewinventorylist' element = {<ViewInventoryList/>}/>
           <Route path = '/inventory' element = {<Inventory/>}/>
