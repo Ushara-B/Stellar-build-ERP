@@ -75,9 +75,14 @@ export default function NestedList() {
       window.location.href = '/addvehicle';
     }else if (menuName === 'Vehicle'){
       window.location.href = '/vehicle';
-    }
+    }else if (menuName === 'Inventory' && subMenuName === 'Add Inventory'){
+      window.location.href = '/addinventory';
+    }else if (menuName === 'Inventory' && subMenuName === 'View inventory list'){
+      window.location.href = '/viewinventorylist';
+    }else if (menuName === 'Inventory'){
+      window.location.href = '/inventory';
     // Add more else if conditions for other sub menus and their respective URLs
-    else {
+    }else {
       // Handle any other cases
     }
   };
