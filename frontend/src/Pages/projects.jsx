@@ -9,6 +9,9 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import axios from "axios";
 import Allprojects from './Allprojects';
+import { useNavigate } from 'react-router-dom';
+import { useRef } from 'react';
+import { useReactToPrint } from 'react-to-print';
 
 
 const URL = "http://localhost:5000/Projects";
@@ -21,8 +24,16 @@ const fetchHandler = async () => {
 
 function Projects() {
     const [projects, setProjects] = useState([]);
-    
+    const navigate = useNavigate();
     const [totalProjects, setTotalProjects] = useState(0);
+
+    const ComponentsRef = useRef();
+    const handlePrint = useReactToPrint({
+        content: () => ComponentsRef.current,
+        documentTitle: 'Vehicles Report',//document name(PDF save name)
+        onAfterPrint: () => alert("Vehicles Report successfully Download !"),//after download display alert message
+        
+    })
     
     
 
@@ -34,6 +45,9 @@ function Projects() {
           
         });
       }, []);
+      const handleAddClick = () => {
+        navigate(`/Newprojects`);
+    };  
 
     return (
         <div >
@@ -58,10 +72,14 @@ function Projects() {
                
                 {/* Add more cards for additional statistics if needed */}
             </Grid>
+            <br/>
             
             <Paper elevation={4}>
                 {/* Display Table of Vehicles here */}
             </Paper>
+            <button style={{ marginLeft: '270px', paddingTop: '13px' }} onClick={handleAddClick}>Add Vehicle</button>
+            <br/><br/>
+            <button style={{ marginLeft: '270px', paddingTop: '13px' }} onClick={handlePrint}>Download ALL Report</button>
         
         
             <Allprojects></Allprojects>
