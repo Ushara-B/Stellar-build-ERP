@@ -53,6 +53,7 @@ function App() {
           <Route path = '/viewvehicles' element = {<Vehicles/>}/>
           <Route path = '/viewvehicles/:id' element = {<UpdateVehicles/>}/>
           <Route path = '/allusers' element ={<AllUsers/>}/>
+          <Route path = '/projects' element = {<Projects/>}/>    
           <Route path = '/Allprojects' element = {<Allprojects/>}/>
           <Route path = '/Addprojects' element = {<Addprojects/>}/>
           <Route path = '/Newprojects' element = {<Newprojects/>}/>
