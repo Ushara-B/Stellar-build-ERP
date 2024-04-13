@@ -16,6 +16,8 @@ function Allprojects() {
     fetchHandler().then((data) => setProjects(data.project));
   }, [])
 
+  
+
   return (
     <div style={{ marginLeft: '255px', paddingTop: '80px' }}>
       <AppBar />
