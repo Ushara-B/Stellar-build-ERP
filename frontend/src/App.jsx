@@ -1,4 +1,3 @@
-
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./Pages/Home";
 import UserManage from "./Pages/UserManage";
@@ -15,19 +14,19 @@ import ActiveLeaves from "./Pages/ActiveLeaves";
 import UpdateLeave from "./Pages/UpdateLeave";
 import Login from "./Pages/Login";
 import Projects from "./Pages/projects";
-import Allprojects from "./Pages/Allprojects";
-import Addprojects from "./Pages/Addprojects";
-import Newprojects from "./Pages/Newprojects";
 import AddVehicle from './Pages/AddVehicle';
 import Vehicles from './Pages/Vehicles';
 import UpdateVehicles from './Pages/UpdateVehicle'
 import VehicleDash from './Pages/VehicleDashBoard';
+import Allprojects from "./Pages/Allprojects";
+import Addprojects from "./Pages/Addprojects";
+import Newprojects from "./Pages/Newprojects";
+import Updateprojects from "./Pages/Updateprojects";
 import ViewInventoryList from "./Pages/ViewInventoryList";
 import Inventory from "./Pages/Inventory";
 import AddInventory from "./Pages/AddInventory";
 
 function App() {
-  
   return (
     <div>
       <BrowserRouter>
@@ -56,7 +55,7 @@ function App() {
           <Route path = '/Allprojects' element = {<Allprojects/>}/>
           <Route path = '/Addprojects' element = {<Addprojects/>}/>
           <Route path = '/Newprojects' element = {<Newprojects/>}/>
-
+          <Route path = '/Updateprojects/:id' element = {<Updateprojects/>}/>
           <Route path = '/viewinventorylist' element = {<ViewInventoryList/>}/>
           <Route path = '/inventory' element = {<Inventory/>}/>
           <Route path = '/addinventory' element = {<AddInventory/>}/>
