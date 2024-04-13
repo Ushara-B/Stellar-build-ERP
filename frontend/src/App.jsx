@@ -14,11 +14,14 @@ import LeaveForm from "./Pages/LeaveForm";
 import ActiveLeaves from "./Pages/ActiveLeaves";
 import UpdateLeave from "./Pages/UpdateLeave";
 import Login from "./Pages/Login";
-//import Projects from "./Pages/Projects";
+import Projects from "./Pages/Projects";
 import AddVehicle from './Pages/AddVehicle';
 import Vehicles from './Pages/Vehicles';
 import UpdateVehicles from './Pages/UpdateVehicle'
 import VehicleDash from './Pages/VehicleDashBoard';
+import Allprojects from "./Pages/Allprojects";
+import Addprojects from "./Pages/Addprojects";
+import Newprojects from "./Pages/Newprojects";
 import ViewInventoryList from "./Pages/ViewInventoryList";
 import Inventory from "./Pages/Inventory";
 import AddInventory from "./Pages/AddInventory";
@@ -49,6 +52,10 @@ function App() {
           <Route path = '/addvehicle' element = {<AddVehicle/>}/>
           <Route path = '/viewvehicles' element = {<Vehicles/>}/>
           <Route path = '/viewvehicles/:id' element = {<UpdateVehicles/>}/>
+          <Route path = '/allusers' element ={<AllUsers/>}/>
+          <Route path = '/Allprojects' element = {<Allprojects/>}/>
+          <Route path = '/Addprojects' element = {<Addprojects/>}/>
+          <Route path = '/Newprojects' element = {<Newprojects/>}/>
 
           <Route path = '/viewinventorylist' element = {<ViewInventoryList/>}/>
           <Route path = '/inventory' element = {<Inventory/>}/>
