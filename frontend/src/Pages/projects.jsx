@@ -39,8 +39,9 @@ function Projects() {
         <div >
             <AppBar/>
             <Menu/>
-            <Grid style={{ marginLeft: '300px', paddingTop: '90px' }} container spacing={3}>
-                <Grid item xs={12} sm={6} md={3}>
+            
+            <Grid  container spacing={3}>
+                <Grid style={{ marginLeft: '270px', paddingTop: '110px' }} item xs={12} sm={6} md={3}>
                     <Card>
                         <CardContent>
                             <Typography variant="h5" component="h2">
@@ -52,12 +53,13 @@ function Projects() {
                         </CardContent>
                     </Card>
                 </Grid>
+                
+               
                
                 {/* Add more cards for additional statistics if needed */}
             </Grid>
-            <br />
-            <br />
-            <Paper elevation={3}>
+            
+            <Paper elevation={4}>
                 {/* Display Table of Vehicles here */}
             </Paper>
         

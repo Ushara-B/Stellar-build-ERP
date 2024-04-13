@@ -1,9 +1,6 @@
-import React, {  useState } from "react";
-import "../css/Addprojects.css";
-
-import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
 import axios from "axios";
-
+import { useNavigate } from "react-router-dom";
 
 const formatDate = (dateString) => {
   const date = new Date(dateString);
@@ -29,26 +26,25 @@ function Addprojects(props) {
 
   const deleteHandler = async () => {
     try {
-   
       await axios.delete(`http://localhost:5000/projects/${_id}`);
       setDeleteMessage("project deleted successfully!");
       setTimeout(() => {
-        navigate('/Allprojects');
+        navigate("/Allprojects");
       }, 1000); // Redirect after 1 second
     } catch (error) {
       console.error("Error deleting project:", error);
       setDeleteMessage("Failed to delete project");
-    } 
+    }
   };
-  
-  
+  const handleUpdateClick = () => {
+    navigate(`/Allprojects/${_id}`);
+  };
 
   return (
     <div>
       <div style={{ marginLeft: "10px", paddingTop: "50px" }}>
         <table>
           <tr>
-            
             <th>Project Name</th>
             <th>Project Budget</th>
             <th>Employees</th>
@@ -59,7 +55,6 @@ function Addprojects(props) {
             <th>Action</th>
           </tr>
           <tr>
-           
             <td>{projectName}</td>
             <td>{projectBudget}</td>
             <td>{Employees}</td>
@@ -68,11 +63,15 @@ function Addprojects(props) {
             <td>{formatDate(endDate)}</td>
             <td>{projectType}</td>
             <td class="action-buttons">
-  <button class="update-button">Update</button>
-  <button onClick={deleteHandler} class="delete-button">Delete</button>
-  <button class="report-button">Report</button>
-  {deleteMessage && <p>{deleteMessage}</p>}
-</td>
+              <button onClick={handleUpdateClick} className="update-button">
+                Update
+              </button>
+              <button onClick={deleteHandler} class="delete-button">
+                Delete
+              </button>
+              <button class="report-button">Report</button>
+              {deleteMessage && <p>{deleteMessage}</p>}
+            </td>
           </tr>
         </table>
       </div>
