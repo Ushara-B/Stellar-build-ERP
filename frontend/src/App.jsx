@@ -14,11 +14,10 @@ import LeaveForm from "./Pages/LeaveForm";
 import ActiveLeaves from "./Pages/ActiveLeaves";
 import UpdateLeave from "./Pages/UpdateLeave";
 import Login from "./Pages/Login";
-<<<<<<<<< Temporary merge branch 1
 import Projects from "./Pages/projects";
-=========
-//import Projects from "./Pages/Projects";
->>>>>>>>> Temporary merge branch 2
+import Allprojects from "./Pages/Allprojects";
+import Addprojects from "./Pages/Addprojects";
+import Newprojects from "./Pages/Newprojects";
 import AddVehicle from './Pages/AddVehicle';
 import Vehicles from './Pages/Vehicles';
 import UpdateVehicles from './Pages/UpdateVehicle'
