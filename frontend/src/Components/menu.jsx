@@ -76,11 +76,13 @@ export default function NestedList() {
     }else if (menuName === 'Vehicle'){
       window.location.href = '/vehicle';
     }else if (menuName === 'Inventory' && subMenuName === 'Add Inventory'){
-      window.location.href = '/addinventory';
+    window.location.href = '/addinventory';
     }else if (menuName === 'Inventory' && subMenuName === 'View inventory list'){
-      window.location.href = '/viewinventorylist';
+    window.location.href = '/viewinventorylist';
     }else if (menuName === 'Inventory'){
-      window.location.href = '/inventory';
+    window.location.href = '/inventory';
+  }else if (menuName === 'User Management' && subMenuName === 'View users'){
+    window.location.href = '/allusers';
     // Add more else if conditions for other sub menus and their respective URLs
     }else {
       // Handle any other cases

@@ -14,6 +14,11 @@ import LeaveForm from "./Pages/LeaveForm";
 import ActiveLeaves from "./Pages/ActiveLeaves";
 import UpdateLeave from "./Pages/UpdateLeave";
 import Login from "./Pages/Login";
+<<<<<<<<< Temporary merge branch 1
+import Projects from "./Pages/projects";
+=========
+//import Projects from "./Pages/Projects";
+>>>>>>>>> Temporary merge branch 2
 import AddVehicle from './Pages/AddVehicle';
 import Vehicles from './Pages/Vehicles';
 import UpdateVehicles from './Pages/UpdateVehicle'
@@ -43,7 +48,7 @@ function App() {
           <Route path="/LeaveForm"element={<LeaveForm />}/>
           <Route path="/ActiveLeaves"element={<ActiveLeaves />}/>
           <Route path="/updateLeave" element={<UpdateLeave/>}/>
-         
+          <Route path="/projects" element={<Projects/>}/>
           <Route path = '/vehicle' element = {<VehicleDash/>}/>
           <Route path = '/addvehicle' element = {<AddVehicle/>}/>
           <Route path = '/viewvehicles' element = {<Vehicles/>}/>
@@ -52,10 +57,6 @@ function App() {
           <Route path = '/Allprojects' element = {<Allprojects/>}/>
           <Route path = '/Addprojects' element = {<Addprojects/>}/>
           <Route path = '/Newprojects' element = {<Newprojects/>}/>
-
-          <Route path = '/viewinventorylist' element = {<ViewInventoryList/>}/>
-          <Route path = '/inventory' element = {<Inventory/>}/>
-          <Route path = '/addinventory' element = {<AddInventory/>}/>
 
           <Route path = '/viewinventorylist' element = {<ViewInventoryList/>}/>
           <Route path = '/inventory' element = {<Inventory/>}/>
