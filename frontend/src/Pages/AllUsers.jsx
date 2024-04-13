@@ -116,12 +116,12 @@ export default function AllUsers() {
                       align={column.align}
                       sortDirection={orderBy === column.id ? order : false}
                       sx={{
-                        backgroundColor: '#e0f2f1',
+                        backgroundColor: '#b1c5d4',
                         fontWeight: 'bold',
                         border: 'none',
                         padding: '5px 10px',
                         '&:hover': {
-                          backgroundColor: '#e0f2f1'},
+                          backgroundColor: '#b1c5d4'},
                       }}
                     >
                       <TableSortLabel
