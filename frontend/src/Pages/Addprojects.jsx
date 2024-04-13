@@ -1,6 +1,8 @@
-import React from "react";
+import React, {  useState } from "react";
 import "../css/Addprojects.css";
-import { Link } from 'react-router-dom';
+
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 
 const formatDate = (dateString) => {
@@ -11,7 +13,7 @@ const formatDate = (dateString) => {
 function Addprojects(props) {
   // Example data for suppliers
   const {
-   
+    _id,
     projectName,
     projectBudget,
     Employees,
@@ -20,6 +22,26 @@ function Addprojects(props) {
     endDate,
     projectType,
   } = props.Project;
+
+  const navigate = useNavigate();
+
+  const [deleteMessage, setDeleteMessage] = useState("");
+
+  const deleteHandler = async () => {
+    try {
+   
+      await axios.delete(`http://localhost:5000/projects/${_id}`);
+      setDeleteMessage("project deleted successfully!");
+      setTimeout(() => {
+        navigate('/Allprojects');
+      }, 1000); // Redirect after 1 second
+    } catch (error) {
+      console.error("Error deleting project:", error);
+      setDeleteMessage("Failed to delete project");
+    } 
+  };
+  
+  
 
   return (
     <div>
@@ -47,8 +69,9 @@ function Addprojects(props) {
             <td>{projectType}</td>
             <td class="action-buttons">
   <button class="update-button">Update</button>
-  <button class="delete-button">Delete</button>
+  <button onClick={deleteHandler} class="delete-button">Delete</button>
   <button class="report-button">Report</button>
+  {deleteMessage && <p>{deleteMessage}</p>}
 </td>
           </tr>
         </table>

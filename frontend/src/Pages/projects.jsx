@@ -8,6 +8,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import axios from "axios";
+import Allprojects from './Allprojects';
 
 
 const URL = "http://localhost:5000/Projects";
@@ -35,10 +36,10 @@ function Projects() {
       }, []);
 
     return (
-        <div style={{ marginLeft: '300px', paddingTop: '90px' }}>
+        <div >
             <AppBar/>
             <Menu/>
-            <Grid container spacing={3}>
+            <Grid style={{ marginLeft: '300px', paddingTop: '90px' }} container spacing={3}>
                 <Grid item xs={12} sm={6} md={3}>
                     <Card>
                         <CardContent>
@@ -59,6 +60,9 @@ function Projects() {
             <Paper elevation={3}>
                 {/* Display Table of Vehicles here */}
             </Paper>
+        
+        
+            <Allprojects></Allprojects>
         </div>
     );
 }
