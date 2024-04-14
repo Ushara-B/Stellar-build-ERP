@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useReactToPrint } from "react-to-print";
+import { useRef } from "react";
 
 const formatDate = (dateString) => {
   const date = new Date(dateString);
@@ -37,12 +39,19 @@ function Addprojects(props) {
     }
   };
   const handleUpdateClick = () => {
-    navigate(`/Allprojects/${_id}`);
+    navigate(`/Updateprojects/${_id}`);
   };
 
+  const ComponentsRef2 = useRef();
+  const handlePrintsingle = useReactToPrint({
+    content: () => ComponentsRef2.current,
+    documentTitle: "Project Report",
+    onAfterPrint: () => alert("Project Report successfully Download !"),
+  });
+
   return (
-    <div>
-      <div style={{ marginLeft: "10px", paddingTop: "50px" }}>
+    <div className="project-container">
+      <div  ref={ComponentsRef2} style={{ marginLeft: "10px", paddingTop: "50px" }}>
         <table>
           <tr>
             <th>Project Name</th>
@@ -52,7 +61,7 @@ function Addprojects(props) {
             <th>Start Date</th>
             <th>End Date</th>
             <th>Project Type</th>
-            <th>Action</th>
+            
           </tr>
           <tr>
             <td>{projectName}</td>
@@ -62,20 +71,26 @@ function Addprojects(props) {
             <td>{formatDate(startDate)}</td>
             <td>{formatDate(endDate)}</td>
             <td>{projectType}</td>
-            <td class="action-buttons">
+            
+          </tr>
+        </table>
+
+        
+      </div>
+      <td class="action-buttons">
               <button onClick={handleUpdateClick} className="update-button">
                 Update
               </button>
               <button onClick={deleteHandler} class="delete-button">
                 Delete
               </button>
-              <button class="report-button">Report</button>
+              <button onClick={handlePrintsingle} className="report-button">
+                Report
+              </button>
               {deleteMessage && <p>{deleteMessage}</p>}
             </td>
-          </tr>
-        </table>
-      </div>
     </div>
+    
   );
 }
 export default Addprojects;

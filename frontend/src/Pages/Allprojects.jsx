@@ -3,6 +3,8 @@ import AppBar from "../Components/Appbar";
 import Menu from "../Components/menu";
 import axios from "axios";
 import Addprojects from "../Pages/Addprojects";
+import { useReactToPrint } from 'react-to-print';
+import { useRef } from 'react';
 
 const URL = "http://localhost:5000/projects";
 
@@ -16,6 +18,17 @@ function Allprojects() {
     fetchHandler().then((data) => setProjects(data.project));
   }, [])
 
+  //Report print functions
+    //All report download
+    const ComponentsRef = useRef();
+    const handlePrint = useReactToPrint({
+        content: () => ComponentsRef.current,
+        documentTitle: 'Project Report',//document name(PDF save name)
+        onAfterPrint: () => alert("Project Report successfully Download !"),//after download display alert message
+        
+    })
+   
+
   
 
   return (
@@ -26,13 +39,14 @@ function Allprojects() {
   All projects display page
 </h1>
 
-      <div>
+      <div ref={ComponentsRef}>
         {projects && projects.map((project) => (
            
               <Addprojects key={project.id} Project={project} />
             
           ))}
       </div>
+      <button onClick={handlePrint}>Download ALL Report</button>
     </div>
   );
 }
