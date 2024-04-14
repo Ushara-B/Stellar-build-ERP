@@ -37,7 +37,7 @@ function Addprojects(props) {
     }
   };
   const handleUpdateClick = () => {
-    navigate(`/Allprojects/${_id}`);
+    navigate(`/Updateprojects/${_id}`);
   };
 
   return (
