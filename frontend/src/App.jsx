@@ -1,8 +1,9 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./Pages/Home";
-import UserManage from "./Pages/UserManage";
 import AllUsers from "./Pages/AllUsers";
 import AddUsers from "./Pages/AddUsers";
+import ViewUser from './Pages/ViewUser';
+import UpdateUser from './Pages/UpdateUser';
 import NoPages from "./Pages/NoPages";
 import Supplier from "./Pages/Supplier";
 import EmpManagement from "./Pages/EmpManagement";
@@ -12,16 +13,28 @@ import Attendance from "./Pages/Attendance-mng";
 import LeaveForm from "./Pages/LeaveForm";
 import ActiveLeaves from "./Pages/ActiveLeaves";
 import UpdateLeave from "./Pages/UpdateLeave";
+import Login from "./Pages/Login";
+import Projects from "./Pages/projects";
+import AddVehicle from './Pages/AddVehicle';
+import Vehicles from './Pages/Vehicles';
+import UpdateVehicles from './Pages/UpdateVehicle'
+import VehicleDash from './Pages/VehicleDashBoard';
+import Allprojects from "./Pages/Allprojects";
+import Addprojects from "./Pages/Addprojects";
+import Newprojects from "./Pages/Newprojects";
+import Updateprojects from "./Pages/Updateprojects";
+import ViewInventoryList from "./Pages/ViewInventoryList";
+import Inventory from "./Pages/Inventory";
+import AddInventory from "./Pages/AddInventory";
 
 function App() {
-  
   return (
     <div>
       <BrowserRouter>
         <Routes>
           <Route index element={<Home />} />
           <Route path="/dashboard" element={<Home />} />
-          <Route path="/user" element={<UserManage />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/user/addusers" element={<AddUsers />} />
           <Route path="/user/allusers" element={<AllUsers />} />
           <Route path="/supplier" element={<Supplier />} />
@@ -33,6 +46,22 @@ function App() {
           <Route path="/LeaveForm"element={<LeaveForm />}/>
           <Route path="/ActiveLeaves"element={<ActiveLeaves />}/>
           <Route path="/updateLeave" element={<UpdateLeave/>}/>
+          <Route path="/projects" element={<Projects/>}/>
+          <Route path = '/vehicle' element = {<VehicleDash/>}/>
+          <Route path = '/addvehicle' element = {<AddVehicle/>}/>
+          <Route path = '/viewvehicles' element = {<Vehicles/>}/>
+          <Route path = '/viewvehicles/:id' element = {<UpdateVehicles/>}/>
+          <Route path = '/allusers' element ={<AllUsers/>}/>
+          <Route path = '/Allprojects' element = {<Allprojects/>}/>
+          <Route path = '/Addprojects' element = {<Addprojects/>}/>
+          <Route path = '/Newprojects' element = {<Newprojects/>}/>
+          <Route path = '/Updateprojects/:id' element = {<Updateprojects/>}/>
+          <Route path = '/viewinventorylist' element = {<ViewInventoryList/>}/>
+          <Route path = '/inventory' element = {<Inventory/>}/>
+          <Route path = '/addinventory' element = {<AddInventory/>}/>
+          <Route path="/viewuser/:id" element={<ViewUser />} />
+          <Route path="/updateuser/:id" element={<UpdateUser />} />
+          <Route path="/adduser" element={<AddUsers />} />
 
 
         </Routes>
