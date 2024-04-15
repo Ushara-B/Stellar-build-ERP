@@ -73,6 +73,7 @@ function AddVehicle() {
           <input type='text' name='dname' onChange={handleChange} value={inputs.dname} required /><br/><br/>
           <label>Vehicle Status:</label><br/>
           <input type='text' name='vstatus' onChange={handleChange} value={inputs.vstatus} required /><br/><br/>
+          
           <button>Submit</button>
         </form>
       </div>
