@@ -1,0 +1,20 @@
+.gradient {
+  background: rgb(rgb(199, 197, 197), rgb(173, 175, 173), rgb(178, 178, 180));
+  background: linear-gradient(90deg, rgba(155, 152, 152, 1) 0%, rgba(150, 155, 150, 1) 50%, rgba(134, 134, 138, 1) 100%);
+}
+.paddingall {
+  padding: 10px 10px 10px 10px;
+}
+
+.pricetitle {
+  
+  font-weight: 600;
+}
+
+.pricesubtitle {
+  font-size: 14px;
+ 
+}
+.iconstyle {
+ padding: 20px 20px;
+}

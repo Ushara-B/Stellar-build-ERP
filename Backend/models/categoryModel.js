@@ -1,12 +1,8 @@
 const mongoose = require ("mongoose");
 const Schema = mongoose.Schema;
 
-const inventorySchema = new Schema({
+const categorySchema = new Schema({
     Name:{
-        type : String,
-        required:true,
-    },
-    Category:{
         type : String,
         required:true,
     },
@@ -29,6 +25,6 @@ const inventorySchema = new Schema({
 });
 
 module.exports = mongoose.model(
-   "InventoryModel", //file name
-   inventorySchema //function name
+   "categoryModel", //file name
+   categorySchema //function name
 )

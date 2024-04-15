@@ -4,6 +4,8 @@ const { readdirSync } = require("fs");
 const projectrouter = require("./routes/projectRoute");
 const userrouter = require("./routes/userRouters");
 const vehiclerouter = require("./routes/VehicleRoutes");
+const categoryrouter = require("./routes/categoryRoute");
+const inventoryrouter = require("./routes/inventoryRoute");
 
 
 
@@ -24,6 +26,8 @@ app.use(bodyParser.json());
 app.use("/users", userrouter);
 app.use("/projects", projectrouter);
 app.use("/vehicles", vehiclerouter);
+app.use("/categories", categoryrouter);
+app.use("/inventories", inventoryrouter);
 
 //routes
 readdirSync("./routes").map((route) =>
