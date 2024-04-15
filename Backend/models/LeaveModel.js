@@ -9,7 +9,7 @@ const leaveSchema = new Schema({
         maxLength:10
     },
     date:{
-        type:Date,
+        type:String,
         required:true,
         trim:true,
     } ,

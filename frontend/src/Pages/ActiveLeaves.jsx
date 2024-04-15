@@ -18,9 +18,11 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: "#1B1A55",
     color: theme.palette.common.white,
+    border:1,
+    borderColor:'black',
   },
   [`&.${tableCellClasses.body}`]: {
-    fontSize: 14,
+    fontSize: 18,
   },
 }));
 
@@ -30,8 +32,14 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
   "&:last-child td, &:last-child th": {
     border: 0,
+    borderRadius: 15,
   },
 }));
+
+const StyledButton = styled("button")({
+  width: "50%",
+  padding: "15px",
+});
 
 export default function ActiveLeaves() {
   const [leaves, setLeaves] = useState([]);
@@ -61,20 +69,32 @@ export default function ActiveLeaves() {
           xs={12}
           sm={8}
           sx={{
-            maxWidth: "60%",
+            maxWidth: "100%",
             alignContent: "center",
             display: "block",
-            margin: "150px auto auto 350px",
+            margin: "150px auto auto 250px",
+            overflow: "hidden",
+            borderRadius: "15px",
           }}
         >
-          <Table sx={{ minWidth: 700 }} aria-label="customized table">
+          <Table
+            sx={{
+              minWidth: 650,
+              width: 1000,
+              margin: "auto",
+              borderCollapse: "collapse",
+              borderRadius: "15px",
+              overflow: "hidden",
+            }}
+            aria-label="customized table"
+          >
             <TableHead>
               <TableRow>
                 <StyledTableCell>Employee ID</StyledTableCell>
-                <StyledTableCell align="right">Date</StyledTableCell>
-                <StyledTableCell align="right">Type</StyledTableCell>
-                <StyledTableCell align="right">Reason</StyledTableCell>
-                <StyledTableCell align="right">....</StyledTableCell>
+                <StyledTableCell align="center">Date</StyledTableCell>
+                <StyledTableCell align="center">Type</StyledTableCell>
+                <StyledTableCell align="center">Reason</StyledTableCell>
+                <StyledTableCell align="center"></StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -85,10 +105,17 @@ export default function ActiveLeaves() {
                   </StyledTableCell>
                   <StyledTableCell align="right">{leave.date}</StyledTableCell>
                   <StyledTableCell align="right">{leave.type}</StyledTableCell>
-                  <StyledTableCell align="right">{leave.reason}</StyledTableCell>
                   <StyledTableCell align="right">
-                    <button style={{ width: "50%", padding: "15px" }}>Edit</button>
-                    <button style={{ width: "50%" }}>Delete</button>
+                    {leave.reason}
+                  </StyledTableCell>
+                  <StyledTableCell align="right" sx={{
+                    display:'flex',
+                    padding:5
+                  }}>
+                    <StyledButton style={{ width: "45%", padding: "15px" }}>
+                      Edit
+                    </StyledButton>
+                    <StyledButton style={{ width: "45%", padding: "15px"}}>Delete</StyledButton>
                   </StyledTableCell>
                 </StyledTableRow>
               ))}

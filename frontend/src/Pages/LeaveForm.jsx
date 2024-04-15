@@ -1,5 +1,4 @@
-
-import  { useState } from "react";
+import { useState } from "react";
 import {
   Grid,
   TextField,
@@ -11,53 +10,80 @@ import {
 } from "@mui/material";
 import AppBar from "../Components/Appbar";
 import Drawer from "../Components/menu";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function LeaveForm() {
-  const [employeeId, setEmployeeId] = useState("");
-  const [date, setDate] = useState("");
-  const [leaveType, setLeaveType] = useState("");
-  const [reasonForLeave, setReasonForLeave] = useState("");
+ 
 
   const handleSubmit = (event) => {
     event.preventDefault();
     // Submit the form data here
-    console.log("Employee ID:", employeeId);
-    console.log("Date:", date);
-    console.log("Leave Type:", leaveType);
-    console.log("Reason for Leave:", reasonForLeave);
-
-
+    console.log(inputs);
+    sendRequest().then(() => history('/ActiveLeaves'))
   };
 
+  const sendRequest = async() =>{
+    await axios.post("http://localhost:5000/leaves",{
+      emp_id: String(inputs.emp_id),
+      date: String(inputs.date),
+      type: String(inputs.type),
+      reason: String(inputs.reason),
+    }).then(() => history('ActiveLeaves'))
+  }
+
+  const history = useNavigate();
+  const [inputs, setInputs] = useState({
+    emp_id: "",
+    date: "",
+    type: "",
+    reason: "",
+  });
+
+  const handleChange = (e) =>{
+    setInputs((prevState)=> ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
+  }
   return (
     <Grid container className="wrapper1">
       <Grid className="sidebar1">
         <AppBar />
         <Drawer />
       </Grid>
-
       <Grid
         item
         xs={12}
         sm={8}
         className="leave-form"
         sx={{
-          
-          marginBottom: "30px",
+          maxWidth: "1000px",
+          Width: "100%",
+          alignContent: "center",
           display: "block",
-          margin:"auto"
+          margin: "150px auto auto 250px",
+
         }}
       >
-        <section className="secLeave">
-          <h1 className="headerLeave">Apply for a leave</h1>
+        <Grid sx={{
+          width:"80%",
+        }}>
+          <h1
+            className="headerLeave"
+            style={{ textAlign: "center", marginBottom: "20px" }}
+          >
+            Apply for a Leave
+          </h1>
           <form className="leaveForm" onSubmit={handleSubmit}>
-            <Grid container className="abc" spacing={2} >
-              <Grid item xs={12} sm={6} >
+            <Grid container spacing={2} >
+              <Grid item xs={12} sm={6}>
                 <TextField
                   label="Employee ID"
+                  name="emp_id"
                   variant="outlined"
-                  value={employeeId}
-                  onChange={(event) => setEmployeeId(event.target.value)}
+                  value={inputs.emp_id}
+                  onChange={handleChange}
                   fullWidth
                   required
                 />
@@ -65,9 +91,10 @@ function LeaveForm() {
               <Grid item xs={12} sm={6}>
                 <TextField
                   type="date"
+                  name="date"
                   variant="outlined"
-                  value={date}
-                  onChange={(event) => setDate(event.target.value)}
+                  value={inputs.date}
+                  onChange={handleChange}
                   fullWidth
                   required
                 />
@@ -77,8 +104,9 @@ function LeaveForm() {
                   <InputLabel id="leaveType-label">Leave Type</InputLabel>
                   <Select
                     labelId="leaveType-label"
-                    value={leaveType}
-                    onChange={(event) => setLeaveType(event.target.value)}
+                    name="type"
+                    value={inputs.type}
+                    onChange={handleChange}
                     label="Leave Type"
                     fullWidth
                     required
@@ -93,11 +121,14 @@ function LeaveForm() {
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  minRows={5}
+                  multiline
+                  rows={5}
                   fullWidth
+                  name="reason"
                   label="Reason for Leave"
-                  value={reasonForLeave}
-                  onChange={(event) => setReasonForLeave(event.target.value)}
+                  value={inputs.reason}
+                  onChange={handleChange}
+                  variant="outlined"
                   required
                 />
               </Grid>
@@ -106,14 +137,15 @@ function LeaveForm() {
                   type="submit"
                   variant="contained"
                   color="primary"
-                  
+                  fullWidth
+                  style={{ borderRadius: "5px" }}
                 >
                   Submit
                 </Button>
               </Grid>
             </Grid>
           </form>
-        </section>
+        </Grid>
       </Grid>
     </Grid>
   );
