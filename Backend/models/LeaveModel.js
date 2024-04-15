@@ -26,4 +26,4 @@ const leaveSchema = new Schema({
     } ,
 });
 
-module.exports = mongoose.model('Leave',leaveSchema)
+module.exports = mongoose.model('LeaveModel',leaveSchema)

@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -10,6 +10,9 @@ import Paper from "@mui/material/Paper";
 import AppBar from "../Components/Appbar";
 import Drawer from "../Components/menu";
 import { Grid } from "@mui/material";
+import axios from "axios";
+
+const URL = "http://localhost:5000/leaves";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -25,28 +28,30 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   "&:nth-of-type(odd)": {
     backgroundColor: theme.palette.action.hover,
   },
-  // hide last border
   "&:last-child td, &:last-child th": {
     border: 0,
   },
 }));
 
-function createData(emp_id, date, type, reason) {
-  return { emp_id, date, type, reason };
-}
+export default function ActiveLeaves() {
+  const [leaves, setLeaves] = useState([]);
 
-const rows = [
-  createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-  createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-  createData("Eclair", 262, 16.0, 24, 6.0),
-  createData("Cupcake", 305, 3.7, 67, 4.3),
-  createData("Gingerbread", 356, 16.0, 49, 3.9),
-];
+  useEffect(() => {
+    fetchLeavesFromDatabase();
+  }, []);
 
-export default function activeLeaves() {
+  const fetchLeavesFromDatabase = async () => {
+    try {
+      const response = await axios.get(URL);
+      setLeaves(response.data.leaves);
+    } catch (error) {
+      console.error("Error fetching leaves:", error);
+    }
+  };
+
   return (
-    <Grid>
-      <Grid>
+    <Grid container>
+      <Grid item>
         <AppBar />
         <Drawer />
       </Grid>
@@ -65,25 +70,25 @@ export default function activeLeaves() {
           <Table sx={{ minWidth: 700 }} aria-label="customized table">
             <TableHead>
               <TableRow>
-                <StyledTableCell>Emplyee ID</StyledTableCell>
+                <StyledTableCell>Employee ID</StyledTableCell>
                 <StyledTableCell align="right">Date</StyledTableCell>
                 <StyledTableCell align="right">Type</StyledTableCell>
                 <StyledTableCell align="right">Reason</StyledTableCell>
-                <StyledTableCell></StyledTableCell>
+                <StyledTableCell align="right">....</StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows.map((row) => (
-                <StyledTableRow key={row.emp_id}>
+              {leaves.map((leave, index) => (
+                <StyledTableRow key={index}>
                   <StyledTableCell component="th" scope="row">
-                    {row.emp_id}
+                    {leave.emp_id}
                   </StyledTableCell>
-                  <StyledTableCell align="right">{row.date}</StyledTableCell>
-                  <StyledTableCell align="right">{row.type}</StyledTableCell>
-                  <StyledTableCell align="right">{row.reason}</StyledTableCell>
-                  <StyledTableCell align="center">
-                    <button sx={{ width: "50%", padding: "5px" }}>Edit</button>
-                    <button sx={{ width: "50%" }}>Delete</button>
+                  <StyledTableCell align="right">{leave.date}</StyledTableCell>
+                  <StyledTableCell align="right">{leave.type}</StyledTableCell>
+                  <StyledTableCell align="right">{leave.reason}</StyledTableCell>
+                  <StyledTableCell align="right">
+                    <button style={{ width: "50%", padding: "15px" }}>Edit</button>
+                    <button style={{ width: "50%" }}>Delete</button>
                   </StyledTableCell>
                 </StyledTableRow>
               ))}

@@ -1,3 +1,4 @@
+
 import  { useState } from "react";
 import {
   Grid,
@@ -29,8 +30,8 @@ function LeaveForm() {
   };
 
   return (
-    <Grid container className="wrapper">
-      <Grid className="sidebar">
+    <Grid container className="wrapper1">
+      <Grid className="sidebar1">
         <AppBar />
         <Drawer />
       </Grid>
@@ -39,7 +40,7 @@ function LeaveForm() {
         item
         xs={12}
         sm={8}
-        className="content-form"
+        className="leave-form"
         sx={{
           
           marginBottom: "30px",
@@ -47,10 +48,10 @@ function LeaveForm() {
           margin:"auto"
         }}
       >
-        <section>
-          <h1>Apply for a leave</h1>
-          <form onSubmit={handleSubmit}>
-            <Grid container spacing={2} >
+        <section className="secLeave">
+          <h1 className="headerLeave">Apply for a leave</h1>
+          <form className="leaveForm" onSubmit={handleSubmit}>
+            <Grid container className="abc" spacing={2} >
               <Grid item xs={12} sm={6} >
                 <TextField
                   label="Employee ID"

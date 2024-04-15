@@ -6,6 +6,7 @@ const userrouter = require("./routes/userRouters");
 const vehiclerouter = require("./routes/VehicleRoutes");
 const categoryrouter = require("./routes/categoryRoute");
 const inventoryrouter = require("./routes/inventoryRoute");
+const leaveRouter = require("./routes/leaveRoute")
 
 
 
@@ -28,6 +29,8 @@ app.use("/projects", projectrouter);
 app.use("/vehicles", vehiclerouter);
 app.use("/categories", categoryrouter);
 app.use("/inventories", inventoryrouter);
+app.use("/leaves", leaveRouter);
+app.use("/leaves", leaveRouter);
 
 //routes
 readdirSync("./routes").map((route) =>
