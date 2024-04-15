@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import Drawer from '../Components/menu';
+import Appbar from '../Components/Appbar';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
