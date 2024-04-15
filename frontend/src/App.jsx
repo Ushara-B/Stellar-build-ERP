@@ -1,8 +1,9 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./Pages/Home";
-import UserManage from "./Pages/UserManage";
 import AllUsers from "./Pages/AllUsers";
 import AddUsers from "./Pages/AddUsers";
+import ViewUser from './Pages/ViewUser';
+import UpdateUser from './Pages/UpdateUser';
 import NoPages from "./Pages/NoPages";
 import Supplier from "./Pages/Supplier";
 import EmpManagement from "./Pages/EmpManagement";
@@ -34,7 +35,6 @@ function App() {
           <Route index element={<Home />} />
           <Route path="/dashboard" element={<Home />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/user" element={<UserManage />} />
           <Route path="/user/addusers" element={<AddUsers />} />
           <Route path="/user/allusers" element={<AllUsers />} />
           <Route path="/supplier" element={<Supplier />} />
@@ -59,6 +59,9 @@ function App() {
           <Route path = '/viewinventorylist' element = {<ViewInventoryList/>}/>
           <Route path = '/inventory' element = {<Inventory/>}/>
           <Route path = '/addinventory' element = {<AddInventory/>}/>
+          <Route path="/viewuser/:id" element={<ViewUser />} />
+          <Route path="/updateuser/:id" element={<UpdateUser />} />
+          <Route path="/adduser" element={<AddUsers />} />
 
 
         </Routes>

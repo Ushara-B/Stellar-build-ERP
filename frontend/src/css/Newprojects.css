@@ -1,4 +1,4 @@
-/* Style for the form container */
+/* Style for the form container 
 form {
     max-width: 500px;
     margin: 20px auto;
@@ -8,7 +8,7 @@ form {
     background: #a29c9c;
   }
   
-  /* Style for form elements */
+  /* Style for form elements 
   input[type="text"],
   input[type="number"],
   input[type="date"],
