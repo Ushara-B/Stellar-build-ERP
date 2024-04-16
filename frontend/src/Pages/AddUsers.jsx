@@ -15,6 +15,7 @@ const AddUser = () => {
     email: '',
     address: '',
     dob: '',
+    pswrd: '',
     gender: '',
     m_Status: '',
     nic: '',
@@ -35,6 +36,17 @@ const AddUser = () => {
       navigate('/allusers');
     } catch (error) {
       console.error('Error adding user:', error);
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        // that falls out of the range of 2xx
+        alert(`Error adding user: ${error.response.data.message}`);
+      } else if (error.request) {
+        // The request was made but no response was received
+        alert('Error connecting to the server. Please try again later.');
+      } else {
+        // Something else happened while setting up the request
+        alert('An unexpected error occurred. Please try again later.');
+      }
     }
   };
 
@@ -53,7 +65,7 @@ const AddUser = () => {
         }}
       >
         <Box
-          component="form"
+          component="form1"
           onSubmit={handleSubmit}
           sx={{
             width: '80%',
@@ -116,7 +128,18 @@ const AddUser = () => {
                 variant="outlined"
                 fullWidth
               />
-            </Grid>
+              </Grid>
+              <Grid item xs={6}>
+  <TextField
+    label="Password"
+    name="pswrd" 
+    value={newUser.pswrd}
+    onChange={handleChange}
+    variant="outlined"
+    fullWidth
+  />
+</Grid>
+
             <Grid item xs={6}>
               <TextField
                 label="Address"
