@@ -33,28 +33,17 @@ function Allprojects() {
         All projects display page
       </h1>
 
-      {/* Table with headers */}
-      <table>
-        <thead>
-          <tr>
-            <th>Project Name</th>
-            <th>Project Budget</th>
-            <th>Employees</th>
-            <th>Status</th>
-            <th>Start Date</th>
-            <th>End Date</th>
-            <th>Project Type</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody ref={ComponentsRef}>
+     
+       
+        <div ref={ComponentsRef}>
           {/* Render each project */}
           {projects && projects.map((project) => (
             <Addprojects key={project.id} Project={project} />
           ))}
-        </tbody>
-      </table>
-      
+          
+        </div>
+        
+      <br/><br/>
       <button onClick={handlePrint}>Download ALL Report</button>
     </div>
   );
