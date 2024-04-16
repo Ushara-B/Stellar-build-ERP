@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { Box, Button, Grid, TextField, Typography, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import Drawer from '../Components/menu';
 import Appbar from '../Components/Appbar';
 
-const AddUser = () => {
+const UpdateUser = () => {
   const navigate = useNavigate();
-  const [newUser, setNewUser] = useState({
+  const { id } = useParams();
+  const [user, setUser] = useState({
     user_N: '',
     f_Name: '',
     l_Name: '',
@@ -25,24 +26,36 @@ const AddUser = () => {
     bank_D: '',
   });
 
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await axios.get(`http://localhost:5000/users/${id}`);
+        setUser(response.data.user);
+      } catch (error) {
+        console.error('Error fetching user:', error);
+      }
+    };
+    fetchUser();
+  }, [id]);
+
   const handleChange = (e) => {
-    setNewUser({ ...newUser, [e.target.name]: e.target.value });
+    setUser({ ...user, [e.target.name]: e.target.value });
   };
 
   const handleDateChange = (e) => {
-    setNewUser({ ...newUser, dob: e.target.value });
+    setUser({ ...user, dob: e.target.value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/users', newUser);
-      console.log('User added successfully:', response.data.users);
+      const response = await axios.put(`http://localhost:5000/users/${id}`, user);
+      console.log('User updated successfully:', response.data.user);
       navigate('/allusers');
     } catch (error) {
-      console.error('Error adding user:', error);
+      console.error('Error updating user:', error);
       if (error.response && error.response.data && error.response.data.message) {
-        alert(`Error adding user: ${error.response.data.message}`);
+        alert(`Error updating user: ${error.response.data.message}`);
       } else {
         alert('An unexpected error occurred. Please try again later.');
       }
@@ -75,14 +88,14 @@ const AddUser = () => {
           }}
         >
           <Typography variant="h4" gutterBottom>
-            Add New User
+            Update User
           </Typography>
           <Grid container spacing={3}>
             <Grid item xs={6}>
               <TextField
                 label="Username"
                 name="user_N"
-                value={newUser.user_N}
+                value={user.user_N}
                 onChange={handleChange}
                 variant="outlined"
                 fullWidth
@@ -92,7 +105,7 @@ const AddUser = () => {
               <TextField
                 label="First Name"
                 name="f_Name"
-                value={newUser.f_Name}
+                value={user.f_Name}
                 onChange={handleChange}
                 variant="outlined"
                 fullWidth
@@ -102,7 +115,7 @@ const AddUser = () => {
               <TextField
                 label="Last Name"
                 name="l_Name"
-                value={newUser.l_Name}
+                value={user.l_Name}
                 onChange={handleChange}
                 variant="outlined"
                 fullWidth
@@ -112,7 +125,7 @@ const AddUser = () => {
               <TextField
                 label="Age"
                 name="age"
-                value={newUser.age}
+                value={user.age}
                 onChange={handleChange}
                 variant="outlined"
                 fullWidth
@@ -122,7 +135,7 @@ const AddUser = () => {
               <TextField
                 label="Email"
                 name="email"
-                value={newUser.email}
+                value={user.email}
                 onChange={handleChange}
                 variant="outlined"
                 fullWidth
@@ -132,7 +145,7 @@ const AddUser = () => {
               <TextField
                 label="Password"
                 name="pswrd"
-                value={newUser.pswrd}
+                value={user.pswrd}
                 onChange={handleChange}
                 variant="outlined"
                 fullWidth
@@ -142,36 +155,36 @@ const AddUser = () => {
               <TextField
                 label="Address"
                 name="address"
-                value={newUser.address}
+                value={user.address}
                 onChange={handleChange}
                 variant="outlined"
                 fullWidth
               />
             </Grid>
             <Grid item xs={6}>
-  <TextField
-    label="Date of Birth"
-    name="dob"
-    type="date"
-    value={newUser.dob}
-    onChange={handleDateChange}
-    variant="outlined"
-    fullWidth
-    InputLabelProps={{
-      shrink: true,
-    }}
-    InputProps={{
-      placeholder: 'mm/dd/yyyy',
-    }}
-  />
-</Grid>
+              <TextField
+                label="Date of Birth"
+                name="dob"
+                type="date"
+                value={user.dob}
+                onChange={handleDateChange}
+                variant="outlined"
+                fullWidth
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                InputProps={{
+                  placeholder: 'mm/dd/yyyy',
+                }}
+              />
+            </Grid>
             <Grid item xs={6}>
               <FormControl variant="outlined" fullWidth>
                 <InputLabel id="gender-label">Gender</InputLabel>
                 <Select
                   labelId="gender-label"
                   name="gender"
-                  value={newUser.gender}
+                  value={user.gender}
                   onChange={handleChange}
                 >
                   <MenuItem value="">Select Gender</MenuItem>
@@ -187,7 +200,7 @@ const AddUser = () => {
                 <Select
                   labelId="m-status-label"
                   name="m_Status"
-                  value={newUser.m_Status}
+                  value={user.m_Status}
                   onChange={handleChange}
                 >
                   <MenuItem value="">Select Marital Status</MenuItem>
@@ -201,7 +214,7 @@ const AddUser = () => {
               <TextField
                 label="NIC"
                 name="nic"
-                value={newUser.nic}
+                value={user.nic}
                 onChange={handleChange}
                 variant="outlined"
                 fullWidth
@@ -213,7 +226,7 @@ const AddUser = () => {
                 <Select
                   labelId="role-label"
                   name="role"
-                  value={newUser.role}
+                  value={user.role}
                   onChange={handleChange}
                 >
                   <MenuItem value="">Select Role</MenuItem>
@@ -227,7 +240,7 @@ const AddUser = () => {
               <TextField
                 label="Contact Number"
                 name="contact_No"
-                value={newUser.contact_No}
+                value={user.contact_No}
                 onChange={handleChange}
                 variant="outlined"
                 fullWidth
@@ -237,7 +250,7 @@ const AddUser = () => {
               <TextField
                 label="Family Contact No"
                 name="f_contactNo"
-                value={newUser.f_contactNo}
+                value={user.f_contactNo}
                 onChange={handleChange}
                 variant="outlined"
                 fullWidth
@@ -247,7 +260,7 @@ const AddUser = () => {
               <TextField
                 label="Bank Details"
                 name="bank_D"
-                value={newUser.bank_D}
+                value={user.bank_D}
                 onChange={handleChange}
                 variant="outlined"
                 fullWidth
@@ -271,7 +284,7 @@ const AddUser = () => {
                   },
                 }}
               >
-                Add User
+                Update User
               </Button>
             </Grid>
           </Grid>
@@ -281,4 +294,4 @@ const AddUser = () => {
   );
 };
 
-export default AddUser;
+export default UpdateUser;
