@@ -10,6 +10,7 @@ import Paper from "@mui/material/Paper";
 import AppBar from "../Components/Appbar";
 import Drawer from "../Components/menu";
 import { Grid } from "@mui/material";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 
 const URL = "http://localhost:5000/leaves";
@@ -18,8 +19,8 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: "#1B1A55",
     color: theme.palette.common.white,
-    border:1,
-    borderColor:'black',
+    border: 1,
+    borderColor: "black",
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 18,
@@ -41,7 +42,7 @@ const StyledButton = styled("button")({
   padding: "15px",
 });
 
-export default function ActiveLeaves() {
+function ActiveLeaves() {
   const [leaves, setLeaves] = useState([]);
 
   useEffect(() => {
@@ -55,6 +56,24 @@ export default function ActiveLeaves() {
     } catch (error) {
       console.error("Error fetching leaves:", error);
     }
+  };
+
+  const id = useParams().id;
+  const history = useNavigate();
+
+  const deleteHandler = async (id) => {
+    console.log(`Deleting leave with id: ${id}`); // Log the delete URL
+    try {
+      await axios.delete(`http://localhost:5000/leaves/${id}`);
+      // After successful deletion, update the leaves state to reflect the changes
+      setLeaves(leaves.filter((leave) => leave._id !== id));
+    } catch (error) {
+      console.error("Error deleting leave:", error);
+    }
+  };
+
+  const handleEdit = (id) => {
+    history(`/ActiveLeaves/${id}`);
   };
 
   return (
@@ -108,14 +127,25 @@ export default function ActiveLeaves() {
                   <StyledTableCell align="right">
                     {leave.reason}
                   </StyledTableCell>
-                  <StyledTableCell align="right" sx={{
-                    display:'flex',
-                    padding:5
-                  }}>
-                    <StyledButton style={{ width: "45%", padding: "15px" }}>
+                  <StyledTableCell
+                    align="right"
+                    sx={{
+                      display: "flex",
+                      padding: 5,
+                    }}
+                  >
+                    <StyledButton
+                      style={{ width: "45%", padding: "15px" }}
+                      onClick={() => handleEdit(leave._id)}
+                    >
                       Edit
                     </StyledButton>
-                    <StyledButton style={{ width: "45%", padding: "15px"}}>Delete</StyledButton>
+                    <StyledButton
+                      style={{ width: "45%", padding: "15px" }}
+                      onClick={() => deleteHandler(leave._id)}
+                    >
+                      Delete
+                    </StyledButton>
                   </StyledTableCell>
                 </StyledTableRow>
               ))}
@@ -126,3 +156,5 @@ export default function ActiveLeaves() {
     </Grid>
   );
 }
+
+export default ActiveLeaves;

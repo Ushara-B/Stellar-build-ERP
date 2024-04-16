@@ -30,7 +30,6 @@ app.use("/vehicles", vehiclerouter);
 app.use("/categories", categoryrouter);
 app.use("/inventories", inventoryrouter);
 app.use("/leaves", leaveRouter);
-app.use("/leaves", leaveRouter);
 
 //routes
 readdirSync("./routes").map((route) =>

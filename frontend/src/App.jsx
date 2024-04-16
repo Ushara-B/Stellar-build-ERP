@@ -3,7 +3,6 @@ import Home from "./Pages/Home";
 import AllUsers from "./Pages/AllUsers";
 import AddUsers from "./Pages/AddUsers";
 import ViewUser from './Pages/ViewUser';
-import UpdateUser from './Pages/UpdateUser';
 import NoPages from "./Pages/NoPages";
 import Supplier from "./Pages/Supplier";
 import EmpManagement from "./Pages/EmpManagement";
@@ -26,6 +25,7 @@ import Updateprojects from "./Pages/Updateprojects";
 import ViewInventoryList from "./Pages/ViewInventoryList";
 import Inventory from "./Pages/Inventory";
 import AddInventory from "./Pages/AddInventory";
+
 
 function App() {
   return (
@@ -60,8 +60,9 @@ function App() {
           <Route path = '/inventory' element = {<Inventory/>}/>
           <Route path = '/addinventory' element = {<AddInventory/>}/>
           <Route path="/viewuser/:id" element={<ViewUser />} />
-          <Route path="/updateuser/:id" element={<UpdateUser />} />
           <Route path="/adduser" element={<AddUsers />} />
+          <Route path="/ActiveLeaves/:id"element={<UpdateLeave />}/>
+          <Route path="/UpdateLeave/:id"element={<UpdateLeave />}/>
 
 
         </Routes>
