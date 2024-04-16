@@ -47,7 +47,7 @@ function Newprojects() {
     <div style={{ marginLeft: "255px", paddingTop: "80px" }}>
       <AppBar />
       <Menu />
-      <h1>Add new projects</h1>
+      <h1>Add new project</h1>
       <form onSubmit={handleSubmit}>
        
 
