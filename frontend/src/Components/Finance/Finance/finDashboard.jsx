@@ -6,7 +6,7 @@ import { InnerLayout } from '../../Styles/Layout';
 
 import Chart from '../../Components/Finance/chart';
 
-function Dashboard() {
+function financeDashboard() {
     const {totalExpenses,incomes, expenses, totalIncome, totalBalance, getIncomes, getExpenses } = useGlobalContext()
 
     useEffect(() => {
@@ -144,4 +144,4 @@ const DashboardStyled = styled.div`
     }
 `;
 
-export default Dashboard
+export default financeDashboard
