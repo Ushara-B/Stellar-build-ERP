@@ -54,7 +54,7 @@ function AddVehicle() {
       <Menu />
       <div style={{ marginLeft: '255px', paddingTop: '80px' }}>
         <h1 style={{ textAlign: "center" }}>Add Vehicle Details</h1>
-        <form onSubmit={handleSubmit}>
+        <form1 onSubmit={handleSubmit}>
           <label>RegisterNo</label><br/>
           <input type='text' name='RegNo' onChange={handleChange} value={inputs.RegNo} required /><br/><br/>
           <label>Vehicle Name</label><br/>
@@ -74,7 +74,7 @@ function AddVehicle() {
           <label>Vehicle Status:</label><br/>
           <input type='text' name='vstatus' onChange={handleChange} value={inputs.vstatus} required /><br/><br/>
           <button>Submit</button>
-        </form>
+        </form1>
       </div>
     </div>
   );
