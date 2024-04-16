@@ -29,7 +29,7 @@ import AddInventory from "./Pages/AddInventory";
 import  Expense from "./Components/Finance/Finance/Expense";
 import  Income from "./Components/Finance/Finance/Income";
 import FinanceDashboard from "./Components/Finance/Finance/finDashboard";
-
+import InventoryCategory from "./Pages/InventoryCategory";
 
 function App() {
   return (
@@ -69,7 +69,10 @@ function App() {
           <Route path="/finance/dashboard" element={<FinanceDashboard />} />
           <Route path="/finance/expense" element={<Expense />} />
           <Route path="/finance/income" element={<Income />} />
-          
+          <Route path = '/inventorycategory' element = {<InventoryCategory/>}/>
+          <Route path="/viewuser/:id" element={<ViewUser />} />
+          <Route path="/updateuser/:id" element={<UpdateUser />} />
+          <Route path="/adduser" element={<AddUsers />} />
 
 
         </Routes>

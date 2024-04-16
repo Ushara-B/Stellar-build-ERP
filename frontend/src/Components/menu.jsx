@@ -6,7 +6,7 @@ import Collapse from '@mui/material/Collapse';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import { styled } from '@mui/material/styles';
-import SupplierPage from '../Supplierpage'; // Import the SupplierPage component
+import { useLocation, Link } from 'react-router-dom';
 
 const SideMenuBar = styled('div')({
   backgroundColor: '#1B1A55',
@@ -16,7 +16,7 @@ const SideMenuBar = styled('div')({
   top: 0,
   left: 0,
   bottom: 0,
-  width: '250px'
+  width: '250px',
 });
 
 const StyledList = styled(List)(({ theme }) => ({
@@ -31,11 +31,15 @@ const StyledListItemButton = styled(ListItemButton)(({ theme }) => ({
       color: '#ffffff',
     },
   },
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
 }));
 
 export default function NestedList() {
   const [openMenus, setOpenMenus] = React.useState({});
   const [renderedComponent, setRenderedComponent] = React.useState(null);
+  const location = useLocation();
 
   const handleMenuClick = (menuName) => {
     setOpenMenus((prevState) => {
@@ -52,23 +56,57 @@ export default function NestedList() {
   };
 
   const handleSubMenuClick = (menuName, subMenuName) => {
+    // Redirect to the related page based on the sub menu clicked
     if (menuName === 'Contact' && subMenuName === 'Suppliers') {
-      setRenderedComponent(<SupplierPage />); // Render the SupplierPage component
-    } else {
-      setRenderedComponent(null); // Clear the rendered component
+      window.location.href = '/supplier';
+    } else if (menuName === 'Contact' && subMenuName === 'Clients') {
+      window.location.href = '/clients';
+    } else if (menuName === 'Contact' && subMenuName === 'Add contacts') {
+      window.location.href = '/add-contacts';
+    } else if (menuName === 'Projects' && subMenuName === 'All projects') {
+      window.location.href = '/AllProjects';
+    } else if (menuName === 'Projects' && subMenuName === 'New projects') {
+      window.location.href = '/Newprojects';
+    } else if (menuName === 'Projects' && subMenuName === 'Project categories') {
+      window.location.href = '/project-categories';
+    }else if (menuName === 'Vehicle' && subMenuName === 'View Vehicles'){
+      window.location.href = '/viewvehicles';
+    }else if (menuName === 'Vehicle' && subMenuName === 'Add Vehicle'){
+      window.location.href = '/addvehicle';
+    }else if (menuName === 'Vehicle'){
+      window.location.href = '/vehicle';
+    }else if (menuName === 'Inventory' && subMenuName === 'Inventory Category'){
+      window.location.href = '/inventorycategory';
+    }else if (menuName === 'Inventory' && subMenuName === 'Add Inventory'){
+    window.location.href = '/addinventory';
+    }else if (menuName === 'Inventory' && subMenuName === 'View inventory list'){
+    window.location.href = '/viewinventorylist';
+    }else if (menuName === 'Inventory'){
+    window.location.href = '/inventory';
+    }else if (menuName === 'User Management' && subMenuName === 'View users'){
+    window.location.href = '/allusers';
+    }else if (menuName === 'User Management' && subMenuName === 'Add users'){
+    window.location.href = '/adduser';
+    // Add more else if conditions for other sub menus and their respective URLs
+    }else {
+      // Handle any other cases
     }
+  };
+
+  const isMenuActive = (menuPath) => {
+    return location.pathname.startsWith(menuPath);
   };
 
   const mainMenus = [
     { name: 'Dashboard', path: '/dashboard' },
     { name: 'Contact', path: '/contact', subMenus: ['Suppliers', 'Clients', 'Add contacts'] },
     { name: 'Projects', path: '/projects', subMenus: ['All projects', 'New projects', 'Project categories'] },
-    { name: 'Inventory', path: '/inventory', subMenus: ['Add Inventory', 'View inventory list'] },
+    { name: 'Inventory', path: '/inventory', subMenus: ['Add Inventory', 'View inventory list', 'Inventory Category'] },
     { name: 'Financial', path: '/financial', subMenus: ['Financial Dashboard', 'Expenses', 'Incomes', 'Categories'] },
     { name: 'Vehicle', path: '/vehicle', subMenus: ['View Vehicles', 'Add Vehicle', 'Assign drivers'] },
-    { name: 'Loans Management', path: '/loan-management', subMenus: ['Add loans', 'Bank/Bussines Loans', 'Vehicle  finance'] },
-    { name: 'User Management', path: '/user-management', subMenus: ['View users', 'Add users'] },
-    { name: 'Employee Management', path: '/employee-management', subMenus: ['View employees', 'Leaves', 'Attendance'] },
+    { name: 'Loans Management', path: '/loan-management', subMenus: ['Add loans', 'Bank/Bussines Loans', 'Vehicle finance'] },
+    { name: 'User Management', path: '/allusers', subMenus: ['View users', 'Add users'] },
+    { name: 'Employee Management', path: '/employee-management', subMenus: ['PaySlip', 'Leaves', 'Attendance'] },
   ];
 
   return (
@@ -76,16 +114,28 @@ export default function NestedList() {
       <StyledList component="nav" aria-labelledby="nested-list-subheader">
         {mainMenus.map((menu) => (
           <React.Fragment key={menu.name}>
-            <StyledListItemButton onClick={() => handleMenuClick(menu.name)}>
-              <ListItemText primary={menu.name} />
+            <StyledListItemButton onClick={() => handleMenuClick(menu.name)} selected={isMenuActive(menu.path)}>
+              <Link to={menu.path} style={{ color: 'inherit', textDecoration: 'none', display: 'flex', alignItems: 'center', flexGrow: 1 }}>
+                <ListItemText primary={menu.name} />
+              </Link>
               {menu.subMenus && (openMenus[menu.name] ? <ExpandLess /> : <ExpandMore />)}
             </StyledListItemButton>
             {menu.subMenus && (
               <Collapse in={openMenus[menu.name]} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
                   {menu.subMenus.map((subMenu) => (
-                    <StyledListItemButton sx={{ pl: 4 }} key={subMenu} onClick={() => handleSubMenuClick(menu.name, subMenu)}>
-                      <ListItemText primary={subMenu} />
+                    <StyledListItemButton
+                      sx={{ pl: 4 }}
+                      key={subMenu}
+                      onClick={() => handleSubMenuClick(menu.name, subMenu)}
+                      selected={isMenuActive(`${menu.path}/${subMenu.toLowerCase().replace(/ /g, '-')}`)}
+                    >
+                      <Link
+                        to={`${menu.path}/${subMenu.toLowerCase().replace(/ /g, '-')}`}
+                        style={{ color: 'inherit', textDecoration: 'none' }}
+                      >
+                        <ListItemText primary={subMenu} />
+                      </Link>
                     </StyledListItemButton>
                   ))}
                 </List>
