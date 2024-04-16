@@ -4,6 +4,7 @@ import AllUsers from "./Pages/AllUsers";
 import AddUsers from "./Pages/AddUsers";
 import ViewUser from './Pages/ViewUser';
 import UpdateUser from './Pages/UpdateUser';
+import UserProfile from './Pages/UserProfile';
 import NoPages from "./Pages/NoPages";
 import Supplier from "./Pages/Supplier";
 import EmpManagement from "./Pages/EmpManagement";
@@ -62,6 +63,7 @@ function App() {
           <Route path="/viewuser/:id" element={<ViewUser />} />
           <Route path="/updateuser/:id" element={<UpdateUser />} />
           <Route path="/adduser" element={<AddUsers />} />
+          <Route path="/user-profile" element={<UserProfile />} />
 
 
         </Routes>
