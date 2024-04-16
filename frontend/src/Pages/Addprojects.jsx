@@ -53,16 +53,8 @@ function Addprojects(props) {
     <div className="project-container">
       <div  ref={ComponentsRef2} style={{ marginLeft: "10px", paddingTop: "50px" }}>
         <table>
-          <tr>
-            <th>Project Name</th>
-            <th>Project Budget</th>
-            <th>Employees</th>
-            <th>Status</th>
-            <th>Start Date</th>
-            <th>End Date</th>
-            <th>Project Type</th>
             
-          </tr>
+          
           <tr>
             <td>{projectName}</td>
             <td>{projectBudget}</td>
