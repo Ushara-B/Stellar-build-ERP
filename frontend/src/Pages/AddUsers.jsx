@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { Box, Button, Grid, TextField, Typography } from '@mui/material';
+import { Box, Button, Grid, TextField, Typography, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import Drawer from '../Components/menu';
 import Appbar from '../Components/Appbar';
 
@@ -29,22 +29,21 @@ const AddUser = () => {
     setNewUser({ ...newUser, [e.target.name]: e.target.value });
   };
 
+  const handleDateChange = (e) => {
+    setNewUser({ ...newUser, dob: e.target.value });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5000/users', newUser);
+      const response = await axios.post('http://localhost:5000/users', newUser);
+      console.log('User added successfully:', response.data.users);
       navigate('/allusers');
     } catch (error) {
       console.error('Error adding user:', error);
-      if (error.response) {
-        // The request was made and the server responded with a status code
-        // that falls out of the range of 2xx
+      if (error.response && error.response.data && error.response.data.message) {
         alert(`Error adding user: ${error.response.data.message}`);
-      } else if (error.request) {
-        // The request was made but no response was received
-        alert('Error connecting to the server. Please try again later.');
       } else {
-        // Something else happened while setting up the request
         alert('An unexpected error occurred. Please try again later.');
       }
     }
@@ -65,7 +64,7 @@ const AddUser = () => {
         }}
       >
         <Box
-          component="form1"
+          component="form"
           onSubmit={handleSubmit}
           sx={{
             width: '80%',
@@ -128,18 +127,17 @@ const AddUser = () => {
                 variant="outlined"
                 fullWidth
               />
-              </Grid>
-              <Grid item xs={6}>
-  <TextField
-    label="Password"
-    name="pswrd" 
-    value={newUser.pswrd}
-    onChange={handleChange}
-    variant="outlined"
-    fullWidth
-  />
-</Grid>
-
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                label="Password"
+                name="pswrd"
+                value={newUser.pswrd}
+                onChange={handleChange}
+                variant="outlined"
+                fullWidth
+              />
+            </Grid>
             <Grid item xs={6}>
               <TextField
                 label="Address"
@@ -151,34 +149,53 @@ const AddUser = () => {
               />
             </Grid>
             <Grid item xs={6}>
-              <TextField
-                label="Date of Birth"
-                name="dob"
-                value={newUser.dob}
-                onChange={handleChange}
-                variant="outlined"
-                fullWidth
-              />
+  <TextField
+    label="Date of Birth"
+    name="dob"
+    type="date"
+    value={newUser.dob}
+    onChange={handleDateChange}
+    variant="outlined"
+    fullWidth
+    InputLabelProps={{
+      shrink: true,
+    }}
+    InputProps={{
+      placeholder: 'mm/dd/yyyy',
+    }}
+  />
+</Grid>
+            <Grid item xs={6}>
+              <FormControl variant="outlined" fullWidth>
+                <InputLabel id="gender-label">Gender</InputLabel>
+                <Select
+                  labelId="gender-label"
+                  name="gender"
+                  value={newUser.gender}
+                  onChange={handleChange}
+                >
+                  <MenuItem value="">Select Gender</MenuItem>
+                  <MenuItem value="male">Male</MenuItem>
+                  <MenuItem value="female">Female</MenuItem>
+                  <MenuItem value="prefer-not-to-say">Prefer not to say</MenuItem>
+                </Select>
+              </FormControl>
             </Grid>
             <Grid item xs={6}>
-              <TextField
-                label="Gender"
-                name="gender"
-                value={newUser.gender}
-                onChange={handleChange}
-                variant="outlined"
-                fullWidth
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-                label="Marital Status"
-                name="m_Status"
-                value={newUser.m_Status}
-                onChange={handleChange}
-                variant="outlined"
-                fullWidth
-              />
+              <FormControl variant="outlined" fullWidth>
+                <InputLabel id="m-status-label">Marital Status</InputLabel>
+                <Select
+                  labelId="m-status-label"
+                  name="m_Status"
+                  value={newUser.m_Status}
+                  onChange={handleChange}
+                >
+                  <MenuItem value="">Select Marital Status</MenuItem>
+                  <MenuItem value="single">Single</MenuItem>
+                  <MenuItem value="married">Married</MenuItem>
+                  <MenuItem value="divorced">Divorced</MenuItem>
+                </Select>
+              </FormControl>
             </Grid>
             <Grid item xs={6}>
               <TextField
@@ -191,14 +208,20 @@ const AddUser = () => {
               />
             </Grid>
             <Grid item xs={6}>
-              <TextField
-                label="Role"
-                name="role"
-                value={newUser.role}
-                onChange={handleChange}
-                variant="outlined"
-                fullWidth
-              />
+              <FormControl variant="outlined" fullWidth>
+                <InputLabel id="role-label">Role</InputLabel>
+                <Select
+                  labelId="role-label"
+                  name="role"
+                  value={newUser.role}
+                  onChange={handleChange}
+                >
+                  <MenuItem value="">Select Role</MenuItem>
+                  <MenuItem value="admin">Admin</MenuItem>
+                  <MenuItem value="manager">Manager</MenuItem>
+                  <MenuItem value="employer">Employer</MenuItem>
+                </Select>
+              </FormControl>
             </Grid>
             <Grid item xs={6}>
               <TextField
@@ -240,6 +263,7 @@ const AddUser = () => {
                   mt: 7,
                   mb: 2,
                   height: '50px',
+                  width: '150px',
                   borderRadius: '21px',
                   backgroundColor: '#1B1A55',
                   '&:hover': {
