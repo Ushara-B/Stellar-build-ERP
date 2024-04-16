@@ -25,6 +25,7 @@ import VehicleDash from './Pages/VehicleDashBoard';
 import ViewInventoryList from "./Pages/ViewInventoryList";
 import Inventory from "./Pages/Inventory";
 import AddInventory from "./Pages/AddInventory";
+import InventoryCategory from "./Pages/InventoryCategory";
 
 function App() {
   
@@ -60,6 +61,7 @@ function App() {
           <Route path = '/viewinventorylist' element = {<ViewInventoryList/>}/>
           <Route path = '/inventory' element = {<Inventory/>}/>
           <Route path = '/addinventory' element = {<AddInventory/>}/>
+          <Route path = '/inventorycategory' element = {<InventoryCategory/>}/>
 
 
         </Routes>
