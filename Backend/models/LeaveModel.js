@@ -6,7 +6,7 @@ const leaveSchema = new Schema({
         type:String,
         required:true,
         trim:true,
-        maxLength:10
+        maxLength:20
     },
     date:{
         type:String,
