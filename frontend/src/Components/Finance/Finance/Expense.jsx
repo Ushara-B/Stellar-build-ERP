@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Box, Typography, Avatar } from '@mui/material';
 import { DataGrid, gridClasses } from '@mui/x-data-grid';
-import { useGlobalContext } from '../../Context/GlobalContext'; 
+import { useGlobalContext } from '../../../Context/globalContext'; 
 import moment from 'moment';    
 import { grey } from '@mui/material/colors';
 import DeleteIcon from '@mui/icons-material/Delete';
