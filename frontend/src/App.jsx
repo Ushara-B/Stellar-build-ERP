@@ -28,8 +28,9 @@ import Inventory from "./Pages/Inventory";
 import AddInventory from "./Pages/AddInventory";
 import  Expense from "./Components/Finance/Finance/Expense";
 import  Income from "./Components/Finance/Finance/Income";
-import FinanceDashboard from "./Components/Finance/Finance/finDashboard";
+import Finance from "./Pages/Finance";
 import InventoryCategory from "./Pages/InventoryCategory";
+import { useGlobalContext } from '../src/Context/globalContext';
 
 function App() {
   return (
@@ -66,7 +67,7 @@ function App() {
           <Route path="/viewuser/:id" element={<ViewUser />} />
           <Route path="/updateuser/:id" element={<UpdateUser />} />
           <Route path="/adduser" element={<AddUsers />} />
-          <Route path="/finance/dashboard" element={<FinanceDashboard />} />
+          <Route path="/finance" element={<Finance />} />
           <Route path="/finance/expense" element={<Expense />} />
           <Route path="/finance/income" element={<Income />} />
           <Route path = '/inventorycategory' element = {<InventoryCategory/>}/>
