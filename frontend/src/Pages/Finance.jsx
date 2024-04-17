@@ -3,12 +3,12 @@ import Menu from '../Components/menu';
 import {GlobalStyle} from '../Styles/globalStyle';
 import styled, { css } from 'styled-components';
 import { MainLayout} from '../Styles/Layout';
-import FinDashboard from '../Components/Finance/finDashboard';
+import FinDashboard from '../Components/Finance/Finance/finDashboard';
 
-import { useGlobalContext } from '../Context/GlobalContext';
-import Income from '../Components/Finance/Income';
-import Form from '../Components/Finance/Form';
-import Expense from '../Components/Finance/Expense';
+import { useGlobalContext } from '../Context/globalContext';
+import Income from '../Components/Finance/Finance/Income';
+import Form from '../Components/Finance/Finance/Form';
+import Expense from '../Components/Finance/Finance/Expense';
 
 
 function Finance(){
@@ -26,7 +26,7 @@ function Finance(){
        <AppBar/>
         <Menu/>
         <main>
-        <Form/>
+        <FinDashboard/>
         </main>
         </MainLayout>
         </AppStyled>

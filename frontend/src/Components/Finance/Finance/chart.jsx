@@ -12,8 +12,8 @@ import {Chart as ChartJs,
 
 import {Line} from 'react-chartjs-2'
 import styled from 'styled-components'
-import { useGlobalContext } from '../../Context/GlobalContext'
-import { dateFormat } from '../../Utils/Finance/dateFormat'
+import { useGlobalContext } from '../../../Context/globalContext'
+import { dateFormat } from '../../../Utils/dateFormat'
 
 ChartJs.register(
     CategoryScale,

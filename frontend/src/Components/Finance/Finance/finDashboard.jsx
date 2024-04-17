@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react'
 import styled from 'styled-components'
-import { useGlobalContext } from '../../Context/GlobalContext';
-import History from '../../Components/Finance/History';
-import { InnerLayout } from '../../Styles/Layout';
+import { useGlobalContext } from '../../../Context/globalContext';
+import History from '../../../Components/Finance/Finance/History';
+import { InnerLayout } from '../../../Styles/Layout';
 
-import Chart from '../../Components/Finance/chart';
+import Chart from '../../../Components/Finance/Finance/chart';
 
-function financeDashboard() {
+function FinanceDashboard() {
     const {totalExpenses,incomes, expenses, totalIncome, totalBalance, getIncomes, getExpenses } = useGlobalContext()
 
     useEffect(() => {
@@ -144,4 +144,4 @@ const DashboardStyled = styled.div`
     }
 `;
 
-export default financeDashboard
+export default FinanceDashboard
