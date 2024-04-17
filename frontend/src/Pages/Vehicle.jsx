@@ -5,7 +5,7 @@ import { useReactToPrint } from 'react-to-print';
 import "../css/Vehicle.css";
 
 function Vehicle(props) {
-  const { _id, RegNo, Vname, VIN, lic_expDay, ins_expDay, last_serviceDay, mileage, dname, vstatus } = props.Vehicle;
+  const { _id, RegNo, Vname,Type, VIN, lic_expDay, ins_expDay, last_serviceDay, mileage, dname, vstatus } = props.Vehicle;
 
   const navigate = useNavigate();
   const [deleteMessage, setDeleteMessage] = useState("");
@@ -47,6 +47,7 @@ function Vehicle(props) {
         <h1>ID: {_id}</h1>
         <h1>RegisterNo: {RegNo}</h1>
         <h1>Vehicle Name: {Vname}</h1>
+        <h1>Type: {Type}</h1>
         <h1>VIN: {VIN}</h1>
         <h1>License Expiry Day: {formatDate(lic_expDay)}</h1>
         <h1>Insurance Expiry Day: {formatDate(ins_expDay)}</h1>

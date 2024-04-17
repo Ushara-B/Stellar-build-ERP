@@ -27,6 +27,7 @@ import ViewInventoryList from "./Pages/ViewInventoryList";
 import Inventory from "./Pages/Inventory";
 import AddInventory from "./Pages/AddInventory";
 
+
 function App() {
   return (
     <div>

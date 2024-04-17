@@ -7,6 +7,10 @@ const vehicleSchema = new Schema({
         required:true,//validate
     },
     Vname:{
+        type:String,
+        required:true,//validate
+    },
+    Type:{
         type:String,//dataType
         required:true,//validate
     },
