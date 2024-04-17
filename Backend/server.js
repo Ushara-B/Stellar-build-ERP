@@ -10,11 +10,14 @@ const inventoryrouter = require("./routes/inventoryRoute");
 
 
 
+
 const app = express();
+
 
 const dotenv = require("dotenv").config();
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
+
 
 const PORT = process.env.PORT || 5000;
 
@@ -29,10 +32,14 @@ app.use("/vehicles", vehiclerouter);
 app.use("/categories", categoryrouter);
 app.use("/inventories", inventoryrouter);
 
+
+
 //routes
 readdirSync("./routes").map((route) =>
   app.use("/api/v1", require("./routes/" + route))
 );
+
+ 
 
 //connect to DB and start server
 mongoose

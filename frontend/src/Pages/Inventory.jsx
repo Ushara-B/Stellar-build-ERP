@@ -11,6 +11,7 @@ import RemoveShoppingCartIcon from "@mui/icons-material/RemoveShoppingCart";
 import CategoryIcon from "@mui/icons-material/Category";
 import "../css/Idash.css";
 
+
 export default function Inventory() {
   return (
     <>
@@ -82,7 +83,6 @@ export default function Inventory() {
           </Box>
         </Box>
       </div>
-      
     </>
   );
 }
