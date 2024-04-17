@@ -77,7 +77,7 @@ function Projects() {
             <Paper elevation={4}>
                 {/* Display Table of Vehicles here */}
             </Paper>
-            <button style={{ marginLeft: '270px', paddingTop: '13px' }} onClick={handleAddClick}>Add Vehicle</button>
+            <button style={{ marginLeft: '270px', paddingTop: '13px' }} onClick={handleAddClick}>Add New Project</button>
             <br/><br/>
             <button style={{ marginLeft: '270px', paddingTop: '13px' }} onClick={handlePrint}>Download ALL Report</button>
         

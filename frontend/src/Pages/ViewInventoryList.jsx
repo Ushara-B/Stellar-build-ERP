@@ -1,92 +1,128 @@
-import React from "react";
-import Menu from "../Components/menu";
-import AppBar from "../Components/Appbar";
-import Typography from "@mui/material/Typography";
-import Breadcrumbs from "@mui/material/Breadcrumbs";
-import Link from "@mui/material/Link";
-import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+import React, { useRef } from "react";
+import Paper from "@mui/material/Paper";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TablePagination from "@mui/material/TablePagination";
+import TableRow from "@mui/material/TableRow";
+import IconButton from "@mui/material/IconButton";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
+import PrintIcon from "@mui/icons-material/Print";
+import AddIcon from "@mui/icons-material/Add";
+import SearchIcon from "@mui/icons-material/Search";
+import InputBase from "@mui/material/InputBase";
 import Box from "@mui/material/Box";
-import Paper from '@mui/material/Paper';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TablePagination from '@mui/material/TablePagination';
-import TableRow from '@mui/material/TableRow';
-import Devider from '@mui/material/Divider';
+import AppBar from "../Components/Appbar";
+import Menu from "../Components/menu";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useReactToPrint } from "react-to-print";
+import { Breadcrumbs, Link, Typography } from "@mui/material";
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+import Divider from "@mui/material/Divider";
+import Swal from "sweetalert2";
 
+const columns = [
+  { id: "name", label: "Name", minWidth: 170 },
+  { id: "category", label: "Category", minWidth: 170 },
+  { id: "quantity", label: "Quantity", minWidth: 170 },
+  { id: "value", label: "Value", minWidth: 170 },
+  { id: "supplier", label: "Supplier", minWidth: 170 },
+  { id: "actions", label: "Actions", minWidth: 170, align: "center" },
+];
 
+export default function ViewInventoryList() {
+  const [inventories, setInventories] = React.useState([]);
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [searchTerm, setSearchTerm] = React.useState("");
+  const navigate = useNavigate();
 
-  const columns = [
-    { id: 'name', label: 'ID', minWidth: 170 },
-    { id: 'code', label: 'ISO\u00a0Code', minWidth: 100 },
-    {
-      id: 'population',
-      label: 'Population',
-      minWidth: 170,
-      align: 'right',
-      format: (value) => value.toLocaleString('en-US'),
-    },
-    {
-      id: 'size',
-      label: 'Size\u00a0(km\u00b2)',
-      minWidth: 170,
-      align: 'right',
-      format: (value) => value.toLocaleString('en-US'),
-    },
-    {
-      id: 'density',
-      label: 'Density',
-      minWidth: 170,
-      align: 'right',
-      format: (value) => value.toFixed(2),
-    },
-  ];
-  
-  function createData(name, code, population, size) {
-    const density = population / size;
-    return { name, code, population, size, density };
-  }
-  
-  const rows = [
-    createData('India', 'IN', 1324171354, 3287263),
-    createData('China', 'CN', 1403500365, 9596961),
-    createData('Italy', 'IT', 60483973, 301340),
-    createData('United States', 'US', 327167434, 9833520),
-    createData('Canada', 'CA', 37602103, 9984670),
-    createData('Australia', 'AU', 25475400, 7692024),
-    createData('Germany', 'DE', 83019200, 357578),
-    createData('Ireland', 'IE', 4857000, 70273),
-    createData('Mexico', 'MX', 126577691, 1972550),
-    createData('Japan', 'JP', 126317000, 377973),
-    createData('France', 'FR', 67022000, 640679),
-    createData('United Kingdom', 'GB', 67545757, 242495),
-    createData('Russia', 'RU', 146793744, 17098246),
-    createData('Nigeria', 'NG', 200962417, 923768),
-    createData('Brazil', 'BR', 210147125, 8515767),
-  ];
-  
-  export default function ViewInventoryList() {
-    const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  
-    const handleChangePage = (event, newPage) => {
-      setPage(newPage);
-    };
-  
-    const handleChangeRowsPerPage = (event) => {
-      setRowsPerPage(+event.target.value);
-      setPage(0);
-    };
-  
+  React.useEffect(() => {
+    fetchInventories();
+  }, []);
+
+  const fetchInventories = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/inventories");
+      setInventories(response.data.inventories);
+    } catch (error) {
+      console.error("Error fetching inventory:", error);
+    }
+  };
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(+event.target.value);
+    setPage(0);
+  };
+
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  //pdf print function
+  const ComponentsRef = useRef();
+  const handlePrintToPdf = useReactToPrint({
+    content: () => ComponentsRef.current,
+    documentTitle: "All inventory",
+  });
+
+  const handleViewInventory = (inventoryId) => {
+    navigate("/viewinventory/" + inventoryId);
+  };
+
+  const handleUpdateInventory = (inventoryId) => {
+    navigate("/updateinventory/" + inventoryId);
+  };
+
+  const handleDeleteInventory = async (inventoryId) => {
+    try {
+      const result = await Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+      });
+
+      if (result.isConfirmed) {
+        const response = await axios.delete(
+          "http://localhost:5000/inventories/${inventoryId}"
+        );
+        if (response.status === 200) {
+          Swal.fire("Deleted!", "Your inventory has been deleted.", "success");
+        }
+      }
+    } catch (error) {
+      console.error("Error deleting inventory:", error);
+      Swal.fire(
+        "Error",
+        "An error occurred while deleting the inventory.",
+        "error"
+      );
+    }
+  };
+
+  const filteredInventories = inventories.filter((inventory) =>
+    inventory.Name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <>
       <AppBar />
       <Menu />
       <div style={{ marginLeft: "200px", paddingTop: "20px" }}>
-        
-        <Box sx ={{ p:9}} height={2}>
+        <Box sx={{ p: 9 }} height={2}>
           <Breadcrumbs
             arial-label="breadcrumb"
             separator={<NavigateNextIcon fontSize="small" />}
@@ -98,84 +134,204 @@ import Devider from '@mui/material/Divider';
               View Inventory List
             </Typography>
           </Breadcrumbs>
-          
-          <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-            <Typography
-            gutterBottom
-            variant="h5"
-            component="div"
-            sx ={{ padding: "20px"}}
-          >
-            Inventory List
-            </Typography>
-            <Devider />
-      <TableContainer sx={{ maxHeight: 440 }}>
-        <Table stickyHeader aria-label="sticky table">
-          <TableHead>
-            <TableRow>
-              {columns.map((column) => (
-                <TableCell
-                  key={column.id}
-                  align={column.align}
-                  style={{ minWidth: column.minWidth }}
-                >
-                  {column.label}
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row) => {
-                return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
-                    {columns.map((column) => {
-                      const value = row[column.id];
-                      return (
-                        <TableCell key={column.id} align={column.align}>
-                          {column.format && typeof value === 'number'
-                            ? column.format(value)
-                            : value}
-                        </TableCell>
-                      );
-                    })}
-                  </TableRow>
-                );
-              })}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <TablePagination
-        rowsPerPageOptions={[10, 25, 100]}
-        component="div"
-        count={rows.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-      />
-    </Paper>
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          </Box>
 
-       
-        
+          <Paper sx={{ width: "98%", overflow: "hidden", padding: "12px" }}>
+          
+
+            <Typography
+              gutterBottom
+              variant="h4"
+              component="div"
+              sx={{ padding: "20PX" }}
+            >
+              Inventory List
+            </Typography>
+            <Divider />
+
+            <br />
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+            <InputBase
+              sx={{ ml: 1, flex: 1 }}
+              placeholder="Search Inventory.."
+              value={searchTerm}
+              onChange={handleSearchChange}
+              startAdornment={<SearchIcon fontSize="small" />}
+            />
+
+            <Box>
+              <IconButton
+                color="primary"
+                aria-label="print"
+                onClick={handlePrintToPdf}
+              >
+                <PrintIcon />
+              </IconButton>
+              <IconButton
+                color="primary"
+                aria-label="Add inventory"
+                onClick={() => navigate("/addinventory")}
+              >
+                <AddIcon />
+              </IconButton>
+            </Box>
+            </Box>
+            <TableContainer ref={ComponentsRef}>
+              <Table
+                stickyHeader
+                aria-label="sticky table"
+                sx={{ borderCollapse: "collapse" }}
+              >
+                <TableHead>
+                  <TableRow>
+                    {columns.map((column) => (
+                      <TableCell
+                        key={column.id}
+                        align={column.align}
+                        sx={{
+                          backgroundColor: "#b1c5d4",
+                          fontWeight: "bold",
+                          border: "none",
+                          padding: "5px 10px",
+                          "&:hover": {
+                            backgroundColor: "#b1c5d4",
+                          },
+                        }}
+                      >
+                        {column.label}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {filteredInventories
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .map((row) => (
+                      <TableRow
+                        hover
+                        role="checkbox"
+                        tabIndex={-1}
+                        key={row._id}
+                        sx={{
+                          "&:hover": {
+                            backgroundColor: "#f5f5f5",
+                          },
+                          border: "none",
+                          padding: "8px 16px",
+                        }}
+                      >
+                        <TableCell
+                          sx={{
+                            border: "1px",
+                            padding: "10px 12px",
+                            backgroundColor: "white",
+                          }}
+                        >
+                          {row.Name}
+                        </TableCell>
+                        <TableCell
+                          sx={{
+                            border: "none",
+                            padding: "10px 12px",
+                            backgroundColor: "white",
+                          }}
+                        >
+                          {row.Category}
+                        </TableCell>
+                        <TableCell
+                          sx={{
+                            border: "none",
+                            padding: "10px 12px",
+                            backgroundColor: "white",
+                          }}
+                        >
+                          {row.Quantity}
+                        </TableCell>
+                        <TableCell
+                          sx={{
+                            border: "none",
+                            padding: "10px 12px",
+                            backgroundColor: "white",
+                          }}
+                        >
+                          {row.Value}
+                        </TableCell>
+                        <TableCell
+                          sx={{
+                            border: "none",
+                            padding: "10px 12px",
+                            backgroundColor: "white",
+                          }}
+                        >
+                          {row.Supplier}
+                        </TableCell>
+                        <TableCell
+                          align="center"
+                          sx={{
+                            border: "none",
+                            padding: "10px 12px",
+                            backgroundColor: "white",
+                          }}
+                        >
+                          <IconButton
+                            color="primary"
+                            aria-label="view"
+                            sx={{
+                              "&:hover": {
+                                color: "#00008b",
+                              },
+                              color: "",
+                            }}
+                            onClick={() => handleViewInventory(row._id)}
+                          >
+                            <VisibilityIcon />
+                          </IconButton>
+                          <IconButton
+                            color="primary"
+                            aria-label="edit"
+                            sx={{
+                              "&:hover": {
+                                color: "#00008b",
+                              },
+                              color: "",
+                            }}
+                            onClick={() => handleUpdateInventory(row._id)}
+                          >
+                            <EditIcon />
+                          </IconButton>
+                          <IconButton
+                            color="secondary"
+                            aria-label="delete"
+                            sx={{
+                              "&:hover": {
+                                color: "#FF1B1B",
+                              },
+                              color: "#CF5C5C",
+                            }}
+                            onClick={() => handleDeleteInventory(row._id)}
+                          >
+                            <DeleteIcon />
+                          </IconButton>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+            <TablePagination
+              rowsPerPageOptions={[10, 25, 100]}
+              component="div"
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+              sx={{
+                borderTop: "none",
+                padding: "12px 16px",
+              }}
+            />
+          </Paper>
+        </Box>
       </div>
-      
     </>
   );
 }

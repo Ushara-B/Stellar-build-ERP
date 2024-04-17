@@ -56,6 +56,7 @@ function AddVehicle() {
       <Menu />
       <div style={{ marginLeft: '255px', paddingTop: '80px' }}>
         <h1 style={{ textAlign: "center" }}>Add Vehicle Details</h1>
+
         <form onSubmit={handleSubmit} style={{ textAlign: "center" }}>
           <label>RegisterNo</label><br/>
           <input type='text' name='RegNo' onChange={handleChange} value={inputs.RegNo} required /><br/><br/>

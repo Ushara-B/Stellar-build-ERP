@@ -1,10 +1,9 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import AppBar from "../Components/Appbar";
 import Menu from "../Components/menu";
 import axios from "axios";
 import Addprojects from "../Pages/Addprojects";
 import { useReactToPrint } from 'react-to-print';
-import { useRef } from 'react';
 
 const URL = "http://localhost:5000/projects";
 
@@ -18,34 +17,33 @@ function Allprojects() {
     fetchHandler().then((data) => setProjects(data.project));
   }, [])
 
-  //Report print functions
-    //All report download
-    const ComponentsRef = useRef();
-    const handlePrint = useReactToPrint({
-        content: () => ComponentsRef.current,
-        documentTitle: 'Project Report',//document name(PDF save name)
-        onAfterPrint: () => alert("Project Report successfully Download !"),//after download display alert message
-        
-    })
-   
-
-  
+  // Report print functions
+  const ComponentsRef = useRef();
+  const handlePrint = useReactToPrint({
+    content: () => ComponentsRef.current,
+    documentTitle: 'Project Report',
+    onAfterPrint: () => alert("Project Report successfully Download !"),
+  })
 
   return (
     <div style={{ marginLeft: '255px', paddingTop: '80px' }}>
       <AppBar />
       <Menu />
       <h1 style={{ color: 'blue', marginLeft: '40px' }}>
-  All projects display page
-</h1>
+        All projects display page
+      </h1>
 
-      <div ref={ComponentsRef}>
-        {projects && projects.map((project) => (
-           
-              <Addprojects key={project.id} Project={project} />
-            
+     
+       
+        <div ref={ComponentsRef}>
+          {/* Render each project */}
+          {projects && projects.map((project) => (
+            <Addprojects key={project.id} Project={project} />
           ))}
-      </div>
+          
+        </div>
+        
+      <br/><br/>
       <button onClick={handlePrint}>Download ALL Report</button>
     </div>
   );

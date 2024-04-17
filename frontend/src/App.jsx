@@ -26,6 +26,10 @@ import Updateprojects from "./Pages/Updateprojects";
 import ViewInventoryList from "./Pages/ViewInventoryList";
 import Inventory from "./Pages/Inventory";
 import AddInventory from "./Pages/AddInventory";
+import  Expense from "./Components/Finance/Finance/Expense";
+import  Income from "./Components/Finance/Finance/Income";
+import FinanceDashboard from "./Components/Finance/Finance/finDashboard";
+import InventoryCategory from "./Pages/InventoryCategory";
 
 
 function App() {
@@ -60,6 +64,13 @@ function App() {
           <Route path = '/viewinventorylist' element = {<ViewInventoryList/>}/>
           <Route path = '/inventory' element = {<Inventory/>}/>
           <Route path = '/addinventory' element = {<AddInventory/>}/>
+          <Route path="/viewuser/:id" element={<ViewUser />} />
+          <Route path="/updateuser/:id" element={<UpdateUser />} />
+          <Route path="/adduser" element={<AddUsers />} />
+          <Route path="/finance/dashboard" element={<FinanceDashboard />} />
+          <Route path="/finance/expense" element={<Expense />} />
+          <Route path="/finance/income" element={<Income />} />
+          <Route path = '/inventorycategory' element = {<InventoryCategory/>}/>
           <Route path="/viewuser/:id" element={<ViewUser />} />
           <Route path="/updateuser/:id" element={<UpdateUser />} />
           <Route path="/adduser" element={<AddUsers />} />

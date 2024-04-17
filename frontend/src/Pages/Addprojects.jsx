@@ -50,45 +50,32 @@ function Addprojects(props) {
   });
 
   return (
-    <div className="project-container">
+    <div >
       <div  ref={ComponentsRef2} style={{ marginLeft: "10px", paddingTop: "50px" }}>
-        <table>
-          <tr>
-            <th>Project Name</th>
-            <th>Project Budget</th>
-            <th>Employees</th>
-            <th>Status</th>
-            <th>Start Date</th>
-            <th>End Date</th>
-            <th>Project Type</th>
-            
-          </tr>
-          <tr>
-            <td>{projectName}</td>
-            <td>{projectBudget}</td>
-            <td>{Employees}</td>
-            <td>{Status}</td>
-            <td>{formatDate(startDate)}</td>
-            <td>{formatDate(endDate)}</td>
-            <td>{projectType}</td>
-            
-          </tr>
-        </table>
-
+        
+            Project Name = {projectName}<br/><br/>
+            Project Budget = {projectBudget}<br/><br/>
+            Employees = {Employees}<br/><br/>
+            Status = {Status}<br/><br/>
+            Start Date = {formatDate(startDate)}<br/><br/>
+            End Date = {formatDate(endDate)}<br/><br/>
+            Project Type = {projectType}<br/><br/>
+     
         
       </div>
-      <td class="action-buttons">
-              <button onClick={handleUpdateClick} className="update-button">
-                Update
+    <div>Actions = 
+      
+              <button onClick= {handleUpdateClick} >
+                 Update
               </button>
-              <button onClick={deleteHandler} class="delete-button">
+              <button onClick={deleteHandler}>
                 Delete
               </button>
-              <button onClick={handlePrintsingle} className="report-button">
+              <button onClick={handlePrintsingle} >
                 Report
               </button>
               {deleteMessage && <p>{deleteMessage}</p>}
-            </td>
+              </div>
     </div>
     
   );
