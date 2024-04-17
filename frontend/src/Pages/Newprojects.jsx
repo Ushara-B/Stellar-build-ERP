@@ -45,86 +45,88 @@ function Newprojects() {
   };
 
   return (
-    
-      <div  style={{ marginLeft: "255px", paddingTop: "70px" }}>
-         <div className="image" style={{ marginLeft: "255px", paddingTop: "70px" }}></div>
-        <div className="container">
-      <div className="form-container">
-      <AppBar />
-      <Menu />
-      <h1>Add new project</h1>
-      <form onSubmit={handleSubmit}>
-        <label>Project Name</label>
-        <input
-          type="text"
-          name="projectName"
-          onChange={handleChange}
-          value={projects.projectName}
-          required
-        />
-        <br />
-        <label>Project Budget</label>
-        <input
-          type="number"
-          name="projectBudget"
-          onChange={handleChange}
-          value={projects.projectBudget}
-          required
-        />
-        <br />
-        <label>Employees</label>
-        <input
-          type="text"
-          name="Employees"
-          onChange={handleChange}
-          value={projects.Employees}
-          required
-        />
-        <br />
-        <label>Status</label>
-        <input
-          type="text"
-          name="Status"
-          onChange={handleChange}
-          value={projects.Status}
-          required
-        />
-        <br />
-        <label>Start Date</label>
-        <input
-          type="date"
-          name="startDate"
-          onChange={handleChange}
-          value={projects.startDate}
-          required
-        />
-        <br />
-        <label>End Date</label>
-        <input
-          type="date"
-          name="endDate"
-          onChange={handleChange}
-          value={projects.endDate}
-          required
-        />
-        <br />
-        <label>Project Type</label>
-        <input
-          type="text"
-          name="projectType"
-          onChange={handleChange}
-          value={projects.projectType}
-          required
-        />
-        <br />
-        <br />
-        <button className="create-button" type="submit">Create Project</button>
-      </form>
+    <div style={{ marginLeft: "255px", paddingTop: "70px" }}>
+      <div
+        className="image"
+        style={{ marginLeft: "255px", paddingTop: "70px" }}
+      ></div>
+      <div className="container">
+        <div className="form-container">
+          <AppBar />
+          <Menu />
+          <h1>Add new project</h1>
+          <form onSubmit={handleSubmit}>
+            <label>Project Name</label>
+            <input
+              type="text"
+              name="projectName"
+              onChange={handleChange}
+              value={projects.projectName}
+              required
+            />
+            <br />
+            <label>Project Budget</label>
+            <input
+              type="number"
+              name="projectBudget"
+              onChange={handleChange}
+              value={projects.projectBudget}
+              required
+            />
+            <br />
+            <label>Employees</label>
+            <input
+              type="text"
+              name="Employees"
+              onChange={handleChange}
+              value={projects.Employees}
+              required
+            />
+            <br />
+            <label>Status</label>
+            <input
+              type="text"
+              name="Status"
+              onChange={handleChange}
+              value={projects.Status}
+              required
+            />
+            <br />
+            <label>Start Date</label>
+            <input
+              type="date"
+              name="startDate"
+              onChange={handleChange}
+              value={projects.startDate}
+              required
+            />
+            <br />
+            <label>End Date</label>
+            <input
+              type="date"
+              name="endDate"
+              onChange={handleChange}
+              value={projects.endDate}
+              required
+            />
+            <br />
+            <label>Project Type</label>
+            <input
+              type="text"
+              name="projectType"
+              onChange={handleChange}
+              value={projects.projectType}
+              required
+            />
+            <br />
+            <br />
+            <button className="create-button" type="submit">
+              Create Project
+            </button>
+          </form>
+        </div>
       </div>
-     
     </div>
-    </div>
-   
   );
 }
 

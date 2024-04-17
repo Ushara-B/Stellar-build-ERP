@@ -20,7 +20,6 @@ import Vehicles from './Pages/Vehicles';
 import UpdateVehicles from './Pages/UpdateVehicle'
 import VehicleDash from './Pages/VehicleDashBoard';
 import Allprojects from "./Pages/Allprojects";
-import Addprojects from "./Pages/Addprojects";
 import Newprojects from "./Pages/Newprojects";
 import Updateprojects from "./Pages/Updateprojects";
 import ViewInventoryList from "./Pages/ViewInventoryList";
@@ -52,8 +51,7 @@ function App() {
           <Route path = '/viewvehicles' element = {<Vehicles/>}/>
           <Route path = '/viewvehicles/:id' element = {<UpdateVehicles/>}/>
           <Route path = '/allusers' element ={<AllUsers/>}/>
-          <Route path = '/Allprojects' element = {<Allprojects/>}/>
-          <Route path = '/Addprojects' element = {<Addprojects/>}/>
+          <Route path = '/allprojects' element = {<Allprojects/>}/>
           <Route path = '/Newprojects' element = {<Newprojects/>}/>
           <Route path = '/Updateprojects/:id' element = {<Updateprojects/>}/>
           <Route path = '/viewinventorylist' element = {<ViewInventoryList/>}/>
