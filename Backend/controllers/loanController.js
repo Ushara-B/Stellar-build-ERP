@@ -94,7 +94,25 @@ const updateLoan = async (req, res, next ) => {
 
 //delete Loan Details 
 
+const deleteLoan = async(req, res,next) => {
+    const id = req.params.id;
+    let loan;
+
+    try{
+        loan = await Loan.findByIdAndDelete(id)   
+    }catch(err) {
+        console.log(err);
+    } 
+    //not available vehicles
+    if(!loan){
+        return res.status(404).send({message:" Unable to Delete Loan Details"});
+    }
+    return res.status(200).json({loan});
+};
+
+
 exports.getAllLoans = getAllLoans;
 exports.addLoan = addLoan;
 exports.getById = getById;
 exports.updateLoan = updateLoan;
+exports.deleteLoan = deleteLoan;
