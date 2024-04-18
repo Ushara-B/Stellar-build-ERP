@@ -83,8 +83,10 @@ export default function NestedList() {
     window.location.href = '/viewinventorylist';
     }else if (menuName === 'Inventory'){
     window.location.href = '/inventory';
-  }else if (menuName === 'User Management' && subMenuName === 'View users'){
+    }else if (menuName === 'User Management' && subMenuName === 'View users'){
     window.location.href = '/allusers';
+    }else if (menuName === 'User Management' && subMenuName === 'Add users'){
+    window.location.href = '/adduser';
     // Add more else if conditions for other sub menus and their respective URLs
     }else {
       // Handle any other cases

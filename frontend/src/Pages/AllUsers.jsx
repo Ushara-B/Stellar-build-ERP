@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useRef } from "react";
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -7,7 +7,6 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
-import TableSortLabel from '@mui/material/TableSortLabel';
 import IconButton from '@mui/material/IconButton';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import EditIcon from '@mui/icons-material/Edit';
@@ -19,30 +18,42 @@ import InputBase from '@mui/material/InputBase';
 import Box from '@mui/material/Box';
 import AppBar from '../Components/Appbar';
 import Drawer from '../Components/menu';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { useReactToPrint } from 'react-to-print';
+
 
 const columns = [
-  { id: 'username', label: 'Username', minWidth: 170 },
   { id: 'name', label: 'Name', minWidth: 170 },
-  { id: 'age', label: 'Age', minWidth: 100, },
+  { id: 'username', label: 'Username', minWidth: 170 },
   { id: 'role', label: 'Role', minWidth: 170 },
   { id: 'nic', label: 'NIC', minWidth: 170 },
+  { id: 'age', label: 'Age', minWidth: 170 },
+  { id: 'gender', label: 'Gender', minWidth: 170 },
+  { id: 'marital_status', label: 'Marital status', minWidth: 170 },
+  { id: 'no', label: 'Contact No', minWidth: 170 },
   { id: 'actions', label: 'Actions', minWidth: 170, align: 'center' },
 ];
 
-const userRows = [
-  { id: 1, username: 'useraa', name: 'John Doe', age: 25, role: 'Admin', nic: '123456789V' },
-  { id: 2, username: 'userf', name: 'Jane Smith', age: 30, role: 'User', nic: '987654321V' },
-  { id: 3, username: 'userdd', name: 'Bob Johnson', age: 35, role: 'User', nic: '456789123V' },
-  { id: 4, username: 'user1', name: 'Alice Johnson', age: 28, role: 'User', nic: '111111111V' },
-
-];
-
 export default function AllUsers() {
+  const [users, setUsers] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [searchTerm, setSearchTerm] = React.useState('');
-  const [orderBy, setOrderBy] = React.useState('username');
-  const [order, setOrder] = React.useState('asc');
+  const navigate = useNavigate();
+
+  React.useEffect(() => {
+    fetchUsers();
+  }, []);
+
+  const fetchUsers = async () => {
+    try {
+      const response = await axios.get('http://localhost:5000/users');
+      setUsers(response.data.Users);
+    } catch (error) {
+      console.error('Error fetching users:', error);
+    }
+  };
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -57,30 +68,33 @@ export default function AllUsers() {
     setSearchTerm(event.target.value);
   };
 
-  const handleSort = (property) => {
-    const isAsc = orderBy === property && order === 'asc';
-    setOrder(isAsc ? 'desc' : 'asc');
-    setOrderBy(property);
-  };
-
-  const handlePrintToPdf = () => {
-    //  logic to print the table data to a PDF
-    console.log('Printing to PDF...');
-  };
-
-  const sortedUsers = userRows.sort((a, b) => {
-    const isAsc = order === 'asc';
-    return (
-      (isAsc ? a[orderBy].localeCompare(b[orderBy]) : b[orderBy].localeCompare(a[orderBy])) * (order === 'asc' ? 1 : -1)
-    );
+//pdf print function
+  const ComponentsRef = useRef();
+  const handlePrintToPdf = useReactToPrint({content: () => ComponentsRef.current,
+    documentTitle: 'All users',
   });
+  
+  const handleViewUser = (userId) => {
+    navigate(`/viewuser/${userId}`);
+  };
 
-  const filteredUsers = sortedUsers.filter(
+  const handleUpdateUser = (userId) => {
+    navigate(`/updateuser/${userId}`);
+  };
+
+  const handleDeleteUser = async (userId) => {
+    try {
+      await axios.delete(`http://localhost:5000/users/${userId}`);
+      fetchUsers(); // Refresh the user list after successful deletion
+    } catch (error) {
+      console.error('Error deleting user:', error);
+    }
+  };
+
+  const filteredUsers = users.filter(
     (user) =>
-      user.username.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      user.role.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      user.nic.toLowerCase().includes(searchTerm.toLowerCase())
+      `${user.f_Name} ${user.l_Name}`.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      user.user_N.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
@@ -101,12 +115,12 @@ export default function AllUsers() {
               <IconButton color="primary" aria-label="print" onClick={handlePrintToPdf}>
                 <PrintIcon />
               </IconButton>
-              <IconButton color="primary" aria-label="add">
+              <IconButton color="primary" aria-label="Add user" onClick={() => navigate('/adduser')}>
                 <AddIcon />
               </IconButton>
             </Box>
           </Box>
-          <TableContainer>
+          <TableContainer ref={ComponentsRef}>
             <Table stickyHeader aria-label="sticky table" sx={{ borderCollapse: 'collapse' }}>
               <TableHead>
                 <TableRow>
@@ -114,23 +128,17 @@ export default function AllUsers() {
                     <TableCell
                       key={column.id}
                       align={column.align}
-                      sortDirection={orderBy === column.id ? order : false}
                       sx={{
-                        backgroundColor: '#e0f2f1',
+                        backgroundColor: '#b1c5d4',
                         fontWeight: 'bold',
                         border: 'none',
                         padding: '5px 10px',
                         '&:hover': {
-                          backgroundColor: '#e0f2f1'},
+                          backgroundColor: '#b1c5d4',
+                        },
                       }}
                     >
-                      <TableSortLabel
-                        active={orderBy === column.id}
-                        direction={orderBy === column.id ? order : 'asc'}
-                        onClick={() => handleSort(column.id)}
-                      >
-                        {column.label}
-                      </TableSortLabel>
+                      {column.label}
                     </TableCell>
                   ))}
                 </TableRow>
@@ -138,84 +146,91 @@ export default function AllUsers() {
               <TableBody>
                 {filteredUsers
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((row) => {
-                    return (
-                      <TableRow
-                        hover
-                        role="checkbox"
-                        tabIndex={-1}
-                        key={row.id}
-                        sx={{
-                          '&:hover': {
-                            backgroundColor: '#f5f5f5',
-                          },
-                          border: 'none',
-                          padding: '8px 16px',
-                        }}
-                      >
-                        {columns.map((column) => {
-                          const value = row[column.id];
-                          return (
-                            <TableCell
-                              key={column.id}
-                              align={column.align}
-                              sx={{
-                                border: 'none',
-                                padding: '10px 12px',
-                                backgroundColor:'white',
-                              }}
-                            >
-                              {column.id === 'actions' ? (
-                                <>
-                                  <IconButton
-                                    color="primary"
-                                    aria-label="view"
-                                    sx={{
-                                      '&:hover': {
-                                        color: '#00008b',
-                                      },
-                                      color: '',
-                                    }}
-                                  >
-                                    <VisibilityIcon />
-                                  </IconButton>
-                                  <IconButton
-                                    color="primary"
-                                    aria-label="edit"
-                                    sx={{
-                                      '&:hover': {
-                                        color: '#00008b',
-                                      },
-                                      color: '',
-                                    }}
-                                  >
-                                    <EditIcon />
-                                  </IconButton>
-                                  <IconButton
-                                    color="secondary"
-                                    aria-label="delete"
-                                    sx={{
-                                      '&:hover': {
-                                        color: '#FF1B1B',
-                                      },
-                                      color: '#CF5C5C',
-                                    }}
-                                  >
-                                    <DeleteIcon />
-                                  </IconButton>
-                                </>
-                              ) : (
-                                value
-                              )}
-                            </TableCell>
-                          );
-                        })}
-                      </TableRow>
-                    );
-                  })}
+                  .map((row) => (
+                    <TableRow
+                      hover
+                      role="checkbox"
+                      tabIndex={-1}
+                      key={row._id}
+                      sx={{
+                        '&:hover': {
+                          backgroundColor: '#f5f5f5',
+                        },
+                        border: 'none',
+                        padding: '8px 16px',
+                      }}
+                    >
+                      <TableCell sx={{ border: '1px', padding: '10px 12px', backgroundColor: 'white' }}>
+                        {`${row.f_Name} ${row.l_Name}`}
+                      </TableCell>
+                      <TableCell sx={{ border: 'none', padding: '10px 12px', backgroundColor: 'white' }}>
+                        {row.user_N}
+                      </TableCell>
+                      <TableCell sx={{ border: 'none', padding: '10px 12px', backgroundColor: 'white' }}>
+                        {row.role}
+                      </TableCell>
+                      <TableCell sx={{ border: 'none', padding: '10px 12px', backgroundColor: 'white' }}>
+                        {row.nic}
+                      </TableCell>
+                      <TableCell sx={{ border: 'none', padding: '10px 12px', backgroundColor: 'white' }}>
+                        {row.age}
+                      </TableCell>
+                      <TableCell sx={{ border: 'none', padding: '10px 12px', backgroundColor: 'white' }}>
+                        {row.gender}
+                      </TableCell>
+                      <TableCell sx={{ border: 'none', padding: '10px 12px', backgroundColor: 'white' }}>
+                        {row.m_Status}
+                      </TableCell>
+                      <TableCell sx={{ border: 'none', padding: '10px 12px', backgroundColor: 'white' }}>
+                        {row.contact_No}
+                      </TableCell>
+                      <TableCell align="center" sx={{ border: 'none', padding: '10px 12px', backgroundColor: 'white' }}>
+                        <IconButton
+                          color="primary"
+                          aria-label="view"
+                          sx={{
+                            '&:hover': {
+                              color: '#00008b',
+                            },
+                            color: '',
+                          }}
+                          onClick={() => handleViewUser(row._id)}
+                        >
+                          <VisibilityIcon />
+                        </IconButton>
+                        <IconButton
+                          color="primary"
+                          aria-label="edit"
+                          sx={{
+                            '&:hover': {
+                              color: '#00008b',
+                            },
+                            color: '',
+                          }}
+                          onClick={() => handleUpdateUser(row._id)}
+                        >
+                          <EditIcon />
+                        </IconButton>
+                        <IconButton
+                          color="secondary"
+                          aria-label="delete"
+                          sx={{
+                            '&:hover': {
+                              color: '#FF1B1B',
+                            },
+                            color: '#CF5C5C',
+                          }}
+                          onClick={() => handleDeleteUser(row._id)}
+                        >
+                          <DeleteIcon />
+                        </IconButton>
+                      </TableCell>
+                    </TableRow>
+                  ))}
               </TableBody>
             </Table>
           </TableContainer>
+
           <TablePagination
             rowsPerPageOptions={[10, 25, 100]}
             component="div"
@@ -233,4 +248,9 @@ export default function AllUsers() {
       </div>
     </>
   );
+
 }
+
+
+
+
