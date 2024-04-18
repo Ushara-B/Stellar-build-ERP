@@ -20,7 +20,6 @@ import Vehicles from './Pages/Vehicles';
 import UpdateVehicles from './Pages/UpdateVehicle'
 import VehicleDash from './Pages/VehicleDashBoard';
 import Allprojects from "./Pages/Allprojects";
-import Addprojects from "./Pages/Addprojects";
 import Newprojects from "./Pages/Newprojects";
 import Updateprojects from "./Pages/Updateprojects";
 import ViewInventoryList from "./Pages/ViewInventoryList";
@@ -28,8 +27,9 @@ import Inventory from "./Pages/Inventory";
 import AddInventory from "./Pages/AddInventory";
 import  Expense from "./Components/Finance/Finance/Expense";
 import  Income from "./Components/Finance/Finance/Income";
-import FinanceDashboard from "./Components/Finance/Finance/finDashboard";
+import Finance from "./Pages/Finance";
 import InventoryCategory from "./Pages/InventoryCategory";
+import { useGlobalContext } from '../src/Context/globalContext';
 
 
 function App() {
@@ -57,8 +57,7 @@ function App() {
           <Route path = '/viewvehicles' element = {<Vehicles/>}/>
           <Route path = '/viewvehicles/:id' element = {<UpdateVehicles/>}/>
           <Route path = '/allusers' element ={<AllUsers/>}/>
-          <Route path = '/Allprojects' element = {<Allprojects/>}/>
-          <Route path = '/Addprojects' element = {<Addprojects/>}/>
+          <Route path = '/allprojects' element = {<Allprojects/>}/>
           <Route path = '/Newprojects' element = {<Newprojects/>}/>
           <Route path = '/Updateprojects/:id' element = {<Updateprojects/>}/>
           <Route path = '/viewinventorylist' element = {<ViewInventoryList/>}/>
@@ -67,7 +66,7 @@ function App() {
           <Route path="/viewuser/:id" element={<ViewUser />} />
           <Route path="/updateuser/:id" element={<UpdateUser />} />
           <Route path="/adduser" element={<AddUsers />} />
-          <Route path="/finance/dashboard" element={<FinanceDashboard />} />
+          <Route path="/finance" element={<Finance />} />
           <Route path="/finance/expense" element={<Expense />} />
           <Route path="/finance/income" element={<Income />} />
           <Route path = '/inventorycategory' element = {<InventoryCategory/>}/>
