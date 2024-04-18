@@ -9,7 +9,6 @@ import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import IconButton from "@mui/material/IconButton";
 import PrintIcon from "@mui/icons-material/Print";
-import AddIcon from "@mui/icons-material/Add";
 import SearchIcon from "@mui/icons-material/Search";
 import InputBase from "@mui/material/InputBase";
 import Box from "@mui/material/Box";
@@ -49,7 +48,7 @@ export default function AttendanceMng() {
   }, []);
 
   const fetchUsers = async () => {
-    try {
+    try { 
       const response = await axios.get("http://localhost:5000/users");
       setUsers(response.data.Users);
     } catch (error) {
@@ -81,15 +80,23 @@ export default function AttendanceMng() {
     setSelectedUserId(userId);
     setConfirmationOpen(true);
   };
-
+  
+  
   const handleConfirmAttendance = async () => {
     try {
       const currentTime = new Date();
+      const selectedUser = users.find((user) => user._id === selectedUserId);
+      if (!selectedUser || !selectedUser._id) {
+        console.error("Selected user or user ID not found");
+        return;
+      }
       const attendanceData = {
-        emp_id: selectedUserId,
-        date: currentTime.toISOString().slice(0, 10), // Format: YYYY-MM-DD
-        clock_in: currentTime.toISOString(), // Current time in ISO format
+        uId: selectedUser._id,
+        emp_id: selectedUser.user_N,
+        date: currentTime.toISOString().slice(0, 10),
+        clock_in: currentTime.toISOString(),
       };
+      
       await axios.post("http://localhost:5000/attendance", attendanceData);
       console.log("Attendance marked successfully!");
       setConfirmationOpen(false);
@@ -100,6 +107,12 @@ export default function AttendanceMng() {
       console.error("Error marking attendance:", error);
     }
   };
+  
+  
+  
+  
+  
+  
 
   const handleCancelAttendance = () => {
     setConfirmationOpen(false);
@@ -119,7 +132,9 @@ export default function AttendanceMng() {
       user.user_N.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-
+  const handleViewUser = (userId) => {
+    navigate(`/viewAttendance/${userId}`);
+  };
 
   return (
     <>
@@ -139,9 +154,7 @@ export default function AttendanceMng() {
               <IconButton color="primary" aria-label="print" onClick={handlePrintToPdf}>
                 <PrintIcon />
               </IconButton>
-              <IconButton color="primary" aria-label="Add user" onClick={() => navigate("/adduser")}>
-                <AddIcon />
-              </IconButton>
+              
             </Box>
           </Box>
           <TableContainer ref={ComponentsRef}>
@@ -190,7 +203,7 @@ export default function AttendanceMng() {
 
                     <TableCell align="center" sx={{ border: "1", padding: "10px", backgroundColor: "white", display: "flex" }}>
                       <button style={{backgroundColor:"#535C91"}} onClick={() => markAttendance(row._id)}>Mark Attendance</button>
-                      <button style={{backgroundColor:"#535C91"}}>View Attendance</button>
+                      <button style={{backgroundColor:"#535C91"}} onClick={() => handleViewUser(row._id)}>View Attendance</button>
                     </TableCell>
                   </TableRow>
                 ))}
@@ -220,11 +233,12 @@ export default function AttendanceMng() {
           Are you sure you want to mark attendance for this user?
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleConfirmAttendance} color="primary">
-            Yes
-          </Button>
+          
           <Button onClick={handleCancelAttendance} color="primary">
             No
+          </Button>
+          <Button onClick={handleConfirmAttendance} color="primary">
+            Yes
           </Button>
         </DialogActions>
       </Dialog>

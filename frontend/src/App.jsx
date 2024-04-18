@@ -25,6 +25,7 @@ import Updateprojects from "./Pages/Updateprojects";
 import ViewInventoryList from "./Pages/ViewInventoryList";
 import Inventory from "./Pages/Inventory";
 import AddInventory from "./Pages/AddInventory";
+import ViewAttendance from "./Pages/ViewAttendance";
 
 
 function App() {
@@ -63,6 +64,7 @@ function App() {
           <Route path="/adduser" element={<AddUsers />} />
           <Route path="/ActiveLeaves/:id"element={<UpdateLeave />}/>
           <Route path="/UpdateLeave/:id"element={<UpdateLeave />}/>
+          <Route path="/viewAttendance/:id"element={<ViewAttendance />}/>
 
 
         </Routes>

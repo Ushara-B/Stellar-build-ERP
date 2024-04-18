@@ -6,5 +6,7 @@ const attendanceController = require("../controllers/attendanceController")
 router.get("/", attendanceController.getAttendance);
 router.post("/", attendanceController.addAttendance);
 router.get("/:id", attendanceController.getById);
+router.get("/:id", attendanceController.getAttendanceByUid);
+
 
 module.exports = router; 
