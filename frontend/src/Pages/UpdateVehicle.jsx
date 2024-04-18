@@ -62,7 +62,7 @@ function UpdateVehicle() {
               <input type='text' name='Vname' onChange={handleChange} value={inputs.Vname} required /><br/><br/>
               <label>Type</label><br/>
               <input type='text' name='Type' onChange={handleChange} value={inputs.Type} required /><br/><br/>
-              <label>VIN</label><br/>
+              <label>Vehicle Identification Number</label><br/>
               <input type='text' name='VIN' onChange={handleChange} value={inputs.VIN} required /><br/><br/>
               <label>License Expiry Day</label><br/>
               <input type='date' name='lic_expDay' onChange={handleChange} value={inputs.lic_expDay ? new Date(inputs.lic_expDay).toISOString().split('T')[0] : ''} required /><br/><br/>

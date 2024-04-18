@@ -9,7 +9,7 @@ import PrintIcon from '@mui/icons-material/Print';
 import AddIcon from '@mui/icons-material/Add';
 import IconButton from '@mui/material/IconButton';
 import { Box, Paper, InputBase, TableContainer, Table, TableHead, TableBody, TableRow, TableCell } from '@mui/material';
-
+import vehicle from "../css/Vehicle.css";
 const URL = "http://localhost:5000/Vehicles";
 
 const fetchHandler = async () => {
