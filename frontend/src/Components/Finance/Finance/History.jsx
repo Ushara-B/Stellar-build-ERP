@@ -1,6 +1,6 @@
 import React from 'react'
-import styled from 'styled-components'
-import { useGlobalContext } from '../../Context/GlobalContext';
+import styled from '@emotion/styled'
+import { useGlobalContext } from '../../../Context/globalContext';
 
 function History() {
     const {transactionHistory} = useGlobalContext()

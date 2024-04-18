@@ -2,7 +2,7 @@ import React, { useState,useEffect } from 'react'
 import styled from 'styled-components'
 import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css";
-import { useGlobalContext } from '../../Context/GlobalContext';
+import { useGlobalContext } from '../../../Context/globalContext';
 import Button from './Button';
 import axios from 'axios'
 
