@@ -9,6 +9,7 @@ function AddVehicle() {
    const [inputs, setInputs] = useState({
       RegNo: "",
       Vname: "",
+      Type: "",
       VIN: "",
       lic_expDay: "",
       ins_expDay: "",
@@ -36,6 +37,7 @@ function AddVehicle() {
     await axios.post("http://localhost:5000/Vehicles", {
       RegNo: String(inputs.RegNo),
       Vname: String(inputs.Vname),
+      Type: String(inputs.Type),
       VIN: String(inputs.VIN),
       lic_expDay: Date(inputs.lic_expDay),
       ins_expDay: Date(inputs.ins_expDay),
@@ -54,12 +56,15 @@ function AddVehicle() {
       <Menu />
       <div style={{ marginLeft: '255px', paddingTop: '80px' }}>
         <h1 style={{ textAlign: "center" }}>Add Vehicle Details</h1>
-        <form1 onSubmit={handleSubmit}>
+
+        <form onSubmit={handleSubmit} style={{ textAlign: "center" }}>
           <label>RegisterNo</label><br/>
           <input type='text' name='RegNo' onChange={handleChange} value={inputs.RegNo} required /><br/><br/>
           <label>Vehicle Name</label><br/>
           <input type='text' name='Vname' onChange={handleChange} value={inputs.Vname} required /><br/><br/>
-          <label>VIN</label><br/>
+          <label>Vehicle Type</label><br/>
+          <input type='text' name='Type' onChange={handleChange} value={inputs.Type} required /><br/><br/>
+          <label>Vehicle Identification Number</label><br/>
           <input type='text' name='VIN' onChange={handleChange} value={inputs.VIN} required /><br/><br/>
           <label>License Expiry Day</label><br/>
           <input type='date' name='lic_expDay' onChange={handleChange} value={inputs.lic_expDay} required /><br/><br/>
@@ -73,8 +78,9 @@ function AddVehicle() {
           <input type='text' name='dname' onChange={handleChange} value={inputs.dname} required /><br/><br/>
           <label>Vehicle Status:</label><br/>
           <input type='text' name='vstatus' onChange={handleChange} value={inputs.vstatus} required /><br/><br/>
+          
           <button>Submit</button>
-        </form1>
+        </form>
       </div>
     </div>
   );

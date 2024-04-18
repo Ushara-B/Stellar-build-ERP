@@ -31,6 +31,7 @@ import Finance from "./Pages/Finance";
 import InventoryCategory from "./Pages/InventoryCategory";
 import { useGlobalContext } from '../src/Context/globalContext';
 
+
 function App() {
   return (
     <div>
