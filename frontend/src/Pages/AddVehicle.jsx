@@ -56,7 +56,7 @@ function AddVehicle() {
         <h1 style={{ textAlign: "center" }}>Add Vehicle Details</h1>
         <form onSubmit={handleSubmit}>
           <label>RegisterNo</label><br/>
-          <input type='text' name='RegNo' onChange={handleChange} value={inputs.RegNo} required /><br/><br/>
+          <input type='text' name='RegNo' onChange={handleChange} value={inputs.RegNo}  required /><br/><br/>
           <label>Vehicle Name</label><br/>
           <input type='text' name='Vname' onChange={handleChange} value={inputs.Vname} required /><br/><br/>
           <label>VIN</label><br/>
