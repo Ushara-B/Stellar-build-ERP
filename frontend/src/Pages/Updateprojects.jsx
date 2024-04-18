@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router';
 import { useParams } from 'react-router';
 import Menu from '../Components/menu';
 import AppBar from '../Components/Appbar';
+import '../css/Newprojects.css';
 
 function Updateprojects() {
 
@@ -75,9 +76,13 @@ function Updateprojects() {
     
     return (
         <div>
+            <div  style={{ marginLeft: "255px", paddingTop: "70px" }}>
+         <div className="image" style={{ marginLeft: "255px", paddingTop: "70px" }}></div>
+        <div className="container">
+      <div className="form-container"></div>
             <AppBar />
             <Menu />
-            <div style={{ marginLeft: '255px', paddingTop: '70px' }}>
+            <div >
                 <h1 style={{ textAlign: "center" }}>Update Project Details</h1>
                 <form onSubmit={handleSubmit}>
                     <label>Project Name</label>
@@ -94,9 +99,11 @@ function Updateprojects() {
                     <input type='date' name='endDate' onChange={handleChange} value={inputs.endDate} required /><br/>
                     <label>Project Type</label>
                     <input type='text' name='projectType' onChange={handleChange} value={inputs.projectType} required /><br/><br/>
-                    <button type="submit">Submit</button>
+                    <button className="create-button" type="submit">Submit</button>
                 </form>
             </div>
+        </div>
+        </div>
         </div>
     );
 }
