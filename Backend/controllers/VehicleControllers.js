@@ -20,12 +20,12 @@ const getAllVehicles = async (req, res, next) => {
 
 //data insert part 
 const addVehicles = async(req,res,next) =>{
-    const {RegNo,Vname,VIN,lic_expDay,ins_expDay,last_serviceDay,mileage, dname,vstatus} = req.body;
+    const {RegNo,Vname,Type,VIN,lic_expDay,ins_expDay,last_serviceDay,mileage, dname,vstatus} = req.body;
 
     let vehicle;
 
     try{
-        vehicle = new Vehicle({RegNo,Vname,VIN,lic_expDay,ins_expDay,last_serviceDay,mileage, dname,vstatus});
+        vehicle = new Vehicle({RegNo,Vname,Type,VIN,lic_expDay,ins_expDay,last_serviceDay,mileage, dname,vstatus});
         await vehicle.save();
     }catch(err){
         console.log(err);
@@ -59,13 +59,13 @@ const getById = async (req, res,next) => {
 //Update Vehicle Details
 const updateVehicle = async (req, res, next) => {
     const id = req.params.id;
-    const {RegNo,Vname,VIN,lic_expDay,ins_expDay,last_serviceDay,mileage, dname,vstatus} = req.body;
+    const {RegNo,Vname,VIN,Type,lic_expDay,ins_expDay,last_serviceDay,mileage, dname,vstatus} = req.body;
     
     let vehicles;
 
     try{
         vehicles = await Vehicle.findByIdAndUpdate(id,
-            {RegNo: RegNo,Vname: Vname,VIN: VIN,lic_expDay: lic_expDay,ins_expDay: ins_expDay,last_serviceDay: last_serviceDay,mileage: mileage, dname:dname,vstatus:vstatus });
+            {RegNo: RegNo,Vname: Vname,VIN: VIN,Type: Type,lic_expDay: lic_expDay,ins_expDay: ins_expDay,last_serviceDay: last_serviceDay,mileage: mileage, dname:dname,vstatus:vstatus });
             vehicles = await vehicles.save();
     }catch(err) {
         console.log(err);
