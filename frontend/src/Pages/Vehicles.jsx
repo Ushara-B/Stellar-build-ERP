@@ -8,6 +8,9 @@ import SearchIcon from '@mui/icons-material/Search';
 import PrintIcon from '@mui/icons-material/Print';
 import AddIcon from '@mui/icons-material/Add';
 import IconButton from '@mui/material/IconButton';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+
 import { Box, Paper, InputBase, TableContainer, Table, TableHead, TableBody, TableRow, TableCell } from '@mui/material';
 import vehicle from "../css/Vehicle.css";
 const URL = "http://localhost:5000/Vehicles";
@@ -37,7 +40,7 @@ function Vehicles() {
         // Here you can generate a report for the specific vehicleData
         // For example, you can create a new window/tab with the vehicle details to print
         const reportWindow = window.open("", "_blank");
-        reportWindow.document.write(`<html><head><title>Vehicle Report</title></head><body><h1>Vehicle Details</h1><p>Register No: ${vehicleData.RegNo}</p><p>Vehicle Name: ${vehicleData.Vname}</p><p>Type: ${vehicleData.Type}</p><p>VIN: ${vehicleData.VIN}</p><p>License Expiry Day: ${formatDate(vehicleData.lic_expDay)}</p><p>Insurance Expiry Day: ${formatDate(vehicleData.ins_expDay)}</p><p>Last Service Day: ${formatDate(vehicleData.last_serviceDay)}</p><p>Mileage: ${vehicleData.mileage}</p><p>Driver Name: ${vehicleData.dname}</p><p>Vehicle Status: ${vehicleData.vstatus}</p></body></html>`);
+        reportWindow.document.write(`<html><head><title>Vehicle Report</title></head><body><h1>Vehicle Details</h1><p>Register No: ${vehicleData.RegNo}</p><p>Vehicle Name: ${vehicleData.Vname}</p><p>Vehicle Type: ${vehicleData.Type}</p><p>Vehicle Inditification NO: ${vehicleData.VIN}</p><p>License Expiry Day: ${formatDate(vehicleData.lic_expDay)}</p><p>Insurance Expiry Day: ${formatDate(vehicleData.ins_expDay)}</p><p>Last Service Day: ${formatDate(vehicleData.last_serviceDay)}</p><p>Mileage: ${vehicleData.mileage}</p><p>Driver Name: ${vehicleData.dname}</p><p>Vehicle Status: ${vehicleData.vstatus}</p></body></html>`);
         reportWindow.document.close();
         reportWindow.print();
     };
@@ -72,36 +75,39 @@ function Vehicles() {
     };
 
     return (
-        <div style={{ marginLeft: '250px', paddingTop: '80px' }}>
+        <div>
+
             <AppBar />
             <Menu />
-            <Box sx={{ display: 'flex', alignItems: 'center', marginRight: '40px' }}>
-                <InputBase
+            <div style={{ marginLeft: '250px', paddingTop: '80px' }}>
+            <Paper sx={{ width: '100%', boxShadow: 'none' }}>
+                <Box >
+                    <InputBase
                     sx={{ flex: 1, marginLeft: '10px' }}
                     placeholder="Search vehicle Details"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     startAdornment={<SearchIcon />}
-                />
-                <IconButton color="primary" aria-label="search" onClick={handleSearch}>
-                    <SearchIcon />
-                </IconButton>
-                <IconButton color="primary" aria-label="add vehicle" onClick={handleAddClick}>
-                    <AddIcon />
-                </IconButton>
-                <IconButton color="primary" aria-label="print all" onClick={handlePrint}>
-                    <PrintIcon />
-                </IconButton>
-            </Box>
+                    />
+                    <IconButton color="primary" aria-label="search" onClick={handleSearch}>
+                        <SearchIcon />
+                    </IconButton>
+                    <IconButton color="primary" aria-label="add vehicle" onClick={handleAddClick}>
+                        <AddIcon />
+                    </IconButton>
+                    <IconButton color="primary" aria-label="print all" onClick={handlePrint}>
+                        <PrintIcon />
+                    </IconButton>
+                </Box>
 
             {noResults ? (
                 <div>
                     <p>No results found</p>
                 </div>
             ) : (
-                <div>
+                <div >
                     <TableContainer component={Paper}>
-                        <Table>
+                        <Table stickyHeader aria-label="sticky table" sx={{ borderCollapse: 'collapse' }}>
                             <div ref={ComponentsRef}>
                                 <h1>Details of Vehicles</h1>
                                 <TableHead>
@@ -118,7 +124,7 @@ function Vehicles() {
                                         <TableCell>Register No</TableCell>
                                         <TableCell>Vehicle Name</TableCell>
                                         <TableCell>Type</TableCell>
-                                        <TableCell>VIN</TableCell>
+                                        <TableCell>Vehicle ID</TableCell>
                                         <TableCell>License Expiry Day</TableCell>
                                         <TableCell>Insurance Expiry Day</TableCell>
                                         <TableCell>Last Service Day</TableCell>
@@ -142,9 +148,9 @@ function Vehicles() {
                                             <TableCell>{vehicle.dname}</TableCell>
                                             <TableCell>{vehicle.vstatus}</TableCell>
                                             <TableCell>
-                                                <IconButton onClick={() => navigate(`/viewvehicles/${vehicle._id}`)} className="update-button">Update</IconButton>
-                                                <IconButton onClick={() => deleteHandler(vehicle._id)} className="delete-button">Delete</IconButton>
-                                                <IconButton onClick={() => handlePrintSingle(vehicle)} className="report-button">Report</IconButton>
+                                                <IconButton onClick={() => navigate(`/viewvehicles/${vehicle._id}`)} ><EditIcon /></IconButton>
+                                                <IconButton onClick={() => deleteHandler(vehicle._id)} ><DeleteIcon /></IconButton>
+                                                <IconButton onClick={() => handlePrintSingle(vehicle)} ><PrintIcon /></IconButton>
                                             </TableCell>
                                         </TableRow>
                                     ))}
@@ -155,6 +161,8 @@ function Vehicles() {
                 </div>
             )}
             <br /><br />
+            </Paper>
+        </div>
         </div>
     )
 }
