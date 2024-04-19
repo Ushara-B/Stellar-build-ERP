@@ -122,7 +122,7 @@ function UpdateVehicle() {
               <TextField
                 label="Vehicle Identification Number"
                 name="VIN"
-                value={inputs.VIN}
+                value={inputs.VIN ? inputs.VIN : ''}
                 onChange={handleChange}
                 variant="outlined"
                 fullWidth
