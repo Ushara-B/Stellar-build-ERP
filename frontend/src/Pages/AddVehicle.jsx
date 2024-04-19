@@ -106,6 +106,7 @@ function AddVehicle() {
                         required
                         select
                         >
+                        <MenuItem value="Bike">Bike</MenuItem>
                         <MenuItem value="Car">Car</MenuItem>
                         <MenuItem value="Van">Van</MenuItem>
                         <MenuItem value="Truck">Truck</MenuItem>
