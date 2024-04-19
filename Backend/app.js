@@ -2,7 +2,7 @@
 
 const express = require("express");
 const mongoose = require("mongoose");
-const router = require("./Backend/routes/loanRoute");
+const router = require("./routes/loanRoute");
 
 const app = express();
 
