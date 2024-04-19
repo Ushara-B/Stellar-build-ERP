@@ -106,6 +106,7 @@ function AddVehicle() {
                         required
                         select
                         >
+                        <MenuItem value="Bike">Bike</MenuItem>
                         <MenuItem value="Car">Car</MenuItem>
                         <MenuItem value="Van">Van</MenuItem>
                         <MenuItem value="Truck">Truck</MenuItem>
@@ -208,7 +209,6 @@ function AddVehicle() {
                     </TextField>
                   </Grid>
 
-
                   <Grid item xs={3}>
                   <Button type="submit"variant="contained" color="primary" fullWidth>
                     Add Vehicle
@@ -240,7 +240,7 @@ function AddVehicle() {
           <input type='text' name='vstatus' onChange={handleChange} value={inputs.vstatus} required /><br/><br/>
           
           <button>Submit</button>
-        </form>
+
         </Box>
     </div>
   );
