@@ -9,6 +9,7 @@ import PrintIcon from '@mui/icons-material/Print';
 import AddIcon from '@mui/icons-material/Add';
 import IconButton from '@mui/material/IconButton';
 import { Box, Paper, InputBase } from '@mui/material';
+import { Doughnut } from 'react-chartjs-2';
 
 const URL = "http://localhost:5000/Vehicles";
 
@@ -42,7 +43,7 @@ function Vehicles() {
                 else if (vehicle.vstatus === 'Repair') statusCounts.repair++;
             });
             setVehicleStatus(statusCounts);
-            //calculate vehicle Type counts
+            // Calculate vehicle type counts
             const vehicleTypeCounts = {Bike: 0, Car: 0, Truck: 0, Van: 0, Other: 0};
             data.vehicle.forEach(vehicle => {
                 if (vehicle.Type === 'Bike') vehicleTypeCounts.Bike++;
@@ -61,53 +62,54 @@ function Vehicles() {
         documentTitle: 'Vehicles Report',
         onAfterPrint: () => alert("Vehicles Report successfully Downloaded!"),
     });
-
-    const handlePrintSingle = (vehicleData) => {
-        // Here you can generate a report for the specific vehicleData
-        // For example, you can create a new window/tab with the vehicle details to print
-        const reportWindow = window.open("", "_blank");
-        reportWindow.document.write(`<html><head><title>Vehicle Report</title></head><body><h1>Vehicle Details</h1><p>Register No: ${vehicleData.RegNo}</p><p>Vehicle Name: ${vehicleData.Vname}</p><p>Type: ${vehicleData.Type}</p><p>VIN: ${vehicleData.VIN}</p><p>License Expiry Day: ${formatDate(vehicleData.lic_expDay)}</p><p>Insurance Expiry Day: ${formatDate(vehicleData.ins_expDay)}</p><p>Last Service Day: ${formatDate(vehicleData.last_serviceDay)}</p><p>Mileage: ${vehicleData.mileage}</p><p>Driver Name: ${vehicleData.dname}</p><p>Vehicle Status: ${vehicleData.vstatus}</p></body></html>`);
-        reportWindow.document.close();
-        reportWindow.print();
-    };
-
-    const handleSearch = () => {
-        fetchHandler().then((data) => {
-            const filteredVehicles = data.vehicle.filter((vehicle) =>
-                Object.values(vehicle).some((field) =>
-                    field.toString().toLowerCase().includes(searchQuery.toLowerCase())
-                ));
-            setVehicles(filteredVehicles);
-            setNoResults(filteredVehicles.length === 0);
-        });
-    };
-
     const handleAddClick = () => {
         navigate(`/addvehicle`);
     };
-
-    
 
     const formatDate = (dateString) => {
         const date = new Date(dateString);
         return date.toLocaleDateString('en-US');
     };
 
+    const vehicleTypeData = {
+        labels: ['Bike', 'Car', 'Truck', 'Van', 'Other'],
+        datasets: [
+            {
+                label: 'Vehicle Types',
+                data: Object.values(vehicleTypeCounts),
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.6)',
+                    'rgba(54, 162, 235, 0.6)',
+                    'rgba(255, 206, 86, 0.6)',
+                    'rgba(75, 192, 192, 0.6)',
+                    'rgba(153, 102, 255, 0.6)',
+                ],
+                borderWidth: 1,
+            },
+        ],
+    };
+
+    const vehicleStatusData = {
+        labels: ['Active', 'Inactive', 'Repair'],
+        datasets: [
+            {
+                label: 'Vehicle Status',
+                data: Object.values(vehicleStatus),
+                backgroundColor: [
+                    'rgba(75, 192, 192, 0.6)',
+                    'rgba(255, 99, 132, 0.6)',
+                    'rgba(255, 206, 86, 0.6)',
+                ],
+                borderWidth: 1,
+            },
+        ],
+    };
+
     return (
-        <div style={{ marginLeft: '250px', paddingTop: '80px' }}>
+        <div style={{ marginLeft: '250px', paddingTop: '80px' }} >
             <AppBar />
             <Menu />
-            <Box sx={{ display: 'flex', alignItems: 'center', marginRight: '40px' }}>
-                <InputBase
-                    sx={{ flex: 1, marginLeft: '10px' }}
-                    placeholder="Search vehicle Details"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    startAdornment={<SearchIcon />}
-                />
-                <IconButton color="primary" aria-label="search" onClick={handleSearch}>
-                    <SearchIcon />
-                </IconButton>
+            <Box sx={{ display: 'flex', alignItems: 'center', marginRight: '40px' }} >
                 <IconButton color="primary" aria-label="add vehicle" onClick={handleAddClick}>
                     <AddIcon />
                 </IconButton>
@@ -122,33 +124,30 @@ function Vehicles() {
                 </div>
             ) : (
                 <div>
-                    <Box sx={{ display: 'flex', justifyContent: 'space-around', flexWrap: 'wrap' }}>
-                        <Paper sx={{ p: 2, m: 2, flexGrow: 1, minWidth: 200 }}>
+                    <Box sx={{ display: 'flex'}} ref={ComponentsRef}>
+                    <div style={{ width: '30%', height: '30%' }}>
+                        <Paper sx={{ p: 2, m: 2, flexGrow: 1, minWidth: 50 }}>
                             <h2>Total Vehicles</h2>
                             <p>{totalVehicles}</p>
                         </Paper>
-                        <Paper sx={{ p: 2, m: 2, flexGrow: 1, minWidth: 200 }}>
+                        <Paper sx={{ p: 2, m: 2, flexGrow: 1, minWidth: 50, }}>
                             <h2>Total Drivers</h2>
                             <p>{totalDrivers}</p>
-                        </Paper>
-                        <Paper sx={{ p: 2, m: 2, flexGrow: 1, minWidth: 200 }}>
-                            <h2>Vehicle Status</h2>
-                            <p>Active: {vehicleStatus.active}</p>
-                            <p>Inactive: {vehicleStatus.inactive}</p>
-                            <p>Repair: {vehicleStatus.repair}</p>
-                        </Paper>
-                        <Paper sx={{ p: 2, m: 2, flexGrow: 1, minWidth: 200 }}>
-                            <h2>Vehicle Type</h2>
-                            <p>Bike: {vehicleTypeCounts.Bike}</p>
-                            <p>Car: {vehicleTypeCounts.Car}</p>
-                            <p>Truck: {vehicleTypeCounts.Truck}</p>
-                            <p>Van: {vehicleTypeCounts.Van}</p>
-                            <p>Other: {vehicleTypeCounts.Other}</p>
-                        </Paper>
-                        
+                        </Paper><br /><br />
+                    </div>   
+                        <div style={{ width: '30%', height: '30%' }}>
+                            <Paper sx={{ p: 2, m: 2, flexGrow: 1, minWidth: 50 }}>
+                                <h2>Vehicle Status</h2>
+                                <Doughnut data={vehicleStatusData} />
+                            </Paper>
+                        </div>
+                        <div style={{ width: '30%', height: '30%' }}>
+                            <Paper sx={{ p: 2, m: 2, flexGrow: 1, minWidth: 50 }}>
+                                <h2>Vehicle Type</h2>
+                                <Doughnut data={vehicleTypeData} />
+                            </Paper>
+                        </div>
                     </Box>
-
-                   
                 </div>
             )}
             <br /><br />
