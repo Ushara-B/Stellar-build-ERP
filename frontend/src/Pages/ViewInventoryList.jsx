@@ -26,6 +26,19 @@ import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import Divider from "@mui/material/Divider";
 import Swal from "sweetalert2";
 
+
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+};
+
 const columns = [
   { id: "name", label: "Name", minWidth: 170 },
   { id: "category", label: "Category", minWidth: 170 },
@@ -41,6 +54,9 @@ export default function ViewInventoryList() {
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [searchTerm, setSearchTerm] = React.useState("");
   const navigate = useNavigate();
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   React.useEffect(() => {
     fetchInventories();
@@ -76,11 +92,11 @@ export default function ViewInventoryList() {
   });
 
   const handleViewInventory = (inventoryId) => {
-    navigate("/viewinventory/" + inventoryId);
+    navigate(`/viewinventory/${inventoryId}`);
   };
 
   const handleUpdateInventory = (inventoryId) => {
-    navigate("/updateinventory/" + inventoryId);
+    navigate(`/updateinventory/${inventoryId}`);
   };
 
   const handleDeleteInventory = async (inventoryId) => {
@@ -97,14 +113,17 @@ export default function ViewInventoryList() {
 
       if (result.isConfirmed) {
         const response = await axios.delete(
-          "http://localhost:5000/inventories/${inventoryId}"
+          `http://localhost:5000/inventories/${inventoryId}`
         );
         if (response.status === 200) {
           Swal.fire("Deleted!", "Your inventory has been deleted.", "success");
         }
       }
     } catch (error) {
-      console.error("Error deleting inventory:", error);
+      console.error(
+        "Error deleting inventory:",
+        error.response ? error.response.data : error
+      );
       Swal.fire(
         "Error",
         "An error occurred while deleting the inventory.",
@@ -136,8 +155,6 @@ export default function ViewInventoryList() {
           </Breadcrumbs>
 
           <Paper sx={{ width: "98%", overflow: "hidden", padding: "12px" }}>
-          
-
             <Typography
               gutterBottom
               variant="h4"
@@ -149,31 +166,38 @@ export default function ViewInventoryList() {
             <Divider />
 
             <br />
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-            <InputBase
-              sx={{ ml: 1, flex: 1 }}
-              placeholder="Search Inventory.."
-              value={searchTerm}
-              onChange={handleSearchChange}
-              startAdornment={<SearchIcon fontSize="small" />}
-            />
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                mb: 2,
+              }}
+            >
+              <InputBase
+                sx={{ ml: 1, flex: 1 }}
+                placeholder="Search Inventory.."
+                value={searchTerm}
+                onChange={handleSearchChange}
+                startAdornment={<SearchIcon fontSize="small" />}
+              />
 
-            <Box>
-              <IconButton
-                color="primary"
-                aria-label="print"
-                onClick={handlePrintToPdf}
-              >
-                <PrintIcon />
-              </IconButton>
-              <IconButton
-                color="primary"
-                aria-label="Add inventory"
-                onClick={() => navigate("/addinventory")}
-              >
-                <AddIcon />
-              </IconButton>
-            </Box>
+              <Box>
+                <IconButton
+                  color="primary"
+                  aria-label="print"
+                  onClick={handlePrintToPdf}
+                >
+                  <PrintIcon />
+                </IconButton>
+                <IconButton
+                  color="primary"
+                  aria-label="Add inventory"
+                  onClick={() => navigate('/addinventory')}
+                >
+                  <AddIcon />
+                </IconButton>
+              </Box>
             </Box>
             <TableContainer ref={ComponentsRef}>
               <Table
