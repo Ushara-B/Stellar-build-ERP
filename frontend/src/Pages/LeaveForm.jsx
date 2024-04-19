@@ -1,118 +1,108 @@
-import  { useState } from "react";
-import {
-  Grid,
-  TextField,
-  Button,
-  Select,
-  MenuItem,
-  FormControl,
-  InputLabel,
-} from "@mui/material";
+import { useState } from "react";
+import { Grid } from "@mui/material";
 import AppBar from "../Components/Appbar";
 import Drawer from "../Components/menu";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function LeaveForm() {
-  const [employeeId, setEmployeeId] = useState("");
-  const [date, setDate] = useState("");
-  const [leaveType, setLeaveType] = useState("");
-  const [reasonForLeave, setReasonForLeave] = useState("");
+  const history = useNavigate();
+  const [inputs, setInputs] = useState({
+    emp_id: "",
+    date: "",
+    type: "",
+    reason: "",
+  });
+
+  const handleChange = (e) => {
+    setInputs((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Submit the form data here
-    console.log("Employee ID:", employeeId);
-    console.log("Date:", date);
-    console.log("Leave Type:", leaveType);
-    console.log("Reason for Leave:", reasonForLeave);
+    sendRequest();
+  };
 
-
+  const sendRequest = async () => {
+    await axios.post("http://localhost:5000/leaves", {
+      emp_id: inputs.emp_id,
+      date: inputs.date,
+      type: inputs.type,
+      reason: inputs.reason,
+    });
+    history('/ActiveLeaves');
   };
 
   return (
-    <Grid container className="wrapper">
-      <Grid className="sidebar">
+    <Grid container className="wrapper1">
+      <Grid className="sidebar1">
         <AppBar />
         <Drawer />
       </Grid>
-
       <Grid
         item
         xs={12}
         sm={8}
-        className="content-form"
+        className="leave-form"
         sx={{
-          
-          marginBottom: "30px",
+          maxWidth: "1000px",
+          Width: "100%",
+          alignContent: "center",
           display: "block",
-          margin:"auto"
+          margin: "150px auto auto 250px",
         }}
       >
-        <section>
-          <h1>Apply for a leave</h1>
+        <Grid sx={{ width: "80%" }}>
+          <h1
+            className="headerLeave"
+            style={{ textAlign: "center", marginBottom: "20px" }}
+          >
+            Apply for a Leave
+          </h1>
           <form onSubmit={handleSubmit}>
-            <Grid container spacing={2} >
-              <Grid item xs={12} sm={6} >
-                <TextField
-                  label="Employee ID"
-                  variant="outlined"
-                  value={employeeId}
-                  onChange={(event) => setEmployeeId(event.target.value)}
-                  fullWidth
-                  required
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  type="date"
-                  variant="outlined"
-                  value={date}
-                  onChange={(event) => setDate(event.target.value)}
-                  fullWidth
-                  required
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <FormControl variant="outlined" fullWidth>
-                  <InputLabel id="leaveType-label">Leave Type</InputLabel>
-                  <Select
-                    labelId="leaveType-label"
-                    value={leaveType}
-                    onChange={(event) => setLeaveType(event.target.value)}
-                    label="Leave Type"
-                    fullWidth
-                    required
-                  >
-                    <MenuItem value="">Select Leave Type</MenuItem>
-                    <MenuItem value="Sick Leave">Sick Leave</MenuItem>
-                    <MenuItem value="Vacation Leave">Vacation Leave</MenuItem>
-                    <MenuItem value="Personal Leave">Personal Leave</MenuItem>
-                    {/* Add more leave types as needed */}
-                  </Select>
-                </FormControl>
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  minRows={5}
-                  fullWidth
-                  label="Reason for Leave"
-                  value={reasonForLeave}
-                  onChange={(event) => setReasonForLeave(event.target.value)}
-                  required
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <Button
-                  type="submit"
-                  variant="contained"
-                  color="primary"
-                  
-                >
-                  Submit
-                </Button>
-              </Grid>
-            </Grid>
+            <label>Employee ID</label><br/>
+            <input
+              type="text"
+              name="emp_id"
+              onChange={handleChange}
+              value={inputs.emp_id}
+              required
+            /><br/><br/>
+            <label>Date</label><br/>
+            <input
+              type="date"
+              name="date"
+              onChange={handleChange}
+              value={inputs.date}
+              required
+            /><br/><br/>
+            <label>Type</label><br/>
+            <select 
+            name="type"
+            value={inputs.type}
+            onChange={handleChange}
+            required
+          >
+            <option value="">Select Type</option>
+            <option value="Sick Leave">Sick leave</option>
+            <option value="Vacation Leave">Vacation leave</option>
+            <option value="Personal Leave">Personal leave</option>
+            {/* Add more options as needed */}
+          </select><br/><br/>
+            <label>Reason</label><br/>
+            <input
+              type="text"
+              name="reason"
+              onChange={handleChange}
+              value={inputs.reason}
+              required
+            /><br/><br/>
+            <button type="submit">Submit</button>
           </form>
-        </section>
+        </Grid>
       </Grid>
     </Grid>
   );

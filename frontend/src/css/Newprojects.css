@@ -26,6 +26,35 @@ select {
 .create-button {
     background-color: #6c63ff;
     color: #ffffff;
+    max-width: 500px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background: #a29c9c;
+  }
+  
+  /* Style for form elements */
+  input[type="text"],
+  input[type="number"],
+  input[type="date"],
+  button, select {
+    width: 100%;
+    padding: 10px;
+    margin: px 0;
+    display: inline-block;
+    border: 1px solid #6f6464;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  
+  /* Style for the submit button */
+  button {
+    width:auto;
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
     border: none;
     border-radius: 4px;
     padding: 10px 20px;

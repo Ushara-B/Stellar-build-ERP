@@ -2,9 +2,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./Pages/Home";
 import AllUsers from "./Pages/AllUsers";
 import AddUsers from "./Pages/AddUsers";
-import ViewUser from './Pages/ViewUser';
 import UpdateUser from './Pages/UpdateUser';
 import UserProfile from './Pages/UserProfile';
+import ViewUser from './Pages/ViewUser';
 import NoPages from "./Pages/NoPages";
 import Supplier from "./Pages/Supplier";
 import EmpManagement from "./Pages/EmpManagement";
@@ -32,6 +32,8 @@ import  Income from "./Components/Finance/Finance/Income";
 import Finance from "./Pages/Finance";
 import InventoryCategory from "./Pages/InventoryCategory";
 import { useGlobalContext } from '../src/Context/globalContext';
+
+import ViewAttendance from "./Pages/ViewAttendance";
 
 
 function App() {
@@ -62,6 +64,9 @@ function App() {
           <Route path = '/allusers' element ={<AllUsers/>}/>
           <Route path = '/allprojects' element = {<Allprojects/>}/>
           <Route path = '/Newprojects' element = {<Newprojects/>}/>
+          <Route path = '/Allprojects' element = {<Allprojects/>}/>
+          <Route path = '/Addprojects' element = {<Addprojects/>}/>
+          <Route path = '/Newprojects' element = {<Newprojects/>}/> 
           <Route path = '/Updateprojects/:id' element = {<Updateprojects/>}/>
           <Route path = '/viewinventorylist' element = {<ViewInventoryList/>}/>
           <Route path = '/inventory' element = {<Inventory/>}/>
@@ -77,6 +82,9 @@ function App() {
           <Route path = '/inventorycategory' element = {<InventoryCategory/>}/>
 
 
+          <Route path="/ActiveLeaves/:id"element={<UpdateLeave />}/>
+          <Route path="/UpdateLeave/:id"element={<UpdateLeave />}/>
+          <Route path="/viewAttendance/:id"element={<ViewAttendance />}/>
         </Routes>
       </BrowserRouter>
     </div>
