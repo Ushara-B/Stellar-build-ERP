@@ -23,6 +23,7 @@ function Vehicles() {
     const [totalVehicles, setTotalVehicles] = useState(0);
     const [totalDrivers, setTotalDrivers] = useState(0);
     const [vehicleStatus, setVehicleStatus] = useState({ active: 0, inactive: 0, repair: 0 });
+    const [vehicleTypeCounts, setVehicleTypeCounts] = useState({Bike: 0, Car: 0, Truck: 0, Van: 0, Other: 0});
     const navigate = useNavigate();
     const ComponentsRef = useRef();
 
@@ -41,6 +42,16 @@ function Vehicles() {
                 else if (vehicle.vstatus === 'Repair') statusCounts.repair++;
             });
             setVehicleStatus(statusCounts);
+            //calculate vehicle Type counts
+            const vehicleTypeCounts = {Bike: 0, Car: 0, Truck: 0, Van: 0, Other: 0};
+            data.vehicle.forEach(vehicle => {
+                if (vehicle.Type === 'Bike') vehicleTypeCounts.Bike++;
+                else if (vehicle.Type === 'Car') vehicleTypeCounts.Car++;
+                else if (vehicle.Type === 'Truck') vehicleTypeCounts.Truck++;
+                else if (vehicle.Type === 'Van') vehicleTypeCounts.Van++;
+                else if (vehicle.Type === 'Other') vehicleTypeCounts.Other++;
+            });
+            setVehicleTypeCounts(vehicleTypeCounts);
         });
     }, []);
 
@@ -74,14 +85,7 @@ function Vehicles() {
         navigate(`/addvehicle`);
     };
 
-    const deleteHandler = async (_id) => {
-        try {
-            await axios.delete(`http://localhost:5000/vehicles/${_id}`);
-            setVehicles(prevVehicles => prevVehicles.filter(vehicle => vehicle._id !== _id));
-        } catch (error) {
-            console.error("Error deleting vehicle:", error);
-        }
-    };
+    
 
     const formatDate = (dateString) => {
         const date = new Date(dateString);
@@ -131,6 +135,14 @@ function Vehicles() {
                             <p>Active: {vehicleStatus.active}</p>
                             <p>Inactive: {vehicleStatus.inactive}</p>
                             <p>Repair: {vehicleStatus.repair}</p>
+                        </Paper>
+                        <Paper sx={{ p: 2, m: 2, flexGrow: 1, minWidth: 200 }}>
+                            <h2>Vehicle Type</h2>
+                            <p>Bike: {vehicleTypeCounts.Bike}</p>
+                            <p>Car: {vehicleTypeCounts.Car}</p>
+                            <p>Truck: {vehicleTypeCounts.Truck}</p>
+                            <p>Van: {vehicleTypeCounts.Van}</p>
+                            <p>Other: {vehicleTypeCounts.Other}</p>
                         </Paper>
                     </Box>
 
