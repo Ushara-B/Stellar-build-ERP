@@ -55,7 +55,7 @@ function App() {
           <Route path = '/allusers' element ={<AllUsers/>}/>
           <Route path = '/Allprojects' element = {<Allprojects/>}/>
           <Route path = '/Addprojects' element = {<Addprojects/>}/>
-          <Route path = '/Newprojects' element = {<Newprojects/>}/>
+          <Route path = '/Newprojects' element = {<Newprojects/>}/> 
           <Route path = '/Updateprojects/:id' element = {<Updateprojects/>}/>
           <Route path = '/viewinventorylist' element = {<ViewInventoryList/>}/>
           <Route path = '/inventory' element = {<Inventory/>}/>
@@ -65,8 +65,6 @@ function App() {
           <Route path="/ActiveLeaves/:id"element={<UpdateLeave />}/>
           <Route path="/UpdateLeave/:id"element={<UpdateLeave />}/>
           <Route path="/viewAttendance/:id"element={<ViewAttendance />}/>
-
-
         </Routes>
       </BrowserRouter>
     </div>
