@@ -6,7 +6,7 @@ const userrouter = require("./routes/userRouters");
 const vehiclerouter = require("./routes/VehicleRoutes");
 const categoryrouter = require("./routes/categoryRoute");
 const inventoryrouter = require("./routes/inventoryRoute");
-
+const  loanrouter = require("./routes/loanRoute");
 
 
 
@@ -31,6 +31,7 @@ app.use("/projects", projectrouter);
 app.use("/vehicles", vehiclerouter);
 app.use("/categories", categoryrouter);
 app.use("/inventories", inventoryrouter);
+app.use("/Loan", loanrouter);
 
 
 
