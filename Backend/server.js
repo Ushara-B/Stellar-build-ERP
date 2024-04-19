@@ -8,14 +8,18 @@ const categoryrouter = require("./routes/categoryRoute");
 const inventoryrouter = require("./routes/inventoryRoute");
 const leaveRouter = require("./routes/leaveRoute")
 const attendanceRouter = require("./routes/attendanceRoute")
+const  loanrouter = require("./routes/loanRoute");
+
 
 
 
 const app = express();
 
+
 const dotenv = require("dotenv").config();
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
+
 
 const PORT = process.env.PORT || 5000;
 
@@ -31,11 +35,16 @@ app.use("/categories", categoryrouter);
 app.use("/inventories", inventoryrouter);
 app.use("/leaves", leaveRouter);
 app.use("/attendance", attendanceRouter);
+app.use("/Loan", loanrouter);
+
+
 
 //routes
 readdirSync("./routes").map((route) =>
   app.use("/api/v1", require("./routes/" + route))
 );
+
+ 
 
 //connect to DB and start server
 mongoose

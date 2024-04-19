@@ -4,7 +4,7 @@ import React, {useEffect, useState} from 'react'
 import axios from 'axios'
 import{ useParams } from 'react-router'
 import{ useNavigate } from 'react-router'
-
+import { Box, Button, FormControl, Grid, InputLabel, MenuItem, TextField, Typography, Select } from '@mui/material';
 function UpdateVehicle() {
 
     const[inputs,setInputs] = useState({});
@@ -26,6 +26,7 @@ function UpdateVehicle() {
         .put(`http://localhost:5000/Vehicles/${id}`,{
             RegNo: String(inputs.RegNo),
             Vname: String(inputs.Vname),
+            Type: String(inputs.Type),
             VIN: String(inputs.VIN),
             lic_expDay: new Date(inputs.lic_expDay),
             ins_expDay: new Date(inputs.ins_expDay),
@@ -50,34 +51,176 @@ function UpdateVehicle() {
       };
       return (
         <div>
-          <AppBar />
-          <Menu />
-          <div style={{ marginLeft: '255px', paddingTop: '80px' }}>
-            <h1 style={{ textAlign: "center" }}>Update Vehicle Details</h1>
-            <form onSubmit={handleSubmit}>
-              <label>RegisterNo</label><br/>
-              <input type='text' name='RegNo' onChange={handleChange} value={inputs.RegNo} required /><br/><br/>
-              <label>Vehicle Name</label><br/>
-              <input type='text' name='Vname' onChange={handleChange} value={inputs.Vname} required /><br/><br/>
-              <label>VIN</label><br/>
-              <input type='text' name='VIN' onChange={handleChange} value={inputs.VIN} required /><br/><br/>
-          
-              <label>License Expiry Day</label><br/>
-              <input type='date' name='lic_expDay' onChange={handleChange} value={inputs.lic_expDay ? new Date(inputs.lic_expDay).toISOString().split('T')[0] : ''} required /><br/><br/>
-              <label>Insurance Expiry Day</label><br/>
-              <input type='date' name='ins_expDay' onChange={handleChange} value={inputs.ins_expDay ? new Date(inputs.ins_expDay).toISOString().split('T')[0] : ''} required /><br/><br/>
-              <label>Last Service Day:</label><br/>
-              <input type='date' name='last_serviceDay' onChange={handleChange} value={inputs.last_serviceDay ? new Date(inputs.last_serviceDay).toISOString().split('T')[0] : ''} required /><br/><br/>
-              <label>Current Mileage:</label><br/>
-              <input type='text' name='mileage' onChange={handleChange} value={inputs.mileage} required /><br/><br/>
-              <label>Driver Name:</label><br/>
-              <input type='text' name='dname' onChange={handleChange} value={inputs.dname} required /><br/><br/>
-              <label>Vehicle Status:</label><br/>
-              <input type='text' name='vstatus' onChange={handleChange} value={inputs.vstatus} required /><br/><br/>
-              <button>Submit</button>
-            </form>
-          </div>
-        </div>
+      <AppBar />
+      <Menu />
+      <Box
+        sx={{
+          marginLeft: '255px',
+          paddingTop: '80px',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          minHeight: '100vh',
+        }}
+      >
+        <Box
+          component="form"
+          onSubmit={handleSubmit}
+          sx={{
+            width: '80%',
+            maxWidth: 800,
+            padding: 4,
+            bgcolor: 'background.paper',
+            boxShadow: 3,
+          }}
+        >
+          <Typography align="center" gutterBottom variant="h4" component="h2">
+            <strong>Update Vehicle Details</strong>
+          </Typography>
+          <br />
+          <Grid container spacing={4} justifyContent="center">
+            <Grid item xs={12} sm={6}>
+              <TextField
+                label="Register No"
+                name="RegNo"
+                value={inputs.RegNo ? inputs.RegNo : ''}
+                onChange={handleChange}
+                variant="outlined"
+                fullWidth
+                required
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                label="Vehicle Name"
+                name="Vname"
+                value={inputs.Vname ? inputs.Vname : ''}
+                onChange={handleChange}
+                variant="outlined"
+                fullWidth
+                required
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <FormControl variant="outlined" fullWidth>
+                <InputLabel id="Type-label">Vehicle Type</InputLabel>
+                <Select
+                labelId="Type-label"
+                name="Type"
+                value={inputs.Type ? inputs.Type : ''}
+                onChange={handleChange}
+              >
+                <MenuItem value="Bike">Bike</MenuItem>
+                <MenuItem value="Car">Car</MenuItem>
+                <MenuItem value="Van">Van</MenuItem>
+                <MenuItem value="Truck">Truck</MenuItem>
+                <MenuItem value="Other">Other</MenuItem>
+              </Select>
+              </FormControl>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                label="Vehicle Identification Number"
+                name="VIN"
+                value={inputs.VIN ? inputs.VIN : ''}
+                onChange={handleChange}
+                variant="outlined"
+                fullWidth
+                required
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                label="License Expiry Day"
+                name="lic_expDay"
+                type="date"
+                value={inputs.lic_expDay ? new Date(inputs.lic_expDay).toISOString().split('T')[0] : ''}
+                onChange={handleChange}
+                variant="outlined"
+                fullWidth
+                required
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                label="Insurance Expiry Day"
+                name="ins_expDay"
+                type="date"
+                value={inputs.ins_expDay ? new Date(inputs.ins_expDay).toISOString().split('T')[0] : ''}
+                onChange={handleChange}
+                variant="outlined"
+                fullWidth
+                required
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                label="Last Service Day"
+                name="last_serviceDay"
+                type="date"
+                value={inputs.last_serviceDay ? new Date(inputs.last_serviceDay).toISOString().split('T')[0] : ''}
+                onChange={handleChange}
+                variant="outlined"
+                fullWidth
+                required
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                label="Current Mileage"
+                name="mileage"
+                value={inputs.mileage ? inputs.mileage : ''}
+                onChange={handleChange}
+                variant="outlined"
+                fullWidth
+                required
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                label="Driver Name"
+                name="dname"
+                value={inputs.dname ? inputs.dname : ''}
+                onChange={handleChange}
+                variant="outlined"
+                fullWidth
+                required
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                label="Vehicle Status"
+                name="vstatus"
+                value={inputs.vstatus ? inputs.vstatus : ''}
+                onChange={handleChange}
+                variant="outlined"
+                fullWidth
+                required
+                select
+              >
+                <MenuItem value="Active">Active</MenuItem>
+                <MenuItem value="Inactive">Inactive</MenuItem>
+                <MenuItem value="Repair">Repair</MenuItem>
+              </TextField>
+            </Grid>
+            <Grid item xs={3}>
+              <Button type="submit" variant="contained" color="primary" fullWidth>
+                Update Vehicle
+              </Button>
+            </Grid>
+          </Grid>
+        </Box>
+      </Box>
+    </div>
       );
 }
 
