@@ -18,6 +18,7 @@ import Login from "./Pages/Login";
 import Projects from "./Pages/projects";
 import AddVehicle from './Pages/AddVehicle';
 import Vehicles from './Pages/Vehicles';
+import Vehicle from './Pages/ViewVehicle';
 import UpdateVehicles from './Pages/UpdateVehicle'
 import VehicleDash from './Pages/VehicleDashBoard';
 import Allprojects from "./Pages/Allprojects";
@@ -56,6 +57,7 @@ function App() {
           <Route path = '/vehicle' element = {<VehicleDash/>}/>
           <Route path = '/addvehicle' element = {<AddVehicle/>}/>
           <Route path = '/viewvehicles' element = {<Vehicles/>}/>
+          <Route path = '/viewvehicle/:id' element = {<Vehicle/>}/>
           <Route path = '/viewvehicles/:id' element = {<UpdateVehicles/>}/>
           <Route path = '/allusers' element ={<AllUsers/>}/>
           <Route path = '/allprojects' element = {<Allprojects/>}/>
