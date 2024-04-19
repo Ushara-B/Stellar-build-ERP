@@ -241,7 +241,7 @@ function AddVehicle() {
           
           <button>Submit</button>
         </form>
-
+        </Box>
     </div>
   );
 }
