@@ -31,7 +31,7 @@ import  Expense from "./Components/Finance/Finance/Expense";
 import  Income from "./Components/Finance/Finance/Income";
 import Finance from "./Pages/Finance";
 import InventoryCategory from "./Pages/InventoryCategory";
-import { useGlobalContext } from '../src/Context/globalContext';
+
 
 import ViewAttendance from "./Pages/ViewAttendance";
 
