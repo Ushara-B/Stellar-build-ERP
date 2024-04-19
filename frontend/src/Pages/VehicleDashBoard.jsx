@@ -8,7 +8,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import PrintIcon from '@mui/icons-material/Print';
 import AddIcon from '@mui/icons-material/Add';
 import IconButton from '@mui/material/IconButton';
-import { Box, Paper, InputBase, TableContainer, Table, TableHead, TableBody, TableRow, TableCell } from '@mui/material';
+import { Box, Paper, InputBase } from '@mui/material';
 
 const URL = "http://localhost:5000/Vehicles";
 
@@ -52,6 +52,7 @@ function Vehicles() {
                 else if (vehicle.Type === 'Other') vehicleTypeCounts.Other++;
             });
             setVehicleTypeCounts(vehicleTypeCounts);
+
         });
     }, []);
 
@@ -144,6 +145,7 @@ function Vehicles() {
                             <p>Van: {vehicleTypeCounts.Van}</p>
                             <p>Other: {vehicleTypeCounts.Other}</p>
                         </Paper>
+                        
                     </Box>
 
                    
