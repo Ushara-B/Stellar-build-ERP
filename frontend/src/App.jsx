@@ -3,7 +3,6 @@ import Home from "./Pages/Home";
 import AllUsers from "./Pages/AllUsers";
 import AddUsers from "./Pages/AddUsers";
 import UpdateUser from './Pages/UpdateUser';
-import ViewUser from './Pages/ViewUser';
 import NoPages from "./Pages/NoPages";
 import Supplier from "./Pages/Supplier";
 import EmpManagement from "./Pages/EmpManagement";
@@ -20,14 +19,11 @@ import Vehicles from './Pages/Vehicles';
 import UpdateVehicles from './Pages/UpdateVehicle'
 import VehicleDash from './Pages/VehicleDashBoard';
 import Allprojects from "./Pages/Allprojects";
-import Addprojects from "./Pages/Addprojects";
 import Newprojects from "./Pages/Newprojects";
 import Updateprojects from "./Pages/Updateprojects";
 import ViewInventoryList from "./Pages/ViewInventoryList";
 import Inventory from "./Pages/Inventory";
 import AddInventory from "./Pages/AddInventory";
-import ViewAttendance from "./Pages/ViewAttendance";
-
 
 function App() {
   return (
@@ -56,7 +52,7 @@ function App() {
           <Route path = '/allusers' element ={<AllUsers/>}/>
           <Route path = '/Allprojects' element = {<Allprojects/>}/>
           <Route path = '/Addprojects' element = {<Addprojects/>}/>
-          <Route path = '/Newprojects' element = {<Newprojects/>}/> 
+          <Route path = '/Newprojects' element = {<Newprojects/>}/>
           <Route path = '/Updateprojects/:id' element = {<Updateprojects/>}/>
           <Route path = '/viewinventorylist' element = {<ViewInventoryList/>}/>
           <Route path = '/inventory' element = {<Inventory/>}/>
@@ -64,9 +60,6 @@ function App() {
           <Route path="/viewuser/:id" element={<ViewUser />} />
           <Route path="/updateuser/:id" element={<UpdateUser />} />
           <Route path="/adduser" element={<AddUsers />} />
-          <Route path="/ActiveLeaves/:id"element={<UpdateLeave />}/>
-          <Route path="/UpdateLeave/:id"element={<UpdateLeave />}/>
-          <Route path="/viewAttendance/:id"element={<ViewAttendance />}/>
         </Routes>
       </BrowserRouter>
     </div>

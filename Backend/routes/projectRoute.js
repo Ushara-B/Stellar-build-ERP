@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 //insert model
-const User = require("../models/projectModel");
+const Project = require("../models/projectModel");
 //insert user controller
 const projectController = require("../controllers/projectControl");
 
