@@ -216,6 +216,31 @@ function AddVehicle() {
                   </Grid>
               </Grid>
             </Box>
+
+        <form onSubmit={handleSubmit} style={{ textAlign: "center" }}>
+          <label>RegisterNo</label><br/>
+          <input type='text' name='RegNo' onChange={handleChange} value={inputs.RegNo}  required /><br/><br/>
+          <label>Vehicle Name</label><br/>
+          <input type='text' name='Vname' onChange={handleChange} value={inputs.Vname} required /><br/><br/>
+          <label>Vehicle Type</label><br/>
+          <input type='text' name='Type' onChange={handleChange} value={inputs.Type} required /><br/><br/>
+          <label>Vehicle Identification Number</label><br/>
+          <input type='text' name='VIN' onChange={handleChange} value={inputs.VIN} required /><br/><br/>
+          <label>License Expiry Day</label><br/>
+          <input type='date' name='lic_expDay' onChange={handleChange} value={inputs.lic_expDay} required /><br/><br/>
+          <label>Insurance Expiry Day</label><br/>
+          <input type='date' name='ins_expDay' onChange={handleChange} value={inputs.ins_expDay} required /><br/><br/>
+          <label>Last Service Day:</label><br/>
+          <input type='date' name='last_serviceDay' onChange={handleChange} value={inputs.last_serviceDay} required /><br/><br/>
+          <label>Current Mileage:</label><br/>
+          <input type='text' name='mileage' onChange={handleChange} value={inputs.mileage} required /><br/><br/>
+          <label>Driver Name:</label><br/>
+          <input type='text' name='dname' onChange={handleChange} value={inputs.dname} required /><br/><br/>
+          <label>Vehicle Status:</label><br/>
+          <input type='text' name='vstatus' onChange={handleChange} value={inputs.vstatus} required /><br/><br/>
+          
+          <button>Submit</button>
+
         </Box>
     </div>
   );
