@@ -4,11 +4,10 @@ import { useNavigate } from "react-router-dom";
 import { useReactToPrint } from 'react-to-print';
 import Menu from '../Components/menu';
 import AppBar from '../Components/Appbar';
-import SearchIcon from '@mui/icons-material/Search';
 import PrintIcon from '@mui/icons-material/Print';
 import AddIcon from '@mui/icons-material/Add';
 import IconButton from '@mui/material/IconButton';
-import { Box, Paper, InputBase } from '@mui/material';
+import { Box, Paper, Typography } from '@mui/material';
 import { Doughnut } from 'react-chartjs-2';
 
 const URL = "http://localhost:5000/Vehicles";
@@ -19,12 +18,12 @@ const fetchHandler = async () => {
 
 function Vehicles() {
     const [vehicles, setVehicles] = useState([]);
-    const [searchQuery, setSearchQuery] = useState("");
-    const [noResults, setNoResults] = useState(false);
     const [totalVehicles, setTotalVehicles] = useState(0);
     const [totalDrivers, setTotalDrivers] = useState(0);
-    const [vehicleStatus, setVehicleStatus] = useState({ active: 0, inactive: 0, repair: 0 });
+    const [vehicleStatus, setVehicleStatus] = useState({ Active: 0, Inactive: 0, Repair: 0 });
     const [vehicleTypeCounts, setVehicleTypeCounts] = useState({Bike: 0, Car: 0, Truck: 0, Van: 0, Other: 0});
+    const [soonToExpireLicenses, setSoonToExpireLicenses] = useState([]);
+    const [soonToExpireInsurance, setSoonToExpireInsurance] = useState([]);
     const navigate = useNavigate();
     const ComponentsRef = useRef();
 
@@ -32,28 +31,52 @@ function Vehicles() {
         fetchHandler().then((data) => {
             setVehicles(data.vehicle);
             setTotalVehicles(data.vehicle.length);
+            
             // Calculate total unique drivers
             const uniqueDrivers = new Set(data.vehicle.map(vehicle => vehicle.dname).filter(Boolean));
             setTotalDrivers(uniqueDrivers.size);
+
             // Calculate vehicle status counts
             const statusCounts = { active: 0, inactive: 0, repair: 0 };
+            // Calculate vehicle type counts
+            const vehicleTypeCounts = {Bike: 0, Car: 0, Truck: 0, Van: 0, Other: 0};
+            // Temporary arrays for soon-to-expire licenses and insurance
+            const tempSoonToExpireLicenses = [];
+            const tempSoonToExpireInsurance = [];
+
             data.vehicle.forEach(vehicle => {
+                // Update status counts
                 if (vehicle.vstatus === 'Active') statusCounts.active++;
                 else if (vehicle.vstatus === 'Inactive') statusCounts.inactive++;
                 else if (vehicle.vstatus === 'Repair') statusCounts.repair++;
-            });
-            setVehicleStatus(statusCounts);
-            // Calculate vehicle type counts
-            const vehicleTypeCounts = {Bike: 0, Car: 0, Truck: 0, Van: 0, Other: 0};
-            data.vehicle.forEach(vehicle => {
+
+                // Update vehicle type counts
                 if (vehicle.Type === 'Bike') vehicleTypeCounts.Bike++;
                 else if (vehicle.Type === 'Car') vehicleTypeCounts.Car++;
                 else if (vehicle.Type === 'Truck') vehicleTypeCounts.Truck++;
                 else if (vehicle.Type === 'Van') vehicleTypeCounts.Van++;
                 else if (vehicle.Type === 'Other') vehicleTypeCounts.Other++;
-            });
-            setVehicleTypeCounts(vehicleTypeCounts);
 
+                // Check for license expiry date within 1 month
+                const licenseExpiryDate = new Date(vehicle.lic_expDay);
+                const oneMonthBefore = new Date();
+                oneMonthBefore.setMonth(oneMonthBefore.getMonth() + 1);
+                if (licenseExpiryDate <= oneMonthBefore) {
+                    tempSoonToExpireLicenses.push(vehicle);
+                }
+                
+                // Check for insurance expiry date within 1 month
+                const insuranceExpiryDate = new Date(vehicle.ins_expDay);
+                if (insuranceExpiryDate <= oneMonthBefore) {
+                    tempSoonToExpireInsurance.push(vehicle);
+                }
+            });
+
+            // Update state after the loop
+            setVehicleStatus(statusCounts);
+            setVehicleTypeCounts(vehicleTypeCounts);
+            setSoonToExpireLicenses(tempSoonToExpireLicenses);
+            setSoonToExpireInsurance(tempSoonToExpireInsurance);
         });
     }, []);
 
@@ -117,39 +140,61 @@ function Vehicles() {
                     <PrintIcon />
                 </IconButton>
             </Box>
-
-            {noResults ? (
-                <div>
-                    <p>No results found</p>
-                </div>
-            ) : (
-                <div>
-                    <Box sx={{ display: 'flex'}} ref={ComponentsRef}>
-                    <div style={{ width: '30%', height: '30%' }}>
-                        <Paper sx={{ p: 2, m: 2, flexGrow: 1, minWidth: 50 }}>
-                            <h2>Total Vehicles</h2>
-                            <p>{totalVehicles}</p>
-                        </Paper>
-                        <Paper sx={{ p: 2, m: 2, flexGrow: 1, minWidth: 50, }}>
-                            <h2>Total Drivers</h2>
-                            <p>{totalDrivers}</p>
-                        </Paper><br /><br />
-                    </div>   
+                <div ref={ComponentsRef}>
+                    <Box sx={{ display: 'flex'}} >
+                        <div style={{ width: '30%', height: '30%' }}>
+                            <Paper sx={{ p: 2, m: 2, flexGrow: 1, minWidth: 50 }}>
+                                <h2>Total Vehicles</h2>
+                                <p>{totalVehicles}</p>
+                            </Paper>
+                            <Paper sx={{ p: 2, m: 2, flexGrow: 1, minWidth: 50, }}>
+                                <h2>Total Drivers</h2>
+                                <p>{totalDrivers}</p>
+                            </Paper><br /><br />
+                        </div>   
                         <div style={{ width: '30%', height: '30%' }}>
                             <Paper sx={{ p: 2, m: 2, flexGrow: 1, minWidth: 50 }}>
                                 <h2>Vehicle Status</h2>
+                                {Object.entries(vehicleStatus).map(([status, count], index) => (
+                                    `${status}: ${count}${index === Object.keys(vehicleStatus).length - 1 ? '' : '| '}`
+                                ))}
                                 <Doughnut data={vehicleStatusData} />
                             </Paper>
                         </div>
                         <div style={{ width: '30%', height: '30%' }}>
                             <Paper sx={{ p: 2, m: 2, flexGrow: 1, minWidth: 50 }}>
                                 <h2>Vehicle Type</h2>
+                                {Object.entries(vehicleTypeCounts).map(([type, count], index) => (
+                                    `${type}: ${count}${index === Object.keys(vehicleTypeCounts).length - 1 ? '' : '| '}`
+                                ))}
                                 <Doughnut data={vehicleTypeData} />
                             </Paper>
                         </div>
                     </Box>
+                    <Box sx={{ display: 'flex', marginTop: '20px', marginLeft: '20px' }}>
+                        <Paper sx={{ p: 2, m: 2, minWidth: '200px', maxWidth: '400px' }}>
+                            <Typography variant="h6" gutterBottom>
+                                Vehicles with Soon-to-Expire Licenses
+                            </Typography>
+                            {soonToExpireLicenses.map(vehicle => (
+                                <Typography key={vehicle._id}>
+                                    - {vehicle.Vname}: License Expiry on {formatDate(vehicle.lic_expDay)}
+                                </Typography>
+                            ))}
+                        </Paper>
+                        <Paper sx={{ p: 2, m: 2, minWidth: '200px', maxWidth: '400px', marginLeft: '20px' }}>
+                            <Typography variant="h6" gutterBottom>
+                                Vehicles with Soon-to-Expire Insurance
+                            </Typography>
+                            {soonToExpireInsurance.map(vehicle => (
+                                <Typography key={vehicle._id}>
+                                    - {vehicle.Vname}: Insurance Expiry on {formatDate(vehicle.ins_expDay)}
+                                </Typography>
+                            ))}
+                        </Paper>
+                    </Box>
                 </div>
-            )}
+            
             <br /><br />
         </div>
     )
