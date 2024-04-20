@@ -3,7 +3,7 @@ import Drawer from '../Components/menu';
 import Appbar from '../Components/Appbar';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import { Box, Card, CardContent, Divider, Grid, Typography } from '@mui/material';
+import { Box, Card, CardContent, Grid, Typography } from '@mui/material';
 
 const ViewVehicle = () => {
   const { id } = useParams();
