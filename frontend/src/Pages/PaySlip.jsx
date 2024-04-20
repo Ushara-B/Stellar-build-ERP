@@ -6,6 +6,7 @@ function PaySlip() {
     <div>
       <AppBar />
       <Drawer />
+        
     </div>
   );
 }

@@ -6,6 +6,9 @@ import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 
 function UpdateLeave() {
+  const navigate = useNavigate();
+  const { id } = useParams();
+
   // Initialize inputs state with default values
   const [inputs, setInputs] = useState({
     emp_id: "",
@@ -14,16 +17,13 @@ function UpdateLeave() {
     reason: "",
   });
 
-  const history = useNavigate();
-  const id = useParams().id;
-
   // Fetch leave data from the server
   useEffect(() => {
     const fetchHandler = async () => {
       try {
         const response = await axios.get(`http://localhost:5000/leaves/${id}`);
         // If data is successfully fetched, update the inputs state
-        setInputs(response.data.leave);
+        setInputs(response.data);
       } catch (error) {
         console.error("Error fetching leave:", error);
       }
@@ -31,35 +31,32 @@ function UpdateLeave() {
     fetchHandler();
   }, [id]);
 
-  // Function to send update request to the server
-  const sendRequest = async () => {
-    try {
-      await axios.put(`http://localhost:5000/leaves/${id}`, {
-        emp_id: String(inputs.emp_id),
-        date: String(inputs.date),
-        type: String(inputs.type),
-        reason: String(inputs.reason),
-      });
-    } catch (error) {
-      console.error("Error updating leave:", error);
-    }
-  };
-
   // Handle input changes
   const handleChange = (e) => {
-    setInputs((prevState) => ({
-      ...prevState,
+    setInputs({
+      ...inputs,
       [e.target.name]: e.target.value,
-    }));
+    });
   };
 
   // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(inputs);
-    sendRequest().then(() => {
-      history("/ActiveLeaves");
-    });
+    try {
+      const response = await axios.put(
+        `http://localhost:5000/leaves/${id}`,
+        inputs
+      );
+      console.log("Leave updated successfully:", response.data);
+      navigate("/ActiveLeaves");
+    } catch (error) {
+      console.error("Error updating leave:", error);
+      if (error.response && error.response.data && error.response.data.message) {
+        alert(`Error updating leave: ${error.response.data.message}`);
+      } else {
+        alert("An unexpected error occurred. Please try again later.");
+      }
+    }
   };
 
   return (
@@ -76,30 +73,39 @@ function UpdateLeave() {
           Width: "100%",
           alignContent: "center",
           display: "block",
-          margin: "150px auto auto 250px",
+          margin: "150px auto auto 350px",
+          backgroundColor:"#D9D9D9",
+          borderRadius:"50px"
         }}
-      >
+      ><h1>Update your leave  </h1>
         <form onSubmit={handleSubmit}>
-            <label>Employee ID</label><br/>
-            <input
-              type="text"
-              name="emp_id"
-              onChange={handleChange}
-              value={inputs.emp_id}
-              required
-            /><br/><br/>
-            <label>Date</label><br/>
-            <input
-              type="date"
-              name="date"
-              onChange={handleChange}
-              value={inputs.date}
-              required
-            /><br/><br/>
-            <label>Type</label><br/>
-            <select 
+          <label>Employee ID</label>
+          <br />
+          <input
+            type="text"
+            name="emp_id"
+            onChange={handleChange}
+            value={inputs.emp_id || ""}
+            required
+          />
+          <br />
+          <br />
+          <label>Date</label>
+          <br />
+          <input
+            type="date"
+            name="date"
+            onChange={handleChange}
+            value={inputs.date || ""}
+            required
+          />
+          <br />
+          <br />
+          <label>Type</label>
+          <br />
+          <select
             name="type"
-            value={inputs.type}
+            value={inputs.type || ""}
             onChange={handleChange}
             required
           >
@@ -108,17 +114,22 @@ function UpdateLeave() {
             <option value="Vacation Leave">Vacation leave</option>
             <option value="Personal Leave">Personal leave</option>
             {/* Add more options as needed */}
-          </select><br/><br/>
-            <label>Reason</label><br/>
-            <input
-              type="text"
-              name="reason"
-              onChange={handleChange}
-              value={inputs.reason}
-              required
-            /><br/><br/>
-            <button type="submit">Submit</button>
-          </form>
+          </select>
+          <br />
+          <br />
+          <label>Reason</label>
+          <br />
+          <input
+            type="text"
+            name="reason"
+            onChange={handleChange}
+            value={inputs.reason || ""}
+            required
+          />
+          <br />
+          <br />
+          <button type="submit">Submit</button>
+        </form>
       </Grid>
     </div>
   );

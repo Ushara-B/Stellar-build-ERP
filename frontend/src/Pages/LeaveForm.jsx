@@ -55,7 +55,15 @@ function LeaveForm() {
           margin: "150px auto auto 250px",
         }}
       >
-        <Grid sx={{ width: "80%" }}>
+        <Grid sx={{ 
+          maxWidth: "1000px",
+          Width: "100%",
+          alignContent: "center",
+          display: "block",
+          margin: "auto auto auto auto",
+          backgroundColor:"#D9D9D9",
+          borderRadius:"50px"
+      }}>
           <h1
             className="headerLeave"
             style={{ textAlign: "center", marginBottom: "20px" }}
