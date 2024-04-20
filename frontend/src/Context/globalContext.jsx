@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react"
 import axios from 'axios'
 
 
-const BASE_URL = "http://localhost:5000/api/v1/";
+const BASE_URL = "http://localhost:5000/finance/";
 
 
 const GlobalContext = React.createContext()
@@ -11,7 +11,7 @@ export const GlobalProvider = ({children}) => {
 
     const [incomes, setIncomes] = useState([])
     const [expenses, setExpenses] = useState([])
-    const [projects, setProjects] = useState([]);
+    
     const [error, setError] = useState(null)
 
     //calculate incomes
@@ -66,6 +66,7 @@ export const GlobalProvider = ({children}) => {
 
     const totalExpenses = () => {
         let totalIncome = 0;
+        
         expenses.forEach((income) =>{
             totalIncome = totalIncome + income.amount
         })
@@ -87,11 +88,7 @@ export const GlobalProvider = ({children}) => {
         return history.slice(0, 3)
     }
 
-    const getProjects = async () => {
-          const response = await axios.get(`${BASE_URL}get-projects`);
-          setProjects(response.data)
-          console.log(response.data)
-      };
+
     
 
     return (
@@ -108,14 +105,12 @@ export const GlobalProvider = ({children}) => {
             totalExpenses,
             totalBalance,
             transactionHistory,
-            projects,
-            getProjects,
             error,
             setError
         }}>
             {children}
         </GlobalContext.Provider>
-    )
+    ) 
 }
 
 export const useGlobalContext = () =>{
