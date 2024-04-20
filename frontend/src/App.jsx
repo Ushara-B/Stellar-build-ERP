@@ -32,7 +32,7 @@ import  Income from "./Components/Finance/Finance/Income";
 import Finance from "./Pages/Finance";
 import InventoryCategory from "./Pages/InventoryCategory";
 import { useGlobalContext } from '../src/Context/globalContext';
-=========
+import Addprojects from "./Pages/Addprojects"
 import ViewAttendance from "./Pages/ViewAttendance";
 
 
