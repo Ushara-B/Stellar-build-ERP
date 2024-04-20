@@ -1,18 +1,26 @@
 import { useEffect, useState } from 'react';
 import { Box, Typography, Avatar } from '@mui/material';
 import { DataGrid, gridClasses } from '@mui/x-data-grid';
-import { useGlobalContext } from '../../../Context/globalContext'; 
+import styled from 'styled-components'
+import { useGlobalContext } from '../../Context/globalContext'; 
 import moment from 'moment';    
 import { grey } from '@mui/material/colors';
 import DeleteIcon from '@mui/icons-material/Delete';
+import  AppBar  from '../../Components/Appbar';
+import  Menu  from '../../Components/menu';
+import { InnerLayout,MainLayout } from '../../Styles/Layout';
+import { GlobalStyle } from '../../Styles/globalStyle';
+import { useNavigate } from 'react-router-dom';
 
-const Income = () => {
-  const { incomes, getIncomes, deleteIncome, totalIncome } = useGlobalContext();
+
+const Expense = () => {
+  const { expenses, getExpenses, deleteExpense, totalExpenses } = useGlobalContext();
   const [pageSize, setPageSize] = useState(5);
   const [selectedRowId, setSelectedRowId] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    getIncomes();
+    getExpenses();
   }, []);
 
   const columns = [
@@ -60,7 +68,7 @@ const Income = () => {
       width: 200,
       renderCell: (params) => {
         const handleDelete = () => {
-          deleteIncome(params.row._id);
+          deleteExpense(params.row._id);
         };
         return (
           <div>
@@ -72,7 +80,7 @@ const Income = () => {
   ];
 
   const totalIncomeStyle = {
-    backgroundColor: 'green', // Set green background color
+    backgroundColor: 'red', // Set green background color
     color: 'white', // Set text color to white
     padding: '15px',
     fontSize:'30px',
@@ -95,21 +103,27 @@ const Income = () => {
   };
 
   return (
+    <ExpenseStyled>
+      <MainLayout>
+      <GlobalStyle/>
+       <AppBar/>
+        <Menu/>
+        <main>
     <Box sx={{ height: 800, width: '100%' }}>
       <Typography variant="h3" component="h3" sx={{ textAlign: 'center', mt: 3, mb: 3 }}>
-        Incomes
+        Expenses
       </Typography>
       <Box  sx={{ display: 'flex',gap: 2 }}>
       <Typography variant="h6" component="h6" sx={{ textAlign: 'center', mb: 3, }}>
-      <span style={totalIncomeStyle}> Total Income:Rs{totalIncome()}</span>
+      <span style={totalIncomeStyle}> Total Expense:Rs{totalExpenses()}</span>
       </Typography>
-      <Typography variant="h6" component="h6" sx={{ textAlign: 'center', mb: 3, }}>
-      <span style={addIncomeStyle}> Add Income</span>
+      <Typography variant="h6" component="h6" sx={{ textAlign: 'center', mb: 3, }}  onClick={() => navigate('/finance/expenseform')}>
+      <span style={addIncomeStyle}> Add Expense</span>
       </Typography>
       </Box>
       <DataGrid
         columns={columns}
-        rows={incomes}
+        rows={expenses}
         getRowId={(row) => row._id}
         rowsPerPageOptions={[5, 10, 20]}
         pageSize={pageSize}
@@ -135,7 +149,33 @@ const Income = () => {
         onCellEditCommit={(params) => setSelectedRowId(params.id)}
       />
     </Box>
+    </main>
+    </MainLayout>
+    </ExpenseStyled>
   );
+  
 };
 
-export default Income;
+const ExpenseStyled = styled.div`
+height: 100vh;
+background-image: url(${props => props.bg});
+position: relative;
+main{
+  width:2000px;
+  height:1050px;
+  margin-left: 250px;
+  margin-top:50px;
+  background: #FFFFFF;
+  border: 3px solid #FFFFFF;
+  backdrop-filter: blur(4.5px);
+  
+  
+  overflow-x: hidden;
+  
+}
+
+Box{}
+
+
+`;
+export default Expense;

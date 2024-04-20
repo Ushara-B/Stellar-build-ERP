@@ -213,7 +213,22 @@ function UpdateVehicle() {
               </TextField>
             </Grid>
             <Grid item xs={3}>
-              <Button type="submit" variant="contained" color="primary" fullWidth>
+              <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+                fullWidth
+                sx={{
+                  mt: 7,
+                  mb: 2,
+                  height: '50px',
+                  width: '150px',
+                  borderRadius: '21px',
+                  backgroundColor: '#1B1A55',
+                  '&:hover': {
+                    backgroundColor: '#16155d',
+                  },
+                }}>
                 Update Vehicle
               </Button>
             </Grid>

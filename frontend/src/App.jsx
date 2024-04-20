@@ -27,9 +27,11 @@ import Updateprojects from "./Pages/Updateprojects";
 import ViewInventoryList from "./Pages/ViewInventoryList";
 import Inventory from "./Pages/Inventory";
 import AddInventory from "./Pages/AddInventory";
-import  Expense from "./Components/Finance/Finance/Expense";
-import  Income from "./Components/Finance/Finance/Income";
-import Finance from "./Pages/Finance";
+import  Expense from "./Pages/Finance/Expense";
+import  Income from "./Pages/Finance/Income";
+import  IncomeForm from "./Pages/Finance/Form";
+import  ExpenseForm from "./Pages/Finance/expenseForm";
+import FinanceDashboard from "../src/Pages/Finance/finDashboard";
 import InventoryCategory from "./Pages/InventoryCategory";
 
 
@@ -65,7 +67,6 @@ function App() {
           <Route path = '/allprojects' element = {<Allprojects/>}/>
           <Route path = '/Newprojects' element = {<Newprojects/>}/>
           <Route path = '/Allprojects' element = {<Allprojects/>}/>
-          <Route path = '/Addprojects' element = {<Addprojects/>}/>
           <Route path = '/Newprojects' element = {<Newprojects/>}/> 
           <Route path = '/Updateprojects/:id' element = {<Updateprojects/>}/>
           <Route path = '/viewinventorylist' element = {<ViewInventoryList/>}/>
@@ -74,11 +75,13 @@ function App() {
           <Route path="/viewuser/:id" element={<ViewUser />} />
           <Route path="/updateuser/:id" element={<UpdateUser />} />
           <Route path="/adduser" element={<AddUsers />} />
-          <Route path="/user-profile" element={<UserProfile />} />
 
-          <Route path="/finance" element={<Finance />} />
+          <Route path="/finance" element={<FinanceDashboard />} />
+          <Route path="/user-profile" element={<UserProfile />} />
           <Route path="/finance/expense" element={<Expense />} />
           <Route path="/finance/income" element={<Income />} />
+          <Route path="/finance/incomeform" element={<IncomeForm />} />
+          <Route path="/finance/expenseform" element={<ExpenseForm />} />
           <Route path = '/inventorycategory' element = {<InventoryCategory/>}/>
 
 

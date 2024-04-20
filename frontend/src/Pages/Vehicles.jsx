@@ -13,6 +13,10 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Box, Paper, InputBase, TableContainer, Table, TableHead, TableBody, TableRow, TableCell, TablePagination } from '@mui/material';
 import vehicle from "../css/Vehicle.css";
+import Breadcrumbs from '@mui/material/Breadcrumbs';
+import Typography from '@mui/material/Typography';
+import Link from '@mui/material/Link';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 const URL = "http://localhost:5000/Vehicles";
 
 const fetchHandler = async () => {
@@ -91,6 +95,18 @@ function Vehicles() {
             <AppBar />
             <Menu />
             <div style={{ marginLeft: '260px', paddingTop: '100px'}}>
+                <Breadcrumbs
+                    arial-label="breadcrumb"
+                    separator={<NavigateNextIcon fontSize="small" />}
+                >
+                <Link underline="hover" key="1" color="inherit" href="/vehicle">
+                    Vehicle DashBoard
+                </Link>
+                <Typography key="3" color="text.primary">
+                    Vehicles List
+                </Typography>
+                </Breadcrumbs>
+                <br></br>
             <Paper sx={{ width: '100%', boxShadow: 'none' }}>
                 <Box >
                     <InputBase
@@ -124,33 +140,33 @@ function Vehicles() {
                                
                                 <TableHead>
                                     <TableRow>
-                                        <TableCell >Register No</TableCell>
-                                        <TableCell >Vehicle Name</TableCell>
-                                        <TableCell >Type</TableCell>
+                                        <TableCell  sx={{backgroundColor: '#b1c5d4',fontWeight: 'bold',border: 'none',padding: '5px 10px','&:hover': {backgroundColor: '#b1c5d4'}}}>Register No</TableCell>
+                                        <TableCell sx={{backgroundColor: '#b1c5d4',fontWeight: 'bold',border: 'none',padding: '5px 10px','&:hover': {backgroundColor: '#b1c5d4'}}}>Vehicle Name</TableCell>
+                                        <TableCell sx={{backgroundColor: '#b1c5d4',fontWeight: 'bold',border: 'none',padding: '5px 10px','&:hover': {backgroundColor: '#b1c5d4'}}}>Type</TableCell>
                                         
-                                        <TableCell >License Expiry Day</TableCell>
-                                        <TableCell >Insurance Expiry Day</TableCell>
-                                        <TableCell >Last Service Day</TableCell>
-                                        <TableCell >Mileage</TableCell>
-                                        <TableCell >Driver Name</TableCell>
-                                        <TableCell >Vehicle Status</TableCell>
-                                        <TableCell >Action</TableCell>
+                                        <TableCell sx={{backgroundColor: '#b1c5d4',fontWeight: 'bold',border: 'none',padding: '5px 10px','&:hover': {backgroundColor: '#b1c5d4'}}}>License Expiry Day</TableCell>
+                                        <TableCell sx={{backgroundColor: '#b1c5d4',fontWeight: 'bold',border: 'none',padding: '5px 10px','&:hover': {backgroundColor: '#b1c5d4'}}}>Insurance Expiry Day</TableCell>
+                                        <TableCell sx={{backgroundColor: '#b1c5d4',fontWeight: 'bold',border: 'none',padding: '5px 10px','&:hover': {backgroundColor: '#b1c5d4'}}}>Last Service Day</TableCell>
+                                        <TableCell sx={{backgroundColor: '#b1c5d4',fontWeight: 'bold',border: 'none',padding: '5px 10px','&:hover': {backgroundColor: '#b1c5d4'}}}>Mileage</TableCell>
+                                        <TableCell sx={{backgroundColor: '#b1c5d4',fontWeight: 'bold',border: 'none',padding: '5px 10px','&:hover': {backgroundColor: '#b1c5d4'}}}>Driver Name</TableCell>
+                                        <TableCell sx={{backgroundColor: '#b1c5d4',fontWeight: 'bold',border: 'none',padding: '5px 10px','&:hover': {backgroundColor: '#b1c5d4'}}}>Vehicle Status</TableCell>
+                                        <TableCell sx={{backgroundColor: '#b1c5d4',fontWeight: 'bold',border: 'none',padding: '5px 10px','&:hover': {backgroundColor: '#b1c5d4'}}}>Action</TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
                                     {vehicles.map((vehicle) => (
                                         <TableRow key={vehicle._id}>
-                                            <TableCell sx={{ border: '1px', padding: '5px 4px', backgroundColor: 'white', textAlign: 'center' }}>{vehicle.RegNo}</TableCell>
-                                            <TableCell sx={{ border: '1px', padding: '5px 4px', backgroundColor: 'white', textAlign: 'center' }}>{vehicle.Vname}</TableCell>
+                                            <TableCell sx={{ border: '1px', padding: '5px 10px', backgroundColor: 'white', textAlign: 'center' }}>{vehicle.RegNo}</TableCell>
+                                            <TableCell sx={{ border: '1px', padding: '5px 10px', backgroundColor: 'white', textAlign: 'center' }}>{vehicle.Vname}</TableCell>
                                             <TableCell sx={{ border: '1px', padding: '5px 4px', backgroundColor: 'white', textAlign: 'center' }}>{vehicle.Type}</TableCell>
                                            
-                                            <TableCell sx={{ border: '1px', padding: '5px 4px', backgroundColor: 'white', textAlign: 'center' }}>{formatDate(vehicle.lic_expDay)}</TableCell>
-                                            <TableCell sx={{ border: '1px', padding: '5px 4px', backgroundColor: 'white', textAlign: 'center' }}>{formatDate(vehicle.ins_expDay)}</TableCell>
-                                            <TableCell sx={{ border: '1px', padding: '5px 4px', backgroundColor: 'white', textAlign: 'center' }}>{formatDate(vehicle.last_serviceDay)}</TableCell>
-                                            <TableCell sx={{ border: '1px', padding: '5px 4px', backgroundColor: 'white', textAlign: 'center' }}>{vehicle.mileage}</TableCell>
-                                            <TableCell sx={{ border: '1px', padding: '5px 4px', backgroundColor: 'white', textAlign: 'center' }}>{vehicle.dname}</TableCell>
-                                            <TableCell sx={{ border: '1px', padding: '5px 4px', backgroundColor: 'white', textAlign: 'center' }}>{vehicle.vstatus}</TableCell>
-                                            <TableCell sx={{ border: '1px', padding: '5px 4px', backgroundColor: 'white', textAlign: 'center'}}>
+                                            <TableCell sx={{ border: '1px', padding: '5px 10px', backgroundColor: 'white', textAlign: 'center' }}>{formatDate(vehicle.lic_expDay)}</TableCell>
+                                            <TableCell sx={{ border: '1px', padding: '5px 10px', backgroundColor: 'white', textAlign: 'center' }}>{formatDate(vehicle.ins_expDay)}</TableCell>
+                                            <TableCell sx={{ border: '1px', padding: '5px 10px', backgroundColor: 'white', textAlign: 'center' }}>{formatDate(vehicle.last_serviceDay)}</TableCell>
+                                            <TableCell sx={{ border: '1px', padding: '5px 10px', backgroundColor: 'white', textAlign: 'center' }}>{vehicle.mileage}</TableCell>
+                                            <TableCell sx={{ border: '1px', padding: '5px 10px', backgroundColor: 'white', textAlign: 'center' }}>{vehicle.dname}</TableCell>
+                                            <TableCell sx={{ border: '1px', padding: '5px 10px', backgroundColor: 'white', textAlign: 'center' }}>{vehicle.vstatus}</TableCell>
+                                            <TableCell sx={{ border: '1px', padding: '5px 10px', backgroundColor: 'white', textAlign: 'center'}}>
                                                 <IconButton onClick={() => navigate(`/viewvehicles/${vehicle._id}`)} >
                                                 <EditIcon
                                                     color="primary"
