@@ -129,7 +129,7 @@ function Vehicles() {
     };
 
     return (
-        <div style={{ marginLeft: '250px', paddingTop: '80px' }} >
+        <div style={{ marginLeft: '250px', paddingTop: '80px', position: 'relative' }}>
             <AppBar />
             <Menu />
             <Box sx={{ display: 'flex', alignItems: 'center', marginRight: '40px' }} >
@@ -143,11 +143,11 @@ function Vehicles() {
                 <div ref={ComponentsRef}>
                     <Box sx={{ display: 'flex'}} >
                         <div style={{ width: '30%', height: '30%' }}>
-                            <Paper sx={{ p: 2, m: 2, flexGrow: 1, minWidth: 50 }}>
+                            <Paper sx={{ p: 2, m: 2, flexGrow: 1, minWidth: 50,backgroundColor: '#708090'}}>
                                 <h2>Total Vehicles</h2>
                                 <p>{totalVehicles}</p>
                             </Paper>
-                            <Paper sx={{ p: 2, m: 2, flexGrow: 1, minWidth: 50, }}>
+                            <Paper sx={{ p: 2, m: 2, flexGrow: 1, minWidth: 50,backgroundColor: '#87CEEB' }}>
                                 <h2>Total Drivers</h2>
                                 <p>{totalDrivers}</p>
                             </Paper><br /><br />
@@ -171,10 +171,17 @@ function Vehicles() {
                             </Paper>
                         </div>
                     </Box>
-                    <Box sx={{ display: 'flex', marginTop: '20px', marginLeft: '20px' }}>
+                    <Box sx={{ display: 'flex', marginTop: '20px', marginLeft: '30px', 
+                    maxWidth: '600px',
+                    borderRadius: '21px',
+                    backgroundColor: '#1B1A55',
+                    '&:hover': {
+                      backgroundColor: '#16155d',
+                    },
+                    }}>
                         <Paper sx={{ p: 2, m: 2, minWidth: '200px', maxWidth: '400px' }}>
                             <Typography variant="h6" gutterBottom>
-                                Vehicles with Soon-to-Expire Licenses
+                                Vehicles with Soon-to-Expire Licenses                         
                             </Typography>
                             {soonToExpireLicenses.map(vehicle => (
                                 <Typography key={vehicle._id}>
@@ -196,6 +203,18 @@ function Vehicles() {
                 </div>
             
             <br /><br />
+            {/* Background image */}
+            <div style={{
+                position: 'absolute',
+                bottom: '0',
+                right: '5px',
+                width: '450px',
+                height: '300px',
+                backgroundImage: 'url(https://www.datalex.com.ng/wp-content/uploads/2021/07/vehicle-management-software.png)',
+                backgroundSize: 'cover',
+                backgroundRepeat: 'no-repeat',
+                zIndex: '-1'
+            }} />
         </div>
     )
 }
