@@ -65,7 +65,6 @@ function App() {
           <Route path = '/allprojects' element = {<Allprojects/>}/>
           <Route path = '/Newprojects' element = {<Newprojects/>}/>
           <Route path = '/Allprojects' element = {<Allprojects/>}/>
-          <Route path = '/Addprojects' element = {<Addprojects/>}/>
           <Route path = '/Newprojects' element = {<Newprojects/>}/> 
           <Route path = '/Updateprojects/:id' element = {<Updateprojects/>}/>
           <Route path = '/viewinventorylist' element = {<ViewInventoryList/>}/>
