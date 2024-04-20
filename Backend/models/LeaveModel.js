@@ -6,10 +6,10 @@ const leaveSchema = new Schema({
         type:String,
         required:true,
         trim:true,
-        maxLength:10
+        maxLength:20
     },
     date:{
-        type:Date,
+        type:String,
         required:true,
         trim:true,
     } ,
@@ -26,4 +26,4 @@ const leaveSchema = new Schema({
     } ,
 });
 
-module.exports = mongoose.model('Leave',leaveSchema)
+module.exports = mongoose.model('LeaveModel',leaveSchema)
