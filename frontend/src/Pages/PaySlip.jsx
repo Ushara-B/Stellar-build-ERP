@@ -1,38 +1,69 @@
-import React, { useState, useEffect } from "react";
-import Paper from "@mui/material/Paper";
+import React, { useState, useEffect, useRef } from "react";
+import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
+import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import IconButton from "@mui/material/IconButton";
+import Paper from "@mui/material/Paper";
+import AppBar from "../Components/Appbar";
+import Drawer from "../Components/menu";
+import { Box } from "@mui/material";
+import axios from "axios";
+import { useReactToPrint } from "react-to-print";
 import PrintIcon from "@mui/icons-material/Print";
 import SearchIcon from "@mui/icons-material/Search";
 import InputBase from "@mui/material/InputBase";
-import Box from "@mui/material/Box";
-import AppBar from "../Components/Appbar";
-import Drawer from "../Components/menu";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import { useReactToPrint } from "react-to-print";
+import IconButton from "@mui/material/IconButton";
+import AddIcon from "@mui/icons-material/Add";
 import TablePagination from "@mui/material/TablePagination";
+
+import { useNavigate } from "react-router-dom";
+
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+  [`&.${tableCellClasses.head}`]: {
+    backgroundColor: "#1B1A55",
+    color: theme.palette.common.white,
+    border: 1,
+    borderColor: "black",
+  },
+  [`&.${tableCellClasses.body}`]: {
+    fontSize: 18,
+  },
+}));
+
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+  "&:nth-of-type(odd)": {
+    backgroundColor: theme.palette.action.hover,
+  },
+  "&:hover": {
+    backgroundColor: "#DEDEDE",
+    transition: "background-color 0.3s, color 0.3s",
+    cursor: "pointer",
+  },
+}));
+
+const StyledButton = styled("button")({
+  width: "45%",
+  padding: "10px",
+  marginLeft: "5px",
+});
 
 const columns = [
   { id: "fullName", label: "Name", minWidth: 170 },
   { id: "emp_id", label: "Employee ID", minWidth: 170 },
   { id: "basicSalary", label: "Basic Salary", minWidth: 170 },
   { id: "tax", label: "Tax", minWidth: 170 },
-  { id: "insurance", label: "Insurance", minWidth: 170 },
   { id: "netSalary", label: "Net Salary", minWidth: 170 },
   { id: "actions", label: "Actions", minWidth: 170, align: "center" },
 ];
 
-export default function PaySlip() {
-  const [payslips, setPayslips] = useState([]);
+function PaySlip() {
+  const [slips, setSlips] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -42,18 +73,33 @@ export default function PaySlip() {
   const fetchPayslips = async () => {
     try {
       const response = await axios.get("http://localhost:5000/PaySlip");
-      setPayslips(response.data);
+      console.log("Response Data: ", response.data); // Add this line to check your API response
+      setSlips(response.data.slip); // Change setPayslips to setSlips
     } catch (error) {
       console.error("Error fetching payslips:", error);
     }
   };
 
-  // pdf print function
-  const ComponentsRef = React.useRef();
+  const handleEdit = (id) => {
+    navigate(`/PaySlip/${id}`);
+  };
+
   const handlePrintToPdf = useReactToPrint({
     content: () => ComponentsRef.current,
-    documentTitle: "All payslips",
+    documentTitle: "All Payslips",
   });
+
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const ComponentsRef = useRef();
+
+  const filteredPayslips = Array.isArray(slips)
+    ? slips.filter((slip) =>
+        slip.emp_id.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    : [];
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -78,7 +124,13 @@ export default function PaySlip() {
               mb: 2,
             }}
           >
-           
+            <InputBase
+              sx={{ ml: 1, flex: 1 }}
+              placeholder="Search by Employee ID.."
+              value={searchTerm}
+              onChange={handleSearchChange}
+              startAdornment={<SearchIcon fontSize="small" />}
+            />
             <Box>
               <IconButton
                 color="primary"
@@ -87,138 +139,117 @@ export default function PaySlip() {
               >
                 <PrintIcon />
               </IconButton>
+              <IconButton
+                color="primary"
+                aria-label="Add payslip"
+                onClick={() => navigate("/")}
+              >
+                <AddIcon />
+              </IconButton>
             </Box>
           </Box>
-          <TableContainer ref={ComponentsRef}>
+          <TableContainer
+            ref={ComponentsRef}
+            component={Paper}
+            xs={12}
+            sm={8}
+            sx={{
+              maxWidth: "90%",
+              alignContent: "center",
+              display: "block",
+              overflow: "hidden",
+              borderRadius: "15px",
+              margin: "auto",
+            }}
+          >
             <Table
-              stickyHeader
-              aria-label="sticky table"
-              sx={{ borderCollapse: "collapse", width: "80%", margin: "auto" }}
+              sx={{
+                minWidth: 650,
+                width: "100%", // Adjusted width to be 100% of its container
+                borderCollapse: "collapse",
+                borderRadius: "15px",
+                overflow: "hidden",
+              }}
+              aria-label="customized table"
             >
               <TableHead>
                 <TableRow>
                   {columns.map((column) => (
-                    <TableCell
+                    <StyledTableCell
                       key={column.id}
                       align={column.align}
-                      sx={{
-                        backgroundColor: "#b1c5d4",
-                        fontWeight: "bold",
-                        border: "none",
-                        padding: "5px 10px",
-                        "&:hover": {
-                          backgroundColor: "#b1c5d4",
-                        },
-                      }}
                     >
                       {column.label}
-                    </TableCell>
+                    </StyledTableCell>
                   ))}
                 </TableRow>
               </TableHead>
               <TableBody>
-                 { payslips.map((row) => (
-                    <TableRow
-                      hover
-                      role="checkbox"
-                      tabIndex={-1}
+                {filteredPayslips
+                  .slice(
+                    page * rowsPerPage,
+                    page * rowsPerPage + rowsPerPage
+                  )
+                  .map((row) => (
+                    <StyledTableRow
                       key={row._id}
-                      sx={{
-                        "&:hover": {
-                          backgroundColor: "#DEDEDE", // Background color on hover
-                          transition: "background-color 0.3s, color 0.3s", // Smooth transition
-                          cursor: "pointer", // Change cursor to pointer on hover
-                        },
-                        border: "none",
-                        padding: "8px 16px",
-                      }}
+                      tabIndex={-1}
+                      role="checkbox"
                     >
-                      <TableCell
-                        sx={{
-                          border: "1px solid",
-                          padding: "10px 12px",
-                          backgroundColor: "white",
-                        }}
-                      >
+                      <StyledTableCell>
                         {row.fullName}
-                      </TableCell>
-                      <TableCell
-                        sx={{
-                          border: "1px solid",
-                          padding: "10px 12px",
-                          backgroundColor: "white",
-                        }}
-                      >
+                      </StyledTableCell>
+                      <StyledTableCell>
                         {row.emp_id}
-                      </TableCell>
-                      <TableCell
-                        sx={{
-                          border: "1px solid",
-                          padding: "10px 12px",
-                          backgroundColor: "white",
-                        }}
-                      >
+                      </StyledTableCell>
+                      <StyledTableCell>
                         {row.basicSalary}
-                      </TableCell>
-                      <TableCell
-                        sx={{
-                          border: "1px solid",
-                          padding: "10px 12px",
-                          backgroundColor: "white",
-                        }}
-                      >
-                        {row.tax}
-                      </TableCell>
-                      <TableCell
-                        sx={{
-                          border: "1px solid",
-                          padding: "10px 12px",
-                          backgroundColor: "white",
-                        }}
-                      >
-                        {row.insurance}
-                      </TableCell>
-                      <TableCell
-                        sx={{
-                          border: "1px solid",
-                          padding: "10px 12px",
-                          backgroundColor: "white",
-                        }}
-                      >
+                      </StyledTableCell>
+                      <StyledTableCell>{row.tax}</StyledTableCell>
+                      <StyledTableCell>
                         {row.netSalary}
-                      </TableCell>
-                      <TableCell
+                      </StyledTableCell>
+
+                      <StyledTableCell
                         align="center"
                         sx={{
-                          border: "1px solid",
-                          padding: "10px",
-                          backgroundColor: "white",
                           display: "flex",
-                          justifyContent: "center",
+                          justifyContent: "space-around", // Adjusted to evenly space the buttons
+                          padding: 2,
+                          margin: "auto",
                         }}
                       >
-                        
-                        
-                      </TableCell>
-                    </TableRow>
+                        <StyledButton
+                          style={{ padding: "10px 35px" }}
+                          onClick={() => handleEdit(row._id)}
+                        >
+                          View
+                        </StyledButton>
+                        <StyledButton
+                          style={{ padding: "10px 35px" }}
+                          onClick={() => handleEdit(row._id)}
+                        >
+                          Download
+                        </StyledButton>
+                      </StyledTableCell>
+                    </StyledTableRow>
                   ))}
               </TableBody>
             </Table>
+            <TablePagination
+              rowsPerPageOptions={[5, 10, 25]}
+              component="div"
+              count={filteredPayslips.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+            />
           </TableContainer>
-          <TablePagination
-            rowsPerPageOptions={[10, 25, 100]}
-            component="div"
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-            sx={{
-              borderTop: "none",
-              padding: "12px 16px",
-            }}
-          />
         </Paper>
       </div>
     </>
   );
 }
+
+export default PaySlip;

@@ -87,6 +87,8 @@ export default function NestedList() {
     window.location.href = '/allusers';
     }else if (menuName === 'User Management' && subMenuName === 'Add users'){
     window.location.href = '/adduser';
+  }else if (menuName === 'Employee Management' && subMenuName === 'PaySlip'){
+    window.location.href = '/PaySlip';
     // Add more else if conditions for other sub menus and their respective URLs
     }else {
       // Handle any other cases

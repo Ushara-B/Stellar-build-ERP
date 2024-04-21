@@ -15,15 +15,12 @@ const payslipSchema = new Schema({
         type:Number,
         required:true,
     },
-    OT:{
-        type:Number,
-    },
+    
     tax:{
         type:Number,
+        required:true,
     },
-    insuarance:{
-        type:Number,
-    },
+    
     netSalary:{
         type:Number,
         required:true,
