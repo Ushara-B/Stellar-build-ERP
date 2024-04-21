@@ -29,9 +29,8 @@ import Viewinventory from "./Pages/ViewInventory";
 import Inventory from "./Pages/Inventory";
 import AddInventory from "./Pages/AddInventory";
 
-import Expense from "./Components/Finance/Finance/Expense";
-import Income from "./Components/Finance/Finance/Income";
-import Finance from "./Pages/Finance";
+import Expense from "./Pages/Finance/Expense";
+import Income from "./Pages/Finance/Income";
 import InventoryCategory from "./Pages/InventoryCategory";
 import UpdateInventory from "./Pages/UpdateInventory";
 import { useGlobalContext } from "../src/Context/globalContext";
