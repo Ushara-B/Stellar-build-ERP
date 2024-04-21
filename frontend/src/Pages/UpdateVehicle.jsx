@@ -69,7 +69,15 @@ function UpdateVehicle() {
                     Vehicle Update
                 </Typography>
             </Breadcrumbs>
-      <br></br>
+      
+        <Box 
+         sx={{//box position
+        
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',     
+          minHeight: '100vh',
+        }}>
       
         <Box
           component="form"
@@ -242,11 +250,11 @@ function UpdateVehicle() {
             </Grid>
           </Grid>
         </Box>
-      
+      </Box>
 
     </div>
     </div>
-      );
+    );
 }
 
 export default UpdateVehicle
