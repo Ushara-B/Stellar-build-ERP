@@ -43,16 +43,17 @@ export default function SignIn() {
             // Credentials are valid, redirect to the dashboard
             navigate('/dashboard');
           } else {
-            console.error('Incorrect password');
+            alert('Incorrect password');
           }
         } else {
-          console.error('Invalid username or email');
+          alert('Invalid username or email');
         }
       } else {
-        console.error('Invalid credentials');
+        alert('Invalid credentials');
       }
     } catch (error) {
       console.error('Error logging in:', error);
+      alert('An error occurred while logging in. Please try again.');
     }
   };
 
