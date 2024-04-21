@@ -33,13 +33,9 @@ import Expense from "./Pages/Finance/Expense";
 import Income from "./Pages/Finance/Income";
 import InventoryCategory from "./Pages/InventoryCategory";
 import UpdateInventory from "./Pages/UpdateInventory";
-import { useGlobalContext } from "../src/Context/globalContext";
 import  IncomeForm from "./Pages/Finance/Form";
 import  ExpenseForm from "./Pages/Finance/expenseForm";
 import FinanceDashboard from "../src/Pages/Finance/finDashboard";
-import InventoryCategory from "./Pages/InventoryCategory";
-
-
 import ViewAttendance from "./Pages/ViewAttendance";
 import Projectdetails from "./Pages/Projectdetails";
 
