@@ -3,7 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import AppBar from '../Components/Appbar';
 import Menu from '../Components/menu';
-import { TextField, Button, Typography, Grid, Box, MenuItem } from '@mui/material';
+import { TextField, Button, Grid, Box, MenuItem } from '@mui/material';
+import Breadcrumbs from '@mui/material/Breadcrumbs';
+import Typography from '@mui/material/Typography';
+import Link from '@mui/material/Link';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 
 function AddVehicle() {
   const history = useNavigate();
@@ -46,11 +50,21 @@ function AddVehicle() {
     <div>
       <AppBar />
       <Menu />
-      
+      <div style={{ marginLeft: '255px', paddingTop: '80px',}}>
+      <Breadcrumbs arial-label="breadcrumb" separator={<NavigateNextIcon fontSize="small" />}>
+                <Link underline="hover" key="1" color="inherit" href="/vehicle">
+                    Vehicle DashBoard
+                </Link>
+                <Link underline="hover" key="2" color="inherit" href="/viewvehicles">
+                    Vehicles List
+                </Link>
+                <Typography key="3" color="text.primary">
+                    Add Vehicle
+                </Typography>
+            </Breadcrumbs>
       <Box 
          sx={{//box position
-          marginLeft: '255px',
-          paddingTop: '80px',
+        
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',     
@@ -233,6 +247,7 @@ function AddVehicle() {
             </Box>
 
         </Box>
+    </div>
     </div>
   );
 }

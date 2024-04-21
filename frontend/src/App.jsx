@@ -2,9 +2,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./Pages/Home";
 import AllUsers from "./Pages/AllUsers";
 import AddUsers from "./Pages/AddUsers";
-import UpdateUser from './Pages/UpdateUser';
-import UserProfile from './Pages/UserProfile';
-import ViewUser from './Pages/ViewUser';
+import ViewUser from "./Pages/ViewUser";
+import UpdateUser from "./Pages/UpdateUser";
+import UserProfile from "./Pages/UserProfile";
 import NoPages from "./Pages/NoPages";
 import Supplier from "./Pages/Supplier";
 import EmpManagement from "./Pages/EmpManagement";
@@ -25,10 +25,15 @@ import Allprojects from "./Pages/Allprojects";
 import Newprojects from "./Pages/Newprojects";
 import Updateprojects from "./Pages/Updateprojects";
 import ViewInventoryList from "./Pages/ViewInventoryList";
+import Viewinventory from "./Pages/ViewInventory";
 import Inventory from "./Pages/Inventory";
 import AddInventory from "./Pages/AddInventory";
-import  Expense from "./Pages/Finance/Expense";
-import  Income from "./Pages/Finance/Income";
+
+import Expense from "./Pages/Finance/Expense";
+import Income from "./Pages/Finance/Income";
+import InventoryCategory from "./Pages/InventoryCategory";
+import UpdateInventory from "./Pages/UpdateInventory";
+import { useGlobalContext } from "../src/Context/globalContext";
 import  IncomeForm from "./Pages/Finance/Form";
 import  ExpenseForm from "./Pages/Finance/expenseForm";
 import FinanceDashboard from "../src/Pages/Finance/finDashboard";
@@ -36,7 +41,7 @@ import InventoryCategory from "./Pages/InventoryCategory";
 
 
 import ViewAttendance from "./Pages/ViewAttendance";
-
+import Projectdetails from "./Pages/Projectdetails";
 
 function App() {
   return (
@@ -68,11 +73,14 @@ function App() {
           <Route path = '/Newprojects' element = {<Newprojects/>}/>
           <Route path = '/Allprojects' element = {<Allprojects/>}/>
           <Route path = '/Newprojects' element = {<Newprojects/>}/> 
+          <Route path = '/Projectdetails/:id' element = {<Projectdetails/>}/>
           <Route path = '/Updateprojects/:id' element = {<Updateprojects/>}/>
           <Route path = '/viewinventorylist' element = {<ViewInventoryList/>}/>
           <Route path = '/inventory' element = {<Inventory/>}/>
           <Route path = '/addinventory' element = {<AddInventory/>}/>
+          <Route path="/Updateinventory/:id" element={<UpdateInventory />} />
           <Route path="/viewuser/:id" element={<ViewUser />} />
+          <Route path="/viewinventory/:id" element={<Viewinventory />} />
           <Route path="/updateuser/:id" element={<UpdateUser />} />
           <Route path="/adduser" element={<AddUsers />} />
 
@@ -80,6 +88,7 @@ function App() {
           <Route path="/user-profile" element={<UserProfile />} />
           <Route path="/finance/expense" element={<Expense />} />
           <Route path="/finance/income" element={<Income />} />
+          <Route path="/inventorycategory" element={<InventoryCategory />} />
           <Route path="/finance/incomeform" element={<IncomeForm />} />
           <Route path="/finance/expenseform" element={<ExpenseForm />} />
           <Route path = '/inventorycategory' element = {<InventoryCategory/>}/>
