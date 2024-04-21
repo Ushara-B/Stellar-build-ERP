@@ -11,18 +11,50 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import loginimg from '../Assets/loginimg.png';
-
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const defaultTheme = createTheme();
 
 export default function SignIn() {
-  const handleSubmit = (event) => {
+  const navigate = useNavigate();
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
+    const credentials = {
+      usernameOrEmail: data.get('usernameOrEmail'),
       password: data.get('password'),
-    });
+    };
+
+    try {
+      const response = await axios.post('http://localhost:5000/users/login', credentials);
+
+      if (response.status === 200) {
+        const user = response.data.user;
+
+        // Check if the provided credentials match the user_N or email
+        if (
+          user.user_N === credentials.usernameOrEmail ||
+          user.email === credentials.usernameOrEmail
+        ) {
+          // Check if the provided password matches the user's password
+          if (user.pswrd === credentials.password) {
+            // Credentials are valid, redirect to the dashboard
+            navigate('/dashboard');
+          } else {
+            alert('Incorrect password');
+          }
+        } else {
+          alert('Invalid username or email');
+        }
+      } else {
+        alert('Invalid credentials');
+      }
+    } catch (error) {
+      console.error('Error logging in:', error);
+      alert('An error occurred while logging in. Please try again.');
+    }
   };
 
   return (
@@ -48,18 +80,17 @@ export default function SignIn() {
               alignItems: 'center',
             }}
           >
-            <Typography component="h1" variant="h5" color={'white'} >
+            <Typography component="h1" variant="h5" color={'white'}>
               Sign In
-          
             </Typography>
-            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 20, maxWidth:400 }}>
+            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 20, maxWidth: 400 }}>
               <TextField
                 margin="normal"
                 required
                 fullWidth
-                id="email"
-                label="Email / username"
-                name="email"
+                id="usernameOrEmail"
+                label="Email / Username"
+                name="usernameOrEmail"
                 autoComplete="email"
                 autoFocus
                 sx={{
