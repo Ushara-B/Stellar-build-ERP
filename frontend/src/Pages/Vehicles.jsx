@@ -139,7 +139,16 @@ function Vehicles() {
                            
                                
                                 <TableHead>
-                                    <TableRow>
+                                    <TableRow
+                    sx={{
+                      backgroundColor: "#b1c5d4",
+                      fontWeight: "bold",
+                      border: "none",
+                      padding: "5px 10px",
+                      "&:hover": {
+                        backgroundColor: "#b1c5d4",
+                      },
+                    }}>
                                         <TableCell  sx={{backgroundColor: '#b1c5d4',fontWeight: 'bold',border: 'none',padding: '5px 10px','&:hover': {backgroundColor: '#b1c5d4'}}}>Register No</TableCell>
                                         <TableCell sx={{backgroundColor: '#b1c5d4',fontWeight: 'bold',border: 'none',padding: '5px 10px','&:hover': {backgroundColor: '#b1c5d4'}}}>Vehicle Name</TableCell>
                                         <TableCell sx={{backgroundColor: '#b1c5d4',fontWeight: 'bold',border: 'none',padding: '5px 10px','&:hover': {backgroundColor: '#b1c5d4'}}}>Type</TableCell>
