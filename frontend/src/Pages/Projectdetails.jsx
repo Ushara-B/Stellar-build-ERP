@@ -45,80 +45,80 @@ const Projectdetails = () => {
                 <Link underline="hover" key="2" color="inherit" href="/Allprojects">
                     Projects List
                 </Link>
-                <Typography key="3" color="text.primary">
+                <Typography key="3" color="black" >
                     Project Advance List
                 </Typography>
       </Breadcrumbs>
-      <Box sx={{ marginLeft: '50px', marginTop: '20px', padding: 4, backgroundColor: '#f5f5f5', borderRadius: 2 ,marginRight: '50px'}}>
+      <Box sx={{ marginLeft: '50px', marginTop: '20px', padding: 4, backgroundColor: '#B1C9D8', borderRadius: 2 ,marginRight: '50px'}}>
         <Card>
           <CardContent>
             <Typography variant="h4" gutterBottom>
               Project Details
             </Typography>
             <Grid container spacing={2}>
-            <Grid item xs={6}>
-                <Typography variant="subtitle1" gutterBottom>
+            <Grid sx={{ marginLeft: '30px', marginTop: '20px', padding: 1, backgroundColor: '#f5f5f5', borderRadius: 2 ,marginRight: '5px'}} item xs={5}>
+                <Typography  variant="subtitle1" gutterBottom>
                   Project ID :
                 </Typography>
                 <Typography variant="body1">{Projects.projectID}</Typography>
               </Grid>
-              <Grid item xs={6}>
+              <Grid sx={{ marginLeft: '40px', marginTop: '20px', padding: 1, backgroundColor: '#f5f5f5', borderRadius: 2 ,marginRight: '5px'}} item xs={5}>
                 <Typography variant="subtitle1" gutterBottom>
                   Project Name :
                 </Typography>
                 <Typography variant="body1">{Projects.projectName}</Typography>
               </Grid>
-              <Grid item xs={6}>
+              <Grid sx={{ marginLeft: '30px', marginTop: '20px', padding: 1, backgroundColor: '#f5f5f5', borderRadius: 2 ,marginRight: '5px'}} item xs={5}>
                 <Typography variant="subtitle1" gutterBottom>
                   Project Budget :
                 </Typography>
                 <Typography variant="body1">{Projects.projectBudget}</Typography>
               </Grid>
-              <Grid item xs={6}>
+              <Grid sx={{ marginLeft: '40px', marginTop: '20px', padding: 1, backgroundColor: '#f5f5f5', borderRadius: 2 ,marginRight: '5px'}} item xs={5}>
                 <Typography variant="subtitle1" gutterBottom>
                   Project Location :
                 </Typography>
                 <Typography variant="body1">{Projects.Locate}</Typography>
               </Grid>
               
-              <Grid item xs={6}>
+              <Grid sx={{ marginLeft: '30px', marginTop: '20px', padding: 1, backgroundColor: '#f5f5f5', borderRadius: 2 ,marginRight: '5px'}} item xs={5}>
                 <Typography variant="subtitle1" gutterBottom>
                   Project Owner :
                 </Typography>
                 <Typography variant="body1">{Projects.contractor}</Typography>
               </Grid>
-              <Grid item xs={6}>
+              <Grid sx={{ marginLeft: '40px', marginTop: '20px', padding: 1, backgroundColor: '#f5f5f5', borderRadius: 2 ,marginRight: '5px'}} item xs={5}>
                 <Typography variant="subtitle1" gutterBottom>
                   Project Employeees :
                 </Typography>
                 <Typography variant="body1">{Projects.Employees}</Typography>
               </Grid>
-              <Grid item xs={6}>
+              <Grid sx={{ marginLeft: '30px', marginTop: '20px', padding: 1, backgroundColor: '#f5f5f5', borderRadius: 2 ,marginRight: '5px'}} item xs={5}>
                 <Typography variant="subtitle1" gutterBottom>
                   Start Date :
                 </Typography>
                 <Typography variant="body1">{formatDate(Projects.startDate)}</Typography>
               </Grid>
-              <Grid item xs={6}>
+              <Grid sx={{ marginLeft: '40px', marginTop: '20px', padding: 1, backgroundColor: '#f5f5f5', borderRadius: 2 ,marginRight: '5px'}} item xs={5}>
                 <Typography variant="subtitle1" gutterBottom>
                   End Date :
                 </Typography>
                 <Typography variant="body1">{formatDate(Projects.endDate)}</Typography>
               </Grid>
-              <Grid item xs={6}>
+              <Grid sx={{ marginLeft: '30px', marginTop: '20px', padding: 1, backgroundColor: '#f5f5f5', borderRadius: 2 ,marginRight: '5px'}} item xs={5}>
                 <Typography variant="subtitle1" gutterBottom>
                   Project Status :
                 </Typography>
                 <Typography variant="body1">{Projects.Status}</Typography>
               </Grid>
-              <Grid item xs={6}>
+              <Grid sx={{ marginLeft: '40px', marginTop: '20px', padding: 1, backgroundColor: '#f5f5f5', borderRadius: 2 ,marginRight: '5px'}} item xs={5}>
                 <Typography variant="subtitle1" gutterBottom>
                   Project Type :
                 </Typography>
                 <Typography variant="body1">{Projects.projectType}</Typography>
               </Grid>
               
-              <Grid item xs={6}>
+              <Grid sx={{ marginLeft: '30px', marginTop: '20px', padding: 1, backgroundColor: '#f5f5f5', borderRadius: 2 ,marginRight: '5px'}} item xs={5}>
                 <Typography variant="subtitle1" gutterBottom>
                   Project Description :
                 </Typography>
