@@ -53,11 +53,15 @@ function Updateprojects() {
   
       // Check if start date and end date are empty
       const requestData = {
+          projectID: String(inputs.projectID),
           projectName: String(inputs.projectName),
           projectBudget: Number(inputs.projectBudget),
+          Locate: String(inputs.Locate),
+          contractor: String(inputs.contractor),
           Employees: String(inputs.Employees),
           Status: String(inputs.Status),
           projectType: String(inputs.projectType),
+          description: String(inputs.description),
       };
   
       if (inputs.startDate) {
@@ -85,10 +89,16 @@ function Updateprojects() {
             <div >
                 <h1 style={{ textAlign: "center" }}>Update Project Details</h1>
                 <form onSubmit={handleSubmit}>
+                    <label>Project ID</label>
+                    <input type='text' name='projectID' onChange={handleChange} value={inputs.projectID} required /><br/>
                     <label>Project Name</label>
                     <input type='text' name='projectName' onChange={handleChange} value={inputs.projectName} required /><br/>
                     <label>Project Budget</label>
                     <input type='number' name='projectBudget' onChange={handleChange} value={inputs.projectBudget} required /><br/>
+                    <label>Locate</label>
+                    <input type='text' name='Locate' onChange={handleChange} value={inputs.Locate} required /><br/>
+                    <label>Contractor</label>
+                    <input type='text' name='contractor' onChange={handleChange} value={inputs.contractor} required /><br/>
                     <label>Employees</label>
                     <input type='text' name='Employees' onChange={handleChange} value={inputs.Employees} required /><br/>
                     <label>Status</label>
@@ -98,7 +108,9 @@ function Updateprojects() {
                     <label>End Date</label>
                     <input type='date' name='endDate' onChange={handleChange} value={inputs.endDate} required /><br/>
                     <label>Project Type</label>
-                    <input type='text' name='projectType' onChange={handleChange} value={inputs.projectType} required /><br/><br/>
+                    <input type='text' name='projectType' onChange={handleChange} value={inputs.projectType} required /><br/>
+                    <label>Description</label>
+                    <input type='text' name='description' onChange={handleChange} value={inputs.description} required /><br/><br/>
                     <button className="create-button" type="submit">Submit</button>
                 </form>
             </div>

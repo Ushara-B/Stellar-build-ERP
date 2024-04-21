@@ -13,15 +13,27 @@ function formatDate(dateString) {
 function Newprojects() {
   const navigate = useNavigate();
   const [projects, setProjects] = useState({
+    projectID: "",
     projectName: "",
     projectBudget: "",
+    Locate: "",
+    contractor: "",
     Employees: "",
     Status: "",
     startDate: "",
     endDate: "",
     projectType: "",
+    description: "",
   });
 
+  const handleChangeDate = (e) => {
+    const selectedDate = e.target.value;
+    const formattedDate = formatDate(selectedDate);
+    setProjects((prevState) => ({
+      ...prevState,
+      [e.target.name]: formattedDate,
+    }));
+  };
   const handleChange = (e) => {
     setProjects((prevState) => ({
       ...prevState,
@@ -56,6 +68,16 @@ function Newprojects() {
           <Menu />
           <h1>Add new project</h1>
           <form onSubmit={handleSubmit}>
+            <label>Project ID</label>
+            <input
+              type="text"
+              name="projectID"
+              onChange={handleChange}
+              value={projects.projectID}
+              required
+            />
+            <br />
+          
             <label>Project Name</label>
             <input
               type="text"
@@ -71,6 +93,24 @@ function Newprojects() {
               name="projectBudget"
               onChange={handleChange}
               value={projects.projectBudget}
+              required
+            />
+            <br />
+            <label>Locate</label>
+            <input
+              type="text"
+              name="Locate"
+              onChange={handleChange}
+              value={projects.Locate}
+              required
+            />
+            <br />
+            <label>Contractor</label>
+            <input
+              type="text"
+              name="contractor"
+              onChange={handleChange}
+              value={projects.contractor}
               required
             />
             <br />
@@ -116,6 +156,15 @@ function Newprojects() {
               name="projectType"
               onChange={handleChange}
               value={projects.projectType}
+              required
+            />
+            <br />
+            <label>Description</label>
+            <input
+              type="text"
+              name="description"
+              onChange={handleChange}
+              value={projects.description}
               required
             />
             <br />

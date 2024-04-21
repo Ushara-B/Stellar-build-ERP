@@ -4,7 +4,32 @@ const SchemaProject = mongoose.Schema;
 const projectSchema = new SchemaProject({
     
     
-
+    projectID: {
+        type: String,
+        required: true,
+        trim:true,
+        maxLength:50
+    },
+    
+    Locate: {
+        type: String,
+        required: true,
+        trim:true,
+        maxLength:50
+    },
+    contractor: {
+        type: String,
+        required: true,
+        trim:true,
+        maxLength:50
+    },
+   
+    description : {
+        type: String,
+        required: true,
+        trim:true,
+        maxLength:50
+    },
     projectName: {
         type: String,
         required: true,

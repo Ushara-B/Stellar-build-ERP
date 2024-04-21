@@ -56,6 +56,12 @@ const Projectdetails = () => {
               Project Details
             </Typography>
             <Grid container spacing={2}>
+            <Grid item xs={6}>
+                <Typography variant="subtitle1" gutterBottom>
+                  Project ID :
+                </Typography>
+                <Typography variant="body1">{Projects.projectID}</Typography>
+              </Grid>
               <Grid item xs={6}>
                 <Typography variant="subtitle1" gutterBottom>
                   Project Name :
@@ -67,6 +73,19 @@ const Projectdetails = () => {
                   Project Budget :
                 </Typography>
                 <Typography variant="body1">{Projects.projectBudget}</Typography>
+              </Grid>
+              <Grid item xs={6}>
+                <Typography variant="subtitle1" gutterBottom>
+                  Project Location :
+                </Typography>
+                <Typography variant="body1">{Projects.Locate}</Typography>
+              </Grid>
+              
+              <Grid item xs={6}>
+                <Typography variant="subtitle1" gutterBottom>
+                  Project Owner :
+                </Typography>
+                <Typography variant="body1">{Projects.contractor}</Typography>
               </Grid>
               <Grid item xs={6}>
                 <Typography variant="subtitle1" gutterBottom>
@@ -97,6 +116,13 @@ const Projectdetails = () => {
                   Project Type :
                 </Typography>
                 <Typography variant="body1">{Projects.projectType}</Typography>
+              </Grid>
+              
+              <Grid item xs={6}>
+                <Typography variant="subtitle1" gutterBottom>
+                  Project Description :
+                </Typography>
+                <Typography variant="body1">{Projects.description}</Typography>
               </Grid>
               
             </Grid>
