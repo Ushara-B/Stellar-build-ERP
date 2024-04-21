@@ -1,5 +1,5 @@
 
-  /* Vehicle.css */
+  /* Vehicle.css 
 
 .delete-button {
     background-color: rgb(255, 0, 0);
@@ -28,3 +28,21 @@
   .report-button:hover {
     background-color: darkred;
   }
+
+
+
+/* Background image */
+/*
+.imagedash{
+    background-Image: url('../Assets/vehicle-management-software.png');  
+    position: 'absolute';
+    bottom: '0';
+    right: '5px';
+    width: '450px';
+    height: '300px';
+    background-Size: 'cover';
+    background-Repeat: 'no-repeat';
+    z-Index: '-1';
+}
+
+*/
