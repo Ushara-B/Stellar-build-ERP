@@ -30,6 +30,9 @@ import  Expense from "./Components/Finance/Finance/Expense";
 import  Income from "./Components/Finance/Finance/Income";
 import Finance from "./Pages/Finance";
 import InventoryCategory from "./Pages/InventoryCategory";
+import AddLoans from "./Pages/AddLoans";
+import ViewLoans from "./Pages/ViewLoans";
+import UpdateLoan from "./Pages/UpdateLoan";
 import { useGlobalContext } from '../src/Context/globalContext';
 
 
@@ -73,6 +76,12 @@ function App() {
           <Route path="/finance/expense" element={<Expense />} />
           <Route path="/finance/income" element={<Income />} />
           <Route path = '/inventorycategory' element = {<InventoryCategory/>}/>
+
+
+
+          <Route path="/loan-management" element={<ViewLoans />} />
+          <Route path="/loan-management/addloans" element={<AddLoans />} />
+          <Route path="/loan-management/upateloans" element={<UpdateLoan />} />
 
 
         </Routes>

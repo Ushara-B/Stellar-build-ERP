@@ -36,12 +36,12 @@ const loanSchema = new Schema({
     },
 
     TotalInstallments:{ 
-        type: Number, // dataType
+        type: String, // dataType
         required:true,//validate
     },
 
     PaidInstallments:{
-        type: Number, // dataType
+        type: String, // dataType
         required:true,//validate
     },
 
