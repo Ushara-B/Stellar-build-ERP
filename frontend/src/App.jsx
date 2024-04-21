@@ -33,7 +33,6 @@ import Expense from "./Pages/Finance/Expense";
 import Income from "./Pages/Finance/Income";
 import InventoryCategory from "./Pages/InventoryCategory";
 import UpdateInventory from "./Pages/UpdateInventory";
-import { useGlobalContext } from "../src/Context/globalContext";
 import  IncomeForm from "./Pages/Finance/Form";
 import  ExpenseForm from "./Pages/Finance/expenseForm";
 import FinanceDashboard from "../src/Pages/Finance/finDashboard";
@@ -45,7 +44,7 @@ function App() {
     <div>
       <BrowserRouter>
         <Routes>
-          <Route index element={<Home />} />
+          <Route index element={<Login />} />
           <Route path="/dashboard" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/user/addusers" element={<AddUsers />} />
