@@ -9,7 +9,7 @@ const inventoryrouter = require("./routes/inventoryRoute");
 const leaveRouter = require("./routes/leaveRoute")
 const attendanceRouter = require("./routes/attendanceRoute")
 const  loanrouter = require("./routes/loanRoute");
-
+const payslipRoute = require("./routes/payslipRoute");
 
 
 
@@ -36,6 +36,7 @@ app.use("/inventories", inventoryrouter);
 app.use("/leaves", leaveRouter);
 app.use("/attendance", attendanceRouter);
 app.use("/Loan", loanrouter);
+app.use("/PaySlip", payslipRoute)
 
 
 

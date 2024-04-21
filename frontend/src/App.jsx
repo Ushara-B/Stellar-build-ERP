@@ -85,6 +85,7 @@ function App() {
           <Route path="/ActiveLeaves/:id"element={<UpdateLeave />}/>
           <Route path="/UpdateLeave/:id"element={<UpdateLeave />}/>
           <Route path="/viewAttendance/:id"element={<ViewAttendance />}/>
+          <Route path="/PaySlip" element={<PaySlip/>}/>
         </Routes>
       </BrowserRouter>
     </div>
