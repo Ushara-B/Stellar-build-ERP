@@ -4,7 +4,11 @@ import React, {useEffect, useState} from 'react'
 import axios from 'axios'
 import{ useParams } from 'react-router'
 import{ useNavigate } from 'react-router'
-import { Box, Button, FormControl, Grid, InputLabel, MenuItem, TextField, Typography, Select } from '@mui/material';
+import { Box, Button, FormControl, Grid, InputLabel, MenuItem, TextField, Select } from '@mui/material';
+import Breadcrumbs from '@mui/material/Breadcrumbs';
+import Typography from '@mui/material/Typography';
+import Link from '@mui/material/Link';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 function UpdateVehicle() {
 
     const[inputs,setInputs] = useState({});
@@ -50,19 +54,31 @@ function UpdateVehicle() {
         history('/viewvehicles'));
       };
       return (
-        <div>
+      <div>
       <AppBar />
       <Menu />
-      <Box
-        sx={{
-          marginLeft: '255px',
-          paddingTop: '80px',
+      <div style={{ marginLeft: '255px', paddingTop: '80px',}}>
+            <Breadcrumbs arial-label="breadcrumb" separator={<NavigateNextIcon fontSize="small" />}>
+                <Link underline="hover" key="1" color="inherit" href="/vehicle">
+                    Vehicle DashBoard
+                </Link>
+                <Link underline="hover" key="2" color="inherit" href="/viewvehicles">
+                    Vehicles List
+                </Link>
+                <Typography key="3" color="text.primary">
+                    Vehicle Update
+                </Typography>
+            </Breadcrumbs>
+      
+        <Box 
+         sx={{//box position
+        
           display: 'flex',
           justifyContent: 'center',
-          alignItems: 'center',
+          alignItems: 'center',     
           minHeight: '100vh',
-        }}
-      >
+        }}>
+      
         <Box
           component="form"
           onSubmit={handleSubmit}
@@ -235,8 +251,10 @@ function UpdateVehicle() {
           </Grid>
         </Box>
       </Box>
+
     </div>
-      );
+    </div>
+    );
 }
 
 export default UpdateVehicle
