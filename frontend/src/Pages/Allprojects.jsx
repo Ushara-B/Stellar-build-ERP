@@ -12,6 +12,13 @@ import { Box, Paper, InputBase, TableContainer, Table, TableHead, TableBody, Tab
 import MilestoneBar from './MilestoneBar';
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 
+import VisibilityIcon from '@mui/icons-material/Visibility';
+
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
+
+
+
 const URL = "http://localhost:5000/projects";
 
 const style = {
@@ -25,6 +32,18 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
+
+const columns = [
+  { id: 'projectName', label: 'Project Name', minWidth: 170 },
+  { id: 'projectBudget', label: 'Project Budget', minWidth: 170 },
+  { id: 'Employees', label: 'Employees', minWidth: 170 },
+  { id: 'Status', label: 'Status', minWidth: 170 },
+  { id: 'startDate', label: 'Start Date', minWidth: 170 },
+  { id: 'endDate', label: 'End Date', minWidth: 170 },
+  { id: 'projectType', label: 'Project Type', minWidth: 170 },
+  { id: 'milestone', label: 'Milestone', minWidth: 170 },
+  { id: 'actions', label: 'Actions', minWidth: 170, align: 'center' },
+];
 
 
 const fetchHandler = async () => {
@@ -51,11 +70,21 @@ export default function AllProjects() {
     onAfterPrint: () => alert("All Projects Report successfully Downloaded!"),
   });
 
-  const handlePrintSingle = useReactToPrint({
-    content: () => ComponentsRefsingle.current,
-    documentTitle: 'Project Report',
-    onAfterPrint: () => alert("Project Report successfully Downloaded!"),
-  });
+  const handlePrintSingle = (projectData) => {
+    // Here you can generate a report for the specific vehicleData
+    // For example, you can create a new window/tab with the vehicle details to print
+    const reportWindow = window.open("", "_blank");
+    reportWindow.document.write(`<html><head><title>Project Report</title></head><body><h1>Project Details</h1><p>Project Name : ${projectData.projectName}</p><p>Budget : ${projectData.projectBudget}</p><p>Project Employees : ${projectData.Employees}</p><p>Project Start Date : ${formatDate(projectData.startDate)}</p><p>Project End Date : ${formatDate(projectData.endDate)}</p><p>Project Type : ${projectData.projectType}</p><p>Project Status : ${projectData.Status}</p><p>Project Milestone : ${projectData.milestone}</p></body></html>`);
+    reportWindow.document.close();
+    reportWindow.print();
+    reportWindow.onAfterPrint = () => {
+      alert("Project Report successfully Downloaded!");
+      
+    }
+    
+};
+
+
 
   const handleSearch = () => {
     fetchHandler().then((data) => {
@@ -286,11 +315,54 @@ export default function AllProjects() {
                             backgroundColor: "white",
                           }}
                         >
-                          <IconButton onClick={() => navigate(`/Updateprojects/${row._id}`)} className="update-button">Update</IconButton>
-                          <IconButton onClick={() => deleteHandler(row._id)} className="delete-button">Delete</IconButton>
-                          <IconButton onClick={() => handlePrintSingle()} className="report-button">Report</IconButton>
-                        </TableCell>
-                      </TableRow>
+                           <IconButton onClick={() => navigate(`/Updateprojects/${row._id}`)} >
+                                                <EditIcon
+                                                    color="primary"
+                                                    aria-label="edit"
+                                                    sx={{
+                                                      '&:hover': {
+                                                        color: '#00008b',
+                                                      },
+                                                      color: '',
+                                                    }} 
+                                                />
+                                                </IconButton>
+                                                <IconButton onClick={() => deleteHandler(row._id)} >
+                                                    <DeleteIcon  color="secondary"
+                                                                aria-label="delete"
+                                                                sx={{
+                                                                    '&:hover': {
+                                                                    color: '#FF1B1B',
+                                                                    },
+                                                                    color: '#CF5C5C',
+                                                                    }}/>
+                                                </IconButton>
+                                                <IconButton onClick={() => handlePrintSingle(row)} >
+                                                    <PrintIcon
+                                                     color="primary"
+                                                     aria-label="edit"
+                                                     sx={{
+                                                       '&:hover': {
+                                                         color: '#00008b',
+                                                       },
+                                                       color: '',
+                                                     }}  />
+                                                </IconButton>
+                                                <IconButton onClick={() => navigate(`/Projectdetails/${row._id}`)} >
+                                                    <VisibilityIcon
+                                                     color="primary"
+                                                     aria-label="edit"
+                                                     sx={{
+                                                       '&:hover': {
+                                                         color: '#00008b',
+                                                       },
+                                                       color: '',
+                                                     }}
+
+                                                     /> 
+                                                </IconButton>
+                                            </TableCell>
+                                        </TableRow>
                     ))}
                 </TableBody>
 
@@ -299,6 +371,7 @@ export default function AllProjects() {
           <TablePagination
             rowsPerPageOptions={[10, 25, 100]}
             component="div"
+            count={projects.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}
@@ -315,242 +388,3 @@ export default function AllProjects() {
   );
 }
 
-
-
-/*
-import React, { useRef, useState, useEffect } from 'react';
-import Paper from '@mui/material/Paper';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TablePagination from '@mui/material/TablePagination';
-import TableRow from '@mui/material/TableRow';
-import IconButton from '@mui/material/IconButton';
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
-import PrintIcon from '@mui/icons-material/Print';
-import AddIcon from '@mui/icons-material/Add';
-import SearchIcon from '@mui/icons-material/Search';
-import InputBase from '@mui/material/InputBase';
-import Box from '@mui/material/Box';
-import AppBar from '../Components/Appbar';
-import Drawer from '../Components/menu';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { useReactToPrint } from 'react-to-print';
-
-const columns = [
-  { id: 'projectName', label: 'Project Name', minWidth: 170 },
-  { id: 'projectBudget', label: 'Project Budget', minWidth: 170 },
-  { id: 'Employees', label: 'Employees', minWidth: 170 },
-  { id: 'Status', label: 'Status', minWidth: 170 },
-  { id: 'startDate', label: 'Start Date', minWidth: 170 },
-  { id: 'endDate', label: 'End Date', minWidth: 170 },
-  { id: 'projectType', label: 'Project Type', minWidth: 170 },
-  { id: 'actions', label: 'Actions', minWidth: 170, align: 'center' },
-];
-
-export default function AllProjects() {
-  const [projects, setProjects] = React.useState([]);
-  const [page, setPage] = React.useState();
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const [searchTerm, setSearchTerm] = React.useState('');
-  const navigate = useNavigate();
-
-  React.useEffect(() => {
-    fetchProjects();
-  }, []);
-
-  const fetchProjects = async () => {
-    try {
-      const response = await axios.get('http://localhost:5000/projects');
-      setProjects(response.data.Projects);
-    } catch (error) {
-      console.error('Error fetching projects:', error);
-    }
-  };
-
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
-  };
-
-  const handleSearchChange = (event) => {
-    setSearchTerm(event.target.value);
-  };
-
-  const ComponentsRef = useRef();
-  const handlePrintToPdf = useReactToPrint({
-    content: () => ComponentsRef.current,
-    documentTitle: 'All Projects',
-  });
-
-  const handleViewProject = (projectId) => {
-    navigate(`/Viewproject/${projectId}`);
-  };
-
-  const handleUpdateProject = (projectId) => {
-    navigate(`/Updateprojects/${projectId}`);
-  };
-
-  const handleDeleteProject = async (projectId) => {
-    try {
-      await axios.delete(`http://localhost:5000/projects/${projectId}`);
-      fetchProjects(); // Refresh the project list after successful deletion
-    } catch (error) {
-      console.error('Error deleting project:', error);
-    }
-  };
-
-  const filteredProjects = projects && projects.length > 0 ? projects.filter((project) =>
-    project.projectName.toLowerCase().includes(searchTerm.toLowerCase())
-  ) : [];
-
-  return (
-    <>
-      <AppBar />
-      <Drawer />
-      <div style={{ marginLeft: '260px', paddingTop: '100px' }}>
-        <Paper sx={{ width: '100%', boxShadow: 'none' }}>
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-            <InputBase
-              sx={{ ml: 1, flex: 1 }}
-              placeholder="Search projects..."
-              value={searchTerm}
-              onChange={handleSearchChange}
-              startAdornment={<SearchIcon fontSize="small" />}
-            />
-            <Box>
-              <IconButton color="primary" aria-label="print" onClick={handlePrintToPdf}>
-                <PrintIcon />
-              </IconButton>
-              <IconButton color="primary" aria-label="Add project" onClick={() => navigate('/Newprojects')}>
-                <AddIcon />
-              </IconButton>
-            </Box>
-          </Box>
-          <TableContainer ref={ComponentsRef}>
-            <Table stickyHeader aria-label="sticky table" sx={{ borderCollapse: 'collapse' }}>
-              <TableHead>
-                <TableRow>
-                  {columns.map((column) => (
-                    <TableCell
-                      key={column.id}
-                      align={column.align}
-                      sx={{
-                        backgroundColor: '#b1c5d4',
-                        fontWeight: 'bold',
-                        border: 'none',
-                        padding: '5px 10px',
-                        '&:hover': {
-                          backgroundColor: '#b1c5d4',
-                        },
-                      }}
-                    >
-                      {column.label}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {filteredProjects
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((row) => (
-                    <TableRow
-                      hover
-                      role="checkbox"
-                      tabIndex={-1}
-                      key={row._id}
-                      sx={{
-                        '&:hover': {
-                          backgroundColor: '#f5f5f5',
-                        },
-                        border: 'none',
-                        padding: '8px 16px',
-                      }}
-                    >
-                      <TableCell align="center" sx={{ border: 'none', padding: '10px 12px', backgroundColor: 'white' }}>
-                        {row.projectName}
-                      </TableCell>
-                      <TableCell align="center" sx={{ border: 'none', padding: '10px 12px', backgroundColor: 'white' }}>
-                        {row.startDate}
-                      </TableCell>
-                      <TableCell align="center" sx={{ border: 'none', padding: '10px 12px', backgroundColor: 'white' }}>
-                        {row.endDate}
-                      </TableCell>
-                      <TableCell align="center" sx={{ border: 'none', padding: '10px 12px', backgroundColor: 'white' }}>
-                        {row.projectType}
-                      </TableCell>
-                      <TableCell align="center" sx={{ border: 'none', padding: '10px 12px', backgroundColor: 'white' }}>
-                        <IconButton
-                          color="primary"
-                          aria-label="view"
-                          sx={{
-                            '&:hover': {
-                              color: '#00008b',
-                            },
-                            color: '',
-                          }}
-                          onClick={() => handleViewProject(row._id)}
-                        >
-                          <VisibilityIcon />
-                        </IconButton>
-                        <IconButton
-                          color="primary"
-                          aria-label="edit"
-                          sx={{
-                            '&:hover': {
-                              color: '#00008b',
-                            },
-                            color: '',
-                          }}
-                          onClick={() => handleUpdateProject(row._id)}
-                        >
-                          <EditIcon />
-                        </IconButton>
-                        <IconButton
-                          color="secondary"
-                          aria-label="delete"
-                          sx={{
-                            '&:hover': {
-                              color: '#FF1B1B',
-                            },
-                            color: '#CF5C5C',
-                          }}
-                          onClick={() => handleDeleteProject(row._id)}
-                        >
-                          <DeleteIcon />
-                        </IconButton>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-
-          <TablePagination
-            rowsPerPageOptions={[10, 25, 100]}
-            component="div"
-            count={filteredProjects.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-            sx={{
-              borderTop: 'none',
-              padding: '12px 16px',
-            }}
-          />
-        </Paper>
-      </div>
-    </>
-  );
-}
-*/

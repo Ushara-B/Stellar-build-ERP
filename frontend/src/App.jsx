@@ -34,6 +34,7 @@ import  ExpenseForm from "./Pages/Finance/expenseForm";
 import FinanceDashboard from "../src/Pages/Finance/finDashboard";
 import InventoryCategory from "./Pages/InventoryCategory";
 import ViewAttendance from "./Pages/ViewAttendance";
+import Projectdetails from "./Pages/Projectdetails";
 
 
 function App() {
@@ -66,6 +67,7 @@ function App() {
           <Route path = '/Newprojects' element = {<Newprojects/>}/>
           <Route path = '/Allprojects' element = {<Allprojects/>}/>
           <Route path = '/Newprojects' element = {<Newprojects/>}/> 
+          <Route path = '/Projectdetails/:id' element = {<Projectdetails/>}/>
           <Route path = '/Updateprojects/:id' element = {<Updateprojects/>}/>
           <Route path = '/viewinventorylist' element = {<ViewInventoryList/>}/>
           <Route path = '/inventory' element = {<Inventory/>}/>
