@@ -75,6 +75,7 @@ export default function AllProjects() {
   const navigate = useNavigate();
   const ComponentsRef = useRef();
   const ComponentsRefsingle = useRef();
+  const [searchTerm, setSearchTerm] = React.useState('');
 
   useEffect(() => {
     fetchHandler().then((data) => setProjects(data.project));
@@ -112,17 +113,14 @@ export default function AllProjects() {
     };
   };
 
-  const handleSearch = () => {
-    fetchHandler().then((data) => {
-      const filteredProjects = data.project.filter((project) =>
-        Object.values(project).some((field) =>
-          field.toString().toLowerCase().includes(searchQuery.toLowerCase())
-        )
-      );
-      setProjects(filteredProjects);
-      setNoResults(filteredProjects.length === 0);
-    });
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value);
   };
+
+  const filteredProjects = projects.filter((project) =>
+    project.projectName.toLowerCase().includes(searchTerm.toLowerCase()) || project.contractor.toLowerCase().includes(searchTerm.toLowerCase())
+
+  );
 
   const handleAddClick = () => {
     navigate(`/Newprojects`);
@@ -174,13 +172,13 @@ export default function AllProjects() {
     <>
       <AppBar />
       <Menu />
-      <div style={{ marginLeft: "260px", paddingTop: "20px" }}>
-        <Box sx={{ p: 9 }} height={2}>
+      <div style={{ marginLeft: "180px", paddingTop: "20px" }}>
+        <Box sx={{ p: 8 }} height={2}>
           <Breadcrumbs
             arial-label="breadcrumb"
             separator={<NavigateNextIcon fontSize="small" />}
           >
-            <Link underline="hover" key="1" color="inherit" href="/projects">
+            <Link style={{ marginLeft: "20px" }} underline="hover" key="1" color="inherit" href="/projects">
               Projects
             </Link>
             <Typography key="3" color="text.primary">
@@ -188,7 +186,7 @@ export default function AllProjects() {
             </Typography>
           </Breadcrumbs>
           <br/>
-          <Paper sx={{ width: "100%", overflow: "hidden", padding: "12px",boxShadow: 'Auto' }}>
+          <Paper sx={{ width: "100%", overflow: "hidden", padding: "15px",boxShadow: 'Auto' }}>
           <Box
               sx={{
                 display: "flex",
@@ -197,21 +195,15 @@ export default function AllProjects() {
               }}
             >
               <InputBase
-                sx={{ flex: 1, marginLeft: "10px" }}
-                placeholder="Search project Details"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                sx={{ ml: 1, flex: 1 }}
+                placeholder="Search projects.."
+                value={searchTerm}
+                onChange={handleSearchChange}
                 startAdornment={<SearchIcon fontSize="small" />}
               />
               
               <Box>
-                <IconButton
-                  color="primary"
-                  aria-label="search"
-                  onClick={handleSearch}
-                >
-                  <SearchIcon />
-                </IconButton>
+              
                 <IconButton
                   color="primary"
                   aria-label="add project"
@@ -232,7 +224,7 @@ export default function AllProjects() {
               gutterBottom
               variant="h4"
               component="div"
-              sx={{ padding: "20PX" ,textAlign: 'center'}}
+              sx={{ padding: "20px" ,textAlign: 'center'}}
             >
               Details of Projects
             </h1>
@@ -240,8 +232,8 @@ export default function AllProjects() {
 
             <br />
             
-            <br/>
-            <br/>
+           
+            
 
             <TableContainer ref={ComponentsRef}>
               <Table
@@ -272,14 +264,14 @@ export default function AllProjects() {
                     <TableCell  sx={{backgroundColor: '#b1c5d4',fontWeight: 'bold', textAlign: 'center',border: 'none',padding: '5px 10px','&:hover': {backgroundColor: '#b1c5d4'}}}>Start Date</TableCell>
                     <TableCell  sx={{backgroundColor: '#b1c5d4',fontWeight: 'bold', textAlign: 'center',border: 'none',padding: '5px 10px','&:hover': {backgroundColor: '#b1c5d4'}}}>End Date</TableCell>
                     <TableCell  sx={{backgroundColor: '#b1c5d4',fontWeight: 'bold', textAlign: 'center',border: 'none',padding: '5px 10px','&:hover': {backgroundColor: '#b1c5d4'}}}>Type</TableCell>
-                    <TableCell  sx={{backgroundColor: '#b1c5d4',fontWeight: 'bold', textAlign: 'center',border: 'none',padding: '5px 10px','&:hover': {backgroundColor: '#b1c5d4'}}}>Milstone</TableCell>
+                    <TableCell  sx={{backgroundColor: '#b1c5d4',fontWeight: 'bold', textAlign: 'center',border: 'none',padding: '5px 10px','&:hover': {backgroundColor: '#b1c5d4'}}}>Milestone</TableCell>
                     <TableCell  sx={{backgroundColor: '#b1c5d4',fontWeight: 'bold', textAlign: 'center',border: 'none',padding: '5px 10px','&:hover': {backgroundColor: '#b1c5d4'}}}>Action</TableCell>
 
 
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {projects
+                  {filteredProjects
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row) => (
                       <TableRow
@@ -296,7 +288,7 @@ export default function AllProjects() {
                         <TableCell
                           sx={{
                             border: "1px",
-                            padding: "10px 12px",
+                            padding: "8px 10px",
                             backgroundColor: "white",
                             textAlign: "center",
                           }}
@@ -306,7 +298,7 @@ export default function AllProjects() {
                         <TableCell
                           sx={{
                             border: "1px",
-                            padding: "10px 12px",
+                            padding: "10px 10px",
                             backgroundColor: "white",
                             textAlign: "center",
                           }}
@@ -316,7 +308,7 @@ export default function AllProjects() {
                         <TableCell
                           sx={{
                             border: "1px",
-                            padding: "10px 12px",
+                            padding: "10px 10px",
                             backgroundColor: "white",
                             textAlign: "center",
                           }}
@@ -327,7 +319,7 @@ export default function AllProjects() {
                         <TableCell
                           sx={{
                             border: "1px",
-                            padding: "10px 12px",
+                            padding: "10px 10px",
                             backgroundColor: "white",
                             textAlign: "center",
                           }}
@@ -337,7 +329,7 @@ export default function AllProjects() {
                         <TableCell
                           sx={{
                             border: "1px",
-                            padding: "10px 12px",
+                            padding: "10px 10px",
                             backgroundColor: "white",
                             textAlign: "center",
                           }}
@@ -347,7 +339,7 @@ export default function AllProjects() {
                         <TableCell
                           sx={{
                             border: "1px",
-                            padding: "10px 12px",
+                            padding: "10px 10px",
                             backgroundColor: "white",
                             textAlign: "center",
                           }}
@@ -357,7 +349,7 @@ export default function AllProjects() {
                         <TableCell
                           sx={{
                             border: "1px",
-                            padding: "10px 12px",
+                            padding: "10px 10px",
                             backgroundColor: "white",
                             textAlign: "center",
                           }}
@@ -368,7 +360,7 @@ export default function AllProjects() {
                         <TableCell
                           sx={{
                             border: "1px",
-                            padding: "10px 12px",
+                            padding: "10px 10px",
                             backgroundColor: "white",
                             textAlign: "center",
                           }}
@@ -378,7 +370,7 @@ export default function AllProjects() {
                         <TableCell
                           sx={{
                             border: "1px",
-                            padding: "10px 12px",
+                            padding: "10px 10px",
                             backgroundColor: "white",
                             textAlign: "center",
                           }}
@@ -388,7 +380,7 @@ export default function AllProjects() {
                         <TableCell
                           sx={{
                             border: "1px",
-                            padding: "10px 12px",
+                            padding: "10px 10px",
                             backgroundColor: "white",
                             textAlign: "center",
                           }}
@@ -398,7 +390,7 @@ export default function AllProjects() {
                         <TableCell
                           sx={{
                             border: "1px",
-                            padding: "10px 12px",
+                            padding: "10px 10px",
                             backgroundColor: "white",
                             textAlign: "center",
                           }}
@@ -410,7 +402,7 @@ export default function AllProjects() {
                         <TableCell
                           sx={{
                             border: "1px",
-                            padding: "10px 12px",
+                            padding: "10px 10px",
                             backgroundColor: "white",
                             textAlign: "center",
                           }}
@@ -480,7 +472,7 @@ export default function AllProjects() {
             <TablePagination
               rowsPerPageOptions={[10, 25, 100]}
               component="div"
-              count={projects.length}
+              count={filteredProjects.length}
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={handleChangePage}
