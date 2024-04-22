@@ -10,6 +10,16 @@ const projectSchema = new SchemaProject({
         trim:true,
         maxLength:50
     },
+    projectName: {
+        type: String,
+        required: true,
+    },
+    projectBudget: {
+        type: Number,
+        required: true,
+        trim:true,
+        maxLength:50
+    },
     
     Locate: {
         type: String,
@@ -24,22 +34,8 @@ const projectSchema = new SchemaProject({
         maxLength:50
     },
    
-    description : {
-        type: String,
-        required: true,
-        trim:true,
-        maxLength:50
-    },
-    projectName: {
-        type: String,
-        required: true,
-    },
-    projectBudget: {
-        type: Number,
-        required: true,
-        trim:true,
-        maxLength:50
-    },
+   
+ 
     Employees: {
         type: String,
         required: true,
@@ -73,6 +69,12 @@ const projectSchema = new SchemaProject({
         required: true,//variable
         trim:true,
         maxLength:50
+    },
+    description : {
+        type: String,
+        required: true,
+        trim:true,
+        
     },
 });
 
