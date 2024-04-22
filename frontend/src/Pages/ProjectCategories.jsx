@@ -109,6 +109,7 @@ const ProjectCategories = () => {
                             <TableRow sx={{ backgroundColor: "#a9aaaf" }}>
                               <TableCell>Project Name</TableCell>
                               <TableCell>Project Budget</TableCell>
+                              <TableCell>Owner</TableCell>
                               <TableCell>Start Date</TableCell>
                               <TableCell>End Date</TableCell>
                             </TableRow>
@@ -124,6 +125,7 @@ const ProjectCategories = () => {
                                 >
                                   <TableCell>{project.projectName}</TableCell>
                                   <TableCell>{project.projectBudget}</TableCell>
+                                  <TableCell>{project.contractor}</TableCell>
                                   <TableCell>{formatDate(project.startDate)}</TableCell>
                                   <TableCell>{formatDate(project.endDate)}</TableCell>
                                 </TableRow>
