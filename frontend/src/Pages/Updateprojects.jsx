@@ -1,10 +1,14 @@
-import React, { useEffect, useState } from 'react'   
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router';
 import { useParams } from 'react-router';
 import Menu from '../Components/menu';
 import AppBar from '../Components/Appbar';
-import '../css/Newprojects.css';
+import { TextField, Button, Grid, Box, MenuItem } from "@mui/material";
+import Breadcrumbs from "@mui/material/Breadcrumbs";
+import Typography from "@mui/material/Typography";
+import Link from "@mui/material/Link";
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 
 function Updateprojects() {
 
@@ -23,22 +27,14 @@ function Updateprojects() {
         fetchHandler();
     },[id]);
 
-    const  sendRequest = async()=>{
+    const sendRequest = async (requestData) => {
         try {
-            await axios.put(`http://localhost:5000/projects/${id}`, {
-                projectName: String(inputs.projectName),
-                projectBudget: Number(inputs.projectBudget),
-                Employees: String(inputs.Employees),
-                Status: String(inputs.Status),
-                startDate: Date(inputs.startDate),
-                endDate: Date(inputs.endDate),
-                projectType: String(inputs.projectType),
-            });
-            console.log("Project updated successfully!");
+          await axios.put(`http://localhost:5000/projects/${id}`, requestData);
+          console.log("Project updated successfully!");
         } catch (error) {
-            console.log("Error updating project:", error);
+          console.log("Error updating project:", error);
         }
-    };
+      };
 
     const handleChange = (e) => {
         setInputs(prevState => ({
@@ -48,11 +44,10 @@ function Updateprojects() {
     };
     
     const handleSubmit = (e) => {
-      e.preventDefault();
-      console.log(inputs);
-  
-      // Check if start date and end date are empty
-      const requestData = {
+        e.preventDefault();
+        console.log(inputs);
+      
+        const requestData = {
           projectID: String(inputs.projectID),
           projectName: String(inputs.projectName),
           projectBudget: Number(inputs.projectBudget),
@@ -62,62 +57,237 @@ function Updateprojects() {
           Status: String(inputs.Status),
           projectType: String(inputs.projectType),
           description: String(inputs.description),
+          startDate: inputs.startDate ? new Date(inputs.startDate).toISOString() : null,
+          endDate: inputs.endDate ? new Date(inputs.endDate).toISOString() : null,
+        };
+      
+        sendRequest(requestData).then(() => history('/Allprojects'));
       };
-  
-      if (inputs.startDate) {
-          requestData.startDate = Date(inputs.startDate);
-      }
-  
-      if (inputs.endDate) {
-          requestData.endDate = Date(inputs.endDate);
-      }
-  
-      sendRequest(requestData).then(() => 
-          history('/Allprojects')
-      );
-  };
+    
   
     
     return (
         <div>
-            <div  style={{ marginLeft: "255px", paddingTop: "70px" }}>
-         <div className="image" style={{ marginLeft: "255px", paddingTop: "70px" }}></div>
-        <div className="container">
-      <div className="form-container"></div>
-            <AppBar />
-            <Menu />
-            <div >
-                <h1 style={{ textAlign: "center" }}>Update Project Details</h1>
-                <form onSubmit={handleSubmit}>
-                    <label>Project ID</label>
-                    <input type='text' name='projectID' onChange={handleChange} value={inputs.projectID} required /><br/>
-                    <label>Project Name</label>
-                    <input type='text' name='projectName' onChange={handleChange} value={inputs.projectName} required /><br/>
-                    <label>Project Budget</label>
-                    <input type='number' name='projectBudget' onChange={handleChange} value={inputs.projectBudget} required /><br/>
-                    <label>Locate</label>
-                    <input type='text' name='Locate' onChange={handleChange} value={inputs.Locate} required /><br/>
-                    <label>Contractor</label>
-                    <input type='text' name='contractor' onChange={handleChange} value={inputs.contractor} required /><br/>
-                    <label>Employees</label>
-                    <input type='text' name='Employees' onChange={handleChange} value={inputs.Employees} required /><br/>
-                    <label>Status</label>
-                    <input type='text' name='Status' onChange={handleChange} value={inputs.Status} required /><br/>
-                    <label>Start Date</label>
-                    <input type='date' name='startDate' onChange={handleChange} value={inputs.startDate} required /><br/>
-                    <label>End Date</label>
-                    <input type='date' name='endDate' onChange={handleChange} value={inputs.endDate} required /><br/>
-                    <label>Project Type</label>
-                    <input type='text' name='projectType' onChange={handleChange} value={inputs.projectType} required /><br/>
-                    <label>Description</label>
-                    <input type='text' name='description' onChange={handleChange} value={inputs.description} required /><br/><br/>
-                    <button className="create-button" type="submit">Submit</button>
-                </form>
-            </div>
-        </div>
-        </div>
-        </div>
-    );
+      <AppBar />
+      <Menu />
+      <div style={{ marginLeft: "270px", paddingTop: "90px" }}>
+        <Breadcrumbs
+          arial-label="breadcrumb"
+          separator={<NavigateNextIcon fontSize="small" />}
+        >
+          <Link underline="hover" key="1" color="inherit" href="/projects">
+            Project Dashboard
+          </Link>
+          <Link underline="hover" key="2" color="inherit" href="/allprojects">
+            Projects List
+          </Link>
+          <Typography key="3" color="text.primary">
+            Update Project
+          </Typography>
+        </Breadcrumbs>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            minHeight: "100vh",
+          }}
+        >
+          <Box
+            component="form"
+            onSubmit={handleSubmit}
+            sx={{
+              width: "80%",
+              maxWidth: 800,
+              padding: 4,
+              bgcolor: "background.paper",
+              boxShadow: 3,
+            }}
+          >
+            <Typography align="center" gutterBottom variant="h4" component="h2">
+              <strong>Update Project Details</strong>
+            </Typography>
+            <br></br>
+
+            <Grid container spacing={4} justifyContent="center">
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  label="Project ID"
+                  name="projectID"
+                  value={inputs.projectID}
+                  onChange={handleChange}
+                  variant="outlined"
+                  fullWidth
+                  required
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  label="Project Name"
+                  name="projectName"
+                  value={inputs.projectName}
+                  onChange={handleChange}
+                  variant="outlined"
+                  fullWidth
+                  required
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  label="Project Budget"
+                  name="projectBudget"
+                  value={inputs.projectBudget}
+                  onChange={handleChange}
+                  variant="outlined"
+                  fullWidth
+                  required
+                  type="number"
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+              <TextField  //GoogleMapComponent
+                  label="Location"
+                  name="Locate"
+                  value={inputs.Locate}
+                  onChange={handleChange}
+                  variant="outlined"
+                  fullWidth
+                  required
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  label="Contractor"
+                  name="contractor"
+                  value={inputs.contractor}
+                  onChange={handleChange}
+                  variant="outlined"
+                  fullWidth
+                  required
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  label="Employees"
+                  name="Employees"
+                  value={inputs.Employees}
+                  onChange={handleChange}
+                  variant="outlined"
+                  fullWidth
+                  required
+                />
+              </Grid>
+
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  label="Start Date"
+                  name="startDate"
+                  type="date"
+                  value={inputs.startDate}
+                  onChange={handleChange}
+                  variant="outlined"
+                  fullWidth
+                  required
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  label="End Date"
+                  name="endDate"
+                  type="date"
+                  value={inputs.endDate}
+                  onChange={handleChange}
+                  variant="outlined"
+                  fullWidth
+                  required
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+              </Grid>
+
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  label="Status"
+                  name="Status"
+                  value={inputs.Status}
+                  onChange={handleChange}
+                  variant="outlined"
+                  fullWidth
+                  required
+                  select
+                >
+                  <MenuItem value="In Progress">In Progress</MenuItem>
+                  <MenuItem value="Start">Start</MenuItem>
+                  <MenuItem value="Done">Done</MenuItem>
+                  <MenuItem value="End">End</MenuItem>
+                  <MenuItem value="Pouse">Pause</MenuItem>
+                </TextField>
+              </Grid>
+
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  label="Project Type"
+                  name="projectType"
+                  value={inputs.projectType}
+                  onChange={handleChange}
+                  variant="outlined"
+                  fullWidth
+                  required
+                  select
+                >
+                  <MenuItem value="Furniture">Furniture</MenuItem>
+                  <MenuItem value="Elevator">Elevator</MenuItem>
+                  <MenuItem value="Paint">Paint</MenuItem>
+                  <MenuItem value="Water-Supply">Water-supply</MenuItem>
+                  <MenuItem value="Tile">Tile</MenuItem>
+                </TextField>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  label="Description"
+                  name="description"
+                  value={inputs.description}
+                  onChange={handleChange}
+                  variant="outlined"
+                  fullWidth
+                  required
+                  multiline
+                  rows={4}
+                />
+              </Grid>
+              <Grid item xs={3} >
+                <Button 
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  fullWidth
+                  sx={{
+                    mt: 7,
+                    mb: 2,
+                    height: "50px",
+                    width: "150px",
+                    borderRadius: "21px",
+                    backgroundColor: "#1B1A55",
+                    "&:hover": {
+                      backgroundColor: "#16155d",
+                    },
+                  }}
+                >
+                  Update
+                </Button>
+              </Grid>
+            </Grid>
+ 
+  
+          </Box>  
+        </Box>
+      </div>
+    </div>
+  );
 }
 
 export default Updateprojects;
