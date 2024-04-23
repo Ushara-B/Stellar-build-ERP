@@ -71,61 +71,62 @@ const AssignDriver = () => {
           minHeight: '100vh'
         }}
       >
-        <form onSubmit={handleSubmit}>
-          <h1>Assign Driver</h1>
-          <br></br>
-          <Grid container spacing={3}>
-            <Grid item xs={12}>
-              <FormControl variant="outlined" fullWidth>
-                <InputLabel id="vehicle-label">Select Vehicle</InputLabel>
-                <Select
-                  labelId="vehicle-label"
-                  value={selectedVehicle._id || ''}
-                  onChange={handleVehicleChange}
-                >
-                  {vehicles.map(vehicle => (
-                    <MenuItem key={vehicle._id} value={vehicle._id}>{vehicle.RegNo} {vehicle.Vname}</MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </Grid>
+        <Box sx={{ border: '1px solid #ccc', padding: '20px', borderRadius: '8px' }}>
+          <form onSubmit={handleSubmit}>
+            <h1>Assign Driver</h1>
+            <br></br>
+            <Grid container spacing={3}>
+              <Grid item xs={12}>
+                <FormControl variant="outlined" fullWidth>
+                  <InputLabel id="vehicle-label">Select Vehicle</InputLabel>
+                  <Select
+                    labelId="vehicle-label"
+                    value={selectedVehicle._id || ''}
+                    onChange={handleVehicleChange}
+                  >
+                    {vehicles.map(vehicle => (
+                      <MenuItem key={vehicle._id} value={vehicle._id}>{vehicle.RegNo} {vehicle.Vname}</MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Grid>
 
-            <Grid item xs={12}>
-              <FormControl variant="outlined" fullWidth>
-                <InputLabel id="user-label">Select Employee</InputLabel>
-                <Select
-                  labelId="user-label"
-                  value={selectedUser}
-                  onChange={(e) => setSelectedUser(e.target.value)}
-                >
-                  {users.map(user => (
-                    <MenuItem key={user._id} value={user._id}>{user.f_Name} {user.l_Name}</MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </Grid>
+              <Grid item xs={12}>
+                <FormControl variant="outlined" fullWidth>
+                  <InputLabel id="user-label">Select Employee</InputLabel>
+                  <Select
+                    labelId="user-label"
+                    value={selectedUser}
+                    onChange={(e) => setSelectedUser(e.target.value)}
+                  >
+                    {users.map(user => (
+                      <MenuItem key={user._id} value={user._id}>{user.f_Name} {user.l_Name}</MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Grid>
 
-            <Grid item xs={12}>
-              <Button type="submit" variant="contained" color="primary"
-                sx={{
-                  mt: 7,
-                  mb: 2,
-                  height: '50px',
-                  width: '150px',
-                  borderRadius: '21px',
-                  backgroundColor: '#1B1A55',
-                  '&:hover': {
-                    backgroundColor: '#16155d',
-                  },
-                }}>
-                Assign Driver
-              </Button>
+              <Grid item xs={12}>
+                <Button type="submit" variant="contained" color="primary"
+                  sx={{
+                    mt: 7,
+                    mb: 2,
+                    height: '50px',
+                    width: '150px',
+                    borderRadius: '21px',
+                    backgroundColor: '#1B1A55',
+                    '&:hover': {
+                      backgroundColor: '#16155d',
+                    },
+                  }}>
+                  Assign Driver
+                </Button>
+              </Grid>
             </Grid>
-          </Grid>
-        </form>
+          </form>
+        </Box>
       </Box>
     </div>
-    
   );
 };
 
