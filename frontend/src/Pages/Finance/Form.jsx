@@ -9,6 +9,7 @@ import { GlobalStyle } from '../../Styles/globalStyle';
 import  AppBar  from '../../Components/Appbar';
 import  Menu  from '../../Components/menu';
 import { Box, Typography, Avatar } from '@mui/material';
+import { MainLayout,InnerLayout } from '../../Styles/Layout';
 
 
 
@@ -66,14 +67,14 @@ function Form() {
 
     return (
         <FormStyled onSubmit={handleSubmit}>
-            
+            <InnerLayout>
             <GlobalStyle/>
             <AppBar/>
             <Menu/>
-            
+            <main>
             <Typography variant="h3" component="h3" sx={{ textAlign: 'center', mt: 3, mb: 3 }}>
-        Add Income
-      </Typography>
+           Add Income
+           </Typography>
             {error && <p className='error'>{error}</p>}
             <div className="input-control">
                 <input 
@@ -138,6 +139,8 @@ function Form() {
                     color={'#fff'}
                 />
             </div>
+            </main>
+        </InnerLayout>
         </FormStyled>
     )
 }
@@ -145,51 +148,54 @@ function Form() {
 
 const FormStyled = styled.form`
 
+    
 
+display: center;
+flex-direction: column;
+gap: 50px;
+margin-top:100px;
+margin-left:400px;
+input, textarea, select{
+    font-family: inherit;
+    font-size: inherit;
+    outline: none;
+    border: none;
+    padding: 2rem 2rem;
+    border-radius: 5px;
+    border: 2px solid #fff;
+    background: transparent;
+    resize: none;
+    box-shadow: 0px 1px 15px rgba(0, 0, 0, 0.06);
+    color: rgba(34, 34, 96, 0.9);
+    &::placeholder{
+        color: rgba(34, 34, 96, 0.4);
+    }
+}
+.input-control{
+    gap: 70px; /* Increase the gap between input tabs */
+    input {
+        width: 80%;
+    }
+}
+
+.selects{
     display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    margin-top:100px;
-    input, textarea, select{
-        font-family: inherit;
-        font-size: inherit;
-        outline: none;
-        border: none;
-        padding: .5rem 1rem;
-        border-radius: 5px;
-        border: 2px solid #fff;
-        background: transparent;
-        resize: none;
+    justify-content: flex-start;
+    select{
+        color: rgba(34, 34, 96, 0.4);
+        &:focus, &:active{
+            color: rgba(34, 34, 96, 1);
+        }
+    }
+}
+
+.submit-btn{
+    button{
         box-shadow: 0px 1px 15px rgba(0, 0, 0, 0.06);
-        color: rgba(34, 34, 96, 0.9);
-        &::placeholder{
-            color: rgba(34, 34, 96, 0.4);
+        &:hover{
+            background: var(--color-green) !important;
         }
     }
-    .input-control{
-        input{
-            width: 100%;
-        }
-    }
-
-    .selects{
-        display: flex;
-        justify-content: flex-start;
-        select{
-            color: rgba(34, 34, 96, 0.4);
-            &:focus, &:active{
-                color: rgba(34, 34, 96, 1);
-            }
-        }
-    }
-
-    .submit-btn{
-        button{
-            box-shadow: 0px 1px 15px rgba(0, 0, 0, 0.06);
-            &:hover{
-                background: var(--color-green) !important;
-            }
-        }
-    }
+}
 `;
 export default Form

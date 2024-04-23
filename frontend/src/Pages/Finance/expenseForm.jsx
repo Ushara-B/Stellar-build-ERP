@@ -146,16 +146,17 @@ function Form() {
 const FormStyled = styled.form`
 
 
-    display: flex;
+    display: center;
     flex-direction: column;
-    gap: 2rem;
+    gap: 50px;
     margin-top:100px;
+    margin-left:400px;
     input, textarea, select{
         font-family: inherit;
         font-size: inherit;
         outline: none;
         border: none;
-        padding: .5rem 1rem;
+        padding: 2rem 2rem;
         border-radius: 5px;
         border: 2px solid #fff;
         background: transparent;
@@ -167,8 +168,9 @@ const FormStyled = styled.form`
         }
     }
     .input-control{
-        input{
-            width: 100%;
+        gap: 70px; /* Increase the gap between input tabs */
+        input {
+            width: 80%;
         }
     }
 
