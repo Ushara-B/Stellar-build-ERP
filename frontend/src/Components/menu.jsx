@@ -121,7 +121,7 @@ export default function NestedList() {
     { name: 'Financial', path: '/finance', subMenus: ['Financial Dashboard', 'Expenses', 'Incomes', 'Categories'] },
     { name: 'Vehicle Management', path: '/vehicle', subMenus: ['Vehicle Dashboard','Add Vehicle', 'View Vehicles', 'Assign Drivers'] },
     { name: 'Loans Management', path: '/loan-management', subMenus: ['Add loans', 'Bank/Bussines Loans', 'Vehicle finance'] },
-    { name: 'User Management', path: '/allusers', subMenus: ['View users', 'Add users'] },
+    { name: 'User Management', path: '/userdash', subMenus: ['View users', 'Add users'] },
     { name: 'Employee Management', path: '/employee-management', subMenus: ['PaySlip', 'Leaves', 'Attendance'] },
   ];
 
