@@ -15,11 +15,14 @@ import LeaveForm from "./Pages/LeaveForm";
 import ActiveLeaves from "./Pages/ActiveLeaves";
 import UpdateLeave from "./Pages/UpdateLeave";
 import Login from "./Pages/Login";
+
 import AddVehicle from './Pages/AddVehicle';
 import Vehicles from './Pages/Vehicles';
 import Vehicle from './Pages/ViewVehicle';
 import UpdateVehicles from './Pages/UpdateVehicle'
 import VehicleDash from './Pages/VehicleDashBoard';
+import AssignDriver from './Pages/AssignDriver';
+
 //pathum's
 import Projects from "./Pages/projects";
 import Allprojects from "./Pages/Allprojects";
@@ -63,11 +66,13 @@ function App() {
           <Route path="/ActiveLeaves"element={<ActiveLeaves />}/>
           <Route path="/updateLeave" element={<UpdateLeave/>}/>
           <Route path="/projects" element={<Projects/>}/>
+
           <Route path = '/vehicle' element = {<VehicleDash/>}/>
           <Route path = '/addvehicle' element = {<AddVehicle/>}/>
           <Route path = '/viewvehicles' element = {<Vehicles/>}/>
           <Route path = '/viewvehicle/:id' element = {<Vehicle/>}/>
           <Route path = '/viewvehicles/:id' element = {<UpdateVehicles/>}/>
+          <Route path = '/assigndriver' element = {<AssignDriver/>}/>
           <Route path = '/allusers' element ={<AllUsers/>}/>
 
           
