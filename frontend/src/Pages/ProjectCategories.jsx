@@ -17,11 +17,16 @@ import {
   TableRow,
   InputBase,
   Breadcrumbs,
+  Tooltip,
   Link,
   Paper,
+  IconButton,
+
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+import AddIcon from '@mui/icons-material/Add';
+
 
 
 const URL = "http://localhost:5000/projects";
@@ -34,6 +39,8 @@ const ProjectCategories = () => {
   useEffect(() => {
     fetchHandler().then((data) => setProjects(data.project));
   }, []);
+
+  
 
   const fetchHandler = async () => {
     return await axios.get(URL).then((res) => res.data);
@@ -60,7 +67,8 @@ const ProjectCategories = () => {
     <>
       <AppBar />
       <Menu />
-      <div style={{ marginLeft: "200px", paddingTop: "80spx" }}>
+      <div style={{ marginLeft: "200px", paddingTop: "20px" }}>
+        
         <Box sx={{ p: 10}} height={2}>
           <Breadcrumbs
             arial-label="breadcrumb"
@@ -93,7 +101,20 @@ const ProjectCategories = () => {
                 value={searchTerm}
                 onChange={handleSearchChange}
                 startAdornment={<SearchIcon fontSize="small" />}
+
+                
               />
+              <Box>
+              <Tooltip title="Add Category">
+              <IconButton
+                color="primary"
+                aria-label="add project"
+                onClick={() => navigate('/add-category')}
+              >
+                <AddIcon />
+              </IconButton>
+              </Tooltip>
+              </Box>
             </Paper>
             <Grid container spacing={3}>
               {filteredProjectTypes.map((projectType, index) => (
