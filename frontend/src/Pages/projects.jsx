@@ -88,6 +88,8 @@ function ProjectDashboard() {
           "rgba(255, 206, 86, 0.6)",
           "rgba(75, 192, 192, 0.6)",
           "rgba(153, 102, 255, 0.6)",
+          "rgba(66, 73, 73, 0.6)",
+          
         ],
         borderWidth: 1,
       },
