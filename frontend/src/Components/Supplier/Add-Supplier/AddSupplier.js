@@ -58,7 +58,7 @@ function AddSupplier() {
     }
 
     try {
-      await axios.post("http://localhost:8080/suppliers", inputs);
+      await axios.post("http://localhost:5000/suppliers", inputs);
       showAlert("Supplier added successfully!");
       navigate("/supplier-details");
     } catch (error) {

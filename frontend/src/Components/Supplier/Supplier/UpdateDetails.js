@@ -17,7 +17,7 @@ const UpdateDetails = () => {
     const fetchHandler = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8080/suppliers/${id}`
+          `http://localhost:5000/suppliers/${id}`
         );
         setInputs(response.data.supplier);
       } catch (error) {
@@ -28,7 +28,7 @@ const UpdateDetails = () => {
   }, [id]);
 
   const sendRequest = async () => {
-    await axios.put(`http://localhost:8080/suppliers/${id}`, {
+    await axios.put(`http://localhost:5000/suppliers/${id}`, {
       name: String(inputs.name),
       bname: String(inputs.bname),
       email: String(inputs.email),

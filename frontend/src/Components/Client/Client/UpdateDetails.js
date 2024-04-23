@@ -8,7 +8,7 @@ import {
   CircularProgress,
   Paper,
   Container,
-} from "@material-ui/core";
+} from "@mui/material";
 
 const UpdateDetails = () => {
   const { id } = useParams(); // Get the ID from the URL params

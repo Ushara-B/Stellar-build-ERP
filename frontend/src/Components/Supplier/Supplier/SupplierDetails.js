@@ -2,19 +2,19 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import { useReactToPrint } from "react-to-print";
-import Typography from "@material-ui/core/Typography";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
-import Table from "@material-ui/core/Table";
-import TableHead from "@material-ui/core/TableHead";
-import TableBody from "@material-ui/core/TableBody";
-import TableRow from "@material-ui/core/TableRow";
-import TableCell from "@material-ui/core/TableCell";
-import Paper from "@material-ui/core/Paper";
-import Alert from "@material-ui/lab/Alert";
-import CircularProgress from "@material-ui/core/CircularProgress";
+import Typography from "@mui/material/Typography";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import Table from "@mui/material/Table";
+import TableHead from "@mui/material/TableHead";
+import TableBody from "@mui/material/TableBody";
+import TableRow from "@mui/material/TableRow";
+import TableCell from "@mui/material/TableCell";
+import Paper from "@mui/material/Paper";
+import Alert from "@mui/material/Alert";
+import CircularProgress from "@mui/material/CircularProgress";
 import { makeStyles } from "@material-ui/core/styles";
-const URL = "http://localhost:8080/suppliers";
+const URL = "http://localhost:5000/suppliers";
 const useStyles = makeStyles((theme) => ({
   clientDetails: {
     padding: theme.spacing(2),
@@ -165,9 +165,6 @@ const SupplierDetails = () => {
 
   return (
     <div className={classes.clientDetails}>
-      <Typography variant="h1" className={classes.topic}>
-        Admin <span className="admin_sub_topic_client">Dashboard</span>
-      </Typography>
       <div className={classes.actionAdminCon}>
         <div className={classes.searchBoxAdmin}>
           <TextField

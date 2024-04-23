@@ -6,7 +6,6 @@ import ViewUser from "./Pages/ViewUser";
 import UpdateUser from "./Pages/UpdateUser";
 import UserProfile from "./Pages/UserProfile";
 import NoPages from "./Pages/NoPages";
-import Supplier from "./Pages/Supplier";
 import EmpManagement from "./Pages/EmpManagement";
 import PaySlip from "./Pages/PaySlip";
 import LeaveMng from "./Pages/leavemng";
@@ -44,11 +43,11 @@ import FinanceDashboard from "../src/Pages/Finance/finDashboard";
 import ViewAttendance from "./Pages/ViewAttendance";
 
 
-import AddClient from "../src/Components/Client/Add-Client";
+import AddClient from "../src/Components/Client/Add-Client/AddClient";
 import ClientDetails from "../src/Components/Client/Client/ClientDetails";
 import ClientUpdateDetails from "../src/Components/Client/Client/UpdateDetails";
 import SHome from "../src/Components/SHome";
-import AddSupplier from "../src/Components/Supplier/Add-Supplier";
+import AddSupplier from "../src/Components/Supplier/Add-Supplier/AddSupplier";
 import SupplierDetails from "../src/Components/Supplier/Supplier/SupplierDetails";
 import SupplierUpdateDetails from "../src/Components/Supplier/Supplier/UpdateDetails";
 
