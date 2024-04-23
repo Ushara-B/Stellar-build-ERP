@@ -7,7 +7,7 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import Avatar from '@mui/material/Avatar';
-import Cheems from '../Assets/cheems.png';
+import Cheems from '../Assets/cheems.jpeg';
 import { useState, useEffect } from 'react';
 import { Box } from '@mui/material';
 
@@ -45,7 +45,7 @@ export default function ButtonAppBar() {
     const hours = String(date.getHours()).padStart(2, '0');
     const minutes = String(date.getMinutes()).padStart(2, '0');
     const seconds = String(date.getSeconds()).padStart(2, '0');
-    return `${month}/${day}/${year}  ${hours}:${minutes}:${seconds}`;
+    return `${month}/${day}/${year} ${hours}:${minutes}:${seconds}`;
   };
 
   const handleProfileClick = () => {
