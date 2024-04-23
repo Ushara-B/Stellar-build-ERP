@@ -26,10 +26,10 @@ import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 
 const columns = [
-  { id: "name", label: "Name", minWidth: 170 },
-  { id: "emp_id", label: "Employee ID", minWidth: 170 },
-  { id: "role", label: "Role", minWidth: 170 },
-  { id: "actions", label: "Actions", minWidth: 170, align: "center" },
+  { id: "name", label: "Name" },
+  { id: "emp_id", label: "Employee ID" },
+  { id: "role", label: "Role" },
+  { id: "actions", label: "Actions", align: "center" },
 ];
 
 export default function AttendanceMng() {
@@ -48,7 +48,7 @@ export default function AttendanceMng() {
   }, []);
 
   const fetchUsers = async () => {
-    try { 
+    try {
       const response = await axios.get("http://localhost:5000/users");
       setUsers(response.data.Users);
     } catch (error) {
@@ -80,8 +80,7 @@ export default function AttendanceMng() {
     setSelectedUserId(userId);
     setConfirmationOpen(true);
   };
-  
-  
+
   const handleConfirmAttendance = async () => {
     try {
       const currentTime = new Date();
@@ -96,7 +95,7 @@ export default function AttendanceMng() {
         date: currentTime.toISOString().slice(0, 10),
         clock_in: currentTime.toISOString(),
       };
-      
+
       await axios.post("http://localhost:5000/attendance", attendanceData);
       console.log("Attendance marked successfully!");
       setConfirmationOpen(false);
@@ -107,12 +106,6 @@ export default function AttendanceMng() {
       console.error("Error marking attendance:", error);
     }
   };
-  
-  
-  
-  
-  
-  
 
   const handleCancelAttendance = () => {
     setConfirmationOpen(false);
@@ -128,7 +121,9 @@ export default function AttendanceMng() {
 
   const filteredUsers = users.filter(
     (user) =>
-      `${user.f_Name} ${user.l_Name}`.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      `${user.f_Name} ${user.l_Name}`
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase()) ||
       user.user_N.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
@@ -142,7 +137,14 @@ export default function AttendanceMng() {
       <Drawer />
       <div style={{ marginLeft: "260px", paddingTop: "100px" }}>
         <Paper sx={{ width: "100%", boxShadow: "none" }}>
-          <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 2 }}>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              mb: 2,
+            }}
+          >
             <InputBase
               sx={{ ml: 1, flex: 1 }}
               placeholder="Search users.."
@@ -151,14 +153,21 @@ export default function AttendanceMng() {
               startAdornment={<SearchIcon fontSize="small" />}
             />
             <Box>
-              <IconButton color="primary" aria-label="print" onClick={handlePrintToPdf}>
+              <IconButton
+                color="primary"
+                aria-label="print"
+                onClick={handlePrintToPdf}
+              >
                 <PrintIcon />
               </IconButton>
-              
             </Box>
           </Box>
           <TableContainer ref={ComponentsRef}>
-            <Table stickyHeader aria-label="sticky table" sx={{ borderCollapse: "collapse", width: "80%", margin: "auto" }}>
+            <Table
+              stickyHeader
+              aria-label="sticky table"
+              sx={{ borderCollapse: "collapse", width: "75%", margin: "auto" }}
+            >
               <TableHead>
                 <TableRow>
                   {columns.map((column) => (
@@ -181,32 +190,75 @@ export default function AttendanceMng() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
-                  <TableRow
-                    hover
-                    role="checkbox"
-                    tabIndex={-1}
-                    key={row._id}
-                    sx={{
-                      "&:hover": {
-                        backgroundColor: "#DEDEDE", // Background color on hover
-                        transition: "background-color 0.3s, color 0.3s", // Smooth transition
-                        cursor: "pointer", // Change cursor to pointer on hover
-                      },
-                      border: "none",
-                      padding: "8px 16px",
-                    }}
-                  >
-                    <TableCell sx={{ border: "1", padding: "10px 12px", backgroundColor: "white" }}>{`${row.f_Name} ${row.l_Name}`}</TableCell>
-                    <TableCell sx={{ border: "1", padding: "10px 12px", backgroundColor: "white" }}>{row.user_N}</TableCell>
-                    <TableCell sx={{ border: "1", padding: "10px 12px", backgroundColor: "white" }}>{row.role}</TableCell>
+                {filteredUsers
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((row) => (
+                    <TableRow
+                      hover
+                      role="checkbox"
+                      tabIndex={-1}
+                      key={row._id}
+                      sx={{
+                        "&:hover": {
+                          backgroundColor: "#DEDEDE", // Background color on hover
+                          transition: "background-color 0.3s, color 0.3s", // Smooth transition
+                          cursor: "pointer", // Change cursor to pointer on hover
+                        },
+                        border: "none",
+                        padding: "8px 16px",
+                      }}
+                    >
+                      <TableCell
+                        sx={{
+                          border: "1",
+                          padding: "10px 12px",
+                          backgroundColor: "white",
+                        }}
+                      >{`${row.f_Name} ${row.l_Name}`}</TableCell>
+                      <TableCell
+                        sx={{
+                          border: "1",
+                          padding: "10px 12px",
+                          backgroundColor: "white",
+                        }}
+                      >
+                        {row.user_N}
+                      </TableCell>
+                      <TableCell
+                        sx={{
+                          border: "1",
+                          padding: "10px 12px",
+                          backgroundColor: "white",
+                        }}
+                      >
+                        {row.role}
+                      </TableCell>
 
-                    <TableCell align="center" sx={{ border: "1", padding: "10px", backgroundColor: "white", display: "flex" }}>
-                      <button style={{backgroundColor:"#535C91"}} onClick={() => markAttendance(row._id)}>Mark Attendance</button>
-                      <button style={{backgroundColor:"#535C91"}} onClick={() => handleViewUser(row._id)}>View Attendance</button>
-                    </TableCell>
-                  </TableRow>
-                ))}
+                      <TableCell
+                        align="center"
+                        sx={{
+                          border: "1",
+                          padding: "10px",
+                          backgroundColor: "white",
+                          display: "flex",
+                          width: "40%",
+                        }}
+                      >
+                        <button
+                          style={{ backgroundColor: "#535C91", width: "45%" }}
+                          onClick={() => markAttendance(row._id)}
+                        >
+                          Mark Attendance
+                        </button>
+                        <button
+                          style={{ backgroundColor: "#535C91", width: "45%" }}
+                          onClick={() => handleViewUser(row._id)}
+                        >
+                          View Attendance
+                        </button>
+                      </TableCell>
+                    </TableRow>
+                  ))}
               </TableBody>
             </Table>
           </TableContainer>
@@ -233,7 +285,6 @@ export default function AttendanceMng() {
           Are you sure you want to mark attendance for this user?
         </DialogContent>
         <DialogActions>
-          
           <Button onClick={handleCancelAttendance} color="primary">
             No
           </Button>
@@ -243,8 +294,16 @@ export default function AttendanceMng() {
         </DialogActions>
       </Dialog>
 
-      <Snackbar open={openSuccessSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar}>
-        <MuiAlert onClose={handleCloseSnackbar} severity="success" sx={{ width: "100%" }}>
+      <Snackbar
+        open={openSuccessSnackbar}
+        autoHideDuration={6000}
+        onClose={handleCloseSnackbar}
+      >
+        <MuiAlert
+          onClose={handleCloseSnackbar}
+          severity="success"
+          sx={{ width: "100%" }}
+        >
           {successMessage}
         </MuiAlert>
       </Snackbar>

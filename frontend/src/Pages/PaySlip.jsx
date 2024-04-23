@@ -220,13 +220,13 @@ function PaySlip() {
                         }}
                       >
                         <StyledButton
-                          style={{ padding: "10px 35px" }}
+                          style={{ padding: "10px 35px", backgroundColor:"#535C91" }}
                           onClick={() => handleEdit(row._id)}
                         >
                           View
                         </StyledButton>
                         <StyledButton
-                          style={{ padding: "10px 35px" }}
+                          style={{ padding: "10px 35px", backgroundColor:"#535C91" }}
                           onClick={() => handleEdit(row._id)}
                         >
                           Download

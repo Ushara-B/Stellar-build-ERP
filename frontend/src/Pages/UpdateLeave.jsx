@@ -134,7 +134,7 @@ function UpdateLeave() {
             <br />
             <button
               type="submit"
-              
+              style={{ backgroundColor:"#535C91"}}
             >
               Submit
             </button>
