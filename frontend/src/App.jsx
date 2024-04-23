@@ -40,7 +40,17 @@ import  IncomeForm from "./Pages/Finance/Form";
 import  ExpenseForm from "./Pages/Finance/expenseForm";
 import FinanceDashboard from "../src/Pages/Finance/finDashboard";
 import ViewAttendance from "./Pages/ViewAttendance";
+
+import Expense from "./Components/Finance/Finance/Expense";
+import Income from "./Components/Finance/Finance/Income";
+import Finance from "./Pages/Finance";
 import InventoryCategory from "./Pages/InventoryCategory";
+import UpdateInventory from "./Pages/UpdateInventory";
+import { useGlobalContext } from "../src/Context/globalContext";
+import  IncomeForm from "./Pages/Finance/Form";
+import  ExpenseForm from "./Pages/Finance/expenseForm";
+import FinanceDashboard from "../src/Pages/Finance/finDashboard";
+import ViewAttendance from "./Pages/ViewAttendance";
 
 
 function App() {
@@ -78,6 +88,25 @@ function App() {
           <Route path="/viewinventorylist" element={<ViewInventoryList />} />
           <Route path="/inventory" element={<Inventory />} />
           <Route path="/addinventory" element={<AddInventory />} />
+          <Route path="/employee-management/Attendance"element={<Attendance />}/>
+          <Route path="/LeaveForm"element={<LeaveForm />}/>
+          <Route path="/ActiveLeaves"element={<ActiveLeaves />}/>
+          <Route path="/updateLeave" element={<UpdateLeave/>}/>
+          <Route path="/projects" element={<Projects/>}/>
+          <Route path = '/vehicle' element = {<VehicleDash/>}/>
+          <Route path = '/addvehicle' element = {<AddVehicle/>}/>
+          <Route path = '/viewvehicles' element = {<Vehicles/>}/>
+          <Route path = '/viewvehicle/:id' element = {<Vehicle/>}/>
+          <Route path = '/viewvehicles/:id' element = {<UpdateVehicles/>}/>
+          <Route path = '/allusers' element ={<AllUsers/>}/>
+          <Route path = '/allprojects' element = {<Allprojects/>}/>
+          <Route path = '/Newprojects' element = {<Newprojects/>}/>
+          <Route path = '/Allprojects' element = {<Allprojects/>}/>
+          <Route path = '/Newprojects' element = {<Newprojects/>}/> 
+          <Route path = '/Updateprojects/:id' element = {<Updateprojects/>}/>
+          <Route path = '/viewinventorylist' element = {<ViewInventoryList/>}/>
+          <Route path = '/inventory' element = {<Inventory/>}/>
+          <Route path = '/addinventory' element = {<AddInventory/>}/>
           <Route path="/Updateinventory/:id" element={<UpdateInventory />} />
 
           <Route path="/employee-management/Attendance"element={<Attendance />}/>
@@ -112,6 +141,7 @@ function App() {
 
           
 
+          <Route path="/inventorycategory" element={<InventoryCategory />} />
           <Route path="/finance/incomeform" element={<IncomeForm />} />
           <Route path="/finance/expenseform" element={<ExpenseForm />} />
           <Route path = '/inventorycategory' element = {<InventoryCategory/>}/>
