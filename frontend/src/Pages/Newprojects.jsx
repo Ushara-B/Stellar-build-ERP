@@ -1,76 +1,107 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router';
-import { useParams } from 'react-router';
-import Menu from '../Components/menu';
-import AppBar from '../Components/Appbar';
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import AppBar from "../Components/Appbar";
+import Menu from "../Components/menu";
 import { TextField, Button, Grid, Box, MenuItem } from "@mui/material";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
 
-function Updateprojects() {
+function AddProject() {
+  const history = useNavigate();
+  const [inputs, setInputs] = useState({
+    projectID: "",
+    projectName: "",
+    projectBudget: "",
+    Locate: "",
+    contractor: "",
+    Employees: "",
+    Status: "",
+    startDate: "",
+    endDate: "",
+    projectType: "",
+    description: "",
+  });
+ // const [nextProjectId, setNextProjectId] = useState(null);
 
-    const [inputs, setInputs] = useState({});
-    const history = useNavigate();
-    const id = useParams().id;
 
-    useEffect(()=>{
-        const fetchHandler = async ()=>{
-            await axios
-            .get(`http://localhost:5000/projects/${id}`)
-            .then((res)=> res.data)
-            .then((data)=> setInputs(data.project))
-            .catch((error) => console.log("Error fetching project:", error));
-        };
-        fetchHandler();
-    },[id]);
+  /*useEffect(() => {
+    fetchNextProjectId();
+  }, []);
 
-    const sendRequest = async (requestData) => {
-        try {
-          await axios.put(`http://localhost:5000/projects/${id}`, requestData);
-          console.log("Project updated successfully!");
-        } catch (error) {
-          console.log("Error updating project:", error);
-        }
-      };
+  const fetchNextProjectId = async () => {
+    try {
+      const response = await axios.get('http://localhost:5000/nextProjectId');
+      setNextProjectId(response.data.nextProjectId);
+    } catch (error) {
+      console.error('Error fetching next project ID:', error);
+    }
+  };*/
 
-    const handleChange = (e) => {
-        setInputs(prevState => ({
-            ...prevState,
-            [e.target.name]: e.target.value,
-        }));
+  const handleChange = (e) => {
+    setInputs((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(inputs/*, projectID: nextProjectId*/ );
+    sendRequest().then(() => history('/allprojects'));
+  };
+  const sendRequest = async () => {
+    await axios
+      .post("http://localhost:5000/projects", {
+        ...inputs,
+       // projectID: nextProjectId,
+        startDate: new Date(inputs.startDate).toISOString(),
+        endDate: new Date(inputs.endDate).toISOString(),
+      })
+      .then((res) => res.data);
+  };
+
+  /*const GoogleMapComponent = ({ label, name, value, onChange }) => {
+    const { isLoaded } = useJsApiLoader({
+      id: "google-map-script",
+      googleMapsApiKey: "YOUR_GOOGLE_MAPS_API_KEY",
+    });
+
+    const [position, setPosition] = useState({ lat: 0, lng: 0 });
+
+    const handleMapClick = (event) => {
+      setPosition({ lat: event.latLng.lat(), lng: event.latLng.lng() });
+      onChange({
+        target: { name, value: `${event.latLng.lat()}, ${event.latLng.lng()}` },
+      });
     };
-    
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log(inputs);
-      
-        const requestData = {
-          projectID: String(inputs.projectID),
-          projectName: String(inputs.projectName),
-          projectBudget: Number(inputs.projectBudget),
-          Locate: String(inputs.Locate),
-          contractor: String(inputs.contractor),
-          Employees: String(inputs.Employees),
-          Status: String(inputs.Status),
-          projectType: String(inputs.projectType),
-          description: String(inputs.description),
-          startDate: inputs.startDate ? new Date(inputs.startDate).toISOString() : null,
-          endDate: inputs.endDate ? new Date(inputs.endDate).toISOString() : null,
-        };
-      
-        sendRequest(requestData).then(() => history('/Allprojects'));
-      };
-    
-  
-    
-    return (
-        <div>
+
+    return isLoaded ? (
+      <div>
+        <label>{label}</label>
+        <GoogleMap
+          mapContainerStyle={{ height: "400px", width: "100%" }}
+          center={position}
+          zoom={10}
+          onClick={handleMapClick}
+        >
+          <Marker position={position} />
+        </GoogleMap>
+      </div>
+    ) : (
+      <></>
+    );
+  };
+  */
+
+  return (
+    <div>
       <AppBar />
       <Menu />
-      <div style={{ marginLeft: "270px", paddingTop: "90px" }}>
+      <div style={{ marginLeft: "255px", paddingTop: "80px" }}>
         <Breadcrumbs
           arial-label="breadcrumb"
           separator={<NavigateNextIcon fontSize="small" />}
@@ -82,7 +113,7 @@ function Updateprojects() {
             Projects List
           </Link>
           <Typography key="3" color="text.primary">
-            Update Project
+            Add Project
           </Typography>
         </Breadcrumbs>
         <Box
@@ -105,7 +136,7 @@ function Updateprojects() {
             }}
           >
             <Typography align="center" gutterBottom variant="h4" component="h2">
-              <strong>Update Project Details</strong>
+              <strong>Add Project Details</strong>
             </Typography>
             <br></br>
 
@@ -259,8 +290,8 @@ function Updateprojects() {
                   rows={4}
                 />
               </Grid>
-              <Grid item xs={3} >
-                <Button 
+              <Grid item xs={3}>
+                <Button
                   type="submit"
                   variant="contained"
                   color="primary"
@@ -277,17 +308,15 @@ function Updateprojects() {
                     },
                   }}
                 >
-                  Update
+                  Add Project
                 </Button>
               </Grid>
             </Grid>
- 
-  
-          </Box>  
+          </Box>
         </Box>
       </div>
     </div>
   );
 }
 
-export default Updateprojects;
+export default AddProject;
