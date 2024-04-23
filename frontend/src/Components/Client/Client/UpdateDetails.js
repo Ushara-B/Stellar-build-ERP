@@ -9,6 +9,8 @@ import {
   Paper,
   Container,
 } from "@mui/material";
+import Menu from '../../menu';
+import AppBar from '../../Appbar';
 
 const UpdateDetails = () => {
   const { id } = useParams(); // Get the ID from the URL params
@@ -67,6 +69,11 @@ const UpdateDetails = () => {
   if (error) return <Typography variant="h6">{error}</Typography>;
 
   return (
+    <div>
+            <AppBar />
+                <Menu/>
+
+            <div style={{ marginLeft: '255px', paddingTop: '80px' }}><div>
     <Container maxWidth="sm">
     
       {/* Centers the form */}
@@ -171,6 +178,10 @@ const UpdateDetails = () => {
         </form>
       </Paper>
     </Container>
+
+    </div>
+    </div>
+    </div>
   );
 };
 

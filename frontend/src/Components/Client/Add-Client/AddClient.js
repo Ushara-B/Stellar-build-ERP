@@ -6,6 +6,8 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import { CircularProgress, Paper, Container } from "@material-ui/core";
+import Menu from '../../menu';
+import AppBar from '../../Appbar';
 
 const useStyles = makeStyles((theme) => ({
   adminTopicClient: {
@@ -113,6 +115,12 @@ function AddClient() {
   };
 
   return (
+
+    <div>
+    <AppBar />
+        <Menu/>
+
+    <div style={{ marginLeft: '255px', paddingTop: '80px' }}>'
     <Container maxWidth="sm">
     
       {/* Centers the form */}
@@ -217,6 +225,8 @@ function AddClient() {
         </form>
       </Paper>
     </Container>
+    </div>
+    </div>
   );
 }
 

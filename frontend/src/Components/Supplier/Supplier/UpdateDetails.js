@@ -7,6 +7,8 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
+import Menu from '../../menu';
+import AppBar from '../../Appbar';
 
 const UpdateDetails = () => {
   const [inputs, setInputs] = useState({});
@@ -57,7 +59,11 @@ const UpdateDetails = () => {
     });
   };
 
-  return (
+  return (<div>
+    <AppBar />
+        <Menu/>
+
+    <div style={{ marginLeft: '255px', paddingTop: '80px' }}>
     <Container maxWidth="sm">
       <Box sx={{ marginTop: 4 }}>
         <Typography variant="h4" gutterBottom>
@@ -140,6 +146,8 @@ const UpdateDetails = () => {
         </form>
       </Box>
     </Container>
+    </div>
+    </div>
   );
 };
 

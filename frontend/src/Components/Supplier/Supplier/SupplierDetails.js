@@ -14,7 +14,10 @@ import Paper from "@mui/material/Paper";
 import Alert from "@mui/material/Alert";
 import CircularProgress from "@mui/material/CircularProgress";
 import { makeStyles } from "@material-ui/core/styles";
+import AppBar from '../../Appbar';
+import Menu from '../../menu';
 const URL = "http://localhost:5000/suppliers";
+
 const useStyles = makeStyles((theme) => ({
   clientDetails: {
     padding: theme.spacing(2),
@@ -164,6 +167,11 @@ const SupplierDetails = () => {
   });
 
   return (
+    <div>
+    <AppBar />
+        <Menu/>
+
+    <div style={{ marginLeft: '255px', paddingTop: '80px' }}>
     <div className={classes.clientDetails}>
       <div className={classes.actionAdminCon}>
         <div className={classes.searchBoxAdmin}>
@@ -265,6 +273,8 @@ const SupplierDetails = () => {
           </Table>
         </Paper>
       )}
+    </div>
+    </div>
     </div>
   );
 };

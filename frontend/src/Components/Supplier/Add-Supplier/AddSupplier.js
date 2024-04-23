@@ -8,6 +8,8 @@ import {
   makeStyles,
 } from "@material-ui/core";
 import axios from "axios";
+import AppBar from '../../Appbar';
+import Menu from '../../menu';
 
 const useStyles = makeStyles((theme) => ({
   formContainer: {
@@ -72,6 +74,11 @@ function AddSupplier() {
   };
 
   return (
+    <div>
+    <AppBar />
+        <Menu/>
+
+    <div style={{ marginLeft: '255px', paddingTop: '80px' }}>
     <Container maxWidth="sm">
       <Typography variant="h4" align="center" gutterBottom>
         Add Supplier
@@ -152,6 +159,8 @@ function AddSupplier() {
         </Button>
       </form>
     </Container>
+    </div>
+    </div>
   );
 }
 

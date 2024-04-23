@@ -1,7 +1,9 @@
 import React from "react";
-import { makeStyles } from "@mui/material/styles";
-import Button from "@mui/material/Button";
+import { makeStyles } from "@material-ui/core/styles";
+import Button from "@material-ui/core/Button";
 import { Link } from "react-router-dom";
+import Menu from '../Components/menu';
+import AppBar from '../Components/Appbar';
 
 const useStyles = makeStyles((theme) => ({
   boxConTest: {
@@ -30,10 +32,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Home() {
+export default function SHome() {
   const classes = useStyles();
 
   return (
+    <div>
+    <AppBar />
+        <Menu/>
+
+    <div style={{ marginLeft: '255px', paddingTop: '80px' }}>
     <div className={classes.boxConTest}>
       <Button
         component={Link}
@@ -50,6 +57,8 @@ export default function Home() {
       >
         <h3>Suppliers</h3>
       </Button>
+    </div>
+    </div>
     </div>
   );
 }

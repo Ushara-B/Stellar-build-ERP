@@ -14,6 +14,8 @@ import Paper from "@mui/material/Paper";
 import Alert from "@material-ui/lab/Alert";
 import CircularProgress from "@mui/material/CircularProgress";
 import { makeStyles } from "@material-ui/core/styles";
+import AppBar from '../../Appbar';
+import Drawer from '../../menu';
 
 const URL = "http://localhost:5000/clients";
 
@@ -159,6 +161,11 @@ const ClientDetails = () => {
   });
 
   return (
+    <div>
+    <AppBar />
+        <Drawer/>
+
+    <div style={{ marginLeft: '255px', paddingTop: '80px' }}>
     <div className={classes.clientDetails}>
      
       <div className={classes.actionAdminCon}>
@@ -264,6 +271,8 @@ const ClientDetails = () => {
           </Table>
         </Paper>
       )}
+    </div>
+    </div>
     </div>
   );
 };
