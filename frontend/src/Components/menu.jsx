@@ -61,8 +61,6 @@ export default function NestedList() {
       window.location.href = '/supplier';
     } else if (menuName === 'Contact' && subMenuName === 'Clients') {
       window.location.href = '/clients';
-    } else if (menuName === 'Contact' && subMenuName === 'Add contacts') {
-      window.location.href = '/add-contacts';
     } else if (menuName === 'Projects' && subMenuName === 'All projects') {
       window.location.href = '/AllProjects';
     } else if (menuName === 'Projects' && subMenuName === 'New projects') {
@@ -75,8 +73,8 @@ export default function NestedList() {
       window.location.href = '/addvehicle';
     }else if (menuName === 'Vehicle Management' && subMenuName === 'View Vehicles'){
       window.location.href = '/viewvehicles';
-    }else if (menuName === 'Vehicle Management'){
-      window.location.href = '/vehicle';
+    }else if (menuName === 'Vehicle Management' && subMenuName === 'Assign Drivers'){
+      window.location.href = '/assigndriver';
     }else if (menuName === 'Inventory' && subMenuName === 'Inventory Category'){
       window.location.href = '/inventorycategory';
     }else if (menuName === 'Inventory' && subMenuName === 'Add Inventory'){
@@ -95,6 +93,12 @@ export default function NestedList() {
     window.location.href = '/finance/expense';
     }else if (menuName === 'Financial' && subMenuName === 'Incomes'){
     window.location.href = '/finance/income';
+    }else if (menuName === 'Contact' && subMenuName === 'Add Suppliers'){
+      window.location.href = '/add-supplier';
+    }else if (menuName === 'Contact' && subMenuName === 'Add Clients'){
+      window.location.href = '/add-client';
+
+
     // Add more else if conditions for other sub menus and their respective URLs
     }else {
       // Handle any other cases
@@ -107,11 +111,11 @@ export default function NestedList() {
 
   const mainMenus = [
     { name: 'Dashboard', path: '/dashboard' },
-    { name: 'Contact', path: '/contact', subMenus: ['Suppliers', 'Clients', 'Add contacts'] },
+    { name: 'Contact', path: '/contact', subMenus: ['Add Suppliers', 'Add Clients'] },
     { name: 'Projects', path: '/projects', subMenus: ['All projects', 'New projects', 'Project categories'] },
     { name: 'Inventory', path: '/inventory', subMenus: ['Add Inventory', 'View inventory list', 'Inventory Category'] },
     { name: 'Financial', path: '/finance', subMenus: ['Financial Dashboard', 'Expenses', 'Incomes', 'Categories'] },
-    { name: 'Vehicle Management', path: '/vehicle', subMenus: ['Vehicle Dashboard','Add Vehicle', 'View Vehicles', 'Assign drivers'] },
+    { name: 'Vehicle Management', path: '/vehicle', subMenus: ['Vehicle Dashboard','Add Vehicle', 'View Vehicles', 'Assign Drivers'] },
     { name: 'Loans Management', path: '/loan-management', subMenus: ['Add loans', 'Bank/Bussines Loans', 'Vehicle finance'] },
     { name: 'User Management', path: '/allusers', subMenus: ['View users', 'Add users'] },
     { name: 'Employee Management', path: '/employee-management', subMenus: ['PaySlip', 'Leaves', 'Attendance'] },

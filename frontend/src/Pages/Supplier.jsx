@@ -1,4 +1,4 @@
-import React from 'react';
+
 import Menu from '../Components/menu';
 import AppBar from '../Components/Appbar';
 
@@ -18,15 +18,8 @@ const Supplier = () => {
         <div>
             <AppBar />
                 <Menu/>
-        
 
             <div style={{ marginLeft: '255px', paddingTop: '80px' }}>
-                <h1>List of Suppliers sample page</h1>
-                <ul>
-                    {suppliers.map((supplier) => (
-                        <li key={supplier.id}>{supplier.name}</li>
-                    ))}
-                </ul>
             </div>
         </div>
     );
