@@ -29,6 +29,7 @@ function Vehicles() {
 
     useEffect(() => {
         fetchHandler().then((data) => {
+            // Calculate total vehicles
             setVehicles(data.vehicle);
             setTotalVehicles(data.vehicle.length);
             
