@@ -43,6 +43,17 @@ import  ExpenseForm from "./Pages/Finance/expenseForm";
 import FinanceDashboard from "../src/Pages/Finance/finDashboard";
 import ViewAttendance from "./Pages/ViewAttendance";
 
+
+import AddClient from "../src/Components/Client/Add-Client";
+import ClientDetails from "../src/Components/Client/Client/ClientDetails";
+import ClientUpdateDetails from "../src/Components/Client/Client/UpdateDetails";
+import SHome from "../src/Components/SHome";
+import AddSupplier from "../src/Components/Supplier/Add-Supplier";
+import SupplierDetails from "../src/Components/Supplier/Supplier/SupplierDetails";
+import SupplierUpdateDetails from "../src/Components/Supplier/Supplier/UpdateDetails";
+
+
+
 function App() {
   return (
     <div>
@@ -53,7 +64,6 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/user/addusers" element={<AddUsers />} />
           <Route path="/user/allusers" element={<AllUsers />} />
-          <Route path="/supplier" element={<Supplier />} />
           <Route path="*" element={<NoPages />} />
           <Route path="/employee-management" element={<EmpManagement />} />
           <Route path="/employee-management/PaySlip" element={<PaySlip />} />
@@ -101,6 +111,17 @@ function App() {
           <Route path="/ActiveLeaves/:id"element={<UpdateLeave />}/>
           <Route path="/UpdateLeave/:id"element={<UpdateLeave />}/>
           <Route path="/viewAttendance/:id"element={<ViewAttendance />}/>
+
+
+          <Route path="/contact" element={<SHome />} />
+          <Route path="/add-client" element={<AddClient />} />
+          <Route path="/client-details" element={<ClientDetails />} />
+          <Route path="/updateclient/:id" element={<ClientUpdateDetails />} />
+
+          <Route path="/add-supplier" element={<AddSupplier />} />
+          <Route path="/supplier-details" element={<SupplierDetails />} />
+          <Route path="/updatesuplier/:id" element={<SupplierUpdateDetails/>} />
+
         </Routes>
       </BrowserRouter>
     </div>
