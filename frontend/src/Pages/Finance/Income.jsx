@@ -1,27 +1,34 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components'
-import { Box, Typography, Avatar } from '@mui/material';
+import { Box, Typography, Avatar,Button } from '@mui/material';
 import { DataGrid, gridClasses } from '@mui/x-data-grid';
 import { useGlobalContext } from '../../Context/globalContext'; 
 import moment from 'moment';    
 import { grey } from '@mui/material/colors';
 import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 import  AppBar  from '../../Components/Appbar';
 import  Menu  from '../../Components/menu';
 import { InnerLayout,MainLayout } from '../../Styles/Layout';
 import { GlobalStyle } from '../../Styles/globalStyle';
 import { useNavigate } from 'react-router-dom';
+import ReactToPrint  from 'react-to-print';
+import { useRef } from 'react';
+import { useReactToPrint } from 'react-to-print'; 
 
 const Income = () => {
-  const { incomes, getIncomes, deleteIncome, totalIncome } = useGlobalContext();
+  const { incomes, getIncomes, deleteIncome, updateIncome, totalIncome } = useGlobalContext();
   const [pageSize, setPageSize] = useState(5);
   const [selectedRowId, setSelectedRowId] = useState(null);
   const navigate = useNavigate();
+  const componentRef = useRef(); // Reference to the component you want to print
+  const handlePrint = useReactToPrint({ content: () => componentRef.current }); 
 
   useEffect(() => {
     getIncomes();
   }, []);
 
+  
   const columns = [
     {
       field: 'title',
@@ -47,7 +54,7 @@ const Income = () => {
     },
     {
       field: 'project',
-      headerName: 'project',
+      headerName: 'Project',
       width: 150,
     },
     {
@@ -69,9 +76,16 @@ const Income = () => {
         const handleDelete = () => {
           deleteIncome(params.row._id);
         };
+
+        const handleEdit = () => {
+          // Navigate to edit page with the selected row id
+          navigate(`/finance/updateincome/${params.row._id}`);
+        };
+      
         return (
           <div>
-           <DeleteIcon onClick={handleDelete}/>
+            <DeleteIcon onClick={handleDelete}/>
+            <EditIcon onClick={handleEdit}/>
           </div>
         );
       },
@@ -79,105 +93,95 @@ const Income = () => {
   ];
 
   const totalIncomeStyle = {
-    backgroundColor: 'green', // Set green background color
-    color: 'white', // Set text color to white
+    backgroundColor: 'green',
+    color: 'white',
     padding: '15px',
     fontSize:'30px',
     borderRadius: '16px',
     alignSelf: 'right'
-  
-     // Add padding for better visual appearance
   };
 
-  
   const addIncomeStyle = {
-    backgroundColor: 'grey', // Set green background color
-    color: 'white', // Set text color to white
+    backgroundColor: 'grey',
+    color: 'white',
     padding: '15px',
     fontSize:'30px',
     borderRadius: '16px',
     alignSelf: 'right'
-  
-     // Add padding for better visual appearance
   };
 
   return (
     <IncomeStyled>
-    <MainLayout>
-    <GlobalStyle/>
-       <AppBar/>
+      <MainLayout>
+        <GlobalStyle/>
+        <AppBar/>
         <Menu/>
-     <div>
-    <main> 
-    
-    <Box sx={{ height: 800, width: '100%' }}>
-      <Typography variant="h3" component="h3" sx={{ textAlign: 'center', mt: 3, mb: 3 }}>
-        Incomes
-      </Typography>
-      <Box  sx={{ display: 'flex',gap: 2 }}>
-      <Typography variant="h6" component="h6" sx={{ textAlign: 'center', mb: 3, }}>
-      <span style={totalIncomeStyle}> Total Income:Rs{totalIncome()}</span>
-      </Typography>
-      <Typography variant="h6" component="h6" sx={{ textAlign: 'center', mb: 3, }} onClick={() => navigate('/finance/incomeform')}>
-      <span style={addIncomeStyle}> Add Income</span>
-      </Typography>
-      </Box>
-      <DataGrid
-        columns={columns}
-        rows={incomes}
-        getRowId={(row) => row._id}
-        rowsPerPageOptions={[5, 10, 20]}
-        pageSize={pageSize}
-        onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
-        getRowSpacing={(params) => ({
-          top: params.isFirstVisible ? 0 : 5,
-          bottom: params.isLastVisible ? 0 : 5,
-        })}
-        componentsOverrides={{
-          Footer: {
-            container: {
-              backgroundColor: 'green',
-            },
-          },
-        }}
-        sx={{
-          [`& .${gridClasses.row}`]: {
-            bgcolor: (theme) =>
-              theme.palette.mode === 'light' ? grey[200] : grey[900],
-          },
-          fontSize: '20px',
-        }}
-        onCellEditCommit={(params) => setSelectedRowId(params.id)}
-      />
-    </Box>
-    
-    </main>
-    </div>  
-    
-    </MainLayout>
+        <div>
+          <main> 
+            <Box sx={{ height: 800, width: '100%' }}>
+              <Typography variant="h3" component="h3" sx={{ textAlign: 'center', mt: 3, mb: 3 }}>
+                Incomes
+              </Typography>
+              <Box  sx={{ display: 'flex',gap: 2 }}>
+                <Typography variant="h6" component="h6" sx={{ textAlign: 'center', mb: 3, }}>
+                  <span style={totalIncomeStyle}> Total Income: Rs{totalIncome()}</span>
+                </Typography>
+                <Typography variant="h6" component="h6" sx={{ textAlign: 'center', mb: 3, }} onClick={() => navigate('/finance/incomeform')}>
+                  <span style={addIncomeStyle}> Add Income</span>
+                </Typography>
+              </Box>
+              <div ref={componentRef}>
+              <DataGrid
+                columns={columns}
+                rows={incomes}
+                getRowId={(row) => row._id}
+                rowsPerPageOptions={[5, 10, 20]}
+                pageSize={pageSize}
+                onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+                getRowSpacing={(params) => ({
+                  top: params.isFirstVisible ? 0 : 5,
+                  bottom: params.isLastVisible ? 0 : 5,
+                })}
+                componentsOverrides={{
+                  Footer: {
+                    container: {
+                      backgroundColor: 'green',
+                    },
+                  },
+                }}
+                sx={{
+                  [`& .${gridClasses.row}`]: {
+                    bgcolor: (theme) =>
+                      theme.palette.mode === 'light' ? grey[200] : grey[900],
+                  },
+                  fontSize: '20px',
+                }}
+                onCellEditCommit={(params) => setSelectedRowId(params.id)}
+              />
+              </div>
+            </Box>
+            <Button onClick={handlePrint}>Download Report</Button>
+          </main>
+        </div>  
+      </MainLayout>
     </IncomeStyled>
   );
 };
+
 const IncomeStyled = styled.div`
-height: 100vh;
-background-image: url(${props => props.bg});
-position: relative;
-main{
-  width:2000px;
-  height:1050px;
-  margin-left: 250px;
-  margin-top:50px;
-  background: #FFFFFF;
-  border: 3px solid #FFFFFF;
-  backdrop-filter: blur(4.5px);
-  
-  
-  overflow-x: hidden;
-  
-}
-
-Box{}
-
-
+  height: 100vh;
+  background-image: url(${props => props.bg});
+  position: relative;
+  main{
+    width:2000px;
+    height:1050px;
+    margin-left: 250px;
+    margin-top:50px;
+    background: #FFFFFF;
+    border: 3px solid #FFFFFF;
+    backdrop-filter: blur(4.5px);
+    overflow-x: hidden;
+  }
 `;
+
 export default Income;
