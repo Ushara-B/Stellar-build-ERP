@@ -107,6 +107,7 @@ function AddVehicle() {
                           variant="outlined"
                           fullWidth
                           required
+                          
                          />
                     </Grid>
                     <Grid item xs={12} sm={6}>
@@ -192,6 +193,9 @@ function AddVehicle() {
                     variant="outlined"
                     fullWidth
                     required
+                    inputProps={{ pattern: '^\\d{1,6}(\\s?(km|KM))$' }}
+                    error={!/^(\d{1,6}(\s?(km|KM)))?$/.test(inputs.mileage)}
+                    helperText={!/^(\d{1,6}(\s?(km|KM)))?$/.test(inputs.mileage) ? 'Maximum 6 digits with required "km" or "KM"' : ''}
                   />
                   </Grid>
                   <Grid item xs={12} sm={6}>
@@ -203,6 +207,7 @@ function AddVehicle() {
                     variant="outlined"
                     fullWidth
                     required
+                    
                   />
                   </Grid>
 
