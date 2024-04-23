@@ -1,30 +1,71 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  TextField,
-  Button,
-  Typography,
-  Container,
-  makeStyles,
-} from "@material-ui/core";
-import axios from "axios";
-import AppBar from '../../Appbar';
 import Menu from '../../menu';
+import AppBar from '../../Appbar';
+import axios from "axios";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import { makeStyles } from "@material-ui/core/styles";
+import { CircularProgress, Paper, Container,Link,Breadcrumbs } from "@material-ui/core";
 
-const useStyles = makeStyles((theme) => ({
-  formContainer: {
-    marginTop: theme.spacing(4),
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+
+
+
+/*const useStyles = makeStyles((theme) => ({
+  adminTopicClient: {
+    textAlign: "center",
+    fontWeight: "bold",
+    margin: "10px 0",
+    textTransform: "capitalize",
+    fontSize: 35,
   },
-  formControl: {
-    marginBottom: theme.spacing(2),
+  itemFullBox: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    margin: "25px 0",
   },
-  submitButton: {
-    marginTop: theme.spacing(2),
+  itemFormAdmin: {
+    border: "2px solid #2196f3",
+    padding: 25,
+    borderRadius: 5,
+    width: 450,
+    boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.5)",
+  },
+  formBoxItemLabel: {
+    fontWeight: "bold",
+    textTransform: "capitalize",
+    fontSize: 18,
+  },
+  formBoxItemInput: {
+    width: "100%",
+    fontSize: 17,
+    padding: "0px",
+    borderRadius: 3,
+    margin: "8px 0",
+    border: "1.5px solid #2196f3",
+  },
+  adminFormCenterBtn: {
+    backgroundColor: "#2196f3",
+    color: "white",
+    border: "2px solid #2196f3",
+    fontSize: 20,
+    cursor: "pointer",
+    borderRadius: 3,
+    padding: "8px 16px",
+    textDecoration: "none",
+    fontWeight: "bold",
+    margin: "20px auto 0 auto",
+    display: "flex",
+    textTransform: "capitalize",
+    boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.5)",
   },
 }));
-
+*/
 function AddSupplier() {
-  const classes = useStyles();
+ 
   const navigate = useNavigate();
   const [inputs, setInputs] = useState({
     name: "",
@@ -79,13 +120,27 @@ function AddSupplier() {
         <Menu/>
 
     <div style={{ marginLeft: '255px', paddingTop: '80px' }}>
+    <Breadcrumbs
+            arial-label="breadcrumb"
+            separator={<NavigateNextIcon fontSize="small" />}
+          >
+            <Link style={{ marginLeft: "20px" }} underline="hover" key="1" color="inherit" href="/contact">
+              Home
+            </Link>
+            <Typography key="3" color="text.primary">
+              All Suppliers
+            </Typography>
+          </Breadcrumbs>
+          <br/>
     <Container maxWidth="sm">
+    <Paper elevation={3} style={{ padding: 20, marginBottom: 20 }}>
+
       <Typography variant="h4" align="center" gutterBottom>
         Add Supplier
       </Typography>
-      <form onSubmit={handleSubmit} className={classes.formContainer}>
+      <form onSubmit={handleSubmit} >
         <TextField
-          className={classes.formControl}
+          
           label="Name"
           name="name"
           value={inputs.name}
@@ -93,8 +148,10 @@ function AddSupplier() {
           fullWidth
           required
         />
+        <br/>
+        <br/>
         <TextField
-          className={classes.formControl}
+          
           label="Business Name"
           name="bname"
           value={inputs.bname}
@@ -102,8 +159,10 @@ function AddSupplier() {
           fullWidth
           required
         />
+        <br/>
+        <br/>
         <TextField
-          className={classes.formControl}
+          
           label="Email"
           name="email"
           value={inputs.email}
@@ -111,8 +170,10 @@ function AddSupplier() {
           fullWidth
           required
         />
+        <br/>
+        <br/>
         <TextField
-          className={classes.formControl}
+         
           label="Contact"
           name="contact"
           value={inputs.contact}
@@ -120,8 +181,10 @@ function AddSupplier() {
           fullWidth
           required
         />
+        <br/>
+        <br/>
         <TextField
-          className={classes.formControl}
+         
           label="Address"
           name="address"
           value={inputs.address}
@@ -129,8 +192,10 @@ function AddSupplier() {
           fullWidth
           required
         />
+        <br/>
+        <br/>
         <TextField
-          className={classes.formControl}
+        
           label="Tax"
           name="tax"
           type="number"
@@ -139,8 +204,10 @@ function AddSupplier() {
           fullWidth
           required
         />
+        <br/>
+        <br/>
         <TextField
-          className={classes.formControl}
+          
           label="Total"
           name="total"
           type="number"
@@ -149,15 +216,14 @@ function AddSupplier() {
           fullWidth
           required
         />
-        <Button
-          type="submit"
-          variant="contained"
-          color="primary"
-          className={classes.submitButton}
-        >
-          Add Supplier
-        </Button>
+        
+        <div style={{ textAlign: "center", margin: "25px 0" }}>
+            <Button type="submit" variant="contained" color="primary">
+            Add Supplier
+            </Button>
+          </div>
       </form>
+    </Paper>
     </Container>
     </div>
     </div>

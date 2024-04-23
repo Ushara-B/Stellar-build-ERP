@@ -224,7 +224,7 @@ function Updateprojects() {
                   <MenuItem value="Start">Start</MenuItem>
                   <MenuItem value="Done">Done</MenuItem>
                   <MenuItem value="End">End</MenuItem>
-                  <MenuItem value="Pouse">Pause</MenuItem>
+                  <MenuItem value="Pause">Pause</MenuItem>
                 </TextField>
               </Grid>
 
@@ -244,6 +244,7 @@ function Updateprojects() {
                   <MenuItem value="Paint">Paint</MenuItem>
                   <MenuItem value="Water-Supply">Water-supply</MenuItem>
                   <MenuItem value="Tile">Tile</MenuItem>
+                  <MenuItem value="Electrical">Electrical</MenuItem>
                 </TextField>
               </Grid>
               <Grid item xs={12} sm={6}>
