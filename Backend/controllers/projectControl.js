@@ -18,18 +18,23 @@ const getAllprojects = async (req, res, next) => {
 
 //data insert
 const addprojects = async (req, res, next) => {
-    const {  projectName, projectBudget, Employees, Status, startDate, endDate, projectType } = req.body;
+    const {  projectID,projectName, projectBudget,Locate,contractor, Employees, Status, startDate, endDate, projectType,description } = req.body;
     let project;
     try {
         project = new Projects({
          
+            projectID,
             projectName,
             projectBudget,
+            Locate,
+            contractor,
             Employees,
             Status,
             startDate,
             endDate,
-            projectType
+            projectType,
+            description
+
         });
         await project.save();
     } catch (err) {
@@ -64,18 +69,22 @@ return res.status(200).json({ project });
 
 const updateProjects = async (req, res, next) => {
     const id = req.params.id;
-     const {  projectName, projectBudget, Employees, Status, startDate, endDate, projectType } = req.body;
+    const {  projectID,projectName, projectBudget,Locate,contractor, Employees, Status, startDate, endDate, projectType,description } = req.body;
     let project;
     try {
         project = await Projects.findByIdAndUpdate(id, {
             
+            projectID,
             projectName,
             projectBudget,
+            Locate,
+            contractor,
             Employees,
             Status,
             startDate,
             endDate,
-            projectType
+            projectType,
+            description
         });
         project = await project.save();
     } catch (err) {
