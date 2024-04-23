@@ -1,0 +1,28 @@
+.react-confirm-alert-overlay {
+    background: rgba(213, 14, 14, 0.5);
+  }
+  
+  .react-confirm-alert {
+    background-color: #b53f96; /* Change this value to your desired blue shade */
+    color: rgb(31, 21, 76);
+    border-radius: 8px;
+  }
+  
+  .react-confirm-alert-button-group {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+  }
+  
+  .react-confirm-alert-button-group button {
+    background-color: transparent;
+    color: rgb(176, 26, 26);
+    border: 1px solid rgb(127, 50, 50);
+    padding: 8px 16px;
+    border-radius: 4px;
+    margin-left: 10px;
+  }
+  
+  .react-confirm-alert-button-group button:hover {
+    background-color: rgba(43, 41, 41, 0.2);
+  }
