@@ -26,6 +26,7 @@ import Newprojects from "./Pages/Newprojects";
 import Updateprojects from "./Pages/Updateprojects";
 import ProjectCategories from "./Pages/ProjectCategories";
 import Projectdetails from "./Pages/Projectdetails";
+import AddCategory from "./Pages/AddCategory";
 
 
 
@@ -79,12 +80,13 @@ function App() {
           <Route path = '/viewvehicles/:id' element = {<UpdateVehicles/>}/>
           <Route path = '/allusers' element ={<AllUsers/>}/>
 
-          
+          <Route path = '/projects' element = {<Projects/>}/>
           <Route path = '/allprojects' element = {<Allprojects/>}/>
           <Route path = '/Newprojects' element = {<Newprojects/>}/>
           <Route path = '/Allprojects' element = {<Allprojects/>}/>
           <Route path = '/Newprojects' element = {<Newprojects/>}/> 
           <Route path = '/Projectcategories' element = {<ProjectCategories/>}/>
+          <Route path = '/Add-category' element = {<AddCategory/>}/>
           <Route path = '/Projectdetails/:id' element = {<Projectdetails/>}/>
           <Route path = '/Updateprojects/:id' element = {<Updateprojects/>}/>
 

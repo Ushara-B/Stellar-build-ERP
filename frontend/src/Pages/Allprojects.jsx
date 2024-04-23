@@ -8,6 +8,8 @@ import SearchIcon from "@mui/icons-material/Search";
 import PrintIcon from "@mui/icons-material/Print";
 import AddIcon from "@mui/icons-material/Add";
 import IconButton from "@mui/material/IconButton";
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 import { useSearchParams } from "react-router-dom";
 import {
   Box,
@@ -18,6 +20,7 @@ import {
   TableHead,
   TableBody,
   TableRow,
+  Tooltip,
   TableCell,
   TablePagination,
   Breadcrumbs,
@@ -26,6 +29,7 @@ import {
   Divider,
 } from "@mui/material";
 import MilestoneBar from "./MilestoneBar";
+import '../css/confirmAlert.css';
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 
 import VisibilityIcon from "@mui/icons-material/Visibility";
@@ -146,14 +150,29 @@ export default function AllProjects() {
   };
 
   const deleteHandler = async (_id) => {
-    try {
-      await axios.delete(`http://localhost:5000/projects/${_id}`);
-      setProjects((prevProjects) =>
-        prevProjects.filter((project) => project._id !== _id)
-      );
-    } catch (error) {
-      console.error("Error deleting project:", error);
-    }
+    confirmAlert({
+      title: 'Delete Project',
+      message: 'Are you sure you want to delete this project?',
+      buttons: [
+        {
+          label: 'Yes',
+          onClick: async () => {
+            try {
+              await axios.delete(`http://localhost:5000/projects/${_id}`);
+              setProjects((prevProjects) =>
+                prevProjects.filter((project) => project._id !== _id)
+              );
+            } catch (error) {
+              console.error('Error deleting project:', error);
+            }
+          }
+        },
+        {
+          label: 'No',
+          onClick: () => {}
+        }
+      ]
+    });
   };
 
   const formatDate = (dateString) => {
@@ -222,7 +241,7 @@ export default function AllProjects() {
               />
               
               <Box>
-              
+              <Tooltip title="Add Project">
                 <IconButton
                   color="primary"
                   aria-label="add project"
@@ -230,6 +249,8 @@ export default function AllProjects() {
                 >
                   <AddIcon />
                 </IconButton>
+              </Tooltip>
+              <Tooltip title="Print">
                 <IconButton
                   color="primary"
                   aria-label="print all"
@@ -237,6 +258,7 @@ export default function AllProjects() {
                 >
                   <PrintIcon />
                 </IconButton>
+              </Tooltip>
               </Box>
             </Box>
             <h1
@@ -426,6 +448,7 @@ export default function AllProjects() {
                             textAlign: "center",
                           }}
                         >
+                           <Tooltip title="Update Project">
                           <IconButton
                             onClick={() =>
                               navigate(`/Updateprojects/${row._id}`)
@@ -442,6 +465,8 @@ export default function AllProjects() {
                               }}
                             />
                           </IconButton>
+                          </Tooltip>
+                          <Tooltip title="Delete Project">
                           <IconButton onClick={() => deleteHandler(row._id)}>
                             <DeleteIcon
                               color="secondary"
@@ -454,6 +479,9 @@ export default function AllProjects() {
                               }}
                             />
                           </IconButton>
+                          </Tooltip>
+
+                          <Tooltip title="Print ">
                           <IconButton onClick={() => handlePrintSingle(row)}>
                             <PrintIcon
                               color="primary"
@@ -466,6 +494,9 @@ export default function AllProjects() {
                               }}
                             />
                           </IconButton>
+                          </Tooltip>
+
+                          <Tooltip title="View Details">
                           <IconButton
                             onClick={() =>
                               navigate(`/Projectdetails/${row._id}`)
@@ -482,6 +513,8 @@ export default function AllProjects() {
                               }}
                             />
                           </IconButton>
+                          </Tooltip>
+
                         </TableCell>
                       </TableRow>
                     ))}
