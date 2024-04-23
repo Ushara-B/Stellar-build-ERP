@@ -210,7 +210,7 @@ export default function AllProjects() {
     <>
       <AppBar />
       <Menu />
-      <div style={{ marginLeft: "180px", paddingTop: "20px" }}>
+      <div style={{ marginLeft: "200px", paddingTop: "20px" }}>
         <Box sx={{ p: 8 }} height={2}>
           <Breadcrumbs
             arial-label="breadcrumb"
@@ -440,7 +440,8 @@ export default function AllProjects() {
                             progress={calculateMilestoneProgress(row)}
                           />
                         </TableCell>
-                        <TableCell
+                        
+                        <TableCell  style={{ display: "flex", justifyContent: "start" }}  className="flex-container"
                           sx={{
                             border: "1px",
                             padding: "10px 10px",
@@ -448,6 +449,7 @@ export default function AllProjects() {
                             textAlign: "center",
                           }}
                         >
+                          <div>
                            <Tooltip title="Update Project">
                           <IconButton
                             onClick={() =>
@@ -466,6 +468,8 @@ export default function AllProjects() {
                             />
                           </IconButton>
                           </Tooltip>
+                          </div>
+                          <div>
                           <Tooltip title="Delete Project">
                           <IconButton onClick={() => deleteHandler(row._id)}>
                             <DeleteIcon
@@ -480,7 +484,8 @@ export default function AllProjects() {
                             />
                           </IconButton>
                           </Tooltip>
-
+                          </div>
+                          <div>
                           <Tooltip title="Print ">
                           <IconButton onClick={() => handlePrintSingle(row)}>
                             <PrintIcon
@@ -495,7 +500,8 @@ export default function AllProjects() {
                             />
                           </IconButton>
                           </Tooltip>
-
+                          </div>
+<div>
                           <Tooltip title="View Details">
                           <IconButton
                             onClick={() =>
@@ -514,8 +520,9 @@ export default function AllProjects() {
                             />
                           </IconButton>
                           </Tooltip>
-
+                          </div>
                         </TableCell>
+                      
                       </TableRow>
                     ))}
                 </TableBody>
