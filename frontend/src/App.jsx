@@ -6,11 +6,6 @@ import AddUsers from "./Pages/AddUsers";
 import ViewUser from "./Pages/ViewUser";
 import UpdateUser from "./Pages/UpdateUser";
 import UserProfile from "./Pages/UserProfile";
-
-import UpdateUser from './Pages/UpdateUser';
-import UserProfile from './Pages/UserProfile';
-import ViewUser from './Pages/ViewUser';
-
 import NoPages from "./Pages/NoPages";
 import Supplier from "./Pages/Supplier";
 import EmpManagement from "./Pages/EmpManagement";
@@ -22,11 +17,6 @@ import ActiveLeaves from "./Pages/ActiveLeaves";
 import UpdateLeave from "./Pages/UpdateLeave";
 import Login from "./Pages/Login";
 import Projects from "./Pages/projects";
-
-import AddVehicle from "./Pages/AddVehicle";
-import Vehicles from "./Pages/Vehicles";
-import UpdateVehicles from "./Pages/UpdateVehicle";
-import VehicleDash from "./Pages/VehicleDashBoard";
 
 import AddVehicle from './Pages/AddVehicle';
 import Vehicles from './Pages/Vehicles';
@@ -41,19 +31,16 @@ import ViewInventoryList from "./Pages/ViewInventoryList";
 import Viewinventory from "./Pages/ViewInventory";
 import Inventory from "./Pages/Inventory";
 import AddInventory from "./Pages/AddInventory";
-import Expense from "./Components/Finance/Finance/Expense";
-import Income from "./Components/Finance/Finance/Income";
+import Expense from "./Pages/Finance/Expense";
+import Income from "./Pages/Finance/Income";
 import Finance from "./Pages/Finance";
-import InventoryCategory from "./Pages/InventoryCategory";
 import UpdateInventory from "./Pages/UpdateInventory";
 import { useGlobalContext } from "../src/Context/globalContext";
-import  Expense from "./Pages/Finance/Expense";
-import  Income from "./Pages/Finance/Income";
 import  IncomeForm from "./Pages/Finance/Form";
 import  ExpenseForm from "./Pages/Finance/expenseForm";
 import FinanceDashboard from "../src/Pages/Finance/finDashboard";
-import InventoryCategory from "./Pages/InventoryCategory";
 import ViewAttendance from "./Pages/ViewAttendance";
+import InventoryCategory from "./Pages/InventoryCategory";
 
 
 function App() {
@@ -123,7 +110,7 @@ function App() {
           <Route path="/finance/expense" element={<Expense />} />
           <Route path="/finance/income" element={<Income />} />
 
-          <Route path="/inventorycategory" element={<InventoryCategory />} />
+          
 
           <Route path="/finance/incomeform" element={<IncomeForm />} />
           <Route path="/finance/expenseform" element={<ExpenseForm />} />

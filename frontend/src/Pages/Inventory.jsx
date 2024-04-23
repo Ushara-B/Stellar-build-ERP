@@ -15,8 +15,6 @@ import { CardContent } from "@mui/material";
 
 
 
-
-
 export default function Inventory() {
   return (
     <>
@@ -51,7 +49,7 @@ export default function Inventory() {
                       <div className="paddingall">
                         <span className="pricetitle"> Total Store Value</span>
                         <br />
-                        <span className="pricesubtitle"> $350000 </span>
+                        <span className="pricesubtitle">  </span>
                       </div>
                     </Stack>
                   </Card>

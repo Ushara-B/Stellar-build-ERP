@@ -6,22 +6,7 @@ const categorySchema = new Schema({
         type : String,
         required:true,
     },
-
-    Quantity:{
-        type : Number,
-        required:true,
-    },
-
-    Value:{
-        type : String,
-        required:true,
-    },
-    Supplier:{
-        type : String,
-        required:true,
-    },
    
-    
 });
 
 module.exports = mongoose.model(
