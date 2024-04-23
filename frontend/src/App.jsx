@@ -34,6 +34,9 @@ import  ExpenseForm from "./Pages/Finance/expenseForm";
 import FinanceDashboard from "../src/Pages/Finance/finDashboard";
 import InventoryCategory from "./Pages/InventoryCategory";
 import { useGlobalContext } from '../src/Context/globalContext';
+import UpdateExpense from "./Pages/Finance/updateExpense";
+import UpdateIncome from "./Pages/Finance/updateIncome";
+
 
 import ViewAttendance from "./Pages/ViewAttendance";
 
@@ -67,7 +70,7 @@ function App() {
           <Route path = '/allprojects' element = {<Allprojects/>}/>
           <Route path = '/Newprojects' element = {<Newprojects/>}/>
           <Route path = '/Allprojects' element = {<Allprojects/>}/>
-          <Route path = '/Addprojects' element = {<Addprojects/>}/>
+        {/*  <Route path = '/Addprojects' element = {<Addprojects/>}/>  */}
           <Route path = '/Newprojects' element = {<Newprojects/>}/> 
           <Route path = '/Updateprojects/:id' element = {<Updateprojects/>}/>
           <Route path = '/viewinventorylist' element = {<ViewInventoryList/>}/>
@@ -80,14 +83,15 @@ function App() {
           <Route path="/finance" element={<FinanceDashboard />} />
 
           <Route path="/user-profile" element={<UserProfile />} />
-
-          <Route path="/finance" element={<Finance />} />
+ 
 
           <Route path="/finance/expense" element={<Expense />} />
           <Route path="/finance/income" element={<Income />} />
           <Route path="/finance/incomeform" element={<IncomeForm />} />
           <Route path="/finance/expenseform" element={<ExpenseForm />} />
           <Route path = '/inventorycategory' element = {<InventoryCategory/>}/>
+          <Route path="/finance/updateincome/:id" element={<UpdateIncome />} />
+          <Route path="/finance/updateexpense/:id" element={<UpdateExpense />} />
 
 
           <Route path="/ActiveLeaves/:id"element={<UpdateLeave />}/>
