@@ -5,11 +5,12 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { makeStyles } from "@material-ui/core/styles";
-import { CircularProgress, Paper, Container } from "@material-ui/core";
+import { CircularProgress, Paper, Container,Link,Breadcrumbs } from "@material-ui/core";
 import Menu from '../../menu';
 import AppBar from '../../Appbar';
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 
-const useStyles = makeStyles((theme) => ({
+/*const useStyles = makeStyles((theme) => ({
   adminTopicClient: {
     textAlign: "center",
     fontWeight: "bold",
@@ -58,10 +59,10 @@ const useStyles = makeStyles((theme) => ({
     textTransform: "capitalize",
     boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.5)",
   },
-}));
+}));*/
 
 function AddClient() {
-  const classes = useStyles();
+  
   const navigate = useNavigate();
   const [inputs, setInputs] = useState({
     name: "",
@@ -121,6 +122,18 @@ function AddClient() {
         <Menu/>
 
     <div style={{ marginLeft: '255px', paddingTop: '80px' }}>'
+    <Breadcrumbs
+            arial-label="breadcrumb"
+            separator={<NavigateNextIcon fontSize="small" />}
+          >
+            <Link style={{ marginLeft: "20px" }} underline="hover" key="1" color="inherit" href="/contact">
+              Home
+            </Link>
+            <Typography key="3" color="text.primary">
+              All Suppliers
+            </Typography>
+          </Breadcrumbs>
+          <br/>
     <Container maxWidth="sm">
     
       {/* Centers the form */}
@@ -142,6 +155,7 @@ function AddClient() {
             required
           />
           <br />
+          <br/>
           <TextField
             label="Business Name"
             name="bname"
@@ -151,6 +165,7 @@ function AddClient() {
             required
           />
           <br />
+          <br/>
           <TextField
             type="email"
             label="Email"
@@ -161,6 +176,7 @@ function AddClient() {
             required
           />
           <br />
+          <br/>
           <TextField
             label="Contact"
             name="contact"
@@ -170,6 +186,7 @@ function AddClient() {
             required
           />
           <br />
+          <br />
           <TextField
             label="Address"
             name="address"
@@ -178,6 +195,7 @@ function AddClient() {
             fullWidth
             required
           />
+          <br />
           <br />
           <TextField
             type="number"
@@ -189,6 +207,7 @@ function AddClient() {
             required
           />
           <br />
+          <br />
           <TextField
             label="Recent Project"
             name="rproject"
@@ -198,6 +217,7 @@ function AddClient() {
             required
           />
           <br />
+          <br />
           <TextField
             label="Current Project"
             name="cproject"
@@ -206,6 +226,7 @@ function AddClient() {
             fullWidth
             required
           />
+          <br />
           <br />
           <TextField
             type="number"

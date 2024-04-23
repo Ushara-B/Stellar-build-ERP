@@ -61,6 +61,10 @@ export default function NestedList() {
       window.location.href = '/supplier';
     } else if (menuName === 'Contact' && subMenuName === 'Clients') {
       window.location.href = '/clients';
+    } else if (menuName === 'Contact' && subMenuName === 'All Suppliers') {
+      window.location.href = '/supplier-details';
+    } else if (menuName === 'Contact' && subMenuName === 'All Clients') {
+      window.location.href = '/client-details';
     } else if (menuName === 'Projects' && subMenuName === 'All projects') {
       window.location.href = '/AllProjects';
     } else if (menuName === 'Projects' && subMenuName === 'New projects') {
@@ -111,7 +115,7 @@ export default function NestedList() {
 
   const mainMenus = [
     { name: 'Dashboard', path: '/dashboard' },
-    { name: 'Contact', path: '/contact', subMenus: ['Add Suppliers', 'Add Clients'] },
+    { name: 'Contact', path: '/contact', subMenus: ['Add Suppliers', 'Add Clients', 'All Suppliers', 'All Clients'] },
     { name: 'Projects', path: '/projects', subMenus: ['All projects', 'New projects', 'Project categories'] },
     { name: 'Inventory', path: '/inventory', subMenus: ['Add Inventory', 'View inventory list', 'Inventory Category'] },
     { name: 'Financial', path: '/finance', subMenus: ['Financial Dashboard', 'Expenses', 'Incomes', 'Categories'] },
