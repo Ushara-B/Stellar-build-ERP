@@ -15,20 +15,25 @@ import LeaveForm from "./Pages/LeaveForm";
 import ActiveLeaves from "./Pages/ActiveLeaves";
 import UpdateLeave from "./Pages/UpdateLeave";
 import Login from "./Pages/Login";
-import Projects from "./Pages/projects";
 import AddVehicle from './Pages/AddVehicle';
 import Vehicles from './Pages/Vehicles';
 import Vehicle from './Pages/ViewVehicle';
 import UpdateVehicles from './Pages/UpdateVehicle'
 import VehicleDash from './Pages/VehicleDashBoard';
+//pathum's
+import Projects from "./Pages/projects";
 import Allprojects from "./Pages/Allprojects";
 import Newprojects from "./Pages/Newprojects";
 import Updateprojects from "./Pages/Updateprojects";
+import ProjectCategories from "./Pages/ProjectCategories";
+import Projectdetails from "./Pages/Projectdetails";
+
+
+
 import ViewInventoryList from "./Pages/ViewInventoryList";
 import Viewinventory from "./Pages/ViewInventory";
 import Inventory from "./Pages/Inventory";
 import AddInventory from "./Pages/AddInventory";
-
 import Expense from "./Pages/Finance/Expense";
 import Income from "./Pages/Finance/Income";
 import InventoryCategory from "./Pages/InventoryCategory";
@@ -37,7 +42,6 @@ import  IncomeForm from "./Pages/Finance/Form";
 import  ExpenseForm from "./Pages/Finance/expenseForm";
 import FinanceDashboard from "../src/Pages/Finance/finDashboard";
 import ViewAttendance from "./Pages/ViewAttendance";
-import Projectdetails from "./Pages/Projectdetails";
 
 function App() {
   return (
@@ -65,12 +69,16 @@ function App() {
           <Route path = '/viewvehicle/:id' element = {<Vehicle/>}/>
           <Route path = '/viewvehicles/:id' element = {<UpdateVehicles/>}/>
           <Route path = '/allusers' element ={<AllUsers/>}/>
+
+          
           <Route path = '/allprojects' element = {<Allprojects/>}/>
           <Route path = '/Newprojects' element = {<Newprojects/>}/>
           <Route path = '/Allprojects' element = {<Allprojects/>}/>
           <Route path = '/Newprojects' element = {<Newprojects/>}/> 
+          <Route path = '/Projectcategories' element = {<ProjectCategories/>}/>
           <Route path = '/Projectdetails/:id' element = {<Projectdetails/>}/>
           <Route path = '/Updateprojects/:id' element = {<Updateprojects/>}/>
+
           <Route path = '/viewinventorylist' element = {<ViewInventoryList/>}/>
           <Route path = '/inventory' element = {<Inventory/>}/>
           <Route path = '/addinventory' element = {<AddInventory/>}/>

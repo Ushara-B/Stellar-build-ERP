@@ -8,6 +8,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import PrintIcon from "@mui/icons-material/Print";
 import AddIcon from "@mui/icons-material/Add";
 import IconButton from "@mui/material/IconButton";
+import { useSearchParams } from "react-router-dom";
 import {
   Box,
   Paper,
@@ -76,10 +77,26 @@ export default function AllProjects() {
   const ComponentsRef = useRef();
   const ComponentsRefsingle = useRef();
   const [searchTerm, setSearchTerm] = React.useState('');
+  const [searchParams] = useSearchParams();
+  const projectType = searchParams.get("type");
 
   useEffect(() => {
     fetchHandler().then((data) => setProjects(data.project));
   }, []);
+  
+  const searchFilteredProjects = projects.filter(
+    (project) =>
+      project.projectName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      project.contractor.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const filteredProjectsByType = projectType
+    ? searchFilteredProjects.filter(
+        (project) => project.projectType.toLowerCase() === projectType.toLowerCase()
+      )
+    : searchFilteredProjects;
+
+  
 
   const handlePrint = useReactToPrint({
     content: () => ComponentsRef.current,
@@ -119,6 +136,8 @@ export default function AllProjects() {
 
   const filteredProjects = projects.filter((project) =>
     project.projectName.toLowerCase().includes(searchTerm.toLowerCase()) || project.contractor.toLowerCase().includes(searchTerm.toLowerCase())
+    
+
 
   );
 

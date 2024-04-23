@@ -270,10 +270,10 @@ function AddProject() {
                   required
                   select
                 >
-                  <MenuItem value="furniture">Furniture</MenuItem>
-                  <MenuItem value="elevator">Elevator</MenuItem>
-                  <MenuItem value="paint">Paint</MenuItem>
-                  <MenuItem value="water">Water-supply</MenuItem>
+                  <MenuItem value="Furniture">Furniture</MenuItem>
+                  <MenuItem value="Elevator">Elevator</MenuItem>
+                  <MenuItem value="Paint">Paint</MenuItem>
+                  <MenuItem value="Water-Supply">Water-supply</MenuItem>
                   <MenuItem value="Tile">Tile</MenuItem>
                 </TextField>
               </Grid>
