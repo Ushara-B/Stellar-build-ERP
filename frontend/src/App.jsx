@@ -4,7 +4,8 @@ import AllUsers from "./Pages/AllUsers";
 import AddUsers from "./Pages/AddUsers";
 import ViewUser from "./Pages/ViewUser";
 import UpdateUser from "./Pages/UpdateUser";
-import UserProfile from "./Pages/UserProfile";
+import UserProfile from "../src/Components/UserProfile";
+import UserDash from "./Pages/UserDash";
 import NoPages from "./Pages/NoPages";
 import EmpManagement from "./Pages/EmpManagement";
 import PaySlip from "./Pages/PaySlip";
@@ -114,6 +115,8 @@ function App() {
 
           <Route path="/finance" element={<FinanceDashboard />} />
           <Route path="/user-profile" element={<UserProfile />} />
+          <Route path="/userdash" element={<UserDash />} />
+
 
           <Route path="/finance/expense" element={<Expense />} />
           <Route path="/finance/income" element={<Income />} />
