@@ -52,17 +52,18 @@ return res.status(200).json({ attendances });
 }
 
 const getAttendanceByUid = async (req, res) => {
+  const { uId } = req.params;
+
   try {
-    const { uId } = req.params; // Extract uId from request parameters
+    const attendanceData = await Attendance.findOne({ uId });
 
-    // Query attendance data based on uId
-    const attendanceData = await Attendance.find({ uId });
-
-    // Respond with the fetched attendance data
-    res.status(200).json(attendanceData);
+    if (attendanceData) {
+      res.status(200).json(attendanceData);
+    } else {
+      res.status(404).json({ message: 'Attendance data not found for uId' });
+    }
   } catch (error) {
-    console.error('Error fetching attendance data:', error);
-    res.status(500).json({ error: 'An error occurred while fetching attendance data.' });
+    res.status(500).json({ message: 'Error fetching attendance data', error: error.message });
   }
 };
 

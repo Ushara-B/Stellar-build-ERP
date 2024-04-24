@@ -91,21 +91,6 @@ export default function NestedList() {
     window.location.href = '/allusers';
     }else if (menuName === 'User Management' && subMenuName === 'Add users'){
     window.location.href = '/adduser';
-    }else if (menuName === 'Loans Management' && subMenuName === 'View loans'){
-      window.location.href = '/loan-management';
-    }else if (menuName === 'Loans Management' && subMenuName === 'Add loans'){
-      window.location.href = '/loan-management/addloans';
-    }else if (menuName === 'Financial' && subMenuName === 'Financial Dashboard'){
-    window.location.href = '/finance';
-    }else if (menuName === 'Financial' && subMenuName === 'Expenses'){
-    window.location.href = '/finance/expense';
-    }else if (menuName === 'Financial' && subMenuName === 'Incomes'){
-    window.location.href = '/finance/income';
-    }else if (menuName === 'Contact' && subMenuName === 'Add Suppliers'){
-      window.location.href = '/add-supplier';
-    }else if (menuName === 'Contact' && subMenuName === 'Add Clients'){
-      window.location.href = '/add-client';
-    
     // Add more else if conditions for other sub menus and their respective URLs
   }else {
     // Handle any other cases

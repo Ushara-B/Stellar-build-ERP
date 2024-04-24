@@ -83,7 +83,6 @@ function App() {
           <Route path="/user/allusers" element={<AllUsers />} />
           <Route path="*" element={<NoPages />} />
           <Route path="/employee-management" element={<EmpManagement />} />
-          <Route path="/employee-management/PaySlip" element={<PaySlip />} />
           <Route path="/employee-management/Leaves" element={<LeaveMng />} />
           <Route path="/employee-management/Attendance"element={<Attendance />}/>
           <Route path="/LeaveForm"element={<LeaveForm />}/>
@@ -151,6 +150,7 @@ function App() {
           <Route path="/ActiveLeaves/:id"element={<UpdateLeave />}/>
           <Route path="/UpdateLeave/:id"element={<UpdateLeave />}/>
           <Route path="/viewAttendance/:id"element={<ViewAttendance />}/>
+          <Route path="/PaySlip" element={<PaySlip/>}/>
 
 
           <Route path="/contact" element={<SHome />} />
