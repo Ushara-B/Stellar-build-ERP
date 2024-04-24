@@ -53,7 +53,6 @@ import UpdateInventory from "./Pages/UpdateInventory";
 import  IncomeForm from "./Pages/Finance/Form";
 import  ExpenseForm from "./Pages/Finance/expenseForm";
 import FinanceDashboard from "../src/Pages/Finance/finDashboard";
-import { useGlobalContext } from '../src/Context/globalContext';
 import UpdateExpense from "./Pages/Finance/updateExpense";
 import UpdateIncome from "./Pages/Finance/updateIncome";
 

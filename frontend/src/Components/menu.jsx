@@ -95,9 +95,6 @@ export default function NestedList() {
       window.location.href = '/loan-management';
     }else if (menuName === 'Loans Management' && subMenuName === 'Add loans'){
       window.location.href = '/loan-management/addloans';
-    }else if (menuName === 'Loans Management'){
-      window.location.href = '/loan-management';
-    }
     }else if (menuName === 'Financial' && subMenuName === 'Financial Dashboard'){
     window.location.href = '/finance';
     }else if (menuName === 'Financial' && subMenuName === 'Expenses'){
@@ -108,13 +105,12 @@ export default function NestedList() {
       window.location.href = '/add-supplier';
     }else if (menuName === 'Contact' && subMenuName === 'Add Clients'){
       window.location.href = '/add-client';
-
-
+    
     // Add more else if conditions for other sub menus and their respective URLs
-    else {
-      // Handle any other cases
-    }
-  };
+  }else {
+    // Handle any other cases
+  }
+};
 
   const isMenuActive = (menuPath) => {
     return location.pathname.startsWith(menuPath);
