@@ -52,12 +52,14 @@ const ViewVehicle = () => {
 
 
       <Box sx={{ marginLeft: '50px', marginTop: '20px', padding: 4, backgroundColor: '#f5f5f5', borderRadius: 2 ,marginRight: '50px'}}>
+      <Box sx={{ marginLeft: '50px', marginTop: '20px', padding: 4, backgroundColor: '#1B1A55', borderRadius: 2 ,marginRight: '50px'}}>
         <Card>
           <CardContent>
             <Typography variant="h4" gutterBottom>
               Vehicle Details
             </Typography>
             
+            <br></br>
             <Grid container spacing={2}>
 
               <Grid item xs={6}>

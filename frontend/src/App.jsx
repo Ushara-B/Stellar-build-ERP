@@ -1,12 +1,12 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "./Pages/Home";
+import Dash from "./Pages/Dash";
 import AllUsers from "./Pages/AllUsers";
 import AddUsers from "./Pages/AddUsers";
 import ViewUser from "./Pages/ViewUser";
 import UpdateUser from "./Pages/UpdateUser";
-import UserProfile from "./Pages/UserProfile";
+import UserProfile from "../src/Components/UserProfile";
+import UserDash from "./Pages/UserDash";
 import NoPages from "./Pages/NoPages";
-import Supplier from "./Pages/Supplier";
 import EmpManagement from "./Pages/EmpManagement";
 import PaySlip from "./Pages/PaySlip";
 import LeaveMng from "./Pages/leavemng";
@@ -15,15 +15,25 @@ import LeaveForm from "./Pages/LeaveForm";
 import ActiveLeaves from "./Pages/ActiveLeaves";
 import UpdateLeave from "./Pages/UpdateLeave";
 import Login from "./Pages/Login";
-import Projects from "./Pages/projects";
+
 import AddVehicle from './Pages/AddVehicle';
 import Vehicles from './Pages/Vehicles';
 import Vehicle from './Pages/ViewVehicle';
 import UpdateVehicles from './Pages/UpdateVehicle'
 import VehicleDash from './Pages/VehicleDashBoard';
+import AssignDriver from './Pages/AssignDriver';
+
+//pathum's
+import Projects from "./Pages/projects";
 import Allprojects from "./Pages/Allprojects";
 import Newprojects from "./Pages/Newprojects";
 import Updateprojects from "./Pages/Updateprojects";
+import ProjectCategories from "./Pages/ProjectCategories";
+import Projectdetails from "./Pages/Projectdetails";
+import AddCategory from "./Pages/AddCategory";
+
+
+
 import ViewInventoryList from "./Pages/ViewInventoryList";
 import Viewinventory from "./Pages/ViewInventory";
 import Inventory from "./Pages/Inventory";
@@ -43,8 +53,24 @@ import UpdateInventory from "./Pages/UpdateInventory";
 import  IncomeForm from "./Pages/Finance/Form";
 import  ExpenseForm from "./Pages/Finance/expenseForm";
 import FinanceDashboard from "../src/Pages/Finance/finDashboard";
+import { useGlobalContext } from '../src/Context/globalContext';
+import UpdateExpense from "./Pages/Finance/updateExpense";
+import UpdateIncome from "./Pages/Finance/updateIncome";
+
+
+
 import ViewAttendance from "./Pages/ViewAttendance";
-import Projectdetails from "./Pages/Projectdetails";
+
+
+import AddClient from "../src/Components/Client/Add-Client/AddClient";
+import ClientDetails from "../src/Components/Client/Client/ClientDetails";
+import ClientUpdateDetails from "../src/Components/Client/Client/UpdateDetails";
+import SHome from "../src/Components/SHome";
+import AddSupplier from "../src/Components/Supplier/Add-Supplier/AddSupplier";
+import SupplierDetails from "../src/Components/Supplier/Supplier/SupplierDetails";
+import SupplierUpdateDetails from "../src/Components/Supplier/Supplier/UpdateDetails";
+
+
 
 function App() {
   return (
@@ -52,11 +78,10 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route index element={<Login />} />
-          <Route path="/dashboard" element={<Home />} />
+          <Route path="/dashboard" element={<Dash />} />
           <Route path="/login" element={<Login />} />
           <Route path="/user/addusers" element={<AddUsers />} />
           <Route path="/user/allusers" element={<AllUsers />} />
-          <Route path="/supplier" element={<Supplier />} />
           <Route path="*" element={<NoPages />} />
           <Route path="/employee-management" element={<EmpManagement />} />
           <Route path="/employee-management/PaySlip" element={<PaySlip />} />
@@ -78,13 +103,21 @@ function App() {
 
 
           
+          <Route path = '/assigndriver' element = {<AssignDriver/>}/>
           <Route path = '/allusers' element ={<AllUsers/>}/>
+
+          <Route path = '/projects' element = {<Projects/>}/>
           <Route path = '/allprojects' element = {<Allprojects/>}/>
           <Route path = '/Newprojects' element = {<Newprojects/>}/>
           <Route path = '/Allprojects' element = {<Allprojects/>}/>
+
+        {/*  <Route path = '/Addprojects' element = {<Addprojects/>}/>  */}
           <Route path = '/Newprojects' element = {<Newprojects/>}/> 
+          <Route path = '/Projectcategories' element = {<ProjectCategories/>}/>
+          <Route path = '/Add-category' element = {<AddCategory/>}/>
           <Route path = '/Projectdetails/:id' element = {<Projectdetails/>}/>
           <Route path = '/Updateprojects/:id' element = {<Updateprojects/>}/>
+
           <Route path = '/viewinventorylist' element = {<ViewInventoryList/>}/>
           <Route path = '/inventory' element = {<Inventory/>}/>
           <Route path = '/addinventory' element = {<AddInventory/>}/>
@@ -96,12 +129,17 @@ function App() {
 
           <Route path="/finance" element={<FinanceDashboard />} />
           <Route path="/user-profile" element={<UserProfile />} />
+          <Route path="/userdash" element={<UserDash />} />
+
+
           <Route path="/finance/expense" element={<Expense />} />
           <Route path="/finance/income" element={<Income />} />
           <Route path="/inventorycategory" element={<InventoryCategory />} />
           <Route path="/finance/incomeform" element={<IncomeForm />} />
           <Route path="/finance/expenseform" element={<ExpenseForm />} />
           <Route path = '/inventorycategory' element = {<InventoryCategory/>}/>
+          <Route path="/finance/updateincome/:id" element={<UpdateIncome />} />
+          <Route path="/finance/updateexpense/:id" element={<UpdateExpense />} />
 
 
 
@@ -111,6 +149,19 @@ function App() {
           <Route path="/loan-management/viewloans" element={<ViewLoans />} />
 
 
+          <Route path="/ActiveLeaves/:id"element={<UpdateLeave />}/>
+          <Route path="/UpdateLeave/:id"element={<UpdateLeave />}/>
+          <Route path="/viewAttendance/:id"element={<ViewAttendance />}/>
+
+
+          <Route path="/contact" element={<SHome />} />
+          <Route path="/add-client" element={<AddClient />} />
+          <Route path="/client-details" element={<ClientDetails />} />
+          <Route path="/updateclient/:id" element={<ClientUpdateDetails />} />
+
+          <Route path="/add-supplier" element={<AddSupplier />} />
+          <Route path="/supplier-details" element={<SupplierDetails />} />
+          <Route path="/updatesuplier/:id" element={<SupplierUpdateDetails/>} />
 
         </Routes>
       </BrowserRouter>

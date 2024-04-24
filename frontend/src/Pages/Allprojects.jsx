@@ -8,6 +8,9 @@ import SearchIcon from "@mui/icons-material/Search";
 import PrintIcon from "@mui/icons-material/Print";
 import AddIcon from "@mui/icons-material/Add";
 import IconButton from "@mui/material/IconButton";
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
+import { useSearchParams } from "react-router-dom";
 import {
   Box,
   Paper,
@@ -17,6 +20,7 @@ import {
   TableHead,
   TableBody,
   TableRow,
+  Tooltip,
   TableCell,
   TablePagination,
   Breadcrumbs,
@@ -25,6 +29,7 @@ import {
   Divider,
 } from "@mui/material";
 import MilestoneBar from "./MilestoneBar";
+import '../css/confirmAlert.css';
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 
 import VisibilityIcon from "@mui/icons-material/Visibility";
@@ -75,10 +80,27 @@ export default function AllProjects() {
   const navigate = useNavigate();
   const ComponentsRef = useRef();
   const ComponentsRefsingle = useRef();
+  const [searchTerm, setSearchTerm] = React.useState('');
+  const [searchParams] = useSearchParams();
+  const projectType = searchParams.get("type");
 
   useEffect(() => {
     fetchHandler().then((data) => setProjects(data.project));
   }, []);
+  
+  const searchFilteredProjects = projects.filter(
+    (project) =>
+      project.projectName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      project.contractor.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const filteredProjectsByType = projectType
+    ? searchFilteredProjects.filter(
+        (project) => project.projectType.toLowerCase() === projectType.toLowerCase()
+      )
+    : searchFilteredProjects;
+
+  
 
   const handlePrint = useReactToPrint({
     content: () => ComponentsRef.current,
@@ -112,31 +134,45 @@ export default function AllProjects() {
     };
   };
 
-  const handleSearch = () => {
-    fetchHandler().then((data) => {
-      const filteredProjects = data.project.filter((project) =>
-        Object.values(project).some((field) =>
-          field.toString().toLowerCase().includes(searchQuery.toLowerCase())
-        )
-      );
-      setProjects(filteredProjects);
-      setNoResults(filteredProjects.length === 0);
-    });
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value);
   };
+
+  const filteredProjects = projects.filter((project) =>
+    project.projectName.toLowerCase().includes(searchTerm.toLowerCase()) || project.contractor.toLowerCase().includes(searchTerm.toLowerCase())
+    
+
+
+  );
 
   const handleAddClick = () => {
     navigate(`/Newprojects`);
   };
 
   const deleteHandler = async (_id) => {
-    try {
-      await axios.delete(`http://localhost:5000/projects/${_id}`);
-      setProjects((prevProjects) =>
-        prevProjects.filter((project) => project._id !== _id)
-      );
-    } catch (error) {
-      console.error("Error deleting project:", error);
-    }
+    confirmAlert({
+      title: 'Delete Project',
+      message: 'Are you sure you want to delete this project?',
+      buttons: [
+        {
+          label: 'Yes',
+          onClick: async () => {
+            try {
+              await axios.delete(`http://localhost:5000/projects/${_id}`);
+              setProjects((prevProjects) =>
+                prevProjects.filter((project) => project._id !== _id)
+              );
+            } catch (error) {
+              console.error('Error deleting project:', error);
+            }
+          }
+        },
+        {
+          label: 'No',
+          onClick: () => {}
+        }
+      ]
+    });
   };
 
   const formatDate = (dateString) => {
@@ -174,13 +210,13 @@ export default function AllProjects() {
     <>
       <AppBar />
       <Menu />
-      <div style={{ marginLeft: "260px", paddingTop: "20px" }}>
-        <Box sx={{ p: 9 }} height={2}>
+      <div style={{ marginLeft: "200px", paddingTop: "20px" }}>
+        <Box sx={{ p: 8 }} height={2}>
           <Breadcrumbs
             arial-label="breadcrumb"
             separator={<NavigateNextIcon fontSize="small" />}
           >
-            <Link underline="hover" key="1" color="inherit" href="/projects">
+            <Link style={{ marginLeft: "20px" }} underline="hover" key="1" color="inherit" href="/projects">
               Projects
             </Link>
             <Typography key="3" color="text.primary">
@@ -188,7 +224,7 @@ export default function AllProjects() {
             </Typography>
           </Breadcrumbs>
           <br/>
-          <Paper sx={{ width: "100%", overflow: "hidden", padding: "12px",boxShadow: 'Auto' }}>
+          <Paper sx={{ width: "100%", overflow: "hidden", padding: "15px",boxShadow: 'Auto' }}>
           <Box
               sx={{
                 display: "flex",
@@ -197,21 +233,15 @@ export default function AllProjects() {
               }}
             >
               <InputBase
-                sx={{ flex: 1, marginLeft: "10px" }}
-                placeholder="Search project Details"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                sx={{ ml: 1, flex: 1 }}
+                placeholder="Search projects.."
+                value={searchTerm}
+                onChange={handleSearchChange}
                 startAdornment={<SearchIcon fontSize="small" />}
               />
               
               <Box>
-                <IconButton
-                  color="primary"
-                  aria-label="search"
-                  onClick={handleSearch}
-                >
-                  <SearchIcon />
-                </IconButton>
+              <Tooltip title="Add Project">
                 <IconButton
                   color="primary"
                   aria-label="add project"
@@ -219,6 +249,8 @@ export default function AllProjects() {
                 >
                   <AddIcon />
                 </IconButton>
+              </Tooltip>
+              <Tooltip title="Print">
                 <IconButton
                   color="primary"
                   aria-label="print all"
@@ -226,13 +258,14 @@ export default function AllProjects() {
                 >
                   <PrintIcon />
                 </IconButton>
+              </Tooltip>
               </Box>
             </Box>
             <h1
               gutterBottom
               variant="h4"
               component="div"
-              sx={{ padding: "20PX" ,textAlign: 'center'}}
+              sx={{ padding: "20px" ,textAlign: 'center'}}
             >
               Details of Projects
             </h1>
@@ -240,8 +273,8 @@ export default function AllProjects() {
 
             <br />
             
-            <br/>
-            <br/>
+           
+            
 
             <TableContainer ref={ComponentsRef}>
               <Table
@@ -272,14 +305,14 @@ export default function AllProjects() {
                     <TableCell  sx={{backgroundColor: '#b1c5d4',fontWeight: 'bold', textAlign: 'center',border: 'none',padding: '5px 10px','&:hover': {backgroundColor: '#b1c5d4'}}}>Start Date</TableCell>
                     <TableCell  sx={{backgroundColor: '#b1c5d4',fontWeight: 'bold', textAlign: 'center',border: 'none',padding: '5px 10px','&:hover': {backgroundColor: '#b1c5d4'}}}>End Date</TableCell>
                     <TableCell  sx={{backgroundColor: '#b1c5d4',fontWeight: 'bold', textAlign: 'center',border: 'none',padding: '5px 10px','&:hover': {backgroundColor: '#b1c5d4'}}}>Type</TableCell>
-                    <TableCell  sx={{backgroundColor: '#b1c5d4',fontWeight: 'bold', textAlign: 'center',border: 'none',padding: '5px 10px','&:hover': {backgroundColor: '#b1c5d4'}}}>Milstone</TableCell>
+                    <TableCell  sx={{backgroundColor: '#b1c5d4',fontWeight: 'bold', textAlign: 'center',border: 'none',padding: '5px 10px','&:hover': {backgroundColor: '#b1c5d4'}}}>Milestone</TableCell>
                     <TableCell  sx={{backgroundColor: '#b1c5d4',fontWeight: 'bold', textAlign: 'center',border: 'none',padding: '5px 10px','&:hover': {backgroundColor: '#b1c5d4'}}}>Action</TableCell>
 
 
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {projects
+                  {filteredProjects
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row) => (
                       <TableRow
@@ -296,7 +329,7 @@ export default function AllProjects() {
                         <TableCell
                           sx={{
                             border: "1px",
-                            padding: "10px 12px",
+                            padding: "8px 10px",
                             backgroundColor: "white",
                             textAlign: "center",
                           }}
@@ -306,7 +339,7 @@ export default function AllProjects() {
                         <TableCell
                           sx={{
                             border: "1px",
-                            padding: "10px 12px",
+                            padding: "10px 10px",
                             backgroundColor: "white",
                             textAlign: "center",
                           }}
@@ -316,7 +349,7 @@ export default function AllProjects() {
                         <TableCell
                           sx={{
                             border: "1px",
-                            padding: "10px 12px",
+                            padding: "10px 10px",
                             backgroundColor: "white",
                             textAlign: "center",
                           }}
@@ -327,7 +360,7 @@ export default function AllProjects() {
                         <TableCell
                           sx={{
                             border: "1px",
-                            padding: "10px 12px",
+                            padding: "10px 10px",
                             backgroundColor: "white",
                             textAlign: "center",
                           }}
@@ -337,7 +370,7 @@ export default function AllProjects() {
                         <TableCell
                           sx={{
                             border: "1px",
-                            padding: "10px 12px",
+                            padding: "10px 10px",
                             backgroundColor: "white",
                             textAlign: "center",
                           }}
@@ -347,7 +380,7 @@ export default function AllProjects() {
                         <TableCell
                           sx={{
                             border: "1px",
-                            padding: "10px 12px",
+                            padding: "10px 10px",
                             backgroundColor: "white",
                             textAlign: "center",
                           }}
@@ -357,7 +390,7 @@ export default function AllProjects() {
                         <TableCell
                           sx={{
                             border: "1px",
-                            padding: "10px 12px",
+                            padding: "10px 10px",
                             backgroundColor: "white",
                             textAlign: "center",
                           }}
@@ -368,7 +401,7 @@ export default function AllProjects() {
                         <TableCell
                           sx={{
                             border: "1px",
-                            padding: "10px 12px",
+                            padding: "10px 10px",
                             backgroundColor: "white",
                             textAlign: "center",
                           }}
@@ -378,7 +411,7 @@ export default function AllProjects() {
                         <TableCell
                           sx={{
                             border: "1px",
-                            padding: "10px 12px",
+                            padding: "10px 10px",
                             backgroundColor: "white",
                             textAlign: "center",
                           }}
@@ -388,7 +421,7 @@ export default function AllProjects() {
                         <TableCell
                           sx={{
                             border: "1px",
-                            padding: "10px 12px",
+                            padding: "10px 10px",
                             backgroundColor: "white",
                             textAlign: "center",
                           }}
@@ -398,7 +431,7 @@ export default function AllProjects() {
                         <TableCell
                           sx={{
                             border: "1px",
-                            padding: "10px 12px",
+                            padding: "10px 10px",
                             backgroundColor: "white",
                             textAlign: "center",
                           }}
@@ -407,14 +440,17 @@ export default function AllProjects() {
                             progress={calculateMilestoneProgress(row)}
                           />
                         </TableCell>
-                        <TableCell
+                        
+                        <TableCell  style={{ display: "flex", justifyContent: "start" }}  className="flex-container"
                           sx={{
                             border: "1px",
-                            padding: "10px 12px",
+                            padding: "10px 10px",
                             backgroundColor: "white",
                             textAlign: "center",
                           }}
                         >
+                          <div>
+                           <Tooltip title="Update Project">
                           <IconButton
                             onClick={() =>
                               navigate(`/Updateprojects/${row._id}`)
@@ -431,6 +467,10 @@ export default function AllProjects() {
                               }}
                             />
                           </IconButton>
+                          </Tooltip>
+                          </div>
+                          <div>
+                          <Tooltip title="Delete Project">
                           <IconButton onClick={() => deleteHandler(row._id)}>
                             <DeleteIcon
                               color="secondary"
@@ -443,6 +483,10 @@ export default function AllProjects() {
                               }}
                             />
                           </IconButton>
+                          </Tooltip>
+                          </div>
+                          <div>
+                          <Tooltip title="Print ">
                           <IconButton onClick={() => handlePrintSingle(row)}>
                             <PrintIcon
                               color="primary"
@@ -455,6 +499,10 @@ export default function AllProjects() {
                               }}
                             />
                           </IconButton>
+                          </Tooltip>
+                          </div>
+<div>
+                          <Tooltip title="View Details">
                           <IconButton
                             onClick={() =>
                               navigate(`/Projectdetails/${row._id}`)
@@ -471,7 +519,10 @@ export default function AllProjects() {
                               }}
                             />
                           </IconButton>
+                          </Tooltip>
+                          </div>
                         </TableCell>
+                      
                       </TableRow>
                     ))}
                 </TableBody>
@@ -480,7 +531,7 @@ export default function AllProjects() {
             <TablePagination
               rowsPerPageOptions={[10, 25, 100]}
               component="div"
-              count={projects.length}
+              count={filteredProjects.length}
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={handleChangePage}

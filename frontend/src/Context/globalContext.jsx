@@ -89,6 +89,30 @@ export const GlobalProvider = ({children}) => {
     }
 
 
+    const updateIncome = async (id, updatedIncome) => {
+        try {
+            const response = await axios.put(`${BASE_URL}update-income/${id}`, updatedIncome);
+            // Check if the income was updated successfully
+            if (response.status === 200) {
+                // Update the incomes state with the updated income
+                setIncomes(prevIncomes => {
+                    return prevIncomes.map(income => {
+                        if (income._id === id) {
+                            return {
+                                ...income,
+                                ...updatedIncome
+                            };
+                        }
+                        return income;
+                    });
+                });
+                console.log("Income updated successfully");
+            }
+        } catch (error) {
+            console.error("Error updating income:", error);
+            setError("Error updating income. Please try again later.");
+        }
+    };
     
 
     return (
@@ -102,6 +126,7 @@ export const GlobalProvider = ({children}) => {
             addExpense,
             getExpenses,
             deleteExpense,
+            updateIncome,
             totalExpenses,
             totalBalance,
             transactionHistory,
