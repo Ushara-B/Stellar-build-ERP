@@ -200,9 +200,9 @@ export default function AttendanceMng() {
                       key={row._id}
                       sx={{
                         "&:hover": {
-                          backgroundColor: "#DEDEDE", // Background color on hover
-                          transition: "background-color 0.3s, color 0.3s", // Smooth transition
-                          cursor: "pointer", // Change cursor to pointer on hover
+                          backgroundColor: "#DEDEDE", 
+                          transition: "background-color 0.3s, color 0.3s", 
+                          cursor: "pointer", 
                         },
                         border: "none",
                         padding: "8px 16px",
