@@ -32,9 +32,12 @@ const ViewUser = () => {
       <Box sx={{ marginLeft: '255px', marginTop: '80px', padding: 4 }}>
         <Card>
           <CardContent>
+
             <Typography variant="h4" gutterBottom>
               User Details
             </Typography>
+
+
             <Grid container spacing={2}>
               <Grid item xs={6}>
                 <Typography variant="subtitle1" gutterBottom>
@@ -42,78 +45,104 @@ const ViewUser = () => {
                 </Typography>
                 <Typography variant="body1">{user.user_N}</Typography>
               </Grid>
+
+
               <Grid item xs={6}>
                 <Typography variant="subtitle1" gutterBottom>
                   Name:
                 </Typography>
                 <Typography variant="body1">{`${user.f_Name} ${user.l_Name}`}</Typography>
               </Grid>
+
+
               <Grid item xs={6}>
                 <Typography variant="subtitle1" gutterBottom>
                   Age:
                 </Typography>
                 <Typography variant="body1">{user.age}</Typography>
               </Grid>
+
+
               <Grid item xs={6}>
                 <Typography variant="subtitle1" gutterBottom>
                   Email:
                 </Typography>
                 <Typography variant="body1">{user.email}</Typography>
               </Grid>
+
+
               <Grid item xs={6}>
                 <Typography variant="subtitle1" gutterBottom>
                   Address:
                 </Typography>
                 <Typography variant="body1">{user.address}</Typography>
               </Grid>
+
+
               <Grid item xs={6}>
                 <Typography variant="subtitle1" gutterBottom>
                   Date Of Birth:
                 </Typography>
                 <Typography variant="body1">{user.dob}</Typography>
               </Grid>
+
+
               <Grid item xs={6}>
                 <Typography variant="subtitle1" gutterBottom>
                   Gender:
                 </Typography>
                 <Typography variant="body1">{user.gender}</Typography>
               </Grid>
+
+
               <Grid item xs={6}>
                 <Typography variant="subtitle1" gutterBottom>
                   Marital Status:
                 </Typography>
                 <Typography variant="body1">{user.m_Status}</Typography>
               </Grid>
+
+
               <Grid item xs={6}>
                 <Typography variant="subtitle1" gutterBottom>
                   NIC:
                 </Typography>
                 <Typography variant="body1">{user.nic}</Typography>
               </Grid>
+
+
               <Grid item xs={6}>
                 <Typography variant="subtitle1" gutterBottom>
                   Role:
                 </Typography>
                 <Typography variant="body1">{user.role}</Typography>
               </Grid>
+
+
               <Grid item xs={6}>
                 <Typography variant="subtitle1" gutterBottom>
                   Contact Number:
                 </Typography>
                 <Typography variant="body1">{user.contact_No}</Typography>
               </Grid>
+
+
               <Grid item xs={6}>
                 <Typography variant="subtitle1" gutterBottom>
                   Family Contact No:
                 </Typography>
                 <Typography variant="body1">{user.f_contactNo}</Typography>
               </Grid>
+
+
               <Grid item xs={6}>
                 <Typography variant="subtitle1" gutterBottom>
                   Bank Details:
                 </Typography>
                 <Typography variant="body1">{user.bank_D}</Typography>
               </Grid>
+
+              
             </Grid>
           </CardContent>
         </Card>

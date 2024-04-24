@@ -18,7 +18,6 @@ const SupplierRoute = require("./routes/SupplierRoute.js");
 
 const app = express();
 
-
 const dotenv = require("dotenv").config();
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
@@ -39,9 +38,7 @@ app.use("/projects", projectrouter);
 app.use("/vehicles", vehiclerouter);
 app.use("/categories", categoryrouter);
 app.use("/inventories", inventoryrouter);
-
 app.use("/finance", financerouter);
-
 app.use("/leaves", leaveRouter);
 app.use("/attendance", attendanceRouter);
 app.use("/Loan", loanrouter);
