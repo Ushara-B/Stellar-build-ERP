@@ -42,7 +42,6 @@ const addVehicles = async(req,res,next) =>{
 const getById = async (req, res,next) => {
 
     const id = req.params.id;//name is id
-
     let vehicle;
 
     try{

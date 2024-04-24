@@ -91,23 +91,11 @@ export default function NestedList() {
     window.location.href = '/allusers';
     }else if (menuName === 'User Management' && subMenuName === 'Add users'){
     window.location.href = '/adduser';
-    }else if (menuName === 'Financial' && subMenuName === 'Financial Dashboard'){
-    window.location.href = '/finance';
-    }else if (menuName === 'Financial' && subMenuName === 'Expenses'){
-    window.location.href = '/finance/expense';
-    }else if (menuName === 'Financial' && subMenuName === 'Incomes'){
-    window.location.href = '/finance/income';
-    }else if (menuName === 'Contact' && subMenuName === 'Add Suppliers'){
-      window.location.href = '/add-supplier';
-    }else if (menuName === 'Contact' && subMenuName === 'Add Clients'){
-      window.location.href = '/add-client';
-
-
     // Add more else if conditions for other sub menus and their respective URLs
-    }else {
-      // Handle any other cases
-    }
-  };
+  }else {
+    // Handle any other cases
+  }
+};
 
   const isMenuActive = (menuPath) => {
     return location.pathname.startsWith(menuPath);
@@ -119,8 +107,8 @@ export default function NestedList() {
     { name: 'Projects', path: '/projects', subMenus: ['All projects', 'New projects', 'Project categories'] },
     { name: 'Inventory', path: '/inventory', subMenus: ['Add Inventory', 'View inventory list', 'Inventory Category'] },
     { name: 'Financial', path: '/finance', subMenus: ['Financial Dashboard', 'Expenses', 'Incomes', 'Categories'] },
-    { name: 'Vehicle Management', path: '/vehicle', subMenus: ['Vehicle Dashboard','Add Vehicle', 'View Vehicles', 'Assign Drivers'] },
-    { name: 'Loans Management', path: '/loan-management', subMenus: ['Add loans', 'Bank/Bussines Loans', 'Vehicle finance'] },
+    { name: 'Vehicle Management', path: '/vehicle', subMenus: ['Vehicle Dashboard','Add Vehicle', 'View Vehicles', 'Assign drivers'] },
+    { name: 'Loans Management', path: '/loan-management', subMenus: ['View loans' , 'Add loans'] },
     { name: 'User Management', path: '/userdash', subMenus: ['View users', 'Add users'] },
     { name: 'Employee Management', path: '/employee-management', subMenus: ['PaySlip', 'Leaves', 'Attendance'] },
   ];
