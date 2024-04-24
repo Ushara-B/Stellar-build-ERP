@@ -10,8 +10,9 @@ const financerouter = require("./routes/transaction");
 const leaveRouter = require("./routes/leaveRoute")
 const attendanceRouter = require("./routes/attendanceRoute")
 const  loanrouter = require("./routes/loanRoute");
-
-
+const payslipRoute = require("./routes/payslipRoute")
+const ClientRoute = require("./routes/ClientRoute")
+const SupplierRoute = require("./routes/SupplierRoute")
 
 
 const app = express();
