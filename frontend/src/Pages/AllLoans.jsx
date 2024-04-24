@@ -194,18 +194,7 @@ function Loans() {
 
                                             <TableCell sx={{ border: '1px', padding: '5px 10px', backgroundColor: 'white', textAlign: 'center'}}>
 
-                                            <IconButton onClick={() => navigate(`/loan-management/viewloans/${loan._id}`)} >
-                                                <EditIcon
-                                                    color="primary"
-                                                    aria-label="edit"
-                                                    sx={{
-                                                      '&:hover': {
-                                                        color: '#00008b',
-                                                      },
-                                                      color: '',
-                                                    }} 
-                                                />
-                                                </IconButton>
+                                           
 
 
                                                 <IconButton onClick={() => navigate(`/loan-management/upateloans/${loan._id}`)} >
