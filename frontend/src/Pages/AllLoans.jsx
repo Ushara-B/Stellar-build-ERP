@@ -102,34 +102,28 @@ function Loans() {
                 <br></br>
             <Paper sx={{ width: '100%', boxShadow: 'none' }}>
                 <Box >
-                    <InputBase
+                <InputBase
                     sx={{ flex: 1, marginLeft: '10px' }}
                     placeholder="Search Loan Details"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     startAdornment={<SearchIcon />}
                     />
-                        <AddIcon />
-
-
                     <IconButton color="primary" aria-label="search" onClick={handleSearch}>
                         <SearchIcon />
                     </IconButton>
 
 
-
                     <IconButton color="primary" aria-label="Add Loan" onClick={handleAddClick}>
-                    <AddIcon />
+                        <AddIcon />
                     </IconButton>
-
 
 
                     <IconButton color="primary" aria-label="print all" onClick={handlePrint}>
                         <PrintIcon />
                     </IconButton>
-
-
                 </Box>
+
 
             {noResults ? (
                 <div>
@@ -155,28 +149,16 @@ function Loans() {
                       },
                     }}>
                                         <TableCell  sx={{backgroundColor: '#b1c5d4',fontWeight: 'bold',border: 'none',padding: '5px 10px','&:hover': {backgroundColor: '#b1c5d4'}}}>Loan ID</TableCell>
-
                                         <TableCell sx={{backgroundColor: '#b1c5d4',fontWeight: 'bold',border: 'none',padding: '5px 10px','&:hover': {backgroundColor: '#b1c5d4'}}}>Borrowers Name</TableCell>
-
                                         <TableCell sx={{backgroundColor: '#b1c5d4',fontWeight: 'bold',border: 'none',padding: '5px 10px','&:hover': {backgroundColor: '#b1c5d4'}}}>Loan Amount</TableCell>
-
                                         <TableCell sx={{backgroundColor: '#b1c5d4',fontWeight: 'bold',border: 'none',padding: '5px 10px','&:hover': {backgroundColor: '#b1c5d4'}}}>Interest Rate Of Loan</TableCell>
-                                        
                                         <TableCell sx={{backgroundColor: '#b1c5d4',fontWeight: 'bold',border: 'none',padding: '5px 10px','&:hover': {backgroundColor: '#b1c5d4'}}}>Loan Period</TableCell>
-
                                         <TableCell sx={{backgroundColor: '#b1c5d4',fontWeight: 'bold',border: 'none',padding: '5px 10px','&:hover': {backgroundColor: '#b1c5d4'}}}>Loan Starting Date</TableCell>
-
                                         <TableCell sx={{backgroundColor: '#b1c5d4',fontWeight: 'bold',border: 'none',padding: '5px 10px','&:hover': {backgroundColor: '#b1c5d4'}}}>Loan Ending Date</TableCell>
-
                                         <TableCell sx={{backgroundColor: '#b1c5d4',fontWeight: 'bold',border: 'none',padding: '5px 10px','&:hover': {backgroundColor: '#b1c5d4'}}}>Total Installments</TableCell>
-
                                         <TableCell sx={{backgroundColor: '#b1c5d4',fontWeight: 'bold',border: 'none',padding: '5px 10px','&:hover': {backgroundColor: '#b1c5d4'}}}>Paid Installments</TableCell>
-
-                                        <TableCell sx={{backgroundColor: '#b1c5d4',fontWeight: 'bold',border: 'none',padding: '5px 10px','&:hover': {backgroundColor: '#b1c5d4'}}}>Notes </TableCell>
-
-                                        
+                                        <TableCell sx={{backgroundColor: '#b1c5d4',fontWeight: 'bold',border: 'none',padding: '5px 10px','&:hover': {backgroundColor: '#b1c5d4'}}}>Notes </TableCell>                                        
                                         <TableCell sx={{backgroundColor: '#b1c5d4',fontWeight: 'bold',border: 'none',padding: '5px 10px','&:hover': {backgroundColor: '#b1c5d4'}}}>Loan Status</TableCell>
-
                                         <TableCell sx={{backgroundColor: '#b1c5d4',fontWeight: 'bold',border: 'none',padding: '5px 10px','&:hover': {backgroundColor: '#b1c5d4'}}}>Action</TableCell>
 
                                     </TableRow>
@@ -211,6 +193,20 @@ function Loans() {
 
 
                                             <TableCell sx={{ border: '1px', padding: '5px 10px', backgroundColor: 'white', textAlign: 'center'}}>
+
+                                            <IconButton onClick={() => navigate(`/loan-management/viewloans/${loan._id}`)} >
+                                                <EditIcon
+                                                    color="primary"
+                                                    aria-label="edit"
+                                                    sx={{
+                                                      '&:hover': {
+                                                        color: '#00008b',
+                                                      },
+                                                      color: '',
+                                                    }} 
+                                                />
+                                                </IconButton>
+
 
                                                 <IconButton onClick={() => navigate(`/loan-management/upateloans/${loan._id}`)} >
                                                 <EditIcon
