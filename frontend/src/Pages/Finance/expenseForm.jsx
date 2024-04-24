@@ -2,14 +2,18 @@ import React, { useState,useEffect } from 'react'
 import styled from 'styled-components'
 import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css";
-import { useGlobalContext } from '../../../Context/globalContext';
+import { GlobalProvider, useGlobalContext } from '../../Context/globalContext';
 import Button from './Button';
 import axios from 'axios'
+import { GlobalStyle } from '../../Styles/globalStyle';
+import  AppBar  from '../../Components/Appbar';
+import  Menu  from '../../Components/menu';
+import { Box, Typography, Avatar } from '@mui/material';
 
 
 
 function Form() {
-    const {addIncome,getProjects,error, setError} = useGlobalContext()
+    const {addExpense,error, setError} = useGlobalContext()
     const [inputState, setInputState] = useState({
         title: '',
         amount: '',
@@ -49,7 +53,7 @@ function Form() {
 
     const handleSubmit = e => {
         e.preventDefault()
-        addIncome(inputState)
+        addExpense(inputState)
         setInputState({
             title: '',
             amount: '',
@@ -62,6 +66,14 @@ function Form() {
 
     return (
         <FormStyled onSubmit={handleSubmit}>
+            
+            <GlobalStyle/>
+            <AppBar/>
+            <Menu/>
+            
+            <Typography variant="h3" component="h3" sx={{ textAlign: 'center', mt: 3, mb: 3 }}>
+        Add Expense
+      </Typography>
             {error && <p className='error'>{error}</p>}
             <div className="input-control">
                 <input 
@@ -96,10 +108,8 @@ function Form() {
              <div className="selects input-control">
                 <select required value={project} name="project" id="project" onChange={handleInput('project')}>
                     <option value="" disabled>Select Project</option>
-                    
-                    {projects.map(item => (
-                        <option key={item._id} value={item._id}>{item.name}</option>
-                    ))}
+                    <option value="Kalaniya">Kalaniya</option>
+                  
                 </select>
             </div> 
             <div className="selects input-control">
@@ -134,15 +144,19 @@ function Form() {
 
 
 const FormStyled = styled.form`
-    display: flex;
+
+
+    display: center;
     flex-direction: column;
-    gap: 2rem;
+    gap: 50px;
+    margin-top:100px;
+    margin-left:400px;
     input, textarea, select{
         font-family: inherit;
         font-size: inherit;
         outline: none;
         border: none;
-        padding: .5rem 1rem;
+        padding: 2rem 2rem;
         border-radius: 5px;
         border: 2px solid #fff;
         background: transparent;
@@ -154,8 +168,9 @@ const FormStyled = styled.form`
         }
     }
     .input-control{
-        input{
-            width: 100%;
+        gap: 70px; /* Increase the gap between input tabs */
+        input {
+            width: 80%;
         }
     }
 

@@ -11,9 +11,8 @@ const getAllLoans = async (req, res, next) => {
     //data base eke okkoma data return kara gnnwa
 
     try{
-        loan = await Loan.find();   
-    }
-    catch(err){
+        loan = await Loan.find();
+    }catch(err){
         console.log(err);
     }
 
@@ -31,11 +30,11 @@ const getAllLoans = async (req, res, next) => {
 //data insert part
 const addLoan = async (req, res, next) => {
 
-    const {loanId, LoanAmount, InterestRate, Period, StartingDate, EndDate, TotalInstallments, PaidInstallments, LoanStatus } = req.body;
+    const {loanId, BorrowersName, LoanAmount, InterestRate, Period, StartingDate, EndDate, TotalInstallments, PaidInstallments, Notes,  LoanStatus } = req.body;
     let loan;
 
     try {
-        loan = new Loan({loanId, LoanAmount, InterestRate, Period, StartingDate, EndDate, TotalInstallments, PaidInstallments, LoanStatus});
+        loan = new Loan({loanId, BorrowersName, LoanAmount, InterestRate, Period, StartingDate, EndDate, TotalInstallments, PaidInstallments, Notes,  LoanStatus});
         await loan.save();
     }catch(err){
         console.log(err);
@@ -56,8 +55,7 @@ const getById = async (req, res, next) => {
 
     try{
         loan = await Loan.findById(id);
-    }
-    catch(err){
+    }catch(err){
         console.log(err);
     }
 
@@ -76,16 +74,15 @@ const getById = async (req, res, next) => {
 const updateLoan = async (req, res, next ) => {
 
     const id = req.params.id;
-    const {loanId, LoanAmount, InterestRate, Period, StartingDate, EndDate, TotalInstallments, PaidInstallments, LoanStatus } = req.body;
+    const {loanId, BorrowersName, LoanAmount, InterestRate, Period, StartingDate, EndDate, TotalInstallments, PaidInstallments, Notes, LoanStatus } = req.body;
 
     let loans;
 
     try {
-        loans = await Loan.findByIdAndUpdate(id, {loanId:loanId, LoanAmount:LoanAmount, InterestRate:InterestRate, Period:Period, StartingDate:StartingDate, EndDate:EndDate, TotalInstallments:TotalInstallments, PaidInstallments:PaidInstallments, LoanStatus:LoanStatus});
+        loans = await Loan.findByIdAndUpdate(id, 
+            {loanId:loanId, BorrowersName:BorrowersName, LoanAmount:LoanAmount, InterestRate:InterestRate, Period:Period, StartingDate:StartingDate, EndDate:EndDate, TotalInstallments:TotalInstallments, PaidInstallments:PaidInstallments, Notes:Notes,  LoanStatus:LoanStatus});
         loans = await loans.save();
-    }
-
-    catch(err){
+    }catch(err){
         console.log(err);
     }
 
@@ -99,12 +96,24 @@ const updateLoan = async (req, res, next ) => {
 
 //delete Loan Details 
 
+const deleteLoan = async(req, res,next) => {
+    const id = req.params.id;
+    let loan;
 
-
-
-
+    try{
+        loan = await Loan.findByIdAndDelete(id);
+    }catch(err) {
+        console.log(err);
+    } 
+    //not available vehicles
+    if(!loan){
+        return res.status(404).json({message:" Unable to Delete Loan Details"});
+    }
+    return res.status(200).json({loan});
+};
 
 exports.getAllLoans = getAllLoans;
 exports.addLoan = addLoan;
 exports.getById = getById;
 exports.updateLoan = updateLoan;
+exports.deleteLoan =deleteLoan;

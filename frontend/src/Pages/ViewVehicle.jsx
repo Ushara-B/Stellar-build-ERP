@@ -3,7 +3,11 @@ import Drawer from '../Components/menu';
 import Appbar from '../Components/Appbar';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import { Box, Card, CardContent, Divider, Grid, Typography } from '@mui/material';
+import { Box, Card, CardContent, Grid} from '@mui/material';
+import Breadcrumbs from '@mui/material/Breadcrumbs';
+import Typography from '@mui/material/Typography';
+import Link from '@mui/material/Link';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 
 const ViewVehicle = () => {
   const { id } = useParams();
@@ -32,12 +36,25 @@ const ViewVehicle = () => {
     <div>
       <Appbar />
       <Drawer />
-      <Box sx={{ marginLeft: '255px', marginTop: '80px', padding: 4 }}>
+      <div style={{ marginLeft: '255px', paddingTop: '80px'}}>
+      <Breadcrumbs arial-label="breadcrumb" separator={<NavigateNextIcon fontSize="small" />}>
+                <Link underline="hover" key="1" color="inherit" href="/vehicle">
+                    Vehicle DashBoard
+                </Link>
+                <Link underline="hover" key="2" color="inherit" href="/viewvehicles">
+                    Vehicles List
+                </Link>
+                <Typography key="3" color="text.primary">
+                    Vehicle Advance List
+                </Typography>
+      </Breadcrumbs>
+      <Box sx={{ marginLeft: '50px', marginTop: '20px', padding: 4, backgroundColor: '#1B1A55', borderRadius: 2 ,marginRight: '50px'}}>
         <Card>
           <CardContent>
             <Typography variant="h4" gutterBottom>
               Vehicle Details
             </Typography>
+            <br></br>
             <Grid container spacing={2}>
               <Grid item xs={6}>
                 <Typography variant="subtitle1" gutterBottom>
@@ -102,7 +119,9 @@ const ViewVehicle = () => {
             </Grid>
           </CardContent>
         </Card>
-      </Box>
+      </Box>         
+      </div>
+      
     </div>
   );
 };
