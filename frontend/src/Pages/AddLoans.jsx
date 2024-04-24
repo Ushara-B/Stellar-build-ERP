@@ -4,6 +4,12 @@ import axios from 'axios';
 import  AppBar  from '../Components/Appbar';
 import Menu from '../Components/menu';
 import { TextField, Button, Typography, Grid, Box, MenuItem } from '@mui/material';
+import Breadcrumbs from '@mui/material/Breadcrumbs';
+import Link from '@mui/material/Link';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+
+
+
 
 
 function AddLoans() {
@@ -17,7 +23,8 @@ function AddLoans() {
     EndDate: "",
     TotalInstallments: "",
     PaidInstallments: "",
-    LoanStatus: ""
+    Notes: "",
+    LoanStatus: "",
   });
 
   const handleChange = (e) => {
@@ -44,6 +51,17 @@ function AddLoans() {
     <div>
       <AppBar />
       <Menu />
+      <div style={{ marginLeft: '255px', paddingTop: '80px',}}>
+
+      <Breadcrumbs arial-label="breadcrumb" separator={<NavigateNextIcon fontSize="small" />}>
+                <Link underline="hover" key="1" color="inherit" href="/loan-management">
+                    Loan Management
+                </Link>
+                <Link underline="hover" key="2" color="inherit" href="/loan-management/addloans">
+                    Add loans
+                </Link>
+            </Breadcrumbs>
+    
 
       <Box 
          sx={{//box position
@@ -76,6 +94,17 @@ function AddLoans() {
                             label="Loan Id"
                             name="loanId"
                             value={newLoans.loanId}
+                            onChange={handleChange}
+                            variant="outlined"
+                            fullWidth
+                            required
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                        <TextField
+                            label="Borrowers Name"
+                            name="BorrowersName"
+                            value={newLoans.BorrowersName}
                             onChange={handleChange}
                             variant="outlined"
                             fullWidth
@@ -167,6 +196,19 @@ function AddLoans() {
                     
                   />
                   </Grid>
+
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                    label="Additional Notes relevant to the loan :"
+                    name="Notes"
+                    value={newLoans.Notes} 
+                    onChange={handleChange} 
+                    variant="outlined"
+                    fullWidth
+                    
+                  />
+                  </Grid>
+
                   <Grid item xs={12} sm={6}>
                     <TextField
                       label="Loan Status"
@@ -179,18 +221,34 @@ function AddLoans() {
                       select
                     >
                       <MenuItem value="Active">Active</MenuItem>
-                      <MenuItem value="Closed">Inactive</MenuItem>
+                      <MenuItem value="Closed">Closed</MenuItem>
                     </TextField>
                   </Grid>
 
                   <Grid item xs={3}>
-                  <Button type="submit"variant="contained" color="primary" fullWidth>
+                  <Button 
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  fullWidth
+                  sx={{
+                    mt: 7,
+                    mb: 2,
+                    height: '50px',
+                    width: '150px',
+                    borderRadius: '21px',
+                    backgroundColor: '#1B1A55',
+                    '&:hover': {
+                      backgroundColor: '#16155d',
+                    },
+                  }}>
                     Add Loan
                   </Button>
                   </Grid>
               </Grid>
             </Box>
         </Box>
+    </div>
     </div>
   ); 
 };

@@ -37,6 +37,7 @@ const ViewVehicle = () => {
       <Appbar />
       <Drawer />
       <div style={{ marginLeft: '255px', paddingTop: '80px'}}>
+
       <Breadcrumbs arial-label="breadcrumb" separator={<NavigateNextIcon fontSize="small" />}>
                 <Link underline="hover" key="1" color="inherit" href="/vehicle">
                     Vehicle DashBoard
@@ -48,25 +49,32 @@ const ViewVehicle = () => {
                     Vehicle Advance List
                 </Typography>
       </Breadcrumbs>
+
+
       <Box sx={{ marginLeft: '50px', marginTop: '20px', padding: 4, backgroundColor: '#f5f5f5', borderRadius: 2 ,marginRight: '50px'}}>
         <Card>
           <CardContent>
             <Typography variant="h4" gutterBottom>
               Vehicle Details
             </Typography>
+            
             <Grid container spacing={2}>
+
               <Grid item xs={6}>
                 <Typography variant="subtitle1" gutterBottom>
                   Register No:
                 </Typography>
                 <Typography variant="body1">{vehicle.RegNo}</Typography>
               </Grid>
+
+
               <Grid item xs={6}>
                 <Typography variant="subtitle1" gutterBottom>
                   Vehicle Name:
                 </Typography>
                 <Typography variant="body1">{vehicle.Vname}</Typography>
               </Grid>
+              
               <Grid item xs={6}>
                 <Typography variant="subtitle1" gutterBottom>
                   Type:

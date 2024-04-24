@@ -10,6 +10,11 @@ const loanSchema = new Schema({
         required:true,//validate
     },
 
+    BorrowersName:{//total amount of the loan
+        type: String, // dataType
+        required:true,//validate
+    },
+
     LoanAmount:{//total amount of the loan
         type: String, // dataType
         required:true,//validate
@@ -45,6 +50,11 @@ const loanSchema = new Schema({
         required:true,//validate
     },
 
+    Notes:{
+        type: String, // dataType
+        required:true,//validate
+    },
+
     LoanStatus:{  // is this loan is already paid or active 
         type: String, // dataType
         required:true,//validate
@@ -55,4 +65,4 @@ const loanSchema = new Schema({
 module.exports = mongoose.model(
     "loanModel", //filename
     loanSchema // funtion name
-)
+);

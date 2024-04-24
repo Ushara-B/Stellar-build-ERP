@@ -13,6 +13,8 @@ router.get("/", loanController.getAllLoans);
 router.post("/", loanController.addLoan);
 router.get("/:id", loanController.getById);
 router.put("/:id", loanController.updateLoan);
+router.delete("/:id",loanController.deleteLoan);//Delete
+//export
 
 
 //export

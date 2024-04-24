@@ -28,18 +28,17 @@ import ViewInventoryList from "./Pages/ViewInventoryList";
 import Viewinventory from "./Pages/ViewInventory";
 import Inventory from "./Pages/Inventory";
 import AddInventory from "./Pages/AddInventory";
-import  Expense from "./Components/Finance/Finance/Expense";
-import  Income from "./Components/Finance/Finance/Income";
 import Finance from "./Pages/Finance";
 import InventoryCategory from "./Pages/InventoryCategory";
 import AddLoans from "./Pages/AddLoans";
 import ViewLoans from "./Pages/ViewLoans";
 import UpdateLoan from "./Pages/UpdateLoan";
+import AllLoans from "./Pages/AllLoans";
 import { useGlobalContext } from '../src/Context/globalContext';
 
 import Expense from "./Pages/Finance/Expense";
 import Income from "./Pages/Finance/Income";
-import InventoryCategory from "./Pages/InventoryCategory";
+
 import UpdateInventory from "./Pages/UpdateInventory";
 import  IncomeForm from "./Pages/Finance/Form";
 import  ExpenseForm from "./Pages/Finance/expenseForm";
@@ -67,11 +66,18 @@ function App() {
           <Route path="/ActiveLeaves"element={<ActiveLeaves />}/>
           <Route path="/updateLeave" element={<UpdateLeave/>}/>
           <Route path="/projects" element={<Projects/>}/>
+
+
+
           <Route path = '/vehicle' element = {<VehicleDash/>}/>
           <Route path = '/addvehicle' element = {<AddVehicle/>}/>
           <Route path = '/viewvehicles' element = {<Vehicles/>}/>
           <Route path = '/viewvehicle/:id' element = {<Vehicle/>}/>
           <Route path = '/viewvehicles/:id' element = {<UpdateVehicles/>}/>
+
+
+
+          
           <Route path = '/allusers' element ={<AllUsers/>}/>
           <Route path = '/allprojects' element = {<Allprojects/>}/>
           <Route path = '/Newprojects' element = {<Newprojects/>}/>
@@ -99,9 +105,11 @@ function App() {
 
 
 
-          <Route path="/loan-management" element={<ViewLoans />} />
+          <Route path="/loan-management" element={<AllLoans />} />
           <Route path="/loan-management/addloans" element={<AddLoans />} />
-          <Route path="/loan-management/upateloans" element={<UpdateLoan />} />
+          <Route path="/loan-management/upateloans/:id" element={<UpdateLoan />} />
+          <Route path="/loan-management/viewloans" element={<ViewLoans />} />
+
 
 
         </Routes>

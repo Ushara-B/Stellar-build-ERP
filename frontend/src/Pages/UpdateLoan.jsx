@@ -4,71 +4,84 @@ import React, {useEffect, useState} from 'react'
 import axios from 'axios'
 import{ useParams } from 'react-router'
 import{ useNavigate } from 'react-router'
-import { Box, Button, FormControl, Grid, InputLabel, MenuItem, TextField, Typography, Select } from '@mui/material';
+import { Box, Button, Grid, MenuItem, TextField } from '@mui/material';
+import Typography from '@mui/material/Typography';
+import Breadcrumbs from '@mui/material/Breadcrumbs';
+import Link from '@mui/material/Link';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 
 
 
-function UpdateLoan() {
 
-    const[newLoans,setLoans] = useState({});
-    const navigates = useNavigate();
-    const id = useParams().id; ///methana
+function UpdateLoan  () {
 
-
+    const[loan,setLoan] = useState({});
+    const navigate = useNavigate();
+    const id = useParams().id;
+  
     useEffect(()=>{
         const fetchHandler = async ()=>{
-            await axios
-            .get(`http://localhost:5000/Loan/${id}`)  ///methana
+              await axios.get(`http://localhost:5000/Loan/${id}`)
             .then((res)=> res.data)
-            .then((data)=> setLoans(data.loan)); ////methana
+            .then((data)=> setLoan(data.loan));
         };
         fetchHandler();
     },[id]);
 
-
     const  sendRequest = async()=>{
-        await axios
-        .put(`http://localhost:5000/Loan/${id}`,{  ///menna methana
-            loanId: String(newLoans.loanId),
-            LoanAmount: String(newLoans.LoanAmount),
-            InterestRate: String(newLoans.InterestRate),
-            Period: String(newLoans.Period),
-            StartingDate: new Date(newLoans.StartingDate),
-            EndDate: new Date(newLoans.EndDate),
-            TotalInstallments: String(newLoans.TotalInstallments), /// methana
-            PaidInstallments: String(newLoans.PaidInstallments),  ///methana
-            LoanStatus: String(newLoans.LoanStatus)
+      await axios
+      .put(`http://localhost:5000/Loan/${id}`,{
+          loanId: String(loan.loanId),
+          BorrowersName: String(loan.BorrowersName),
+          LoanAmount: String(loan.LoanAmount),
+          InterestRate: String(loan.InterestRate),
+          Period: String(loan.Period),
+          StartingDate: new Date(loan.StartingDate),
+          EndDate: new Date(loan.EndDate),
+          TotalInstallments: String(loan.TotalInstallments),
+          PaidInstallments: String(loan.PaidInstallments),
+          Notes: String(loan.Notes),
+          LoanStatus: String(loan.LoanStatus)
+        }).then((res) => res.data);
+  };
 
-          }).then((res) => res.data);
-    };
-    const handleChange = (e) => {
-      newLoans(prevState => ({
-            ...prevState,
-            [e.target.name]: e.target.value,
-        }));
-      };
-      
-      const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log(newLoans);
-        sendRequest().then(() => 
-        navigates('/loan-management'));  ////methana
-      };
+  const handleChange = (e) => {
+    setLoan(prevState => ({
+        ...prevState,
+        [e.target.name]: e.target.value,
+    }));
+  };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(loan);
+    sendRequest().then(() => 
+    navigate('/loan-management'));
+  };
       return (
-        <div>
+
+      <div>
       <AppBar />
       <Menu />
-      <Box
-        sx={{
-          marginLeft: '255px',
-          paddingTop: '80px',
+      <div style={{ marginLeft: '255px', paddingTop: '80px',}}>
+      <Breadcrumbs arial-label="breadcrumb" separator={<NavigateNextIcon fontSize="small" />}>
+                <Link underline="hover" key="1" color="inherit" href="/loan-management">
+                    Loan Management
+                </Link>
+                <Typography key="3" color="text.primary">
+                    Loan Update
+                </Typography>
+            </Breadcrumbs>
+
+        <Box 
+         sx={{//box position
+        
           display: 'flex',
           justifyContent: 'center',
-          alignItems: 'center',
+          alignItems: 'center',     
           minHeight: '100vh',
-        }}
-      >
+        }}>
+      
         <Box
           component="form"
           onSubmit={handleSubmit}
@@ -80,6 +93,8 @@ function UpdateLoan() {
             boxShadow: 3,
           }}
         >
+
+
           <Typography align="center" gutterBottom variant="h4" component="h2">
             <strong>Update Loan Details</strong>
           </Typography>
@@ -89,135 +104,149 @@ function UpdateLoan() {
               <TextField
                 label="Loan Id"
                 name="loanId"
-                value={newLoans.loanId ? newLoans.loanId : ''}
+                value={loan.loanId ? loan.loanId : ''}
                 onChange={handleChange}
                 variant="outlined"
                 fullWidth
-                required
+            
               />
             </Grid>
+
+            <Grid item xs={12} sm={6}>
+              <TextField
+                label="Borrowers Name"
+                name="BorrowersName"
+                value={loan.BorrowersName ? loan.BorrowersName : ''}
+                onChange={handleChange}
+                variant="outlined"
+                fullWidth
+            
+              />
+            </Grid>
+
             <Grid item xs={12} sm={6}>
               <TextField
                 label="Enter Loan Amount"
                 name="LoanAmount"
-                value={newLoans.LoanAmount ? newLoans.LoanAmount : ''}
+                value={loan.LoanAmount ? loan.LoanAmount : ''}
                 onChange={handleChange}
                 variant="outlined"
                 fullWidth
-                required
+               
               />
             </Grid>
-
-
             <Grid item xs={12} sm={6}>
               <TextField
-               label="Enter Interest Rate"                                                                                                                                                        name="InterestRate"
-               value={newLoans.InterestRate ? newLoans.InterestRate : ''}
+               label="Enter Interest Rate"                                                
+               name="InterestRate"
+               value={loan.InterestRate ? loan.InterestRate : '' }
                onChange={handleChange}
               variant="outlined"
               fullWidth
-              required
+             
                 />
             </Grid>
-
-
             <Grid item xs={12} sm={6}>
               <TextField
                 label="Loan Period"
                 name="Period"
-                value={newLoans.Period ? newLoans.Period : ''}
+                value={loan.Period ? loan.Period : ''}
                 onChange={handleChange}
                 variant="outlined"
                 fullWidth
-                required
               />
             </Grid>
-
-
             <Grid item xs={12} sm={6}>
               <TextField
                 label="Loan Starting Date"
                 name="StartingDate"
                 type="date"
-                value={newLoans.StartingDate ? new Date(newLoans.StartingDate).toISOString().split('T')[0] : ''}
+                value={loan.StartingDate ? new Date(loan.StartingDate).toISOString().split('T')[0] : ''}
                 onChange={handleChange}
                 variant="outlined"
                 fullWidth
-                required
                 InputLabelProps={{
                   shrink: true,
                 }}
               />
             </Grid>
-
-
-
             <Grid item xs={12} sm={6}>
               <TextField
                 label="Loan Ending Date"
                 name="EndDate"
                 type="date"
-                value={newLoans.EndDate ? new Date(newLoans.EndDate).toISOString().split('T')[0] : ''}
-                onChange={handleChange}
+                value={loan.EndDate ? new Date(loan.EndDate).toISOString().split('T')[0] : ''}
                 variant="outlined"
                 fullWidth
-                required
                 InputLabelProps={{
                   shrink: true,
                 }}
               />
             </Grid>
-
-
             <Grid item xs={12} sm={6}>
               <TextField
                 label="Total Installments Of loan"
                 name="TotalInstallments"
-                type="date"
-                value={newLoans.TotalInstallments ? new Date(newLoans.TotalInstallments).toISOString().split('T')[0] : ''}
+                value={loan.TotalInstallments ? loan.TotalInstallments : ''}
                 onChange={handleChange}
                 variant="outlined"
                 fullWidth
-                required
-                InputLabelProps={{
-                  shrink: true,
-                }}
               />
             </Grid>
-
-
             <Grid item xs={12} sm={6}>
               <TextField
                 label="Paid Installments of loan"
                 name="PaidInstallments"
-                value={newLoans.PaidInstallments ? newLoans.PaidInstallments : ''}
+                value={loan.PaidInstallments ? loan.PaidInstallments : ''}
                 onChange={handleChange}
                 variant="outlined"
                 fullWidth
-                required
               />
             </Grid>
-
-
             <Grid item xs={12} sm={6}>
+                    <TextField
+                    label="Additional Notes relevant to the loan :"
+                    name="Notes"
+                    value={loan.Notes ? loan.Notes : ''} 
+                    onChange={handleChange} 
+                    variant="outlined"
+                    fullWidth
+                    
+                  />
+                  </Grid>
+            <Grid item xs={12} sm={6}>
+            
               <TextField
-                label="Vehicle Status"
-                name="vstatus"
-                value={newLoans.vstatus ? newLoans.vstatus : ''}
+                label="Loan Status"
+                name="LoanStatus"
+                value={loan.LoanStatus ? loan.LoanStatus : ''}
                 onChange={handleChange}
                 variant="outlined"
                 fullWidth
-                required
                 select
               >
                 <MenuItem value="Active">Active</MenuItem>
-                <MenuItem value="Closed">Inactive</MenuItem>                
+                <MenuItem value="Inactive">Closed</MenuItem>         
               </TextField>
-            </Grid>
-
-
+            </Grid>          
             <Grid item xs={3}>
-              <Button type="submit" variant="contained" color="primary" fullWidth>
+              <Button 
+              type="submit"
+              variant="contained"
+              color="primary"
+              
+              fullWidth
+              sx={{
+                mt: 7,
+                mb: 2,
+                height: '50px',
+                width: '150px',
+                borderRadius: '21px',
+                backgroundColor: '#1B1A55',
+                '&:hover': {
+                  backgroundColor: '#16155d',
+                },
+              }}>
                 Update Loan
               </Button>
             </Grid>
@@ -225,7 +254,8 @@ function UpdateLoan() {
         </Box>
       </Box>
     </div>
+    </div>
       );
-};
 
+    }
 export default UpdateLoan;
