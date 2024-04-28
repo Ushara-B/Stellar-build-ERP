@@ -6,32 +6,38 @@ import axios from "axios";
 import { Box, Card, CardContent, Grid, Typography } from "@mui/material";
 
 const ViewAttendance = () => {
-  const { id } = useParams(); // Get 'id' from URL parameters
+  const { id } = useParams(); 
   const [attendance, setAttendance] = useState();
 
   useEffect(() => {
     const fetchAttendance = async () => {
       try {
-        // Fetch attendance data using 'id'
         const response = await axios.get(
           `http://localhost:5000/attendance/${id}`
         );
         const attendanceData = response.data.attendance;
-
-        // If attendance data exists, fetch employee details using uId
+  
         if (attendanceData) {
           const employeeResponse = await axios.get(
             `http://localhost:5000/employee/${id}`
           );
           const employeeData = employeeResponse.data;
-
-          // Set attendance and employee data
-          setAttendance({
-            ...attendanceData,
-            employee: employeeData,
-          });
+  
+          if (attendanceData.uId) {
+            const userResponse = await axios.get(
+              `http://localhost:5000/attendance/uId/${attendanceData.uId}`
+            );
+            const userData = userResponse.data;
+  
+            setAttendance({
+              ...attendanceData,
+              employee: employeeData,
+              user: userData
+            });
+          } else {
+            console.error("uId field not found in attendance data");
+          }
         } else {
-          // Attendance data not found
           console.error("Attendance data not found");
         }
       } catch (error) {
@@ -39,16 +45,13 @@ const ViewAttendance = () => {
       }
     };
     fetchAttendance();
-  }, [id]); // Listen for changes in 'id'
-
+  }, [id]);
   const handleViewUser = async (userId) => {
     try {
       const response = await axios.get(
         `http://localhost:5000/attendance/${userId}`
       );
       const attendanceData = response.data;
-
-      // Handle the retrieved attendance data here (e.g., navigate to a new page)
       console.log(attendanceData);
     } catch (error) {
       console.error("Error fetching attendance data:", error);
@@ -73,7 +76,6 @@ const ViewAttendance = () => {
                       Username:
                     </Typography>
                     <Typography variant="body1">{attendance.emp_id}</Typography>
-                    {/* Add a button to handle viewing user */}
                     <button onClick={() => handleViewUser(attendance.uId)}>
                       View User
                     </button>

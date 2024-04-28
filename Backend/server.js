@@ -10,10 +10,9 @@ const financerouter = require("./routes/transaction");
 const leaveRouter = require("./routes/leaveRoute")
 const attendanceRouter = require("./routes/attendanceRoute")
 const  loanrouter = require("./routes/loanRoute");
-const ClientRoute = require("./routes/ClientRoute.js");
-const SupplierRoute = require("./routes/SupplierRoute.js");
-
-
+const payslipRoute = require("./routes/payslipRoute")
+const ClientRoute = require("./routes/ClientRoute")
+const SupplierRoute = require("./routes/SupplierRoute")
 
 
 const app = express();
@@ -42,6 +41,7 @@ app.use("/finance", financerouter);
 app.use("/leaves", leaveRouter);
 app.use("/attendance", attendanceRouter);
 app.use("/Loan", loanrouter);
+app.use("/PaySlip", payslipRoute)
 
 app.use('/clients', ClientRoute);
 app.use('/suppliers', SupplierRoute);
