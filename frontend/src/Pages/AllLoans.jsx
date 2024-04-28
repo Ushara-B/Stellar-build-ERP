@@ -148,7 +148,7 @@ function Loans() {
                         backgroundColor: "#b1c5d4",
                       },
                     }}>
-                                        <TableCell  sx={{backgroundColor: '#b1c5d4',fontWeight: 'bold',border: 'none',padding: '5px 10px','&:hover': {backgroundColor: '#b1c5d4'}}}>Loan ID</TableCell>
+                                      
                                         <TableCell sx={{backgroundColor: '#b1c5d4',fontWeight: 'bold',border: 'none',padding: '5px 10px','&:hover': {backgroundColor: '#b1c5d4'}}}>Borrowers Name</TableCell>
                                         <TableCell sx={{backgroundColor: '#b1c5d4',fontWeight: 'bold',border: 'none',padding: '5px 10px','&:hover': {backgroundColor: '#b1c5d4'}}}>Loan Amount</TableCell>
                                         <TableCell sx={{backgroundColor: '#b1c5d4',fontWeight: 'bold',border: 'none',padding: '5px 10px','&:hover': {backgroundColor: '#b1c5d4'}}}>Interest Rate Of Loan</TableCell>
@@ -168,7 +168,7 @@ function Loans() {
                                 <TableBody>
                                     {loans.map((loan) => (
                                         <TableRow key={loan._id}>
-                                            <TableCell sx={{ border: '1px', padding: '5px 10px', backgroundColor: 'white', textAlign: 'center' }}>{loan.loanId}</TableCell>
+                                           
 
                                             <TableCell sx={{ border: '1px', padding: '5px 10px', backgroundColor: 'white', textAlign: 'center' }}>{loan.BorrowersName}</TableCell>
 
@@ -186,11 +186,9 @@ function Loans() {
 
                                             <TableCell sx={{ border: '1px', padding: '5px 10px', backgroundColor: 'white', textAlign: 'center' }}>{loan.PaidInstallments}</TableCell>
 
-                                             <TableCell sx={{ border: '1px', padding: '5px 10px', backgroundColor: 'white', textAlign: 'center' }}>{loan.Notes}</TableCell>
+                                            <TableCell sx={{ border: '1px', padding: '5px 10px', backgroundColor: 'white', textAlign: 'center' }}>{loan.Notes}</TableCell>
 
                                             <TableCell sx={{ border: '1px', padding: '5px 10px', backgroundColor: 'white', textAlign: 'center' }}>{loan.LoanStatus}</TableCell>
-
-
 
                                             <TableCell sx={{ border: '1px', padding: '5px 10px', backgroundColor: 'white', textAlign: 'center'}}>
 

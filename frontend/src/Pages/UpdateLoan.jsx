@@ -31,7 +31,6 @@ function UpdateLoan  () {
     const  sendRequest = async()=>{
       await axios
       .put(`http://localhost:5000/Loan/${id}`,{
-          loanId: String(loan.loanId),
           BorrowersName: String(loan.BorrowersName),
           LoanAmount: String(loan.LoanAmount),
           InterestRate: String(loan.InterestRate),
@@ -100,28 +99,26 @@ function UpdateLoan  () {
           </Typography>
           <br />
           <Grid container spacing={4} justifyContent="center">
-            <Grid item xs={12} sm={6}>
-              <TextField
-                label="Loan Id"
-                name="loanId"
-                value={loan.loanId ? loan.loanId : ''}
-                onChange={handleChange}
-                variant="outlined"
-                fullWidth
-            
-              />
-            </Grid>
-
-            <Grid item xs={12} sm={6}>
-              <TextField
-                label="Borrowers Name"
-                name="BorrowersName"
-                value={loan.BorrowersName ? loan.BorrowersName : ''}
-                onChange={handleChange}
-                variant="outlined"
-                fullWidth
-            
-              />
+           
+          <Grid item xs={12} sm={6}>
+            {loan.BorrowersName ? (
+                <TextField
+                  label="Borrowers Name"
+                  value={loan.BorrowersName}
+                  variant="outlined"
+                  fullWidth
+                  InputProps={{ readOnly: true }}
+                />
+              ) : (
+                <TextField
+                  label="Borrowers Name"
+                  name="BorrowersName"
+                  value={loan.BorrowersName}
+                  onChange={handleChange}
+                  variant="outlined"
+                  fullWidth
+                />
+              )}
             </Grid>
 
             <Grid item xs={12} sm={6}>
@@ -132,7 +129,7 @@ function UpdateLoan  () {
                 onChange={handleChange}
                 variant="outlined"
                 fullWidth
-               
+                
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -140,9 +137,9 @@ function UpdateLoan  () {
                label="Enter Interest Rate"                                                
                name="InterestRate"
                value={loan.InterestRate ? loan.InterestRate : '' }
-               onChange={handleChange}
-              variant="outlined"
-              fullWidth
+              onChange={handleChange}
+               variant="outlined"
+               fullWidth
              
                 />
             </Grid>
@@ -165,6 +162,7 @@ function UpdateLoan  () {
                 onChange={handleChange}
                 variant="outlined"
                 fullWidth
+                required
                 InputLabelProps={{
                   shrink: true,
                 }}

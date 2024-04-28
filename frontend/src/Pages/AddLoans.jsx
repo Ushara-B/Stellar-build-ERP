@@ -15,7 +15,7 @@ import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 function AddLoans() {
   const navigates = useNavigate();
   const [newLoans, setLoans] = useState({ // Call the data what are inserting
-    loanId: "",         //form eke input gnna details 
+    //form eke input gnna details 
     LoanAmount: "",
     InterestRate: "",
     Period: "",
@@ -89,17 +89,7 @@ function AddLoans() {
                   <br></br>
         
                   <Grid container spacing={4} justifyContent="center">
-                      <Grid item xs={12} sm={6}>
-                        <TextField
-                            label="Loan Id"
-                            name="loanId"
-                            value={newLoans.loanId}
-                            onChange={handleChange}
-                            variant="outlined"
-                            fullWidth
-                            required
-                        />
-                      </Grid>
+                      
                       <Grid item xs={12} sm={6}>
                         <TextField
                             label="Borrowers Name"
