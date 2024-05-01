@@ -43,16 +43,16 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     backgroundColor: theme.palette.action.hover,
   },
   "&:hover": {
-    backgroundColor: "#DEDEDE", // Background color on hover
-    transition: "background-color 0.3s, color 0.3s", // Smooth transition
-    cursor: "pointer", // Change cursor to pointer on hover
+    backgroundColor: "#DEDEDE", 
+    transition: "background-color 0.3s, color 0.3s", 
+    cursor: "pointer", 
   },
-
 }));
 
 const StyledButton = styled("button")({
-  width: "50%",
-  padding: "15px",
+  width: "45%",
+  padding: "10px",
+  marginLeft: "5px",
 });
 
 const ConfirmationDialog = ({ open, handleClose, handleConfirmDelete }) => {
@@ -175,16 +175,15 @@ function ActiveLeaves() {
               <IconButton color="primary" aria-label="Add user" onClick={() => navigate('/LeaveForm')}>
                 <AddIcon />
               </IconButton>
-             
             </Box>
           </Box>
           <TableContainer
-          ref={ComponentsRef}
+            ref={ComponentsRef}
             component={Paper}
             xs={12}
             sm={8}
             sx={{
-              maxWidth: "100%",
+              maxWidth: "90%",
               alignContent: "center",
               display: "block",
               overflow: "hidden",
@@ -195,8 +194,7 @@ function ActiveLeaves() {
             <Table
               sx={{
                 minWidth: 650,
-                width: 1000,
-                margin: "auto",
+                width: "100%", // Adjusted width to be 100% of its container
                 borderCollapse: "collapse",
                 borderRadius: "15px",
                 overflow: "hidden",
@@ -209,7 +207,7 @@ function ActiveLeaves() {
                   <StyledTableCell align="center">Date</StyledTableCell>
                   <StyledTableCell align="center">Type</StyledTableCell>
                   <StyledTableCell align="center">Reason</StyledTableCell>
-                  <StyledTableCell align="center">Actions</StyledTableCell>
+                  <StyledTableCell align="center" sx={{ width:"30%"}}>Actions</StyledTableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -231,17 +229,19 @@ function ActiveLeaves() {
                       align="right"
                       sx={{
                         display: "flex",
-                        padding: 5,
+                        justifyContent: "space-around", // Adjusted to evenly space the buttons
+                        padding: 2,
+                        margin:"auto"
                       }}
                     >
                       <StyledButton
-                        style={{ width: "45%", padding: "15px" }}
+                        style={{padding:"10px 35px" }}
                         onClick={() => handleEdit(leave._id)}
                       >
                         Edit
                       </StyledButton>
                       <StyledButton
-                        style={{ width: "45%", padding: "15px", backgroundColor:"#992045" }}
+                        style={{ padding:"10px 35px", backgroundColor:"#992045" }}
                         onClick={() => deleteHandler(leave._id)}
                       >
                         Delete

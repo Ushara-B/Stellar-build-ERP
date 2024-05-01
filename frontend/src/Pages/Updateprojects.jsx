@@ -183,7 +183,7 @@ function Updateprojects() {
                   label="Start Date"
                   name="startDate"
                   type="date"
-                  value={inputs.startDate}
+                  value={inputs.startDate ? new Date(inputs.startDate).toISOString().split('T')[0] : ''}
                   onChange={handleChange}
                   variant="outlined"
                   fullWidth
@@ -198,7 +198,7 @@ function Updateprojects() {
                   label="End Date"
                   name="endDate"
                   type="date"
-                  value={inputs.endDate}
+                  value={inputs.endDate ? new Date(inputs.endDate).toISOString().split('T')[0] : ''}
                   onChange={handleChange}
                   variant="outlined"
                   fullWidth
@@ -224,7 +224,7 @@ function Updateprojects() {
                   <MenuItem value="Start">Start</MenuItem>
                   <MenuItem value="Done">Done</MenuItem>
                   <MenuItem value="End">End</MenuItem>
-                  <MenuItem value="Pouse">Pause</MenuItem>
+                  <MenuItem value="Pause">Pause</MenuItem>
                 </TextField>
               </Grid>
 
@@ -244,6 +244,7 @@ function Updateprojects() {
                   <MenuItem value="Paint">Paint</MenuItem>
                   <MenuItem value="Water-Supply">Water-supply</MenuItem>
                   <MenuItem value="Tile">Tile</MenuItem>
+                  <MenuItem value="Electrical">Electrical</MenuItem>
                 </TextField>
               </Grid>
               <Grid item xs={12} sm={6}>

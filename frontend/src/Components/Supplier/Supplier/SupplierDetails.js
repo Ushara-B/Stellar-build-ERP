@@ -266,6 +266,7 @@ const SupplierDetails = () => {
                     >
                       Delete
                     </Button>
+                    
                   </TableCell>
                 </TableRow>
               ))}

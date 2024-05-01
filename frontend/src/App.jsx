@@ -1,10 +1,11 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "./Pages/Home";
+import Dash from "./Pages/Dash";
 import AllUsers from "./Pages/AllUsers";
 import AddUsers from "./Pages/AddUsers";
 import ViewUser from "./Pages/ViewUser";
 import UpdateUser from "./Pages/UpdateUser";
-import UserProfile from "./Pages/UserProfile";
+import UserProfile from "../src/Components/UserProfile";
+import UserDash from "./Pages/UserDash";
 import NoPages from "./Pages/NoPages";
 import EmpManagement from "./Pages/EmpManagement";
 import PaySlip from "./Pages/PaySlip";
@@ -37,14 +38,21 @@ import ViewInventoryList from "./Pages/ViewInventoryList";
 import Viewinventory from "./Pages/ViewInventory";
 import Inventory from "./Pages/Inventory";
 import AddInventory from "./Pages/AddInventory";
+import Finance from "./Pages/Finance";
+import InventoryCategory from "./Pages/InventoryCategory";
+import AddLoans from "./Pages/AddLoans";
+import ViewLoans from "./Pages/ViewLoans";
+import UpdateLoan from "./Pages/UpdateLoan";
+import AllLoans from "./Pages/AllLoans";
+import { useGlobalContext } from '../src/Context/globalContext';
+
 import Expense from "./Pages/Finance/Expense";
 import Income from "./Pages/Finance/Income";
-import InventoryCategory from "./Pages/InventoryCategory";
+
 import UpdateInventory from "./Pages/UpdateInventory";
 import  IncomeForm from "./Pages/Finance/Form";
 import  ExpenseForm from "./Pages/Finance/expenseForm";
 import FinanceDashboard from "../src/Pages/Finance/finDashboard";
-import { useGlobalContext } from '../src/Context/globalContext';
 import UpdateExpense from "./Pages/Finance/updateExpense";
 import UpdateIncome from "./Pages/Finance/updateIncome";
 import Project from "./Pages/Finance/project"
@@ -70,13 +78,12 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route index element={<Login />} />
-          <Route path="/dashboard" element={<Home />} />
+          <Route path="/dashboard" element={<Dash />} />
           <Route path="/login" element={<Login />} />
           <Route path="/user/addusers" element={<AddUsers />} />
           <Route path="/user/allusers" element={<AllUsers />} />
           <Route path="*" element={<NoPages />} />
           <Route path="/employee-management" element={<EmpManagement />} />
-          <Route path="/employee-management/PaySlip" element={<PaySlip />} />
           <Route path="/employee-management/Leaves" element={<LeaveMng />} />
           <Route path="/employee-management/Attendance"element={<Attendance />}/>
           <Route path="/LeaveForm"element={<LeaveForm />}/>
@@ -84,11 +91,17 @@ function App() {
           <Route path="/updateLeave" element={<UpdateLeave/>}/>
           <Route path="/projects" element={<Projects/>}/>
 
+
+
           <Route path = '/vehicle' element = {<VehicleDash/>}/>
           <Route path = '/addvehicle' element = {<AddVehicle/>}/>
           <Route path = '/viewvehicles' element = {<Vehicles/>}/>
           <Route path = '/viewvehicle/:id' element = {<Vehicle/>}/>
           <Route path = '/viewvehicles/:id' element = {<UpdateVehicles/>}/>
+
+
+
+          
           <Route path = '/assigndriver' element = {<AssignDriver/>}/>
           <Route path = '/allusers' element ={<AllUsers/>}/>
 
@@ -115,6 +128,8 @@ function App() {
 
           <Route path="/finance" element={<FinanceDashboard />} />
           <Route path="/user-profile" element={<UserProfile />} />
+          <Route path="/userdash" element={<UserDash />} />
+
 
           <Route path="/finance/expense" element={<Expense />} />
           <Route path="/finance/income" element={<Income />} />
@@ -127,9 +142,17 @@ function App() {
           <Route path="/finance/project" element={<Project />} />
 
 
+
+          <Route path="/loan-management" element={<AllLoans />} />
+          <Route path="/loan-management/addloans" element={<AddLoans />} />
+          <Route path="/loan-management/upateloans/:id" element={<UpdateLoan />} />
+          <Route path="/loan-management/viewloans" element={<ViewLoans />} />
+
+
           <Route path="/ActiveLeaves/:id"element={<UpdateLeave />}/>
           <Route path="/UpdateLeave/:id"element={<UpdateLeave />}/>
           <Route path="/viewAttendance/:id"element={<ViewAttendance />}/>
+          <Route path="/PaySlip" element={<PaySlip/>}/>
 
 
           <Route path="/contact" element={<SHome />} />

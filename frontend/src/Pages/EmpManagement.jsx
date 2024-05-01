@@ -4,7 +4,7 @@ import "../css/EmpManagement.css";
 
 function EmpManagement() {
   const payslip = () => {
-    window.location.href = "/employee-management/PaySlip";
+    window.location.href = "/PaySlip";
   };
   const leave = () => {
     window.location.href = "/employee-management/Leaves";
