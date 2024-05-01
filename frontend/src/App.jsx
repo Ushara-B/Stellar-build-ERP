@@ -47,6 +47,7 @@ import FinanceDashboard from "../src/Pages/Finance/finDashboard";
 import { useGlobalContext } from '../src/Context/globalContext';
 import UpdateExpense from "./Pages/Finance/updateExpense";
 import UpdateIncome from "./Pages/Finance/updateIncome";
+import Project from "./Pages/Finance/project"
 
 
 
@@ -123,6 +124,7 @@ function App() {
           <Route path = '/inventorycategory' element = {<InventoryCategory/>}/>
           <Route path="/finance/updateincome/:id" element={<UpdateIncome />} />
           <Route path="/finance/updateexpense/:id" element={<UpdateExpense />} />
+          <Route path="/finance/project" element={<Project />} />
 
 
           <Route path="/ActiveLeaves/:id"element={<UpdateLeave />}/>

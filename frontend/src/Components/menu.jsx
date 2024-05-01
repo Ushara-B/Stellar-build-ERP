@@ -93,6 +93,8 @@ export default function NestedList() {
     window.location.href = '/finance/expense';
     }else if (menuName === 'Financial' && subMenuName === 'Incomes'){
     window.location.href = '/finance/income';
+  }else if (menuName === 'Financial' && subMenuName === 'Projects'){
+    window.location.href = '/finance/project';
     }else if (menuName === 'Contact' && subMenuName === 'Add Suppliers'){
       window.location.href = '/add-supplier';
     }else if (menuName === 'Contact' && subMenuName === 'Add Clients'){
@@ -114,7 +116,7 @@ export default function NestedList() {
     { name: 'Contact', path: '/contact', subMenus: ['Add Suppliers', 'Add Clients'] },
     { name: 'Projects', path: '/projects', subMenus: ['All projects', 'New projects', 'Project categories'] },
     { name: 'Inventory', path: '/inventory', subMenus: ['Add Inventory', 'View inventory list', 'Inventory Category'] },
-    { name: 'Financial', path: '/finance', subMenus: ['Financial Dashboard', 'Expenses', 'Incomes', 'Categories'] },
+    { name: 'Financial', path: '/finance', subMenus: ['Financial Dashboard', 'Expenses', 'Incomes', 'Projects'] },
     { name: 'Vehicle Management', path: '/vehicle', subMenus: ['Vehicle Dashboard','Add Vehicle', 'View Vehicles', 'Assign Drivers'] },
     { name: 'Loans Management', path: '/loan-management', subMenus: ['Add loans', 'Bank/Bussines Loans', 'Vehicle finance'] },
     { name: 'User Management', path: '/allusers', subMenus: ['View users', 'Add users'] },
