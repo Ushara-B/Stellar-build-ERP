@@ -49,7 +49,7 @@ function Chart() {
             {
                 label: 'Expenses',
                 data: [
-                    ...expenses.map((expense) => {
+                     ...expenses.map((expense) => {
                         const {amount} = expense
                         return amount
                     })
