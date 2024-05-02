@@ -113,7 +113,11 @@ export const GlobalProvider = ({children}) => {
             setError("Error updating income. Please try again later.");
         }
     };
-    
+    const getProjects = async () => {
+        const [...response] = await axios.get(`http://localhost:5000/projects`)
+        getProjects(response.data)
+        console.log(response.data)
+    }
 
     return (
         <GlobalContext.Provider value={{
@@ -129,6 +133,7 @@ export const GlobalProvider = ({children}) => {
             updateIncome,
             totalExpenses,
             totalBalance,
+            getProjects,
             transactionHistory,
             error,
             setError
