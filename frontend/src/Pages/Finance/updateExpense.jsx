@@ -12,6 +12,7 @@ import { useParams, useNavigate } from 'react-router';
 
 function UpdateExpense() {
     const { id } = useParams();
+    const [projects, setProjects] = useState([]);
     const [inputState, setInputState] = useState({
         title: '',
         amount: '',
@@ -26,8 +27,14 @@ function UpdateExpense() {
     useEffect(() => {
         // Fetch income data for the specific ID when the component mounts
         fetchExpense();
+        fetchHandler().then((data) => setProjects(data.project));
     }, []);
 
+    const fetchHandler = async () => {
+        return await axios.get("http://localhost:5000/projects").then((res) => res.data);
+      };
+
+      
     const  fetchExpense = async () => {
         try {
             const response = await axios.get(`http://localhost:5000/finance/get-expense/${id}`);
@@ -94,9 +101,13 @@ function UpdateExpense() {
                 />
             </div>
             <div className="selects input-control">
-                <select required value={inputState.project} name="project" id="project" onChange={handleInput('project')}>
+            <select required value={inputState.project} name="project" id="project" onChange={handleInput('project')}>
                     <option value="" disabled>Select Project</option>
-                    <option value="Kalaniya">Kalaniya</option>
+                    {projects.map(project => (
+                <option  className="history-item" key={project._id}>{project.projectName}</option>
+          // Replace 'id' and 'name' with your actual project properties
+                 ))}
+                  
                 </select>
             </div>
             <div className="selects input-control">
@@ -117,7 +128,7 @@ function UpdateExpense() {
             </div>
             <div className="submit-btn">
                 <Button
-                    name={'Update Income'}
+                    name={'Update Expense'}
                     bPad={'.8rem 1.6rem'}
                     bRad={'30px'}
                     bg={'var(--color-accent)'}
