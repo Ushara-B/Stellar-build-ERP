@@ -59,6 +59,7 @@ import AddLoans from "./Pages/AddLoans";
 import ViewLoans from "./Pages/ViewLoans";
 import UpdateLoan from "./Pages/UpdateLoan";
 import AllLoans from "./Pages/AllLoans";
+import { useGlobalContext } from '../src/Context/globalContext';
 
 import Expense from "./Pages/Finance/Expense";
 import Income from "./Pages/Finance/Income";
