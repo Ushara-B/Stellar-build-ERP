@@ -64,7 +64,8 @@ function AddInventory() {
   };
   useEffect(() => {
     // Fetch the categories when the component mounts
-    axios.get("http://localhost:5000/categories")
+    axios
+      .get("http://localhost:5000/categories")
       .then((res) => {
         console.log(res.data); // Log the response data to the console
         setCategories(res.data);
@@ -104,28 +105,26 @@ function AddInventory() {
               value={inputs.Name}
               placeholder="Enter Name here"
               required
+              pattern="[A-Za-z]+"
+              onInvalid={(e) => {
+                e.target.setCustomValidity(
+                  "Only letter characters are allowed."
+                );
+              }}
+              onInput={(e) => e.target.setCustomValidity("")}
             />
             <br />
             <br />
-            <label>Category</label>
-            <br />
-            <select name="category" onChange={handleChange} required>
-              <option value="">Select a category</option>
-              {categories.map((category) => (
-                <option value={category.Name} key={category._id}>
-                  {category.Name}
-                </option>
-              ))}
-            </select>
-
-            <IconButton
-              color="primary"
-              aria-label="Add category"
-              onClick={handleOpen}
-            >
-              <AddIcon />
-            </IconButton>
-
+            <label>
+              Category
+              <IconButton
+                color="primary"
+                aria-label="Add category"
+                onClick={handleOpen}
+              >
+                <AddIcon />
+              </IconButton>
+            </label>
             <input
               type="text"
               name="Category"
@@ -139,16 +138,24 @@ function AddInventory() {
             <label>Quantity</label>
             <br />
             <input
-              type="text"
+              type="number"
               name="Quantity"
               onChange={handleChange}
               value={inputs.Quantity}
               placeholder="Enter quantity here"
               required
+              min="1"
+              max="10000"
+              onInvalid={(e) => {
+                e.target.setCustomValidity(
+                  "Please enter a number between 1 and 10000."
+                );
+              }}
+              onInput={(e) => e.target.setCustomValidity("")}
             />
             <br />
             <br />
-            <label>Value</label>
+            <label>Value (Unit Price)</label>
             <br />
             <input
               type="text"

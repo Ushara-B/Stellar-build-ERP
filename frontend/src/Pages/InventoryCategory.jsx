@@ -3,14 +3,16 @@ import axios from "axios";
 import Typography from "@mui/material/Typography";
 import CloseIcon from "@mui/icons-material/Close";
 import TextField from "@mui/material/TextField";
-import { useState } from "react";
-import { useEffect } from "react";
+import { useState ,useEffect} from "react";
+
 import { create } from "@mui/material/styles/createTransitions";
 import { useNavigate } from "react-router-dom";
 
 
+
 export default function InventoryCategory({ closeEvent }) {
   const history = useNavigate();
+  const [categories, setCategories] = useState([]);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -31,6 +33,7 @@ export default function InventoryCategory({ closeEvent }) {
     sendRequest().then(() => navigate("/addInventory"));
   };
 
+
   const sendRequest = async () => {
     try {
       await axios.post(`http://localhost:5000/categories`, {
@@ -47,6 +50,7 @@ export default function InventoryCategory({ closeEvent }) {
       }
     }
   };
+  
   return (
     <>
       <Box sx={{ m: 2 }} />

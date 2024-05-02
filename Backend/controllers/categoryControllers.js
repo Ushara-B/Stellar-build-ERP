@@ -86,6 +86,31 @@ const getById = async (req, res, next) => {
 
 
 
+    const deleteCategory = async (req, res, next) => {
+      const id = req.params.id;
+      const {Name} = req.body;
+  
+      let categories;
+  
+      try {
+        categories = await Category.findByIdAndDelete(id, {Name});
+        categories = await Category.save();
+      }catch (err){
+          console.log(err);
+      }
+      
+      //not categories not available
+      if (!categories){
+          return res.status(404).json({message:"Cannot delete the user"});
+      }
+      return res.status(200).json({categories});
+  
+  
+  };
+
+
+
 exports.getAllCategory = getAllCategory;
 exports.addCategory = addCategory;
 exports.getById = getById;
+exports.deleteCategory = deleteCategory;

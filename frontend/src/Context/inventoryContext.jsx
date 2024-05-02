@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react"
+import React, { useContext, useState , useEffect} from "react"
 import axios from 'axios'
 
 
@@ -9,7 +9,7 @@ const InventoryContext = React.createContext()
 
 export const InventoryProvider = ({children}) => {
 
-    const [value, setValue] = useState([])
+    const [values, setValues] = useState([])
     const [error, setError] = useState(null)
 
     //calculate Value
@@ -18,23 +18,19 @@ export const InventoryProvider = ({children}) => {
             .catch((err) =>{
                 setError(err.response.data.message)
             })
-        getValue()
+        getValues()
     }
 
-    const getValue = async () => {
+    const getValues = async () => {
         const response = await axios.get(`${BASE_URL}get-value`)
-        setValue(response.data)
+        setValues(response.data)
         console.log(response.data)
     }
-
-    const deleteValue = async (id) => {
-        const res  = await axios.delete(`${BASE_URL}delete-value/${id}`)
-        getValue()
-    }
+    
 
     const totalValue = () => {
         let totalValue = 0;
-        value.forEach((value) =>{
+        values.forEach((value) =>{
             totalValue = totalValue + value.amount
         })
 
@@ -45,19 +41,12 @@ export const InventoryProvider = ({children}) => {
 
 
     
-
     return (
-        <InventoryContext.Provider value={{
-            inventory,
-
-            error,
-            setError
-        }}>
+        <InventoryContext.Provider value={{ values, addInventory, getValues, totalValue }}>
             {children}
         </InventoryContext.Provider>
-    ) 
+    );
 }
-
 export const useInventoryContext = () =>{
     return useContext(InventoryContext)
 }
