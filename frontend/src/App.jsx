@@ -16,13 +16,20 @@ import LeaveForm from "./Pages/LeaveForm";
 import ActiveLeaves from "./Pages/ActiveLeaves";
 import UpdateLeave from "./Pages/UpdateLeave";
 import Login from "./Pages/Login";
-
+import Projects from "./Pages/projects";
 
 import AddVehicle from "./Pages/AddVehicle";
 import Vehicles from "./Pages/Vehicles";
 import Vehicle from "./Pages/ViewVehicle";
 import UpdateVehicles from "./Pages/UpdateVehicle";
 import VehicleDash from "./Pages/VehicleDashBoard";
+
+
+import AddVehicle from './Pages/AddVehicle';
+import Vehicles from './Pages/Vehicles';
+import Vehicle from './Pages/ViewVehicle';
+import UpdateVehicles from './Pages/UpdateVehicle'
+import VehicleDash from './Pages/VehicleDashBoard';
 import AssignDriver from './Pages/AssignDriver';
 
 //pathum's
@@ -43,6 +50,7 @@ import AddInventory from "./Pages/AddInventory";
 import Expense from "./Pages/Finance/Expense";
 import Income from "./Pages/Finance/Income";
 import UpdateInventory from "./Pages/UpdateInventory";
+import { useGlobalContext } from "../src/Context/globalContext";
 import IncomeForm from "./Pages/Finance/Form";
 import ExpenseForm from "./Pages/Finance/expenseForm";
 import Finance from "./Pages/Finance";
@@ -52,10 +60,12 @@ import ViewLoans from "./Pages/ViewLoans";
 import UpdateLoan from "./Pages/UpdateLoan";
 import AllLoans from "./Pages/AllLoans";
 
+import Expense from "./Pages/Finance/Expense";
+import Income from "./Pages/Finance/Income";
 
-
-
-
+import UpdateInventory from "./Pages/UpdateInventory";
+import  IncomeForm from "./Pages/Finance/Form";
+import  ExpenseForm from "./Pages/Finance/expenseForm";
 import FinanceDashboard from "../src/Pages/Finance/finDashboard";
 import UpdateExpense from "./Pages/Finance/updateExpense";
 import UpdateIncome from "./Pages/Finance/updateIncome";
@@ -64,6 +74,9 @@ import Project from "./Pages/Finance/project"
 
 
 import ViewAttendance from "./Pages/ViewAttendance";
+
+import Finance from "./Pages/Finance";
+import InventoryCategory from "./Pages/InventoryCategory";
 
 import AddClient from "../src/Components/Client/Add-Client/AddClient";
 import ClientDetails from "../src/Components/Client/Client/ClientDetails";
