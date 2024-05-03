@@ -2,6 +2,14 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
 import { useGlobalContext } from '../../Context/globalContext';
+import AppBar from '../../Components/Appbar';
+import Menu from '../../Components/menu';
+import { GlobalStyle } from '../../Styles/globalStyle';
+import { InnerLayout } from '../../Styles/Layout';
+import {  Container, Grid } from '@mui/material';
+import Card from '../../Components/Finance/card';
+import ProjectChart from '../../Components/Finance/projectChart';
+
 
 const URL = "http://localhost:5000/projects";
 const IURL = "http://localhost:5000/finance/get-incomes";
@@ -23,7 +31,6 @@ function Project() {
   const [projects, setProjects] = useState([]);
   const { incomes, getIncomes, expenses, getExpenses } = useGlobalContext();
   
-
   useEffect(() => {
     fetchProjects().then((data) => setProjects(data.project));
     getIncomes();
@@ -54,30 +61,41 @@ function Project() {
 
   return (
     <ProjectStyled>
-      <div>
-        <h1>Projects</h1>
-        <ul>
-          {projects.map(project => (
-            <li className="history-item" key={project._id}>
-              {project.projectName}
-              <ul>
-                <li>Total Income: <span className='income'>{getTotalIncome(project.projectName)}</span></li>
-                <li>Total Expense: <span className='expense'>{getTotalExpense(project.projectName)}</span></li>
-                <li>Total Balance: {getTotalBalance(project.projectName)}</li>
-              </ul>
-            </li>
-          ))}
-        </ul>
-        <div className="total-balance">Total Overall Balance: {getTotalOverallBalance()}</div>
-      </div>
+      <InnerLayout>
+        
+        <AppBar />
+        <Menu/>
+      
+        <div className="project-content">
+          
+          <Container>
+            <Grid >
+            <h1>Projects</h1>
+              <div>
+            {projects.map(project => (
+             <Grid  className="history-item" item key={project._id} xs={12} md={6} lg={4} sx={{
+              display: 'grid',
+              columnGap: 10,
+              rowGap: 1,
+              gridTemplateColumns: 'repeat(2, 1fr)',
+            }} >
+              <Card  project={project} getTotalExpense={getTotalExpense} getTotalIncome={getTotalIncome} getTotalBalance={getTotalBalance}/>
+              <ProjectChart project={project}/>
+               </Grid>
+                     ))}
+               </div>
+
+        </Grid>
+          </Container>
+          <div className="total-balance">Total Overall Balance: {getTotalOverallBalance()}</div>
+        </div>
+      </InnerLayout>
     </ProjectStyled>
   );
 }
 
 const ProjectStyled = styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
+   
     .history-item{
         background: #D9D9D9;
         border: 2px solid #FFFFFF;
@@ -86,7 +104,7 @@ const ProjectStyled = styled.div`
         border-radius: 20px;
         display: flex;
         flex-direction: column;
-        gap: 0.5rem;
+        gap: 3rem;
     }
 
     .income{
