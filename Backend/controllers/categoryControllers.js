@@ -28,25 +28,40 @@ const getAllCategory = async (req, res , next) => {
 
 
 //data insert--
-const addCategory = async (req, res, next) =>{
-
-    const {Name, Quantity, Value, Supplier} = req.body;
-
-    let categories;
-    try{
-        categories = new Category ({Name, Quantity, Value, Supplier});
-        await categories.save();
-    }catch (err) {
-        console.log(err);
+const addCategory = async (req, res, next) => {
+    const { Name } = req.body;
+  
+    let existingCategory;
+  
+    // Check if a category with the same name already exists
+    try {
+      existingCategory = await Category.findOne({ Name });
+    } catch (err) {
+      console.log(err);
+      return res.status(500).json({ message: "Checking for existing category failed, please try again" });
     }
-
-    //not insert categories
-    if (!categories){
-        return res.status(404).json({message:"unable to add categories"});
+  
+    if (existingCategory) {
+      // If a category with the same name already exists, return a conflict response
+      return res.status(409).json({ message: 'Category already exists' });
     }
-    return res.status(200).json({categories})
-
-    };
+  
+    let newCategory;
+  
+    // If a category with the same name doesn't exist, add the new category
+    try {
+      newCategory = new Category({
+        Name
+      });
+  
+      await newCategory.save();
+    } catch (err) {
+      console.log(err);
+      return res.status(500).json({ message: "Creating category failed, please try again" });
+    }
+  
+    return res.status(201).json({ category: newCategory });
+  };
 
 
     //get Category  by ID
@@ -70,54 +85,32 @@ const getById = async (req, res, next) => {
     };
 
 
-//update Category  details
-const updateCategory  = async (req, res, next) => {
-    const id = req.params.id;
-    const {Name,  Quantity, Value, Supplier} = req.body;
 
-    let categories;
-
-    try {
-        categories = await Category.findByIdAndUpdate(id, {Name, Quantity, Value, Supplier});
+    const deleteCategory = async (req, res, next) => {
+      const id = req.params.id;
+      const {Name} = req.body;
+  
+      let categories;
+  
+      try {
+        categories = await Category.findByIdAndDelete(id, {Name});
         categories = await Category.save();
-    }catch (err){
-        console.log(err);
-    }
-    //not categories not available
-    if (!categories){
-        return res.status(404).json({message:"unable to update Category"});
-    }
-    return res.status(200).json({categories});
+      }catch (err){
+          console.log(err);
+      }
+      
+      //not categories not available
+      if (!categories){
+          return res.status(404).json({message:"Cannot delete the user"});
+      }
+      return res.status(200).json({categories});
+  
+  
+  };
 
-};
-
-
-//delete Category  details
-const deleteCategory  = async (req, res, next) => {
-    const id = req.params.id;
-    const {Name, Quantity, Value, Supplier} = req.body;
-
-    let categories;
-
-    try {
-        categories = await Category.findByIdAndDelete(id, {Name, Quantity, Value, Supplier});
-        categories = await Category.save();
-    }catch (err){
-        console.log(err);
-    }
-    
-    //not categories not available
-    if (!categories){
-        return res.status(404).json({message:"Cannot delete the user"});
-    }
-    return res.status(200).json({categories});
-
-
-};
 
 
 exports.getAllCategory = getAllCategory;
 exports.addCategory = addCategory;
 exports.getById = getById;
-exports.updateCategory = updateCategory;
 exports.deleteCategory = deleteCategory;
