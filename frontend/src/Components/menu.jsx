@@ -121,17 +121,11 @@ export default function NestedList() {
     { name: 'Dashboard', path: '/dashboard' },
     { name: 'Contact', path: '/contact', subMenus: ['Add Suppliers', 'Add Clients', 'All Suppliers', 'All Clients'] },
     { name: 'Projects', path: '/projects', subMenus: ['All projects', 'New projects', 'Project categories'] },
-    { name: 'Inventory', path: '/inventory', subMenus: ['Add Inventory', 'View inventory list', 'Inventory Category'] },
-
+    { name: 'Inventory', path: '/inventory', subMenus: ['Add Inventory', 'View inventory list'] },
     { name: 'Financial', path: '/finance', subMenus: ['Financial Dashboard', 'Expenses', 'Incomes', 'Projects'] },
     { name: 'Vehicle Management', path: '/vehicle', subMenus: ['Vehicle Dashboard','Add Vehicle', 'View Vehicles', 'Assign Drivers'] },
-    { name: 'Loans Management', path: '/loan-management', subMenus: ['Add loans', 'Bank/Bussines Loans', 'Vehicle finance'] },
-
-    { name: 'Financial', path: '/finance', subMenus: ['Financial Dashboard', 'Expenses', 'Incomes', 'Categories'] },
-    { name: 'Vehicle Management', path: '/vehicle', subMenus: ['Vehicle Dashboard','Add Vehicle', 'View Vehicles', 'Assign drivers'] },
     { name: 'Loans Management', path: '/loan-management', subMenus: ['View loans' , 'Add loans'] },
     { name: 'User Management', path: '/userdash', subMenus: ['View users', 'Add users'] },
-
     { name: 'Employee Management', path: '/employee-management', subMenus: ['PaySlip', 'Leaves', 'Attendance'] },
   ];
 
