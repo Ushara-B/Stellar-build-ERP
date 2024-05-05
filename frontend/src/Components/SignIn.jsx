@@ -31,23 +31,8 @@ export default function SignIn() {
       const response = await axios.post('http://localhost:5000/users/login', credentials);
 
       if (response.status === 200) {
-        const user = response.data.user;
-
-        // Check if the provided credentials match the user_N or email
-        if (
-          user.user_N === credentials.usernameOrEmail ||
-          user.email === credentials.usernameOrEmail
-        ) {
-          // Check if the provided password matches the user's password
-          if (user.pswrd === credentials.password) {
-            // Credentials are valid, redirect to the dashboard
-            navigate('/dashboard');
-          } else {
-            alert('Incorrect password');
-          }
-        } else {
-          alert('Invalid username or email');
-        }
+        // Credentials are valid, redirect to the dashboard
+        navigate('/dashboard');
       } else {
         alert('Invalid credentials');
       }
@@ -56,6 +41,7 @@ export default function SignIn() {
       alert('An error occurred while logging in. Please try again.');
     }
   };
+
 
   return (
     <ThemeProvider theme={defaultTheme}>
