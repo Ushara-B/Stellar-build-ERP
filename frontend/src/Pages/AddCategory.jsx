@@ -27,9 +27,7 @@ const AddCategory = () => {
 
   return (
     <>
-      <AppBar />
-      <Menu />
-      <div style={{ marginLeft: '255px'}}>
+     
     
     <Box
       sx={{
@@ -73,7 +71,6 @@ const AddCategory = () => {
         </Button>
       </Box>
     </Box>
-    </div>
     </>
   );
 };
