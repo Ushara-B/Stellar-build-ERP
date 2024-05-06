@@ -4,7 +4,7 @@ import { Box, Button, Grid, FormControl, InputLabel, Select, MenuItem } from '@m
 import { useNavigate } from 'react-router-dom';
 import AppBar from '../Components/Appbar';
 import Menu from '../Components/menu';
-import ViewVehicle from './ViewVehicle';
+import driverImage from '../Assets/worker-driving.jpg'; // Import your driver image here
 
 const AssignDriver = () => {
   const navigate = useNavigate();
@@ -61,8 +61,23 @@ const AssignDriver = () => {
     <div>
       <AppBar />
       <Menu />
+      <div>
+      <img
+            src={driverImage}
+            alt="Driver"
+            style={{
+              position: 'absolute',
+              bottom: '-100px',
+              right: '-200px',
+              width: '800px', // Adjust size as needed
+              height: '500px'
+           
+            }}
+          />
+      </div>
       <Box
         sx={{
+          position: 'relative',
           marginLeft: '255px',
           paddingTop: '80px',
           display: 'flex',
@@ -124,8 +139,10 @@ const AssignDriver = () => {
               </Grid>
             </Grid>
           </form>
+         
         </Box>
       </Box>
+     
     </div>
   );
 };

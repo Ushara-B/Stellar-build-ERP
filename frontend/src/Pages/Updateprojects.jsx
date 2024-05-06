@@ -183,7 +183,7 @@ function Updateprojects() {
                   label="Start Date"
                   name="startDate"
                   type="date"
-                  value={inputs.startDate}
+                  value={inputs.startDate ? new Date(inputs.startDate).toISOString().split('T')[0] : ''}
                   onChange={handleChange}
                   variant="outlined"
                   fullWidth
@@ -198,7 +198,7 @@ function Updateprojects() {
                   label="End Date"
                   name="endDate"
                   type="date"
-                  value={inputs.endDate}
+                  value={inputs.endDate ? new Date(inputs.endDate).toISOString().split('T')[0] : ''}
                   onChange={handleChange}
                   variant="outlined"
                   fullWidth

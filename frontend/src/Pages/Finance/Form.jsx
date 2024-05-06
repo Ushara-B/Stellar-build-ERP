@@ -32,15 +32,11 @@ function Form() {
 
     useEffect(() => {
         // Fetch projects when the component mounts
-        getProject();
+        fetchHandler().then((data) => setProjects(data.project));
     }, []);
 
-    const getProject = async () => {
-        setLoading(true);
-        const response = await fetch("http://localhost:3000/api/v1/get-projects");
-        const data = await response.json();
-        setProjects(data);
-        setLoading(false);
+    const fetchHandler = async () => {
+        return await axios.get("http://localhost:5000/projects").then((res) => res.data);
       };
 
     const { title, amount, date, category,project,description } = inputState;
@@ -109,7 +105,10 @@ function Form() {
              <div className="selects input-control">
                 <select required value={project} name="project" id="project" onChange={handleInput('project')}>
                     <option value="" disabled>Select Project</option>
-                    <option value="Kalaniya">Kalaniya</option>
+                    {projects.map(project => (
+                <option  className="history-item" key={project._id}>{project.projectName}</option>
+          // Replace 'id' and 'name' with your actual project properties
+                 ))}
                   
                 </select>
             </div> 
