@@ -129,7 +129,7 @@ function LeaveForm() {
             <br />
             <button
               type="submit"
-              style={{ backgroundColor:"#535C91" }}
+              style={{ backgroundColor:"#535C91"  }}
             >
               Submit
             </button>
