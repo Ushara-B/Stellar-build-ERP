@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/userModel");
 const UserController = require("../controllers/userControllers");
-const bcrypt = require("bcryptjs");
 
 // Login route
 router.post("/login", async (req, res) => {
@@ -18,10 +17,8 @@ router.post("/login", async (req, res) => {
       return res.status(404).json({ error: "User not found" });
     }
 
-    // Compare the entered password with the hashed password in the database
-    const isPasswordValid = await bcrypt.compare(password, user.pswrd);
-
-    if (isPasswordValid) {
+    // Check if the password matches
+    if (user.pswrd === password) {
       return res.status(200).json({ user });
     } else {
       return res.status(401).json({ error: "Incorrect password" });
