@@ -26,8 +26,11 @@ ChartJs.register(
     ArcElement,
 )
 
-function Chart() {
+function Chart({project}) {
     const {incomes, expenses} = useGlobalContext()
+
+    const projectIncomes = incomes.filter(income => income.project === project.projectName);
+    const projectExpenses = expenses.filter(expense => expense.project ===  project.projectName);
 
     const data = {
         labels: incomes.map((inc) =>{
@@ -38,7 +41,7 @@ function Chart() {
             {
                 label: 'Income',
                 data: [
-                    ...incomes.map((income) => {
+                    ...projectIncomes.map((income) => {
                         const {amount} = income
                         return amount
                     })
@@ -49,7 +52,7 @@ function Chart() {
             {
                 label: 'Expenses',
                 data: [
-                     ...expenses.map((expense) => {
+                     ...projectExpenses.map((expense) => {
                         const {amount} = expense
                         return amount
                     })
@@ -74,7 +77,7 @@ const ChartStyled = styled.div`
     box-shadow: 0px 1px 15px rgba(0, 0, 0, 0.06);
     padding: 1rem;
     border-radius: 20px;
-    height: 100%;
+    height: 50%;
 `;
 
 export default Chart

@@ -12,6 +12,7 @@ import { useParams, useNavigate } from 'react-router';
 
 function UpdateIncome() {
     const { id } = useParams();
+    const [projects, setProjects] = useState([]);
     const [inputState, setInputState] = useState({
         title: '',
         amount: '',
@@ -23,10 +24,17 @@ function UpdateIncome() {
 
     const history = useNavigate();
 
+    
+
     useEffect(() => {
         // Fetch income data for the specific ID when the component mounts
         fetchIncome();
+        fetchHandler().then((data) => setProjects(data.project));
     }, []);
+
+    const fetchHandler = async () => {
+        return await axios.get("http://localhost:5000/projects").then((res) => res.data);
+      };
 
     const fetchIncome = async () => {
         try {
@@ -94,9 +102,13 @@ function UpdateIncome() {
                 />
             </div>
             <div className="selects input-control">
-                <select required value={inputState.project} name="project" id="project" onChange={handleInput('project')}>
+            <select required value={inputState.project} name="project" id="project" onChange={handleInput('project')}>
                     <option value="" disabled>Select Project</option>
-                    <option value="Kalaniya">Kalaniya</option>
+                    {projects.map(project => (
+                <option  className="history-item" key={project._id}>{project.projectName}</option>
+          // Replace 'id' and 'name' with your actual project properties
+                 ))}
+                  
                 </select>
             </div>
             <div className="selects input-control">
