@@ -18,15 +18,14 @@ function AddProject() {
     projectBudget: "",
     Locate: "",
     contractor: "",
-    Employees: "",
+    Employees: [],
     Status: "",
     startDate: "",
     endDate: "",
     projectType: "",
     description: "",
   });
- // const [nextProjectId, setNextProjectId] = useState(null);
-
+  // const [nextProjectId, setNextProjectId] = useState(null);
 
   /*useEffect(() => {
     fetchNextProjectId();
@@ -40,6 +39,35 @@ function AddProject() {
       console.error('Error fetching next project ID:', error);
     }
   };*/
+  const [employers, setEmployers] = useState([]);
+
+  useEffect(() => {
+    fetchEmployers();
+  }, []);
+
+  const fetchEmployers = async () => {
+    try {
+      const response = await axios.get('http://localhost:5000/users?role=Employer');
+      setEmployers(response.data.Users);
+    } catch (error) {
+      console.error('Error fetching employers:', error);
+    }
+  };
+
+const handleChange1 = (e) => {
+  const { name, value } = e.target;
+  if (name === "Employees") {
+    setInputs((prevState) => ({
+      ...prevState,
+      [name]: typeof value === "string" ? value.split(",") : value,
+    }));
+  } else {
+    setInputs((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  }
+};
 
   const handleChange = (e) => {
     setInputs((prevState) => ({
@@ -50,16 +78,17 @@ function AddProject() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(inputs/*, projectID: nextProjectId*/ );
-    sendRequest().then(() => history('/allprojects'));
+    console.log(inputs /*, projectID: nextProjectId*/);
+    sendRequest().then(() => history("/allprojects"));
   };
   const sendRequest = async () => {
     await axios
       .post("http://localhost:5000/projects", {
         ...inputs,
-       // projectID: nextProjectId,
+        // projectID: nextProjectId,
         startDate: new Date(inputs.startDate).toISOString(),
         endDate: new Date(inputs.endDate).toISOString(),
+        Employees: inputs.Employees,
       })
       .then((res) => res.data);
   };
@@ -176,7 +205,7 @@ function AddProject() {
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
-              <TextField  //GoogleMapComponent
+                <TextField //GoogleMapComponent
                   label="Location"
                   name="Locate"
                   value={inputs.Locate}
@@ -206,7 +235,18 @@ function AddProject() {
                   variant="outlined"
                   fullWidth
                   required
-                />
+                  select
+                  multiple
+                >
+                  {employers.map((employer) => (
+                    <MenuItem
+                      key={employer._id}
+                      value={`${employer.f_Name} ${employer.l_Name}`}
+                    >
+                      {`${employer.f_Name} ${employer.l_Name} (${employer.user_N})`}
+                    </MenuItem>
+                  ))}
+                </TextField>
               </Grid>
 
               <Grid item xs={12} sm={6}>
