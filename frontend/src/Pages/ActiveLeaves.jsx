@@ -43,9 +43,9 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     backgroundColor: theme.palette.action.hover,
   },
   "&:hover": {
-    backgroundColor: "#DEDEDE", 
-    transition: "background-color 0.3s, color 0.3s", 
-    cursor: "pointer", 
+    backgroundColor: "#DEDEDE",
+    transition: "background-color 0.3s, color 0.3s",
+    cursor: "pointer",
   },
 }));
 
@@ -145,6 +145,15 @@ function ActiveLeaves() {
 
   return (
     <>
+      <style>
+        {`
+          @media print {
+            .hide-on-print {
+              display: none;
+            }
+          }
+        `}
+      </style>
       <AppBar />
       <Drawer />
       <div style={{ marginLeft: '260px', paddingTop: '100px' }}>
@@ -207,7 +216,7 @@ function ActiveLeaves() {
                   <StyledTableCell align="center">Date</StyledTableCell>
                   <StyledTableCell align="center">Type</StyledTableCell>
                   <StyledTableCell align="center">Reason</StyledTableCell>
-                  <StyledTableCell align="center" sx={{ width:"30%"}}>Actions</StyledTableCell>
+                  <StyledTableCell align="center" className="hide-on-print">Actions</StyledTableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -227,12 +236,7 @@ function ActiveLeaves() {
                     </StyledTableCell>
                     <StyledTableCell
                       align="right"
-                      sx={{
-                        display: "flex",
-                        justifyContent: "space-around", // Adjusted to evenly space the buttons
-                        padding: 2,
-                        margin:"auto"
-                      }}
+                      className="hide-on-print"
                     >
                       <StyledButton
                         style={{padding:"10px 35px" }}

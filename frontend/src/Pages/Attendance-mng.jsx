@@ -24,6 +24,7 @@ import DialogActions from "@mui/material/DialogActions";
 import Button from "@mui/material/Button";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
+import { styled } from "@mui/material/styles";
 
 const columns = [
   { id: "name", label: "Name" },
@@ -31,6 +32,25 @@ const columns = [
   { id: "role", label: "Role" },
   { id: "actions", label: "Actions", align: "center" },
 ];
+
+const StyledButton = styled(Button)({
+  backgroundColor: "#535C91",
+  color: "white",
+  width: "45%",
+  marginRight: "10px",
+  "&:hover": {
+    backgroundColor: "#405487",
+  },
+});
+
+const EmployeeDetailsContent = ({ user }) => (
+  <div>
+    <h2>{`${user.f_Name} ${user.l_Name}'s Attendance`}</h2>
+    <p>User ID: {user.user_N}</p>
+    <p>Role: {user.role}</p>
+    {/* Add more details as needed */}
+  </div>
+);
 
 export default function AttendanceMng() {
   const [users, setUsers] = React.useState([]);
@@ -71,10 +91,7 @@ export default function AttendanceMng() {
 
   //pdf print function
   const ComponentsRef = useRef();
-  const handlePrintToPdf = useReactToPrint({
-    content: () => ComponentsRef.current,
-    documentTitle: "All users",
-  });
+  const handlePrintToPdf = useReactToPrint();
 
   const markAttendance = async (userId) => {
     setSelectedUserId(userId);
@@ -119,6 +136,14 @@ export default function AttendanceMng() {
     setOpenSuccessSnackbar(false);
   };
 
+  const handleViewAttendance = (userId) => {
+    const selectedUser = users.find((user) => user._id === userId);
+    handlePrintToPdf({
+      content: () => <EmployeeDetailsContent user={selectedUser} />,
+      documentTitle: `${selectedUser.f_Name} ${selectedUser.l_Name}'s Attendance`,
+    });
+  };
+
   const filteredUsers = users.filter(
     (user) =>
       `${user.f_Name} ${user.l_Name}`
@@ -126,10 +151,6 @@ export default function AttendanceMng() {
         .includes(searchTerm.toLowerCase()) ||
       user.user_N.toLowerCase().includes(searchTerm.toLowerCase())
   );
-
-  const handleViewUser = (userId) => {
-    navigate(`/viewAttendance/${userId}`);
-  };
 
   return (
     <>
@@ -200,9 +221,9 @@ export default function AttendanceMng() {
                       key={row._id}
                       sx={{
                         "&:hover": {
-                          backgroundColor: "#DEDEDE", 
-                          transition: "background-color 0.3s, color 0.3s", 
-                          cursor: "pointer", 
+                          backgroundColor: "#DEDEDE",
+                          transition: "background-color 0.3s, color 0.3s",
+                          cursor: "pointer",
                         },
                         border: "none",
                         padding: "8px 16px",
@@ -240,22 +261,21 @@ export default function AttendanceMng() {
                           border: "1",
                           padding: "10px",
                           backgroundColor: "white",
-                          display: "flex",
                           width: "40%",
                         }}
                       >
-                        <button
-                          style={{ backgroundColor: "#535C91", width: "45%" }}
+                        <StyledButton
+                          variant="contained"
                           onClick={() => markAttendance(row._id)}
                         >
                           Mark Attendance
-                        </button>
-                        <button
-                          style={{ backgroundColor: "#535C91", width: "45%" }}
-                          onClick={() => handleViewUser(row._id)}
+                        </StyledButton>
+                        <StyledButton
+                          variant="contained"
+                          onClick={() => handleViewAttendance(row._id)}
                         >
                           View Attendance
-                        </button>
+                        </StyledButton>
                       </TableCell>
                     </TableRow>
                   ))}

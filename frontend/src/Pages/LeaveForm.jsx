@@ -43,6 +43,8 @@ function LeaveForm() {
     history("/ActiveLeaves");
   };
 
+  const currentDate = new Date().toISOString().split("T")[0]; // Get current date in YYYY-MM-DD format
+
   return (
     <div>
       <AppBar />
@@ -58,12 +60,11 @@ function LeaveForm() {
           backgroundColor: "#D9D9D9", // Background color for the form
           borderRadius: "50px", // Border radius for the form
           padding: "20px", // Add padding to the form
-          
         }}
       >
         <Grid item xs={12}>
           <Typography variant="h4" gutterBottom>
-            Update your leave
+            Apply your leave
           </Typography>
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -80,7 +81,7 @@ function LeaveForm() {
               InputProps={{ disableUnderline: true }}
             />
             <TextField
-              sx={{ backgroundColor: "#fff", borderRadius: "15px"}}
+              sx={{ backgroundColor: "#fff", borderRadius: "15px" }}
               label="Date"
               name="date"
               type="date"
@@ -92,6 +93,7 @@ function LeaveForm() {
               margin="normal"
               InputLabelProps={{ shrink: true }}
               InputProps={{ disableUnderline: true }}
+              inputProps={{ min: currentDate }} // Set min attribute to current date
             />
             <TextField
               sx={{ backgroundColor: "#fff", borderRadius: "15px" }}
@@ -128,7 +130,12 @@ function LeaveForm() {
             <Button
               type="submit"
               variant="contained"
-              sx={{ mt: 2, borderRadius:"15px",backgroundColor: "#535C91", "&:hover": { backgroundColor: "#3D446F" } }}
+              sx={{
+                mt: 2,
+                borderRadius: "15px",
+                backgroundColor: "#535C91",
+                "&:hover": { backgroundColor: "#3D446F" },
+              }}
             >
               Submit
             </Button>
