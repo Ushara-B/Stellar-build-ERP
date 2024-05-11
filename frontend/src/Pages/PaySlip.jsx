@@ -45,6 +45,7 @@ const StyledButton = styled("button")({
   width: "45%",
   padding: "10px",
   marginLeft: "5px",
+  color: "white",
 });
 
 const columns = [
