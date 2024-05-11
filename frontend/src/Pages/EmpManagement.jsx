@@ -24,14 +24,15 @@ function EmpManagement() {
         <section>
           <div className="container">
             <div className="cards">
+            <div className="card" onClick={leave}>
+                <h3>Leave Management</h3>
+                <p></p>
+              </div>
               <div className="card" onClick={payslip}>
                 <h3>Pay slips</h3>
                 <p></p>
               </div>
-              <div className="card" onClick={leave}>
-                <h3>Leave Management</h3>
-                <p></p>
-              </div>
+            
               <div className="card" onClick={att}>
                 <h3>Attendance </h3>
                 <p>.</p>

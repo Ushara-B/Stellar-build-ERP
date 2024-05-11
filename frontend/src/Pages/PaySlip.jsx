@@ -12,13 +12,10 @@ import Drawer from "../Components/menu";
 import { Box } from "@mui/material";
 import axios from "axios";
 import { useReactToPrint } from "react-to-print";
-import PrintIcon from "@mui/icons-material/Print";
 import SearchIcon from "@mui/icons-material/Search";
 import InputBase from "@mui/material/InputBase";
-import IconButton from "@mui/material/IconButton";
-import AddIcon from "@mui/icons-material/Add";
-import TablePagination from "@mui/material/TablePagination";
 
+import TablePagination from "@mui/material/TablePagination";
 import { useNavigate } from "react-router-dom";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -73,21 +70,32 @@ function PaySlip() {
   const fetchPayslips = async () => {
     try {
       const response = await axios.get("http://localhost:5000/PaySlip");
-      console.log("Response Data: ", response.data); // Add this line to check your API response
-      setSlips(response.data.slip); // Change setPayslips to setSlips
+      console.log("Response Data: ", response.data); 
+      setSlips(response.data.slip);
     } catch (error) {
       console.error("Error fetching payslips:", error);
     }
   };
 
-  const handleEdit = (id) => {
-    navigate(`/PaySlip/${id}`);
+  const handleEdit = async (id) => {
+    const payslipData = await fetchPaySlipById(id);
+    printPayslip(payslipData);
   };
 
-  const handlePrintToPdf = useReactToPrint({
-    content: () => ComponentsRef.current,
-    documentTitle: "All Payslips",
-  });
+  const fetchPaySlipById = async (id) => {
+    try {
+      const response = await axios.get(`http://localhost:5000/PaySlip/${id}`);
+      return response.data.slip;
+    } catch (error) {
+      console.error("Error fetching payslip:", error);
+      return null;
+    }
+  };
+
+ const handleEditPrint = async (id) => {
+    const payslipData = await fetchPaySlipById(id);
+    printPayslipID(payslipData);
+  };
 
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
@@ -108,6 +116,99 @@ function PaySlip() {
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
+  };
+
+  const printPayslip = (payslipData) => {
+    if (payslipData) {
+      const { fullName, emp_id, basicSalary, tax, netSalary } = payslipData; 
+      const payslipContent = `
+        <div style="padding: 20px; text-align: center;">
+          <h1>Hamilton De Silva and Sons company</h1>
+          <h2>ERP system for construction company</h2>
+          <h3>Payslip</h3>
+          <p><strong>Name:</strong> ${fullName}</p>
+          <p><strong>Employee ID:</strong> ${emp_id}</p>
+          <p><strong>Basic Salary:</strong> ${basicSalary}.00</p>
+          <p><strong>Tax:</strong> ${tax}.00</p>
+          <p><strong>Net Salary:</strong> ${netSalary}.00</p>
+        </div>
+      `;
+      const newWindow = window.open('', '_blank');
+      newWindow.document.write(`
+        <html>
+          <head>
+            <title>Payslip</title>
+            <style>
+              body {
+                font-family: Arial, sans-serif;
+              }
+              h1, h2, h3 {
+                color: #1B1A55;
+              }
+              p {
+                margin: 5px 0;
+              }
+            </style>
+          </head>
+          <body>
+            ${payslipContent}
+          </body>
+        </html>
+      `);
+      newWindow.document.close();
+    }
+  };
+
+  const printPayslipID = (payslipData) => {
+    if (payslipData) {
+      const { fullName, emp_id, basicSalary, tax, netSalary } = payslipData; 
+      const payslipContent = `
+        <div style="padding: 20px; text-align: center;">
+          <h1>Hamilton De Silva and Sons company</h1>
+          <h2>ERP system for construction company</h2>
+          <h3>Payslip</h3>
+          <p><strong>Name:</strong> ${fullName}</p>
+          <p><strong>Employee ID:</strong> ${emp_id}</p>
+          <p><strong>Basic Salary:</strong> ${basicSalary}.00</p>
+          <p><strong>Tax:</strong> ${tax}.00</p>
+          <p><strong>Net Salary:</strong> ${netSalary}.00</p>
+        </div>
+      `;
+      const newWindow = window.open('', '_blank');
+      newWindow.document.write(`
+        <html>
+          <head>
+            <title>Payslip</title>
+            <style>
+              body {
+                font-family: Arial, sans-serif;
+              }
+              h1, h2, h3 {
+                color: #1B1A55;
+              }
+              p {
+                margin: 5px 0;
+              }
+            </style>
+          </head>
+          <body>
+            ${payslipContent}
+            <script>
+              window.onload = function() {
+                window.print();
+              }
+            </script>
+          </body>
+        </html>
+      `);
+      newWindow.document.close();
+    }
+  };
+  
+
+  const handleDownload = async (id) => {
+    const payslipData = await fetchPaySlipById(id);
+    printPayslip(payslipData);
   };
 
   return (
@@ -131,22 +232,7 @@ function PaySlip() {
               onChange={handleSearchChange}
               startAdornment={<SearchIcon fontSize="small" />}
             />
-            <Box>
-              <IconButton
-                color="primary"
-                aria-label="print"
-                onClick={handlePrintToPdf}
-              >
-                <PrintIcon />
-              </IconButton>
-              <IconButton
-                color="primary"
-                aria-label="Add payslip"
-                onClick={() => navigate("/")}
-              >
-                <AddIcon />
-              </IconButton>
-            </Box>
+           
           </Box>
           <TableContainer
             ref={ComponentsRef}
@@ -165,7 +251,7 @@ function PaySlip() {
             <Table
               sx={{
                 minWidth: 650,
-                width: "100%", // Adjusted width to be 100% of its container
+                width: "100%",
                 borderCollapse: "collapse",
                 borderRadius: "15px",
                 overflow: "hidden",
@@ -214,7 +300,7 @@ function PaySlip() {
                         align="center"
                         sx={{
                           display: "flex",
-                          justifyContent: "space-around", // Adjusted to evenly space the buttons
+                          justifyContent: "space-around",
                           padding: 2,
                           margin: "auto",
                         }}
@@ -223,13 +309,13 @@ function PaySlip() {
                           sx={{ padding: "10px 35px", backgroundColor:"#535C91",borderRadius:"12px" }}
                           onClick={() => handleEdit(row._id)}
                         >
-                          View
+                          View Payslip
                         </StyledButton>
                         <StyledButton
                           sx={{ padding: "10px 35px", backgroundColor:"#535C91" , borderRadius:"12px"}}
-                          onClick={() => handleEdit(row._id)}
+                          onClick={() => handleEditPrint(row._id)}
                         >
-                          Download
+                          Print
                         </StyledButton>
                       </StyledTableCell>
                     </StyledTableRow>
