@@ -61,6 +61,7 @@ export default function AttendanceMng() {
   const [selectedUserId, setSelectedUserId] = useState(null);
   const [successMessage, setSuccessMessage] = useState("");
   const [openSuccessSnackbar, setOpenSuccessSnackbar] = useState(false);
+  const [attendanceMarked, setAttendanceMarked] = useState({});
   const navigate = useNavigate();
 
   React.useEffect(() => {
@@ -91,11 +92,23 @@ export default function AttendanceMng() {
 
   //pdf print function
   const ComponentsRef = useRef();
-  const handlePrintToPdf = useReactToPrint();
+  const handlePrintToPdf = useReactToPrint({
+    content: () => ComponentsRef.current,
+  });
 
   const markAttendance = async (userId) => {
+    const currentDate = new Date().toISOString().slice(0, 10);
+    // Check if attendance has already been marked for the user today
+    if (attendanceMarked[userId] === currentDate) {
+      setSuccessMessage("You have already marked the attendance");
+      setOpenSuccessSnackbar(true);
+      return;
+    }
+    // Proceed with marking attendance
     setSelectedUserId(userId);
     setConfirmationOpen(true);
+    // Update the attendanceMarked state
+    setAttendanceMarked(prevState => ({ ...prevState, [userId]: currentDate }));
   };
 
   const handleConfirmAttendance = async () => {
@@ -152,6 +165,8 @@ export default function AttendanceMng() {
       user.user_N.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  
+
   return (
     <>
       <AppBar />
@@ -173,15 +188,7 @@ export default function AttendanceMng() {
               onChange={handleSearchChange}
               startAdornment={<SearchIcon fontSize="small" />}
             />
-            <Box>
-              <IconButton
-                color="primary"
-                aria-label="print"
-                onClick={handlePrintToPdf}
-              >
-                <PrintIcon />
-              </IconButton>
-            </Box>
+            
           </Box>
           <TableContainer ref={ComponentsRef}>
             <Table
