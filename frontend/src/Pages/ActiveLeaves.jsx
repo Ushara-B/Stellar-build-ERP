@@ -123,9 +123,18 @@ function ActiveLeaves() {
     history(`/ActiveLeaves/${id}`);
   };
 
-  const handlePrintToPdf = useReactToPrint({
+ const handlePrintToPdf = useReactToPrint({
     content: () => ComponentsRef.current,
-    documentTitle: "All Leaves",
+    documentTitle: "Leave Summary Sheet",
+    pageStyle: `@page {
+      size: A4;
+    }
+    @media print {
+      .hide-on-print {
+        display: none;
+      }
+      
+    }`,
   });
 
   const handleSearchChange = (event) => {
@@ -151,6 +160,12 @@ function ActiveLeaves() {
             .hide-on-print {
               display: none;
             }
+          }
+          .pdf-header {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
           }
         `}
       </style>
@@ -239,13 +254,13 @@ function ActiveLeaves() {
                       className="hide-on-print"
                     >
                       <StyledButton
-                        style={{padding:"10px 35px" }}
+                        style={{padding:"10px 35px", borderRadius:"12px" }}
                         onClick={() => handleEdit(leave._id)}
                       >
                         Edit
                       </StyledButton>
                       <StyledButton
-                        style={{ padding:"10px 35px", backgroundColor:"#992045" }}
+                        style={{ padding:"10px 35px", backgroundColor:"#992045" , borderRadius:"12px"}}
                         onClick={() => deleteHandler(leave._id)}
                       >
                         Delete
