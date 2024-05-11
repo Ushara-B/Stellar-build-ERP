@@ -1,5 +1,7 @@
+import React from "react";
 import AppBar from "../Components/Appbar";
 import Drawer from "../Components/menu";
+import empImage from "../images/emp.png"; // Import the emp.png image
 import "../css/EmpManagement.css";
 
 function EmpManagement() {
@@ -38,6 +40,7 @@ function EmpManagement() {
           </div>
         </section>
       </div>
+      <div className="empImage"></div>
     </div>
   );
 }
