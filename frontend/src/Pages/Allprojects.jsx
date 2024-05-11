@@ -314,7 +314,7 @@ export default function AllProjects() {
                 <TableBody>
                   {filteredProjects
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((row) => (
+                    .map((row,index) => (
                       <TableRow
                         ref={ComponentsRefsingle}
                         key={row._id}
@@ -334,7 +334,7 @@ export default function AllProjects() {
                             textAlign: "center",
                           }}
                         >
-                          {row.projectID}
+                          {index+1}
                         </TableCell>
                         <TableCell
                           sx={{
