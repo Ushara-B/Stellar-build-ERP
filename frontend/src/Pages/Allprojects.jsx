@@ -300,7 +300,7 @@ export default function AllProjects() {
                     <TableCell  sx={{backgroundColor: '#b1c5d4',fontWeight: 'bold', textAlign: 'center',border: 'none',padding: '5px 10px','&:hover': {backgroundColor: '#b1c5d4'}}}>Location</TableCell>
 
                     <TableCell  sx={{backgroundColor: '#b1c5d4',fontWeight: 'bold', textAlign: 'center',border: 'none',padding: '5px 10px','&:hover': {backgroundColor: '#b1c5d4'}}}> Owner</TableCell>
-                    <TableCell  sx={{backgroundColor: '#b1c5d4',fontWeight: 'bold', textAlign: 'center',border: 'none',padding: '5px 10px','&:hover': {backgroundColor: '#b1c5d4'}}}>Employees</TableCell>
+                    <TableCell  sx={{backgroundColor: '#b1c5d4',fontWeight: 'bold', textAlign: 'center',border: 'none',padding: '5px 10px','&:hover': {backgroundColor: '#b1c5d4'}}}>Maintainer</TableCell>
                     <TableCell  sx={{backgroundColor: '#b1c5d4',fontWeight: 'bold', textAlign: 'center',border: 'none',padding: '5px 10px','&:hover': {backgroundColor: '#b1c5d4'}}}>Status</TableCell>
                     <TableCell  sx={{backgroundColor: '#b1c5d4',fontWeight: 'bold', textAlign: 'center',border: 'none',padding: '5px 10px','&:hover': {backgroundColor: '#b1c5d4'}}}>Start Date</TableCell>
                     <TableCell  sx={{backgroundColor: '#b1c5d4',fontWeight: 'bold', textAlign: 'center',border: 'none',padding: '5px 10px','&:hover': {backgroundColor: '#b1c5d4'}}}>End Date</TableCell>
