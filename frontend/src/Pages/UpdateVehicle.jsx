@@ -104,6 +104,7 @@ function UpdateVehicle() {
                 variant="outlined"
                 fullWidth
                 required
+                placeholder='NW-RGB-1122'
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -115,7 +116,8 @@ function UpdateVehicle() {
                 variant="outlined"
                 fullWidth
                 required
-                
+                placeholder="e.g. Honda Accord"
+                helperText="Please enter the vehicle make and model" 
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -159,6 +161,14 @@ function UpdateVehicle() {
                 InputLabelProps={{
                   shrink: true,
                 }}
+                inputProps={{
+                  min: new Date().toISOString().split('T')[0], // Set the min attribute to today's date
+                  max: (() => {
+                    const nextYear = new Date();
+                    nextYear.setFullYear(nextYear.getFullYear() + 1);
+                    return nextYear.toISOString().split('T')[0]; // Set the max attribute to the date one year from now
+                  })()
+                }}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -173,6 +183,14 @@ function UpdateVehicle() {
                 required
                 InputLabelProps={{
                   shrink: true,
+                }}
+                inputProps={{
+                  min: new Date().toISOString().split('T')[0], // Set the min attribute to today's date
+                  max: (() => {
+                    const nextYear = new Date();
+                    nextYear.setFullYear(nextYear.getFullYear() + 1);
+                    return nextYear.toISOString().split('T')[0]; // Set the max attribute to the date one year from now
+                  })()
                 }}
               />
             </Grid>
@@ -189,6 +207,9 @@ function UpdateVehicle() {
                 InputLabelProps={{
                   shrink: true,
                 }}
+                inputProps={{
+                  max: new Date().toISOString().split('T')[0] // Set the max attribute to today's date
+                }}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -200,9 +221,10 @@ function UpdateVehicle() {
                 variant="outlined"
                 fullWidth
                 required
-                inputProps={{ pattern: '^\\d{1,6}(\\s?(km|KM))$' }}
-                error={!/^(\d{1,6}(\s?(km|KM)))?$/.test(inputs.mileage)}
-                helperText={!/^(\d{1,6}(\s?(km|KM)))?$/.test(inputs.mileage) ? 'Maximum 6 digits with required "km" or "KM"' : ''}
+                inputProps={{ pattern: '^\\d*\\s?(km|KM)$' }}
+                error={!/^\d*\s?(km|KM)$/.test(inputs.mileage)}
+                helperText={!/^\d*\s?(km|KM)$/.test(inputs.mileage) ? 'Please enter "km" or "KM" with optional digits before.' : ''}
+
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -214,8 +236,15 @@ function UpdateVehicle() {
                 variant="outlined"
                 fullWidth
                 required
+                inputProps={{
+                    pattern: '^[A-Za-z]{1,20}$',
+                    title: 'Please enter only letters (up to 20 characters)'
+                }}
+                error={!/^[A-Za-z]{1,20}$/.test(inputs.dname)}
+                helperText={!/^[A-Za-z]{1,20}$/.test(inputs.dname) ? 'Please enter only letters (up to 20 characters)' : ''}
               />
             </Grid>
+
             <Grid item xs={12} sm={6}>
               <TextField
                 label="Vehicle Status"
