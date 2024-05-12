@@ -13,7 +13,7 @@ import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
 function AddProject() {
   const history = useNavigate();
   const [inputs, setInputs] = useState({
-    projectID: "",
+    
     projectName: "",
     projectBudget: "",
     Locate: "",
@@ -170,17 +170,7 @@ const handleChange1 = (e) => {
             <br></br>
 
             <Grid container spacing={4} justifyContent="center">
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  label="Project ID"
-                  name="projectID"
-                  value={inputs.projectID}
-                  onChange={handleChange}
-                  variant="outlined"
-                  fullWidth
-                  required
-                />
-              </Grid>
+          
               <Grid item xs={12} sm={6}>
                 <TextField
                   label="Project Name"
@@ -228,7 +218,7 @@ const handleChange1 = (e) => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  label="Employees"
+                  label="Maintainer"
                   name="Employees"
                   value={inputs.Employees}
                   onChange={handleChange}
@@ -250,35 +240,42 @@ const handleChange1 = (e) => {
               </Grid>
 
               <Grid item xs={12} sm={6}>
-                <TextField
-                  label="Start Date"
-                  name="startDate"
-                  type="date"
-                  value={inputs.startDate}
-                  onChange={handleChange}
-                  variant="outlined"
-                  fullWidth
-                  required
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  label="End Date"
-                  name="endDate"
-                  type="date"
-                  value={inputs.endDate}
-                  onChange={handleChange}
-                  variant="outlined"
-                  fullWidth
-                  required
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                />
-              </Grid>
+  <TextField
+    label="Start Date"
+    name="startDate"
+    type="date"
+    value={inputs.startDate}
+    onChange={handleChange}
+    variant="outlined"
+    fullWidth
+    required
+    InputLabelProps={{
+      shrink: true,
+    }}
+    inputProps={{
+      min: new Date().toISOString().split('T')[0], // Set min attribute to today's date
+    }}
+  />
+</Grid>
+<Grid item xs={12} sm={6}>
+  <TextField
+    label="End Date"
+    name="endDate"
+    type="date"
+    value={inputs.endDate}
+    onChange={handleChange}
+    variant="outlined"
+    fullWidth
+    required
+    InputLabelProps={{
+      shrink: true,
+    }}
+    inputProps={{
+      min: inputs.startDate, // Set min attribute to the value of start date
+    }}
+  />
+</Grid>
+
 
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -338,7 +335,7 @@ const handleChange1 = (e) => {
                   color="primary"
                   fullWidth
                   sx={{
-                    mt: 7,
+                    mt: 0,
                     mb: 2,
                     height: "50px",
                     width: "150px",
