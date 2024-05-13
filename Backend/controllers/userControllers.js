@@ -115,7 +115,33 @@ const deleteUser = async (req, res, next) => {
 
 };
 
+const login = async (req, res) => {
+    const { usernameOrEmail, password } = req.body;
 
+    try {
+        // Find the user by user_N or email
+        const user = await User.findOne({
+            $or: [{ user_N: usernameOrEmail }, { email: usernameOrEmail }],
+        });
+
+        if (!user) {
+            return res.status(404).json({ error: "User not found" });
+        }
+
+        // Check if the password matches
+        if (user.pswrd === password) {
+            return res.status(200).json({ user });
+        } else {
+            return res.status(401).json({ error: "Incorrect password" });
+        }
+    } catch (error) {
+        console.error("Error logging in:", error);
+        return res.status(500).json({ error: "Internal server error" });
+    }
+};
+
+
+exports.login = login;
 exports.getAllUsers = getAllUsers;
 exports.addUsers = addUsers;
 exports.getById = getById;
