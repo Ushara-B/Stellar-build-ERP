@@ -232,11 +232,11 @@ function AddVehicle() {
                     fullWidth
                     required
                     inputProps={{
-                        pattern: '^[A-Za-z]{1,20}$',
-                        title: 'Please enter only letters (up to 20 characters)'
+                        pattern: '^[A-Za-z ]{1,25}$',// Allow letters and spaces
+                        title: 'Please enter only letters (up to 25 characters)'
                     }}
-                    error={!/^[A-Za-z]{1,20}$/.test(inputs.dname)}
-                    helperText={!/^[A-Za-z]{1,20}$/.test(inputs.dname) ? 'Please enter only letters (up to 20 characters)' : ''}
+                    error={!/^[A-Za-z ]{1,25}$/.test(inputs.dname)}
+                    helperText={!/^[A-Za-z ]{1,25}$/.test(inputs.dname) ? 'Please enter only letters (up to 25 characters)' : ''}
                     />
                   </Grid>
 

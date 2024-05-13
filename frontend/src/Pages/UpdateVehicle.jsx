@@ -228,21 +228,21 @@ function UpdateVehicle() {
               />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <TextField
-                label="Driver Name"
-                name="dname"
-                value={inputs.dname ? inputs.dname : ''}
-                onChange={handleChange}
-                variant="outlined"
-                fullWidth
-                required
-                inputProps={{
-                    pattern: '^[A-Za-z]{1,20}$',
-                    title: 'Please enter only letters (up to 20 characters)'
-                }}
-                error={!/^[A-Za-z]{1,20}$/.test(inputs.dname)}
-                helperText={!/^[A-Za-z]{1,20}$/.test(inputs.dname) ? 'Please enter only letters (up to 20 characters)' : ''}
-              />
+                    <TextField
+                    label="Driver Name"
+                    name="dname"
+                    value={inputs.dname ? inputs.dname : ''}
+                    onChange={handleChange}
+                    variant="outlined"
+                    fullWidth
+                    required
+                    inputProps={{
+                        pattern: '^[A-Za-z ]{1,25}$',// Allow letters and spaces
+                        title: 'Please enter only letters (up to 25 characters)'
+                    }}
+                    error={!/^[A-Za-z ]{1,25}$/.test(inputs.dname)}
+                    helperText={!/^[A-Za-z ]{1,25}$/.test(inputs.dname) ? 'Please enter only letters (up to 25 characters)' : ''}
+                    />
             </Grid>
 
             <Grid item xs={12} sm={6}>
