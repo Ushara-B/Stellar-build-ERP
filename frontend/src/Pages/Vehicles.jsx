@@ -1,22 +1,22 @@
 import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { useReactToPrint } from "react-to-print";
-import Menu from "../Components/menu";
-import AppBar from "../Components/Appbar";
-import SearchIcon from "@mui/icons-material/Search";
-import PrintIcon from "@mui/icons-material/Print";
-import AddIcon from "@mui/icons-material/Add";
-import IconButton from "@mui/material/IconButton";
-import EditIcon from "@mui/icons-material/Edit";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import DeleteIcon from "@mui/icons-material/Delete";
-import {Box,Paper,InputBase,TableContainer,Table,TableHead,TableBody,TableRow,TableCell,TablePagination,} from "@mui/material";
-
-import Breadcrumbs from "@mui/material/Breadcrumbs";
-import Typography from "@mui/material/Typography";
-import Link from "@mui/material/Link";
-import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+import { useReactToPrint } from 'react-to-print';
+import Menu from '../Components/menu';
+import AppBar from '../Components/Appbar';
+import SearchIcon from '@mui/icons-material/Search';
+import PrintIcon from '@mui/icons-material/Print';
+import AddIcon from '@mui/icons-material/Add';
+import IconButton from '@mui/material/IconButton';
+import EditIcon from '@mui/icons-material/Edit';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { Box, Paper, InputBase, TableContainer, Table, TableHead, TableBody, TableRow, TableCell, TablePagination } from '@mui/material';
+import vehicle from "../css/Vehicle.css";
+import Breadcrumbs from '@mui/material/Breadcrumbs';
+import Typography from '@mui/material/Typography';
+import Link from '@mui/material/Link';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 const URL = "http://localhost:5000/Vehicles";
 
 const fetchHandler = async () => {
@@ -106,21 +106,19 @@ function Vehicles() {
     navigate(`/addvehicle`);
   };
 
-  const deleteHandler = async (_id) => {
-    try {
-      await axios.delete(`http://localhost:5000/vehicles/${_id}`);
-      setVehicles((prevVehicles) =>
-        prevVehicles.filter((vehicle) => vehicle._id !== _id)
-      );
-    } catch (error) {
-      console.error("Error deleting vehicle:", error);
-    }
-  };
+    const deleteHandler = async (_id) => {
+        try {
+            await axios.delete(`http://localhost:5000/vehicles/${_id}`);
+            setVehicles(prevVehicles => prevVehicles.filter(vehicle => vehicle._id !== _id));
+        } catch (error) {
+            console.error("Error deleting vehicle:", error);
+        }
+    };
 
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString("en-US");
-  };
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        return date.toLocaleDateString('en-US');
+    };
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -477,47 +475,48 @@ function Vehicles() {
                             />
                           </IconButton>
 
-                          <IconButton
-                            onClick={() =>
-                              navigate(`/viewvehicle/${vehicle._id}`)
-                            }
-                          >
-                            <VisibilityIcon
-                              color="primary"
-                              aria-label="edit"
-                              sx={{
-                                "&:hover": {
-                                  color: "#00008b",
-                                },
-                                color: "",
-                              }}
-                            />
-                          </IconButton>
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </TableContainer>
-              <TablePagination
-                rowsPerPageOptions={[10, 25, 100]}
-                component="div"
-                count={vehicles.length} // Assuming vehicles is the array of data you want to paginate
-                rowsPerPage={rowsPerPage}
-                page={page}
-                onPageChange={handleChangePage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
-                sx={{
-                  borderTop: "none",
-                  padding: "12px 16px",
-                }}
-              />
-            </div>
-          )}
-          <br />
-          <br />
-        </Paper>
-      </div>
+
+                                                <IconButton onClick={() => navigate(`/viewvehicle/${vehicle._id}`)}>
+                                                    <VisibilityIcon
+                                                     color="primary"
+                                                     aria-label="edit"
+                                                     sx={{
+                                                       '&:hover': {
+                                                         color: '#00008b',
+                                                       },
+                                                       color: '',
+                                                     }}
+
+                                                     /> 
+                                                </IconButton>
+
+                                                
+                                            </TableCell>
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                           
+                        </Table>
+                    </TableContainer>
+                    <TablePagination
+                        rowsPerPageOptions={[10, 25, 100]}
+                        component="div"
+                        count={vehicles.length} // Assuming vehicles is the array of data you want to paginate
+                        rowsPerPage={rowsPerPage}
+                        page={page}
+                        onPageChange={handleChangePage}
+                        onRowsPerPageChange={handleChangeRowsPerPage}
+                        sx={{
+                            borderTop: 'none',
+                            padding: '12px 16px',
+                        }}
+                    />
+
+                </div>
+            )}
+            <br /><br />
+            </Paper>
+        </div>
     </div>
   );
 }
