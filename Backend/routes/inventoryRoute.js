@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 //insert model
-const Inventory = require("../models/inventoryModel");
+const Inventory = require("../models/InventoryModel");
 //insert Inventory controller
 const InventoryController = require("../controllers/inventoryControllers"); 
 

@@ -10,7 +10,8 @@ import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import InventoryCategory from "./InventoryCategory";
-import AddCategory from "./AddCategory";
+import AddCategory from "./InventoryCategory";
+
 import {
   Grid,
   TextField,
@@ -35,14 +36,14 @@ const style = {
 function AddInventory() {
   const history = useNavigate();
   const navigate = useNavigate();
-  const [selectedCategory, setSelectedCategory] = useState('');
-  const [categories, setCategories] = useState([]);
+  const [selectedICategory, setSelectedICategory] = useState('');
+  const [icategories, setCategories] = useState([]);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [inputs, setInputs] = useState({
     Name: "",
-    Category: "",
+    ICategory: "",
     Quantity: "",
     Value: "",
     Supplier: "",
@@ -62,7 +63,7 @@ function AddInventory() {
     await axios
       .post(`http://localhost:5000/inventories`, {
         Name: String(inputs.Name),
-        Category: String(inputs.Category),
+        ICategory: String(inputs.ICategory),
         Quantity: String(inputs.Quantity),
         Value: Number(inputs.Value),
         Supplier: String(inputs.Supplier),
@@ -73,9 +74,9 @@ function AddInventory() {
   useEffect(() => {
     // Fetch the categories when the component mounts
     axios
-      .get('http://localhost:5000/categories')
+      .get('http://localhost:5000/icategories')
       .then((res) => {
-        setCategories(res.data.Categories);
+        setCategories(res.data.ICategories);
       })
       .catch((err) => {
         console.error(err);
@@ -84,13 +85,13 @@ function AddInventory() {
   }, []);
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(inputs, selectedCategory);
+    console.log(inputs, selectedICategory);
     sendRequest().then(() => history("/viewInventoryList"));
   };
 
-  const selectedCategoryObj = categories?.find(category=> category._id === selectedCategory);
+  const selectedICategoryObj = icategories?.find(icategory=> icategory._id === selectedICategory);
 
-  const selectedCategoryName = selectedCategoryObj?.Name || 'No category selected';
+  const selectedCategoryName = selectedICategoryObj?.Name || 'No category selected';
 
   
 
@@ -163,12 +164,12 @@ function AddInventory() {
                   <InputLabel id="Category-label">Category</InputLabel>
                   <Select 
                   labelId="Category-label"
-                  value={selectedCategory}
-                  onChange={(e) => setSelectedCategory(e.target.value)}
+                  value={selectedICategory}
+                  onChange={(e) => setSelectedICategory(e.target.value)}
                 >
-                 {categories?.map(category => (
-                    <MenuItem key={category._id} value={category._id}>
-                      {category.Name}
+                 {icategories?.map(icategory => (
+                    <MenuItem key={icategory._id} value={icategory._id}>
+                      {icategory.Name}
                     </MenuItem>
                   ))}
                   </Select>
