@@ -43,9 +43,9 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     backgroundColor: theme.palette.action.hover,
   },
   "&:hover": {
-    backgroundColor: "#DEDEDE", 
-    transition: "background-color 0.3s, color 0.3s", 
-    cursor: "pointer", 
+    backgroundColor: "#DEDEDE",
+    transition: "background-color 0.3s, color 0.3s",
+    cursor: "pointer",
   },
 }));
 
@@ -123,9 +123,18 @@ function ActiveLeaves() {
     history(`/ActiveLeaves/${id}`);
   };
 
-  const handlePrintToPdf = useReactToPrint({
+ const handlePrintToPdf = useReactToPrint({
     content: () => ComponentsRef.current,
-    documentTitle: "All Leaves",
+    documentTitle: "Leave Summary Sheet",
+    pageStyle: `@page {
+      size: A4;
+    }
+    @media print {
+      .hide-on-print {
+        display: none;
+      }
+      
+    }`,
   });
 
   const handleSearchChange = (event) => {
@@ -145,6 +154,21 @@ function ActiveLeaves() {
 
   return (
     <>
+      <style>
+        {`
+          @media print {
+            .hide-on-print {
+              display: none;
+            }
+          }
+          .pdf-header {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+          }
+        `}
+      </style>
       <AppBar />
       <Drawer />
       <div style={{ marginLeft: '260px', paddingTop: '100px' }}>
@@ -207,7 +231,7 @@ function ActiveLeaves() {
                   <StyledTableCell align="center">Date</StyledTableCell>
                   <StyledTableCell align="center">Type</StyledTableCell>
                   <StyledTableCell align="center">Reason</StyledTableCell>
-                  <StyledTableCell align="center" sx={{ width:"30%"}}>Actions</StyledTableCell>
+                  <StyledTableCell align="center" className="hide-on-print">Actions</StyledTableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -227,21 +251,16 @@ function ActiveLeaves() {
                     </StyledTableCell>
                     <StyledTableCell
                       align="right"
-                      sx={{
-                        display: "flex",
-                        justifyContent: "space-around", // Adjusted to evenly space the buttons
-                        padding: 2,
-                        margin:"auto"
-                      }}
+                      className="hide-on-print"
                     >
                       <StyledButton
-                        style={{padding:"10px 35px" }}
+                        style={{padding:"10px 35px", borderRadius:"12px" }}
                         onClick={() => handleEdit(leave._id)}
                       >
                         Edit
                       </StyledButton>
                       <StyledButton
-                        style={{ padding:"10px 35px", backgroundColor:"#992045" }}
+                        style={{ padding:"10px 35px", backgroundColor:"#992045" , borderRadius:"12px"}}
                         onClick={() => deleteHandler(leave._id)}
                       >
                         Delete

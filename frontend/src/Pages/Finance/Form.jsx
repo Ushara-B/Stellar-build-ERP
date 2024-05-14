@@ -28,6 +28,7 @@ function Form() {
 
     const [projects, setProjects] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [successMessage, setSuccessMessage] = useState('');
  
 
     useEffect(() => {
@@ -48,18 +49,23 @@ function Form() {
 
   
 
-    const handleSubmit = e => {
-        e.preventDefault()
-        addIncome(inputState)
-        setInputState({
-            title: '',
-            amount: '',
-            date: '',
-            category: '',
-            project: '',
-            description: '',
-        })
-    }
+    const handleSubmit = async e => {
+        e.preventDefault();
+        try {
+            await addIncome(inputState);
+            setInputState({
+                title: '',
+                amount: '',
+                date: '',
+                category: '',
+                project: '',
+                description: '',
+            });
+            alert("Income Updated Successfully");
+        } catch (error) {
+            console.error('Error adding income:', error);
+        }
+    };
 
     return (
         <FormStyled onSubmit={handleSubmit}>
@@ -77,7 +83,7 @@ function Form() {
                     type="text" 
                     value={title}
                     name={'title'} 
-                    placeholder="Salary Title"
+                    placeholder="Title"
                     onChange={handleInput('title')}
                 />
             </div>
@@ -85,7 +91,7 @@ function Form() {
                 <input value={amount}  
                     type="text" 
                     name={'amount'} 
-                    placeholder={'Salary Amount'}
+                    placeholder={' Amount'}
                     onChange={handleInput('amount')} 
                 />
             </div>

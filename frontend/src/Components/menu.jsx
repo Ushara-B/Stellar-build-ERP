@@ -91,6 +91,8 @@ export default function NestedList() {
     window.location.href = '/allusers';
     }else if (menuName === 'User Management' && subMenuName === 'Add users'){
     window.location.href = '/adduser';
+  }else if (menuName === 'Employee Management' && subMenuName === 'PaySlip'){
+    window.location.href = '/PaySlip';
 
     }else if (menuName === 'Financial' && subMenuName === 'Financial Dashboard'){
     window.location.href = '/finance';

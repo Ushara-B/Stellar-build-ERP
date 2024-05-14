@@ -48,7 +48,7 @@ function Updateprojects() {
         console.log(inputs);
       
         const requestData = {
-          projectID: String(inputs.projectID),
+         
           projectName: String(inputs.projectName),
           projectBudget: Number(inputs.projectBudget),
           Locate: String(inputs.Locate),
@@ -110,17 +110,7 @@ function Updateprojects() {
             <br></br>
 
             <Grid container spacing={4} justifyContent="center">
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  label="Project ID"
-                  name="projectID"
-                  value={inputs.projectID}
-                  onChange={handleChange}
-                  variant="outlined"
-                  fullWidth
-                  required
-                />
-              </Grid>
+             
               <Grid item xs={12} sm={6}>
                 <TextField
                   label="Project Name"
@@ -168,7 +158,7 @@ function Updateprojects() {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  label="Employees"
+                  label="Maintainer"
                   name="Employees"
                   value={inputs.Employees}
                   onChange={handleChange}
