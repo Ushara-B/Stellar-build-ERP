@@ -95,6 +95,8 @@ export default function NestedList() {
       window.location.href = '/loan-management/addloans';
     }else if (menuName === 'Loans Management' && subMenuName === 'View loans'){
       window.location.href = '/loan-management';
+  }else if (menuName === 'Employee Management' && subMenuName === 'PaySlip'){
+    window.location.href = '/PaySlip';
 
     }else if (menuName === 'Financial' && subMenuName === 'Financial Dashboard'){
     window.location.href = '/finance';

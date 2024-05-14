@@ -160,9 +160,10 @@ const Income = () => {
               />
               </div>
             </Box>
-            <Button onClick={handlePrint}>Download Report</Button>
+           
           </main>
-        </div>  
+        </div>
+        <Button onClick={handlePrint}>Download Report</Button>  
       </MainLayout>
     </IncomeStyled>
   );

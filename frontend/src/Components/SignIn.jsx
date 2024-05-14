@@ -13,11 +13,17 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import loginimg from '../Assets/loginimg.png';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 const defaultTheme = createTheme();
 
 export default function SignIn() {
   const navigate = useNavigate();
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [user, setUser] = useState(null);
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -27,34 +33,51 @@ export default function SignIn() {
       password: data.get('password'),
     };
 
+    setLoading(true);
+    setError('');
+
     try {
       const response = await axios.post('http://localhost:5000/users/login', credentials);
 
       if (response.status === 200) {
-        const user = response.data.user;
+        const { user, token } = response.data;
 
-        // Check if the provided credentials match the user_N or email
-        if (
-          user.user_N === credentials.usernameOrEmail ||
-          user.email === credentials.usernameOrEmail
-        ) {
-          // Check if the provided password matches the user's password
-          if (user.pswrd === credentials.password) {
-            // Credentials are valid, redirect to the dashboard
-            navigate('/dashboard');
-          } else {
-            alert('Incorrect password');
-          }
-        } else {
-          alert('Invalid username or email');
-        }
+        // Store the JWT token in localStorage
+        localStorage.setItem('token', token);
+
+        // Set the user state with the logged-in user's data
+        setUser(user);
+
+        // Reset the form fields
+        setUsername('');
+        setPassword('');
+
+        // Redirect to the dashboard
+        navigate('/dashboard');
       } else {
-        alert('Invalid credentials');
+        setError('Invalid credentials');
       }
     } catch (error) {
       console.error('Error logging in:', error);
-      alert('An error occurred while logging in. Please try again.');
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        setError(error.response.data.error || 'An error occurred while logging in. Please try again.');
+      } else if (error.request) {
+        // The request was made but no response was received
+        setError('No response received from the server. Please check your internet connection.');
+      } else {
+        // Something else happened while setting up the request
+        setError('An error occurred while logging in. Please try again.');
+      }
+    } finally {
+      setLoading(false);
     }
+  };
+
+  const handleLogout = () => {
+    // Remove the JWT token from localStorage
+    localStorage.removeItem('token');
+    setUser(null);
   };
 
   return (
@@ -167,6 +190,7 @@ export default function SignIn() {
           }}
         />
       </Grid>
+      
     </ThemeProvider>
   );
 }

@@ -48,18 +48,24 @@ function Form() {
 
   
 
-    const handleSubmit = e => {
-        e.preventDefault()
-        addExpense(inputState)
-        setInputState({
-            title: '',
-            amount: '',
-            date: '',
-            category: '',
-            project: '',
-            description: '',
-        })
-    }
+    const handleSubmit = async e => {
+        e.preventDefault();
+        try {
+            await addExpense(inputState);
+            setInputState({
+                title: '',
+                amount: '',
+                date: '',
+                category: '',
+                project: '',
+                description: '',
+            });
+            alert("Expense Updated Successfully");
+        } catch (error) {
+            console.error('Error adding Expense:', error);
+        }
+    };
+
 
     return (
         <FormStyled onSubmit={handleSubmit}>

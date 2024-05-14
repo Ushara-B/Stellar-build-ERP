@@ -32,8 +32,10 @@ const OutlinedCard = ({project ,getTotalIncome,getTotalExpense,getTotalBalance }
       <Typography variant="h5">
         Incomes: {getTotalIncome(project.projectName)}
         <br />
-        Incomes: {getTotalExpense(project.projectName)}
+        Expenses: {getTotalExpense(project.projectName)}
         <br />
+        <br/>
+        Total Balance: {getTotalBalance(project.projectName)}
       </Typography>
     </CardContent>
     <CardActions>
