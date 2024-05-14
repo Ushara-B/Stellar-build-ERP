@@ -115,20 +115,20 @@ function Form() {
                 <option  className="history-item" key={project._id}>{project.projectName}</option>
           // Replace 'id' and 'name' with your actual project properties
                  ))}
-                  
+                  <option value="other" >Other</option>
                 </select>
             </div> 
             <div className="selects input-control">
                 <select required value={category} name="category" id="category" onChange={handleInput('category')}>
                     <option value=""  disabled >Select Category</option>
-                    <option value="salary">Salary</option>
-                    <option value="freelancing">Freelancing</option>
-                    <option value="investments">Investiments</option>
-                    <option value="stocks">Stocks</option>
-                    <option value="bitcoin">Bitcoin</option>
-                    <option value="bank">Bank Transfer</option>  
-                    <option value="youtube">Youtube</option>  
-                    <option value="other">Other</option>  
+                    <option value="Revenue">Contract Revenue</option>
+                    <option value="Consulting">Consulting Fees</option>
+                    <option value="Maintenance">Maintenance and Service Contracts</option>
+                    <option value="Design">Design-Build Revenue</option>
+                    <option value="Equipment">Equipment Rental Income</option>
+                    <option value="Miscellaneous">Miscellaneous Income</option>  
+                    <option value="Interest">Interest</option>  
+                    
                 </select>
             </div>
             <div className="input-control">

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components'
-import { Box, Typography, Avatar, Button } from '@mui/material';
+import { Box, Typography, Avatar, Button,TextField } from '@mui/material';
 import { DataGrid, gridClasses } from '@mui/x-data-grid';
 import { useGlobalContext } from '../../Context/globalContext'; 
 import moment from 'moment';    
@@ -21,12 +21,29 @@ const Expense = () => {
   const [pageSize, setPageSize] = useState(5);
   const [selectedRowId, setSelectedRowId] = useState(null);
   const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filteredExpenses, setFilteredExpenses] = useState([]);
   const componentRef = useRef(); // Reference to the component you want to print
   const handlePrint = useReactToPrint({ content: () => componentRef.current }); // Function to handle printing
 
   useEffect(() => {
     getExpenses();
   }, []);
+
+  useEffect(() => {
+    const filteredData = expenses.filter((expense) =>
+      Object.values(expense).some((field) =>
+        field.toString().toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    );
+    setFilteredExpenses(filteredData);
+  }, [expenses, searchQuery]);
+
+  const handleSearch = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  
 
   const columns = [
     {
@@ -131,11 +148,18 @@ const Expense = () => {
               <span style={addIncomeStyle}> Add Expense</span>
 
               </Typography>
+              <TextField
+                  label="Search"
+                  variant="outlined"
+                  value={searchQuery}
+                  onChange={handleSearch}
+                  sx={{ width: '300px', ml:130 }}
+                />
             </Box>
             <div ref={componentRef}> {/* Reference the component you want to print */}
               <DataGrid
                 columns={columns}
-                rows={expenses}
+                rows={filteredExpenses}
                 getRowId={(row) => row._id}
                 rowsPerPageOptions={[5, 10, 20]}
                 pageSize={pageSize}
