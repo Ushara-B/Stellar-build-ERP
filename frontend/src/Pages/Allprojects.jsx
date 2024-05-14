@@ -10,6 +10,8 @@ import AddIcon from "@mui/icons-material/Add";
 import IconButton from "@mui/material/IconButton";
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { useSearchParams } from "react-router-dom";
 import {
   Box,
@@ -193,8 +195,10 @@ export default function AllProjects() {
               setProjects((prevProjects) =>
                 prevProjects.filter((project) => project._id !== _id)
               );
+              toast.success("Project deleted successfully!"); // Add this line
             } catch (error) {
               console.error("Error deleting project:", error);
+              toast.error("An error occurred while deleting the project."); // Add this line
             }
           },
         },
@@ -722,6 +726,17 @@ export default function AllProjects() {
           </Paper>
         </Box>
       </div>
+      <ToastContainer
+      position="top-right"
+      autoClose={3000}
+      hideProgressBar={false}
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+    />
     </>
   );
 }
