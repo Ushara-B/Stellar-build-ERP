@@ -13,20 +13,18 @@ import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
 function AddProject() {
   const history = useNavigate();
   const [inputs, setInputs] = useState({
-    projectID: "",
     projectName: "",
     projectBudget: "",
     Locate: "",
     contractor: "",
-    Employees: "",
+    Employees: [],
     Status: "",
     startDate: "",
     endDate: "",
     projectType: "",
     description: "",
   });
- // const [nextProjectId, setNextProjectId] = useState(null);
-
+  // const [nextProjectId, setNextProjectId] = useState(null);
 
   /*useEffect(() => {
     fetchNextProjectId();
@@ -40,6 +38,37 @@ function AddProject() {
       console.error('Error fetching next project ID:', error);
     }
   };*/
+  const [employers, setEmployers] = useState([]);
+
+  useEffect(() => {
+    fetchEmployers();
+  }, []);
+
+  const fetchEmployers = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:5000/users?role=Employer"
+      );
+      setEmployers(response.data.Users);
+    } catch (error) {
+      console.error("Error fetching employers:", error);
+    }
+  };
+
+  const handleChange1 = (e) => {
+    const { name, value } = e.target;
+    if (name === "Employees") {
+      setInputs((prevState) => ({
+        ...prevState,
+        [name]: typeof value === "string" ? value.split(",") : value,
+      }));
+    } else {
+      setInputs((prevState) => ({
+        ...prevState,
+        [name]: value,
+      }));
+    }
+  };
 
   const handleChange = (e) => {
     setInputs((prevState) => ({
@@ -50,16 +79,17 @@ function AddProject() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(inputs/*, projectID: nextProjectId*/ );
-    sendRequest().then(() => history('/allprojects'));
+    console.log(inputs /*, projectID: nextProjectId*/);
+    sendRequest().then(() => history("/allprojects"));
   };
   const sendRequest = async () => {
     await axios
       .post("http://localhost:5000/projects", {
         ...inputs,
-       // projectID: nextProjectId,
+        // projectID: nextProjectId,
         startDate: new Date(inputs.startDate).toISOString(),
         endDate: new Date(inputs.endDate).toISOString(),
+        Employees: inputs.Employees,
       })
       .then((res) => res.data);
   };
@@ -143,17 +173,6 @@ function AddProject() {
             <Grid container spacing={4} justifyContent="center">
               <Grid item xs={12} sm={6}>
                 <TextField
-                  label="Project ID"
-                  name="projectID"
-                  value={inputs.projectID}
-                  onChange={handleChange}
-                  variant="outlined"
-                  fullWidth
-                  required
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
                   label="Project Name"
                   name="projectName"
                   value={inputs.projectName}
@@ -176,7 +195,7 @@ function AddProject() {
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
-              <TextField  //GoogleMapComponent
+                <TextField //GoogleMapComponent
                   label="Location"
                   name="Locate"
                   value={inputs.Locate}
@@ -199,14 +218,25 @@ function AddProject() {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  label="Employees"
+                  label="Maintainer"
                   name="Employees"
                   value={inputs.Employees}
                   onChange={handleChange}
                   variant="outlined"
                   fullWidth
                   required
-                />
+                  select
+                  multiple
+                >
+                  {employers.map((employer) => (
+                    <MenuItem
+                      key={employer._id}
+                      value={`${employer.f_Name} ${employer.l_Name}`}
+                    >
+                      {`${employer.f_Name} ${employer.l_Name} (${employer.user_N})`}
+                    </MenuItem>
+                  ))}
+                </TextField>
               </Grid>
 
               <Grid item xs={12} sm={6}>
@@ -222,6 +252,9 @@ function AddProject() {
                   InputLabelProps={{
                     shrink: true,
                   }}
+                  inputProps={{
+                    min: new Date().toISOString().split("T")[0], // Set min attribute to today's date
+                  }}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -236,6 +269,9 @@ function AddProject() {
                   required
                   InputLabelProps={{
                     shrink: true,
+                  }}
+                  inputProps={{
+                    min: inputs.startDate, // Set min attribute to the value of start date
                   }}
                 />
               </Grid>
@@ -298,7 +334,7 @@ function AddProject() {
                   color="primary"
                   fullWidth
                   sx={{
-                    mt: 7,
+                    mt: 0,
                     mb: 2,
                     height: "50px",
                     width: "150px",

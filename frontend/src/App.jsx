@@ -235,6 +235,7 @@ function App() {
           <Route path="/add-supplier" element={<AddSupplier />} />
           <Route path="/supplier-details" element={<SupplierDetails />} />
           <Route path="/updatesuplier/:id" element={<SupplierUpdateDetails/>} />
+          
 
         </Routes>
       </BrowserRouter>
