@@ -8,7 +8,20 @@ import PrintIcon from "@mui/icons-material/Print";
 import AddIcon from "@mui/icons-material/Add";
 import IconButton from "@mui/material/IconButton";
 import { Box, Paper, Typography, Button } from "@mui/material";
-import { Doughnut } from "react-chartjs-2";
+import { Doughnut, Bar } from "react-chartjs-2"; // Import Bar chart from react-chartjs-2
+import Chart from "chart.js/auto";
+import {
+  
+  
+  TableContainer,
+  Table,
+  TableHead,
+  TableBody,
+  TableRow,
+  
+  TableCell,
+  
+} from "@mui/material";
 
 const URL = "http://localhost:5000/projects";
 
@@ -25,11 +38,15 @@ function ProjectDashboard() {
   const [soonToEndProjects, setSoonToEndProjects] = useState([]);
   const navigate = useNavigate();
   const ComponentsRef = useRef();
+  const [maintainerProjects, setMaintainerProjects] = useState({});
 
   useEffect(() => {
     fetchHandler().then((data) => {
       setProjects(data.project);
       setTotalProjects(data.project.length);
+
+      
+  
 
       // Calculate project categories
       const categories = {};
@@ -46,6 +63,8 @@ function ProjectDashboard() {
         return startDate <= currentDate;
       }).length;
       setStartProjects(startProjects);
+
+      
 
       // Calculate end projects
       const endProjects = data.project.filter((project) => {
@@ -66,6 +85,26 @@ function ProjectDashboard() {
     });
   }, []);
 
+  useEffect(() => {
+    fetchHandler().then((data) => {
+      setProjects(data.project);
+      setTotalProjects(data.project.length);
+  
+      // ... (existing code)
+  
+      // Group projects by maintainers
+      const maintainerProjects = {};
+      data.project.forEach((project) => {
+        const maintainer = project.Employees;
+        if (!maintainerProjects[maintainer]) {
+          maintainerProjects[maintainer] = [];
+        }
+        maintainerProjects[maintainer].push(project);
+      });
+      setMaintainerProjects(maintainerProjects);
+    });
+  }, []);
+
   const handlePrint = useReactToPrint({
     content: () => ComponentsRef.current,
     documentTitle: "Project Dashboard",
@@ -78,6 +117,54 @@ function ProjectDashboard() {
   };
   const handleAddClick = () => {
     navigate(`/Newprojects`);
+  };
+  
+ 
+
+  const calculateMilestoneProgress = (project) => {
+    const startDate = new Date(project.startDate);
+    const endDate = new Date(project.endDate);
+    const currentDate = new Date();
+  
+    if (currentDate < startDate) {
+      return 0; // Project hasn't started yet
+    } else if (currentDate >= endDate) {
+      return 100; // Project is completed
+    } else {
+      const totalDays = (endDate - startDate) / (1000 * 60 * 60 * 24);
+      const elapsedDays = (currentDate - startDate) / (1000 * 60 * 60 * 24);
+      const progress = (elapsedDays / totalDays) * 100;
+      return Math.round(progress);
+    }
+  };
+
+  const milestoneChartData = {
+    labels: projects.map((project) => project.projectName), // Use project names as labels
+    datasets: [
+      {
+        label: "Project Milestone Progress",
+        data: projects.map((project) => calculateMilestoneProgress(project)), // Use milestone progress values
+        backgroundColor: "rgba(75, 192, 192, 0.6)",
+        borderWidth: 1,
+      },
+    ],
+  };
+  const barChartOptions = {
+    maintainAspectRatio: false, // Set this to false to control the chart size manually
+    responsive: true,
+    scales: {
+      x: {
+        ticks: {
+          autoSkip: false, // Set to false to show all x-axis labels
+        },
+      },
+    },
+    plugins: {
+      legend: {
+        display: true, // Show the legend
+        position: "bottom", // Position of the legend
+      },
+    },
   };
 
   const projectTypeData = {
@@ -98,6 +185,8 @@ function ProjectDashboard() {
       },
     ],
   };
+
+
 
   return (
     <div
@@ -178,7 +267,7 @@ function ProjectDashboard() {
         >
           <div>
             <Paper sx={{ p: 2, m: 2, flexGrow: 1, minWidth: 50 }}>
-              <h2>Project Categories</h2>
+              <h2 style={{ textAlign: "center" }}>Project Categories</h2>
               {Object.entries(projectCategories).map(
                 ([category, count], index) =>
                   `${category}: ${count}${
@@ -191,34 +280,13 @@ function ProjectDashboard() {
             </Paper>
           </div>
           <div>
-            <Paper sx={{ p: 2, m: 2, flexGrow: 1, minWidth: 50 }}>
-              <h2>Project Categories</h2>
-              {Object.entries(projectCategories).map(
-                ([category, count], index) =>
-                  `${category}: ${count}${
-                    index === Object.keys(projectCategories).length - 1
-                      ? ""
-                      : "| "
-                  }`
-              )}
-              <Doughnut data={projectTypeData} />
-            </Paper>
-          </div>
-
-          <div>
-            <Paper sx={{ p: 2, m: 2, flexGrow: 1, minWidth: 50 }}>
-              <h2>Project Categories</h2>
-              {Object.entries(projectCategories).map(
-                ([category, count], index) =>
-                  `${category}: ${count}${
-                    index === Object.keys(projectCategories).length - 1
-                      ? ""
-                      : "| "
-                  }`
-              )}
-              <Doughnut data={projectTypeData} />
-            </Paper>
-          </div>
+  <Paper sx={{ p: 2, m: 2, flexGrow: 1, minWidth: 50 }}>
+    <h2 style={{ textAlign: "center" }}>Project Milestone Progress</h2>
+    <div style={{ height: "477px", width: "700px" }}>
+      <Bar data={milestoneChartData} options={barChartOptions} />
+    </div>
+  </Paper>
+</div>
         </div>
         <div
           style={{ display: "flex", justifyContent: "start" }}
@@ -229,24 +297,43 @@ function ProjectDashboard() {
               <h2>Soon-to-End Projects</h2>
               {soonToEndProjects.map((project) => (
                 <Typography key={project._id}>
-                  - {project.projectName}: Ending on{" "}
+                  {project.projectName} : Ending on{" "}
                   {formatDate(project.endDate)}
                 </Typography>
               ))}
             </Paper>
           </div>
           <div>
-            <Paper sx={{ p: 2, m: 2, flexGrow: 1, minWidth: 50 }}>
-              <h2>Soon-to-End Projects</h2>
-              {soonToEndProjects.map((project) => (
-                <Typography key={project._id}>
-                  - {project.projectName}: Ending on{" "}
-                  {formatDate(project.endDate)}
-                </Typography>
+          <Paper sx={{ p: 2, m: 2, flexGrow: 1, minWidth: 50 }}>
+  <h2 style={{ textAlign: "center" }}>Maintainers and Their Projects</h2>
+  <TableContainer>
+    <Table>
+      <TableHead>
+        <TableRow>
+          {Object.keys(maintainerProjects).map((maintainer) => (
+            <TableCell key={maintainer} align="center">
+              {maintainer}
+            </TableCell>
+          ))}
+        </TableRow>
+      </TableHead>
+      <TableBody>
+        <TableRow>
+          {Object.entries(maintainerProjects).map(([maintainer, projects]) => (
+            <TableCell key={maintainer}>
+              {projects.map((project) => (
+                <Typography key={project._id}> {project.projectName}</Typography>
               ))}
-            </Paper>
-          </div>
+            </TableCell>
+          ))}
+        </TableRow>
+      </TableBody>
+    </Table>
+  </TableContainer>
+</Paper>
+  </div>
         </div>
+        
         <div
           style={{
             position: "absolute",
