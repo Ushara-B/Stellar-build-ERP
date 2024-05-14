@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components'
-import { Box, Typography, Avatar,Button } from '@mui/material';
+import { Box, Typography, Avatar,Button,TextField } from '@mui/material';
 import { DataGrid, gridClasses } from '@mui/x-data-grid';
 import { useGlobalContext } from '../../Context/globalContext'; 
 import moment from 'moment';    
@@ -21,6 +21,8 @@ const Income = () => {
   const [pageSize, setPageSize] = useState(5);
   const [selectedRowId, setSelectedRowId] = useState(null);
   const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filteredIncomes, setFilteredIncomes] = useState([]);
   const componentRef = useRef(); // Reference to the component you want to print
   const handlePrint = useReactToPrint({ content: () => componentRef.current }); 
 
@@ -28,6 +30,20 @@ const Income = () => {
     getIncomes();
   }, []);
 
+  useEffect(() => {
+    const filteredData = incomes.filter((income) =>
+      Object.values(income).some((field) =>
+        field.toString().toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    );
+    setFilteredIncomes(filteredData);
+  }, [incomes, searchQuery]);
+
+  const handleSearch = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  
   
   const columns = [
     {
@@ -129,11 +145,18 @@ const Income = () => {
                 <Typography variant="h6" component="h6" sx={{ textAlign: 'center', mb: 3, }} onClick={() => navigate('/finance/incomeform')}>
                   <span style={addIncomeStyle}> Add Income</span>
                 </Typography>
+                <TextField
+                  label="Search"
+                  variant="outlined"
+                  value={searchQuery}
+                  onChange={handleSearch}
+                  sx={{ width: '300px', ml:130 }}
+                />
               </Box>
               <div ref={componentRef}>
               <DataGrid
                 columns={columns}
-                rows={incomes}
+                rows={filteredIncomes}
                 getRowId={(row) => row._id}
                 rowsPerPageOptions={[5, 10, 20]}
                 pageSize={pageSize}
@@ -160,11 +183,12 @@ const Income = () => {
               />
               </div>
             </Box>
-           
+            <Button onClick={handlePrint}>Download Report</Button> {/* Button to trigger printing */}
           </main>
         </div>
-        <Button onClick={handlePrint}>Download Report</Button>  
+         
       </MainLayout>
+      
     </IncomeStyled>
   );
 };
