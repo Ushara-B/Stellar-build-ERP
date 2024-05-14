@@ -5,9 +5,15 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { makeStyles } from "@material-ui/core/styles";
-import { CircularProgress, Paper, Container,Link,Breadcrumbs } from "@material-ui/core";
-import Menu from '../../menu';
-import AppBar from '../../Appbar';
+import {
+  CircularProgress,
+  Paper,
+  Container,
+  Link,
+  Breadcrumbs,
+} from "@material-ui/core";
+import Menu from "../../menu";
+import AppBar from "../../Appbar";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 
 /*const useStyles = makeStyles((theme) => ({
@@ -62,7 +68,6 @@ import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 }));*/
 
 function AddClient() {
-  
   const navigate = useNavigate();
   const [inputs, setInputs] = useState({
     name: "",
@@ -116,137 +121,148 @@ function AddClient() {
   };
 
   return (
-
     <div>
-    <AppBar />
-        <Menu/>
+      <AppBar />
+      <Menu />
 
-    <div style={{ marginLeft: '255px', paddingTop: '80px' }}>'
-    <Breadcrumbs
-            arial-label="breadcrumb"
-            separator={<NavigateNextIcon fontSize="small" />}
+      <div style={{ marginLeft: "255px", paddingTop: "80px" }}>
+        '
+        <Breadcrumbs
+          arial-label="breadcrumb"
+          separator={<NavigateNextIcon fontSize="small" />}
+        >
+          <Link
+            style={{ marginLeft: "20px" }}
+            underline="hover"
+            key="1"
+            color="inherit"
+            href="/contact"
           >
-            <Link style={{ marginLeft: "20px" }} underline="hover" key="1" color="inherit" href="/contact">
-              Home
-            </Link>
-            <Typography key="3" color="text.primary">
-              All Suppliers
+            Home
+          </Link>
+          <Typography key="3" color="text.primary">
+            All Suppliers
+          </Typography>
+        </Breadcrumbs>
+        <br />
+        <Container maxWidth="sm">
+          {/* Centers the form */}
+          <Paper elevation={3} style={{ padding: 20, marginBottom: 20 }}>
+            {/* Adds border */}
+            <Typography variant="h4" gutterBottom align="center">
+              Add Client
             </Typography>
-          </Breadcrumbs>
-          <br/>
-    <Container maxWidth="sm">
-    
-      {/* Centers the form */}
-      <Paper elevation={3} style={{ padding: 20, marginBottom: 20 }}>
-      
-        {/* Adds border */}
-        <Typography variant="h4" gutterBottom align="center">
-          Add Client
-        </Typography>
-        <form onSubmit={handleSubmit}>
-          {/* Input fields for client information */}
-          <br />
-          <TextField
-            label="Name"
-            name="name"
-            value={inputs.name}
-            onChange={handleChange}
-            fullWidth
-            required
-          />
-          <br />
-          <br/>
-          <TextField
-            label="Business Name"
-            name="bname"
-            value={inputs.bname}
-            onChange={handleChange}
-            fullWidth
-            required
-          />
-          <br />
-          <br/>
-          <TextField
-            type="email"
-            label="Email"
-            name="email"
-            value={inputs.email}
-            onChange={handleChange}
-            fullWidth
-            required
-          />
-          <br />
-          <br/>
-          <TextField
-            label="Contact"
-            name="contact"
-            value={inputs.contact}
-            onChange={handleChange}
-            fullWidth
-            required
-          />
-          <br />
-          <br />
-          <TextField
-            label="Address"
-            name="address"
-            value={inputs.address}
-            onChange={handleChange}
-            fullWidth
-            required
-          />
-          <br />
-          <br />
-          <TextField
-            type="number"
-            label="Tax"
-            name="tax"
-            value={inputs.tax}
-            onChange={handleChange}
-            fullWidth
-            required
-          />
-          <br />
-          <br />
-          <TextField
-            label="Recent Project"
-            name="rproject"
-            value={inputs.rproject}
-            onChange={handleChange}
-            fullWidth
-            required
-          />
-          <br />
-          <br />
-          <TextField
-            label="Current Project"
-            name="cproject"
-            value={inputs.cproject}
-            onChange={handleChange}
-            fullWidth
-            required
-          />
-          <br />
-          <br />
-          <TextField
-            type="number"
-            label="Total"
-            name="total"
-            value={inputs.total}
-            onChange={handleChange}
-            fullWidth
-            required
-          />
+            <form onSubmit={handleSubmit}>
+              {/* Input fields for client information */}
+              <br />
+              <TextField
+                label="Name"
+                name="name"
+                value={inputs.name}
+                onChange={handleChange}
+                fullWidth
+                required
+              />
+              <br />
+              <br />
+              <TextField
+                label="Business Name"
+                name="bname"
+                value={inputs.bname}
+                onChange={handleChange}
+                fullWidth
+                required
+              />
+              <br />
+              <br />
+              <TextField
+                type="email"
+                label="Email"
+                name="email"
+                value={inputs.email}
+                onChange={handleChange}
+                fullWidth
+                required
+              />
+              <br />
+              <br />
+              <TextField
+                label="Contact"
+                name="contact"
+                value={inputs.contact}
+                onChange={handleChange}
+                fullWidth
+                required
+                InputProps={{
+                  inputProps: {
+                    pattern: "^[0-9]{10}$", // Regex for 10-digit phone number
+                    title: "Please enter a valid 10-digit phone number",
+                  },
+                }}
+              />
 
-          <div style={{ textAlign: "center", margin: "25px 0" }}>
-            <Button type="submit" variant="contained" color="primary">
-            AddClient
-            </Button>
-          </div>
-        </form>
-      </Paper>
-    </Container>
-    </div>
+              <br />
+              <br />
+              <TextField
+                label="Address"
+                name="address"
+                value={inputs.address}
+                onChange={handleChange}
+                fullWidth
+                required
+              />
+              <br />
+              <br />
+              <TextField
+                type="number"
+                label="Tax"
+                name="tax"
+                value={inputs.tax}
+                onChange={handleChange}
+                fullWidth
+                required
+              />
+              <br />
+              <br />
+              <TextField
+                label="Recent Project"
+                name="rproject"
+                value={inputs.rproject}
+                onChange={handleChange}
+                fullWidth
+                required
+              />
+              <br />
+              <br />
+              <TextField
+                label="Current Project"
+                name="cproject"
+                value={inputs.cproject}
+                onChange={handleChange}
+                fullWidth
+                required
+              />
+              <br />
+              <br />
+              <TextField
+                type="number"
+                label="Total"
+                name="total"
+                value={inputs.total}
+                onChange={handleChange}
+                fullWidth
+                required
+              />
+
+              <div style={{ textAlign: "center", margin: "25px 0" }}>
+                <Button type="submit" variant="contained" color="primary">
+                  AddClient
+                </Button>
+              </div>
+            </form>
+          </Paper>
+        </Container>
+      </div>
     </div>
   );
 }
