@@ -105,6 +105,7 @@ const ProjectStyled = styled.div`
         display: flex;
         flex-direction: column;
         gap: 3rem;
+        
     }
 
     .income{
