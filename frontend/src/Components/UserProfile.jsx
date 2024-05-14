@@ -1,17 +1,33 @@
-// UserProfile.jsx
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { UserContext } from '../Context/UserContext';
-import { useNavigate } from 'react-router-dom';
+import { Typography, Box, Grid, IconButton, TextField, Button, CircularProgress, InputAdornment, Avatar, Paper } from '@mui/material';
+import { Edit, Save, Cancel } from '@mui/icons-material';
 import axios from 'axios';
-import { Typography, Box, Grid, CircularProgress, Button, TextField, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
+
+const labelMap = {
+  user_N: 'Username',
+  f_Name: 'First Name',
+  l_Name: 'Last Name',
+  age: 'Age',
+  email: 'Email',
+  address: 'Address',
+  dob: 'Date of Birth',
+  pswrd: 'Password', // Exclude from display
+  gender: 'Gender',
+  m_Status: 'Marital Status',
+  nic: 'NIC',
+  role: 'Role',
+  contact_No: 'Contact Number',
+  f_contactNo: 'Family Contact Number',
+  bank_D: 'Bank Details',
+};
 
 const UserProfile = () => {
   const { user } = useContext(UserContext);
   const [userDetails, setUserDetails] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [editMode, setEditMode] = useState(false);
+  const [editField, setEditField] = useState(null);
   const [updatedUser, setUpdatedUser] = useState({});
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (user && user.id) {
@@ -26,28 +42,26 @@ const UserProfile = () => {
           setLoading(false);
         }
       };
-
       fetchUserDetails();
     } else {
       setLoading(false);
     }
   }, [user]);
 
-  const handleChange = (e) => {
-    setUpdatedUser({ ...updatedUser, [e.target.name]: e.target.value });
+  const handleEditClick = (field) => {
+    setEditField(field);
   };
 
-  const handleDateChange = (e) => {
-    setUpdatedUser({ ...updatedUser, dob: e.target.value });
+  const handleCancelClick = () => {
+    setEditField(null);
+    setUpdatedUser(userDetails);
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSaveClick = async (field) => {
     try {
       const response = await axios.put(`http://localhost:5000/users/${user.id}`, updatedUser);
-      console.log('User updated successfully:', response.data.user);
       setUserDetails(response.data.user);
-      setEditMode(false);
+      setEditField(null);
     } catch (error) {
       console.error('Error updating user:', error);
       if (error.response && error.response.data && error.response.data.message) {
@@ -56,6 +70,10 @@ const UserProfile = () => {
         alert('An unexpected error occurred. Please try again later.');
       }
     }
+  };
+
+  const handleChange = (e) => {
+    setUpdatedUser({ ...updatedUser, [e.target.name]: e.target.value });
   };
 
   if (loading) {
@@ -67,256 +85,56 @@ const UserProfile = () => {
   }
 
   return (
-    <Box sx={{ padding: 4 }}>
-      <Typography variant="h4">User Profile</Typography>
-      {editMode ? (
-        <Box component="form" onSubmit={handleSubmit} sx={{ width: '80%', maxWidth: 800, padding: 4, bgcolor: 'background.paper', boxShadow: 3, margin: 'auto' }}>
-          <Grid container spacing={3}>
-            <Grid item xs={6}>
-              <TextField
-                label="Username"
-                name="user_N"
-                value={updatedUser.user_N}
-                onChange={handleChange}
-                variant="outlined"
-                fullWidth
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-                label="First Name"
-                name="f_Name"
-                value={updatedUser.f_Name}
-                onChange={handleChange}
-                variant="outlined"
-                fullWidth
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-                label="Last Name"
-                name="l_Name"
-                value={updatedUser.l_Name}
-                onChange={handleChange}
-                variant="outlined"
-                fullWidth
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-                label="Age"
-                name="age"
-                value={updatedUser.age}
-                onChange={handleChange}
-                variant="outlined"
-                fullWidth
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-                label="Email"
-                name="email"
-                value={updatedUser.email}
-                onChange={handleChange}
-                variant="outlined"
-                fullWidth
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-                label="Password"
-                name="pswrd"
-                value={updatedUser.pswrd}
-                onChange={handleChange}
-                variant="outlined"
-                fullWidth
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-                label="Address"
-                name="address"
-                value={updatedUser.address}
-                onChange={handleChange}
-                variant="outlined"
-                fullWidth
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-                label="Date of Birth"
-                name="dob"
-                type="date"
-                value={updatedUser.dob}
-                onChange={handleDateChange}
-                variant="outlined"
-                fullWidth
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                InputProps={{
-                  placeholder: 'mm/dd/yyyy',
-                }}
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <FormControl variant="outlined" fullWidth>
-                <InputLabel id="gender-label">Gender</InputLabel>
-                <Select
-                  labelId="gender-label"
-                  name="gender"
-                  value={updatedUser.gender}
-                  onChange={handleChange}
-                >
-                  <MenuItem value="">Select Gender</MenuItem>
-                  <MenuItem value="male">Male</MenuItem>
-                  <MenuItem value="female">Female</MenuItem>
-                  <MenuItem value="prefer-not-to-say">Prefer not to say</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
-            <Grid item xs={6}>
-              <FormControl variant="outlined" fullWidth>
-                <InputLabel id="m-status-label">Marital Status</InputLabel>
-                <Select
-                  labelId="m-status-label"
-                  name="m_Status"
-                  value={updatedUser.m_Status}
-                  onChange={handleChange}
-                >
-                  <MenuItem value="">Select Marital Status</MenuItem>
-                  <MenuItem value="single">Single</MenuItem>
-                  <MenuItem value="married">Married</MenuItem>
-                  <MenuItem value="divorced">Divorced</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-                label="NIC"
-                name="nic"
-                value={updatedUser.nic}
-                onChange={handleChange}
-                variant="outlined"
-                fullWidth
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <FormControl variant="outlined" fullWidth>
-                <InputLabel id="role-label">Role</InputLabel>
-                <Select
-                  labelId="role-label"
-                  name="role"
-                  value={updatedUser.role}
-                  onChange={handleChange}
-                >
-                  <MenuItem value="">Select Role</MenuItem>
-                  <MenuItem value="admin">Admin</MenuItem>
-                  <MenuItem value="manager">Manager</MenuItem>
-                  <MenuItem value="employer">Employer</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-                label="Contact Number"
-                name="contact_No"
-                value={updatedUser.contact_No}
-                onChange={handleChange}
-                variant="outlined"
-                fullWidth
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-                label="Family Contact No"
-                name="f_contactNo"
-                value={updatedUser.f_contactNo}
-                onChange={handleChange}
-                variant="outlined"
-                fullWidth
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-                label="Bank Details"
-                name="bank_D"
-                value={updatedUser.bank_D}
-                onChange={handleChange}
-                variant="outlined"
-                fullWidth
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <Button type="submit" variant="contained" color="primary" fullWidth sx={{ mt: 7, mb: 2, height: '50px', width: '150px', borderRadius: '21px', backgroundColor: '#1B1A55', '&:hover': { backgroundColor: '#16155d' } }}>
-                Update User
-              </Button>
-            </Grid>
-          </Grid>
+    <Box sx={{ padding: 4, maxWidth: 800, margin: '0 auto' }}>
+      <Paper elevation={3} sx={{ padding: 4 }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: 4 }}>
+          <Avatar alt={userDetails.username} src="/static/images/avatar/1.jpg" sx={{ width: 100, height: 100, marginRight: 4 }} />
+          <Typography variant="h4" gutterBottom>{userDetails.username}</Typography>
         </Box>
-      ) : (
-        <Box mt={2}>
-          <Grid container spacing={2}>
-            <Grid item xs={12} md={6}>
-              <Typography variant="subtitle1">Username:</Typography>
-              <Typography variant="body1">{userDetails.user_N}</Typography>
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <Typography variant="subtitle1">Name:</Typography>
-              <Typography variant="body1">{`${userDetails.f_Name} ${userDetails.l_Name}`}</Typography>
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <Typography variant="subtitle1">Age:</Typography>
-              <Typography variant="body1">{userDetails.age}</Typography>
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <Typography variant="subtitle1">Email:</Typography>
-              <Typography variant="body1">{userDetails.email}</Typography>
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <Typography variant="subtitle1">Address:</Typography>
-              <Typography variant="body1">{userDetails.address}</Typography>
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <Typography variant="subtitle1">Date of Birth:</Typography>
-              <Typography variant="body1">{userDetails.dob}</Typography>
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <Typography variant="subtitle1">Gender:</Typography>
-              <Typography variant="body1">{userDetails.gender}</Typography>
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <Typography variant="subtitle1">Marital Status:</Typography>
-              <Typography variant="body1">{userDetails.m_Status}</Typography>
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <Typography variant="subtitle1">NIC:</Typography>
-              <Typography variant="body1">{userDetails.nic}</Typography>
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <Typography variant="subtitle1">Role:</Typography>
-              <Typography variant="body1">{userDetails.role}</Typography>
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <Typography variant="subtitle1">Contact Number:</Typography>
-              <Typography variant="body1">{userDetails.contact_No}</Typography>
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <Typography variant="subtitle1">Family Contact No:</Typography>
-              <Typography variant="body1">{userDetails.f_contactNo}</Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <Typography variant="subtitle1">Bank Details:</Typography>
-              <Typography variant="body1">{userDetails.bank_D}</Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <Button variant="contained" color="primary" onClick={() => setEditMode(true)} sx={{ mt: 2 }}>
-                Edit Profile
-              </Button>
-            </Grid>
-          </Grid>
-        </Box>
-      )}
+        <Grid container spacing={2}>
+          {Object.entries(userDetails).map(([key, value]) => {
+            if (key === 'id' || key === 'pswrd' || key === '_id' || key === '__v') return null; // Exclude _id and __v
+            const labelName = labelMap[key] || key.replace(/_/g, ' '); // Use label from labelMap or replace underscores with spaces
+            return (
+              <Grid item xs={12} sm={6} key={key}>
+                {editField === key ? (
+                  <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                    <TextField
+                      label={labelName}
+                      name={key}
+                      value={updatedUser[key]}
+                      onChange={handleChange}
+                      variant="outlined"
+                      fullWidth
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <IconButton onClick={() => handleSaveClick(key)}>
+                              <Save />
+                            </IconButton>
+                            <IconButton onClick={handleCancelClick}>
+                              <Cancel />
+                            </IconButton>
+                          </InputAdornment>
+                        ),
+                      }}
+                    />
+                  </Box>
+                ) : (
+                  <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                    <Typography variant="body1" sx={{ flexGrow: 1 }}>
+                      <strong>{labelName.toUpperCase()}:</strong> {value}
+                    </Typography>
+                    <IconButton onClick={() => handleEditClick(key)}>
+                      <Edit />
+                    </IconButton>
+                  </Box>
+                )}
+              </Grid>
+            );
+          })}
+        </Grid>
+      </Paper>
     </Box>
   );
 };
