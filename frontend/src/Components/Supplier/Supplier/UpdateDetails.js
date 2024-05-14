@@ -7,8 +7,8 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
-import Menu from '../../menu';
-import AppBar from '../../Appbar';
+import Menu from "../../menu";
+import AppBar from "../../Appbar";
 
 const UpdateDetails = () => {
   const [inputs, setInputs] = useState({});
@@ -59,94 +59,101 @@ const UpdateDetails = () => {
     });
   };
 
-  return (<div>
-    <AppBar />
-        <Menu/>
+  return (
+    <div>
+      <AppBar />
+      <Menu />
 
-    <div style={{ marginLeft: '255px', paddingTop: '80px' }}>
-    <Container maxWidth="sm">
-      <Box sx={{ marginTop: 4 }}>
-        <Typography variant="h4" gutterBottom>
-          Update Supplier
-        </Typography>
-        <form onSubmit={handleSubmit}>
-          <TextField
-            fullWidth
-            label="Name"
-            name="name"
-            value={inputs.name || ""}
-            onChange={handleChange}
-            margin="normal"
-            variant="outlined"
-          />
-          <TextField
-            fullWidth
-            label="Business Name"
-            name="bname"
-            value={inputs.bname || ""}
-            onChange={handleChange}
-            margin="normal"
-            variant="outlined"
-          />
-          <TextField
-            fullWidth
-            label="Email"
-            name="email"
-            value={inputs.email || ""}
-            onChange={handleChange}
-            margin="normal"
-            variant="outlined"
-            required
-          />
-          <TextField
-            fullWidth
-            label="Contact"
-            name="contact"
-            value={inputs.contact || ""}
-            onChange={handleChange}
-            margin="normal"
-            variant="outlined"
-            required
-          />
-          <TextField
-            fullWidth
-            label="Address"
-            name="address"
-            value={inputs.address || ""}
-            onChange={handleChange}
-            margin="normal"
-            variant="outlined"
-            required
-          />
-          <TextField
-            fullWidth
-            label="Tax"
-            name="tax"
-            type="number"
-            value={inputs.tax || ""}
-            onChange={handleChange}
-            margin="normal"
-            variant="outlined"
-            required
-          />
-          <TextField
-            fullWidth
-            label="Total"
-            name="total"
-            type="number"
-            value={inputs.total || ""}
-            onChange={handleChange}
-            margin="normal"
-            variant="outlined"
-            required
-          />
-          <Button type="submit" variant="contained" color="primary">
-            Update
-          </Button>
-        </form>
-      </Box>
-    </Container>
-    </div>
+      <div style={{ marginLeft: "255px", paddingTop: "80px" }}>
+        <Container maxWidth="sm">
+          <Box sx={{ marginTop: 4 }}>
+            <Typography variant="h4" gutterBottom>
+              Update Supplier
+            </Typography>
+            <form onSubmit={handleSubmit}>
+              <TextField
+                fullWidth
+                label="Name"
+                name="name"
+                value={inputs.name || ""}
+                onChange={handleChange}
+                margin="normal"
+                variant="outlined"
+              />
+              <TextField
+                fullWidth
+                label="Business Name"
+                name="bname"
+                value={inputs.bname || ""}
+                onChange={handleChange}
+                margin="normal"
+                variant="outlined"
+              />
+              <TextField
+                fullWidth
+                label="Email"
+                name="email"
+                value={inputs.email || ""}
+                onChange={handleChange}
+                margin="normal"
+                variant="outlined"
+                required
+              />
+              
+              <TextField
+                label="Contact"
+                name="contact"
+                value={inputs.contact || ""}
+                onChange={handleChange}
+                fullWidth
+                required
+                InputProps={{
+                  inputProps: {
+                    pattern: "^[0-9]{10}$", // Regex for 10-digit phone number
+                    title: "Please enter a valid 10-digit phone number",
+                  },
+                }}
+              />
+
+              <TextField
+                fullWidth
+                label="Address"
+                name="address"
+                value={inputs.address || ""}
+                onChange={handleChange}
+                margin="normal"
+                variant="outlined"
+                required
+              />
+              <TextField
+                fullWidth
+                label="Tax"
+                name="tax"
+                type="number"
+                value={inputs.tax || ""}
+                onChange={handleChange}
+                margin="normal"
+                variant="outlined"
+                required
+              />
+              <TextField
+                fullWidth
+                label="Total"
+                name="total"
+                type="number"
+                value={inputs.total || ""}
+                onChange={handleChange}
+                margin="normal"
+                variant="outlined"
+                required
+              />
+              <Button type="submit" variant="contained" color="primary">
+                Update
+              </Button>
+            </form>
+          </Box>
+        </Container>
+      </div>
     </div>
   );
 };
