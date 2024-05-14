@@ -4,7 +4,6 @@ import {
   TextField,
   Button,
   Typography,
-  Select,
   MenuItem,
 } from "@mui/material";
 import AppBar from "../Components/Appbar";
@@ -30,7 +29,7 @@ function UpdateLeave() {
       try {
         const response = await axios.get(`http://localhost:5000/leaves/${id}`);
         // If data is successfully fetched, update the inputs state
-        setInputs(response.data);
+        setInputs(response.data.leaves);
       } catch (error) {
         console.error("Error fetching leave:", error);
       }
@@ -97,7 +96,7 @@ function UpdateLeave() {
         <Grid item xs={12} sm={6}>
           <form onSubmit={handleSubmit}>
             <TextField
-              sx={{ backgroundColor: "#fff", borderRadius: "15px" }}
+              sx={{ backgroundColor: "#fff" }}
               label="Employee ID"
               name="emp_id"
               value={inputs.emp_id}
@@ -105,9 +104,10 @@ function UpdateLeave() {
               required
               fullWidth
               margin="normal"
+              disabled // Disable the input field
             />
             <TextField
-              sx={{ backgroundColor: "#fff", borderRadius: "15px" }}
+              sx={{ backgroundColor: "#fff" }}
               label="Date"
               name="date"
               type="date"
@@ -122,7 +122,7 @@ function UpdateLeave() {
               inputProps={{ min: currentDate }} // Set min attribute to current date
             />
             <TextField
-              sx={{ backgroundColor: "#fff", borderRadius: "15px" }}
+              sx={{ backgroundColor: "#fff" }}
               select
               label="Type"
               name="type"
@@ -140,7 +140,7 @@ function UpdateLeave() {
               <MenuItem value="Personal Leave">Personal leave</MenuItem>
             </TextField>
             <TextField
-              sx={{ backgroundColor: "#fff", borderRadius: "15px" }}
+              sx={{ backgroundColor: "#fff"}}
               label="Reason"
               name="reason"
               value={inputs.reason}
