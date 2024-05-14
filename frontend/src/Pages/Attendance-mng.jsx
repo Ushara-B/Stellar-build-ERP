@@ -7,14 +7,11 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import IconButton from "@mui/material/IconButton";
-import PrintIcon from "@mui/icons-material/Print";
 import SearchIcon from "@mui/icons-material/Search";
 import InputBase from "@mui/material/InputBase";
 import Box from "@mui/material/Box";
 import AppBar from "../Components/Appbar";
 import Drawer from "../Components/menu";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useReactToPrint } from "react-to-print";
 import Dialog from "@mui/material/Dialog";
@@ -43,14 +40,7 @@ const StyledButton = styled(Button)({
   },
 });
 
-const EmployeeDetailsContent = ({ user }) => (
-  <div>
-    <h2>{`${user.f_Name} ${user.l_Name}'s Attendance`}</h2>
-    <p>User ID: {user.user_N}</p>
-    <p>Role: {user.role}</p>
-    {/* Add more details as needed */}
-  </div>
-);
+
 
 export default function AttendanceMng() {
   const [users, setUsers] = React.useState([]);
@@ -62,7 +52,6 @@ export default function AttendanceMng() {
   const [successMessage, setSuccessMessage] = useState("");
   const [openSuccessSnackbar, setOpenSuccessSnackbar] = useState(false);
   const [attendanceMarked, setAttendanceMarked] = useState({});
-  const navigate = useNavigate();
 
   React.useEffect(() => {
     fetchUsers();
@@ -91,10 +80,7 @@ export default function AttendanceMng() {
   };
 
   //pdf print function
-  const ComponentsRef = useRef();
-  const handlePrintToPdf = useReactToPrint({
-    content: () => ComponentsRef.current,
-  });
+
 
   const markAttendance = async (userId) => {
     const currentDate = new Date().toISOString().slice(0, 10);
@@ -149,13 +135,7 @@ export default function AttendanceMng() {
     setOpenSuccessSnackbar(false);
   };
 
-  const handleViewAttendance = (userId) => {
-    const selectedUser = users.find((user) => user._id === userId);
-    handlePrintToPdf({
-      content: () => <EmployeeDetailsContent user={selectedUser} />,
-      documentTitle: `${selectedUser.f_Name} ${selectedUser.l_Name}'s Attendance`,
-    });
-  };
+
 
   const filteredUsers = users.filter(
     (user) =>
@@ -190,7 +170,7 @@ export default function AttendanceMng() {
             />
             
           </Box>
-          <TableContainer ref={ComponentsRef}>
+          <TableContainer>
             <Table
               stickyHeader
               aria-label="sticky table"
@@ -276,12 +256,6 @@ export default function AttendanceMng() {
                           onClick={() => markAttendance(row._id)}
                         >
                           Mark Attendance
-                        </StyledButton>
-                        <StyledButton
-                          variant="contained"
-                          onClick={() => handleViewAttendance(row._id)}
-                        >
-                          View Attendance
                         </StyledButton>
                       </TableCell>
                     </TableRow>

@@ -1,27 +1,17 @@
-import * as React from 'react';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
-import Paper from '@mui/material/Paper';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import loginimg from '../Assets/loginimg.png';
-import axios from 'axios';
+import React, { useContext, useState } from 'react';
+import { UserContext } from '../Context/UserContext';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import axios from 'axios';
+import {
+  Button, CssBaseline, TextField, FormControlLabel, Checkbox, Link, Paper, Box, Grid, Typography, createTheme, ThemeProvider
+} from '@mui/material';
+import loginimg from '../Assets/loginimg.png';
 
 const defaultTheme = createTheme();
 
 export default function SignIn() {
   const navigate = useNavigate();
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [user, setUser] = useState(null);
+  const { loginUser } = useContext(UserContext); // Destructure loginUser from context
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -45,12 +35,15 @@ export default function SignIn() {
         // Store the JWT token in localStorage
         localStorage.setItem('token', token);
 
-        // Set the user state with the logged-in user's data
-        setUser(user);
+        const userDetails = {
+          username: user.user_N,
+          id: user._id,
+          role: user.role,
+          email: user.email,
+        };
 
-        // Reset the form fields
-        setUsername('');
-        setPassword('');
+        // Set the user state with the logged-in user's data using context
+        loginUser(userDetails);
 
         // Redirect to the dashboard
         navigate('/dashboard');
@@ -60,24 +53,15 @@ export default function SignIn() {
     } catch (error) {
       console.error('Error logging in:', error);
       if (error.response) {
-        // The request was made and the server responded with a status code
         setError(error.response.data.error || 'An error occurred while logging in. Please try again.');
       } else if (error.request) {
-        // The request was made but no response was received
         setError('No response received from the server. Please check your internet connection.');
       } else {
-        // Something else happened while setting up the request
         setError('An error occurred while logging in. Please try again.');
       }
     } finally {
       setLoading(false);
     }
-  };
-
-  const handleLogout = () => {
-    // Remove the JWT token from localStorage
-    localStorage.removeItem('token');
-    setUser(null);
   };
 
   return (
@@ -190,7 +174,6 @@ export default function SignIn() {
           }}
         />
       </Grid>
-      
     </ThemeProvider>
   );
 }

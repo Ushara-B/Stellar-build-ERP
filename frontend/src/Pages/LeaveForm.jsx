@@ -4,7 +4,6 @@ import {
   TextField,
   Button,
   Typography,
-  Select,
   MenuItem,
 } from "@mui/material";
 import AppBar from "../Components/Appbar";
@@ -33,15 +32,15 @@ function LeaveForm() {
     sendRequest();
   };
 
-  const sendRequest = async () => {
-    await axios.post("http://localhost:5000/leaves", {
-      emp_id: inputs.emp_id,
-      date: inputs.date,
-      type: inputs.type,
-      reason: inputs.reason,
-    });
-    history("/ActiveLeaves");
-  };
+    const sendRequest = async () => {
+      await axios.post("http://localhost:5000/leaves", {
+        emp_id: inputs.emp_id,
+        date: inputs.date,
+        type: inputs.type,
+        reason: inputs.reason,
+      });
+      history("/ActiveLeaves");
+    };
 
   const currentDate = new Date().toISOString().split("T")[0]; // Get current date in YYYY-MM-DD format
 
@@ -70,7 +69,7 @@ function LeaveForm() {
         <Grid item xs={12} sm={6}>
           <form onSubmit={handleSubmit}>
             <TextField
-              sx={{ backgroundColor: "#fff", borderRadius: "15px" }}
+              sx={{ backgroundColor: "#fff" }}
               label="Employee ID"
               name="emp_id"
               value={inputs.emp_id}
@@ -81,7 +80,7 @@ function LeaveForm() {
               InputProps={{ disableUnderline: true }}
             />
             <TextField
-              sx={{ backgroundColor: "#fff", borderRadius: "15px" }}
+              sx={{ backgroundColor: "#fff" }}
               label="Date"
               name="date"
               type="date"
@@ -89,14 +88,13 @@ function LeaveForm() {
               onChange={handleChange}
               required
               fullWidth
-              variant="outlined"
               margin="normal"
               InputLabelProps={{ shrink: true }}
               InputProps={{ disableUnderline: true }}
               inputProps={{ min: currentDate }} // Set min attribute to current date
             />
             <TextField
-              sx={{ backgroundColor: "#fff", borderRadius: "15px" }}
+              sx={{ backgroundColor: "#fff"}}
               select
               label="Type"
               name="type"
@@ -114,7 +112,7 @@ function LeaveForm() {
               <MenuItem value="Personal Leave">Personal leave</MenuItem>
             </TextField>
             <TextField
-              sx={{ backgroundColor: "#fff", borderRadius: "15px" }}
+              sx={{ backgroundColor: "#fff" }}
               label="Reason"
               name="reason"
               value={inputs.reason}
