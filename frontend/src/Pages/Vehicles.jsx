@@ -477,7 +477,6 @@ function Vehicles() {
                               }}
                             />
                           </IconButton>
-
                           <IconButton
                             onClick={() => deleteHandler(vehicle._id)}
                           >
@@ -492,7 +491,6 @@ function Vehicles() {
                               }}
                             />
                           </IconButton>
-
                           <IconButton
                             onClick={() => handlePrintSingle(vehicle)}
                           >
@@ -507,7 +505,6 @@ function Vehicles() {
                               }}
                             />
                           </IconButton>
-
                           <IconButton
                             onClick={() =>
                               navigate(`/viewvehicle/${vehicle._id}`)
