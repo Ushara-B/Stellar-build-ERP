@@ -121,12 +121,12 @@ function Form() {
             <div className="selects input-control">
                 <select required value={category} name="category" id="category" onChange={handleInput('category')}>
                     <option value=""  disabled >Select Category</option>
-                    <option value="Revenue">Contract Revenue</option>
-                    <option value="Consulting">Consulting Fees</option>
-                    <option value="Maintenance">Maintenance and Service Contracts</option>
-                    <option value="Design">Design-Build Revenue</option>
-                    <option value="Equipment">Equipment Rental Income</option>
-                    <option value="Miscellaneous">Miscellaneous Income</option>  
+                    <option value="Contract Revenue">Contract Revenue</option>
+                    <option value="Consulting Fees">Consulting Fees</option>
+                    <option value="Maintenance and Service Contracts">Maintenance and Service Contracts</option>
+                    <option value="Design-Build Revenue">Design-Build Revenue</option>
+                    <option value="Equipment Rental Income">Equipment Rental Income</option>
+                    <option value="Miscellaneous Income">Miscellaneous Income</option>  
                     <option value="Interest">Interest</option>  
                     
                 </select>
