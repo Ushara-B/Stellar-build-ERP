@@ -49,6 +49,7 @@ import AddInventory from "./Pages/AddInventory";
 import Expense from "./Pages/Finance/Expense";
 import Income from "./Pages/Finance/Income";
 
+//Avishka's
 import AddLoans from "./Pages/AddLoans";
 import ViewLoans from "./Pages/ViewLoans";
 import UpdateLoan from "./Pages/UpdateLoan";
