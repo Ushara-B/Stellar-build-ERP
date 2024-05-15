@@ -1,6 +1,19 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { UserContext } from '../Context/UserContext';
-import { Typography, Box, Grid, IconButton, TextField, Button, CircularProgress, InputAdornment, Avatar, Paper } from '@mui/material';
+import {
+  Typography,
+  Box,
+  Grid,
+  IconButton,
+  TextField,
+  Button,
+  CircularProgress,
+  InputAdornment,
+  Avatar,
+  Paper,
+  Container,
+  Alert,
+} from '@mui/material';
 import { Edit, Save, Cancel } from '@mui/icons-material';
 import axios from 'axios';
 
@@ -28,6 +41,8 @@ const UserProfile = () => {
   const [loading, setLoading] = useState(true);
   const [editField, setEditField] = useState(null);
   const [updatedUser, setUpdatedUser] = useState({});
+  const [message, setMessage] = useState('');
+  const [error, setError] = useState('');
 
   useEffect(() => {
     if (user && user.id) {
@@ -62,13 +77,12 @@ const UserProfile = () => {
       const response = await axios.put(`http://localhost:5000/users/${user.id}`, updatedUser);
       setUserDetails(response.data.user);
       setEditField(null);
+      setMessage('User details updated successfully.');
+      setError('');
     } catch (error) {
       console.error('Error updating user:', error);
-      if (error.response && error.response.data && error.response.data.message) {
-        alert(`Error updating user: ${error.response.data.message}`);
-      } else {
-        alert('An unexpected error occurred. Please try again later.');
-      }
+      setError('An unexpected error occurred. Please try again later.');
+      setMessage('');
     }
   };
 
@@ -77,20 +91,36 @@ const UserProfile = () => {
   };
 
   if (loading) {
-    return <CircularProgress />;
+    return (
+      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+        <CircularProgress />
+      </Box>
+    );
   }
 
   if (!userDetails) {
-    return <Typography variant="h6">No user logged in</Typography>;
+    return (
+      <Typography variant="h6" align="center">
+        No user logged in
+      </Typography>
+    );
   }
 
   return (
-    <Box sx={{ padding: 4, maxWidth: 800, margin: '0 auto' }}>
-      <Paper elevation={3} sx={{ padding: 4 }}>
-        <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: 4 }}>
-          <Avatar alt={userDetails.username} src="/static/images/avatar/1.jpg" sx={{ width: 100, height: 100, marginRight: 4 }} />
-          <Typography variant="h4" gutterBottom>{userDetails.username}</Typography>
+    <Container maxWidth="md" sx={{ mt: 5 }}>
+      <Paper elevation={3} sx={{ p: 4, backgroundColor: '#f7f9fc' }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', mb: 4 }}>
+          <Avatar
+            alt={userDetails.username}
+            src="/static/images/avatar/1.jpg"
+            sx={{ width: 100, height: 100, mr: 4 }}
+          />
+          <Typography variant="h4" gutterBottom>
+            {userDetails.username}
+          </Typography>
         </Box>
+        {message && <Alert severity="success">{message}</Alert>}
+        {error && <Alert severity="error">{error}</Alert>}
         <Grid container spacing={2}>
           {Object.entries(userDetails).map(([key, value]) => {
             if (key === 'id' || key === 'pswrd' || key === '_id' || key === '__v') return null; // Exclude _id and __v
@@ -121,7 +151,7 @@ const UserProfile = () => {
                     />
                   </Box>
                 ) : (
-                  <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                  <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                     <Typography variant="body1" sx={{ flexGrow: 1 }}>
                       <strong>{labelName.toUpperCase()}:</strong> {value}
                     </Typography>
@@ -135,7 +165,7 @@ const UserProfile = () => {
           })}
         </Grid>
       </Paper>
-    </Box>
+    </Container>
   );
 };
 
