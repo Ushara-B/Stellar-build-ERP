@@ -23,7 +23,6 @@ import ActiveLeaves from "./Pages/ActiveLeaves";
 import UpdateLeave from "./Pages/UpdateLeave";
 import Login from "./Pages/Login";
 
-
 import AddVehicle from "./Pages/AddVehicle";
 import Vehicles from './Pages/Vehicles';
 import Vehicle from './Pages/ViewVehicle';
@@ -55,7 +54,9 @@ import UpdateLoan from "./Pages/UpdateLoan";
 import AllLoans from "./Pages/AllLoans";
 
 
-
+import UpdateInventory from "./Pages/UpdateInventory";
+import  IncomeForm from "./Pages/Finance/Form";
+import  ExpenseForm from "./Pages/Finance/expenseForm";
 import FinanceDashboard from "../src/Pages/Finance/finDashboard";
 import UpdateExpense from "./Pages/Finance/updateExpense";
 import UpdateIncome from "./Pages/Finance/updateIncome";
@@ -78,7 +79,6 @@ import SupplierUpdateDetails from "../src/Components/Supplier/Supplier/UpdateDet
 
 
 const queryClient = new QueryClient();
-
 
 
 
@@ -247,7 +247,6 @@ function App() {
           <Route path="/add-supplier" element={<AddSupplier />} />
           <Route path="/supplier-details" element={<SupplierDetails />} />
           <Route path="/updatesuplier/:id" element={<SupplierUpdateDetails/>} />
-          
           
 
         </Routes>

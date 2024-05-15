@@ -6,7 +6,7 @@ const inventorySchema = new Schema({
         type : String,
         required:true,
     },
-    ICategory:{
+    Category:{
         type : String,
         required:true,
     },
