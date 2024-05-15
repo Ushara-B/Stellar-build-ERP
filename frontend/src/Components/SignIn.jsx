@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { UserContext } from '../Context/UserContext';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -14,15 +14,34 @@ export default function SignIn() {
   const { loginUser } = useContext(UserContext); // Destructure loginUser from context
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
+  const [credentials, setCredentials] = useState({
+    usernameOrEmail: '',
+    password: '',
+  });
+
+  useEffect(() => {
+    const savedCredentials = JSON.parse(localStorage.getItem('credentials'));
+    if (savedCredentials) {
+      setCredentials(savedCredentials);
+      setRememberMe(true);
+    }
+  }, []);
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setCredentials((prevCredentials) => ({
+      ...prevCredentials,
+      [name]: value,
+    }));
+  };
+
+  const handleRememberMeChange = (event) => {
+    setRememberMe(event.target.checked);
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    const credentials = {
-      usernameOrEmail: data.get('usernameOrEmail'),
-      password: data.get('password'),
-    };
-
     setLoading(true);
     setError('');
 
@@ -44,6 +63,12 @@ export default function SignIn() {
 
         // Set the user state with the logged-in user's data using context
         loginUser(userDetails);
+
+        if (rememberMe) {
+          localStorage.setItem('credentials', JSON.stringify(credentials));
+        } else {
+          localStorage.removeItem('credentials');
+        }
 
         // Redirect to the dashboard
         navigate('/dashboard');
@@ -100,6 +125,8 @@ export default function SignIn() {
                 name="usernameOrEmail"
                 autoComplete="email"
                 autoFocus
+                value={credentials.usernameOrEmail}
+                onChange={handleChange}
                 sx={{
                   borderRadius: '21px',
                   backgroundColor: 'white',
@@ -119,6 +146,8 @@ export default function SignIn() {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                value={credentials.password}
+                onChange={handleChange}
                 sx={{
                   borderRadius: '21px',
                   backgroundColor: 'white',
@@ -146,12 +175,19 @@ export default function SignIn() {
               <Grid container alignItems="center" justifyContent="space-between">
                 <Grid item>
                   <FormControlLabel
-                    control={<Checkbox value="remember" sx={{ color: '#1B1A55', '&.Mui-checked': { color: '#1B1A55' } }} />}
+                    control={
+                      <Checkbox
+                        checked={rememberMe}
+                        onChange={handleRememberMeChange}
+                        value="remember"
+                        sx={{ color: '#1B1A55', '&.Mui-checked': { color: '#1B1A55' } }}
+                      />
+                    }
                     label={<Typography variant="body2" sx={{ color: '#1B1A55' }}>Remember me</Typography>}
                   />
                 </Grid>
                 <Grid item>
-                  <Link href="#" variant="body2" sx={{ color: '#1B1A55' }}>
+                  <Link href="/forgot-password" variant="body2" sx={{ color: '#1B1A55' }}>
                     Forgot password?
                   </Link>
                 </Grid>
