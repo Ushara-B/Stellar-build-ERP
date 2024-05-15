@@ -1,4 +1,10 @@
+import React from 'react';
+import { UserProvider } from './Context/UserContext';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { QueryClient, QueryClientProvider } from 'react-query';
+
+
+
 import Dash from "./Pages/Dash";
 import AllUsers from "./Pages/AllUsers";
 import AddUsers from "./Pages/AddUsers";
@@ -72,9 +78,15 @@ import SupplierDetails from "../src/Components/Supplier/Supplier/SupplierDetails
 import SupplierUpdateDetails from "../src/Components/Supplier/Supplier/UpdateDetails";
 
 
+const queryClient = new QueryClient();
+
+
 
 function App() {
   return (
+
+   
+      <UserProvider>
     <div>
       <BrowserRouter>
         <Routes>
@@ -235,10 +247,12 @@ function App() {
           <Route path="/add-supplier" element={<AddSupplier />} />
           <Route path="/supplier-details" element={<SupplierDetails />} />
           <Route path="/updatesuplier/:id" element={<SupplierUpdateDetails/>} />
+          
 
         </Routes>
       </BrowserRouter>
     </div>
+    </UserProvider>
   );
 }
 

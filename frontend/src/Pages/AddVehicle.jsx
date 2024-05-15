@@ -96,6 +96,7 @@ function AddVehicle() {
                             variant="outlined"
                             fullWidth
                             required
+                            placeholder='NW-RGB-1122'
                         />
                       </Grid>
                     <Grid item xs={12} sm={6}>
@@ -107,6 +108,8 @@ function AddVehicle() {
                           variant="outlined"
                           fullWidth
                           required
+                          placeholder="e.g. Honda Accord"
+                          helperText="Please enter the vehicle make and model"
                           
                          />
                     </Grid>
@@ -137,6 +140,7 @@ function AddVehicle() {
                         variant="outlined"
                         fullWidth
                         required
+                        
                       />
                     </Grid>
                     <Grid item xs={12} sm={6}>
@@ -151,6 +155,14 @@ function AddVehicle() {
                         required
                         InputLabelProps={{
                             shrink: true,
+                        }}
+                        inputProps={{
+                          min: new Date().toISOString().split('T')[0], // Set the min attribute to today's date
+                          max: (() => {
+                            const nextYear = new Date();
+                            nextYear.setFullYear(nextYear.getFullYear() + 1);
+                            return nextYear.toISOString().split('T')[0]; // Set the max attribute to the date one year from now
+                          })()
                         }}
                     />
                     </Grid>
@@ -167,6 +179,14 @@ function AddVehicle() {
                         InputLabelProps={{
                             shrink: true,
                         }}
+                        inputProps={{
+                          min: new Date().toISOString().split('T')[0], // Set the min attribute to today's date
+                          max: (() => {
+                            const nextYear = new Date();
+                            nextYear.setFullYear(nextYear.getFullYear() + 1);
+                            return nextYear.toISOString().split('T')[0]; // Set the max attribute to the date one year from now
+                          })()
+                        }}
                      />
                     </Grid>
                     <Grid item xs={12} sm={6}>
@@ -182,6 +202,9 @@ function AddVehicle() {
                       InputLabelProps={{
                         shrink: true,
                       }}
+                      inputProps={{
+                        max: new Date().toISOString().split('T')[0] // Set the max attribute to today's date
+                      }}
                     />
                   </Grid>
                   <Grid item xs={12} sm={6}>
@@ -193,22 +216,28 @@ function AddVehicle() {
                     variant="outlined"
                     fullWidth
                     required
-                    inputProps={{ pattern: '^\\d{1,6}(\\s?(km|KM))$' }}
-                    error={!/^(\d{1,6}(\s?(km|KM)))?$/.test(inputs.mileage)}
-                    helperText={!/^(\d{1,6}(\s?(km|KM)))?$/.test(inputs.mileage) ? 'Maximum 6 digits with required "km" or "KM"' : ''}
+                    inputProps={{ pattern: '^\\d*\\s?(km|KM)$' }}
+                    error={!/^\d*\s?(km|KM)$/.test(inputs.mileage)}
+                    helperText={!/^\d*\s?(km|KM)$/.test(inputs.mileage) ? 'Please enter "km" or "KM" with optional digits before.' : ''}
+
                   />
                   </Grid>
                   <Grid item xs={12} sm={6}>
                     <TextField
                     label="Driver Name"
                     name="dname"
-                    value={inputs.dname}
+                    value={inputs.dname ? inputs.dname : ''}
                     onChange={handleChange}
                     variant="outlined"
                     fullWidth
                     required
-                    
-                  />
+                    inputProps={{
+                        pattern: '^[A-Za-z ]{1,25}$',// Allow letters and spaces
+                        title: 'Please enter only letters (up to 25 characters)'
+                    }}
+                    error={!/^[A-Za-z ]{1,25}$/.test(inputs.dname)}
+                    helperText={!/^[A-Za-z ]{1,25}$/.test(inputs.dname) ? 'Please enter only letters (up to 25 characters)' : ''}
+                    />
                   </Grid>
 
                   <Grid item xs={12} sm={6}>

@@ -1,23 +1,19 @@
-import * as React from 'react';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
-import Paper from '@mui/material/Paper';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import loginimg from '../Assets/loginimg.png';
-import axios from 'axios';
+import React, { useContext, useState } from 'react';
+import { UserContext } from '../Context/UserContext';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import {
+  Button, CssBaseline, TextField, FormControlLabel, Checkbox, Link, Paper, Box, Grid, Typography, createTheme, ThemeProvider
+} from '@mui/material';
+import loginimg from '../Assets/loginimg.png';
 
 const defaultTheme = createTheme();
 
 export default function SignIn() {
   const navigate = useNavigate();
+  const { loginUser } = useContext(UserContext); // Destructure loginUser from context
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -27,33 +23,44 @@ export default function SignIn() {
       password: data.get('password'),
     };
 
+    setLoading(true);
+    setError('');
+
     try {
       const response = await axios.post('http://localhost:5000/users/login', credentials);
 
       if (response.status === 200) {
-        const user = response.data.user;
+        const { user, token } = response.data;
 
-        // Check if the provided credentials match the user_N or email
-        if (
-          user.user_N === credentials.usernameOrEmail ||
-          user.email === credentials.usernameOrEmail
-        ) {
-          // Check if the provided password matches the user's password
-          if (user.pswrd === credentials.password) {
-            // Credentials are valid, redirect to the dashboard
-            navigate('/dashboard');
-          } else {
-            alert('Incorrect password');
-          }
-        } else {
-          alert('Invalid username or email');
-        }
+        // Store the JWT token in localStorage
+        localStorage.setItem('token', token);
+
+        const userDetails = {
+          username: user.user_N,
+          id: user._id,
+          role: user.role,
+          email: user.email,
+        };
+
+        // Set the user state with the logged-in user's data using context
+        loginUser(userDetails);
+
+        // Redirect to the dashboard
+        navigate('/dashboard');
       } else {
-        alert('Invalid credentials');
+        setError('Invalid credentials');
       }
     } catch (error) {
       console.error('Error logging in:', error);
-      alert('An error occurred while logging in. Please try again.');
+      if (error.response) {
+        setError(error.response.data.error || 'An error occurred while logging in. Please try again.');
+      } else if (error.request) {
+        setError('No response received from the server. Please check your internet connection.');
+      } else {
+        setError('An error occurred while logging in. Please try again.');
+      }
+    } finally {
+      setLoading(false);
     }
   };
 

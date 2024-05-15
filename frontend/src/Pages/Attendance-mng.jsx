@@ -7,14 +7,11 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import IconButton from "@mui/material/IconButton";
-import PrintIcon from "@mui/icons-material/Print";
 import SearchIcon from "@mui/icons-material/Search";
 import InputBase from "@mui/material/InputBase";
 import Box from "@mui/material/Box";
 import AppBar from "../Components/Appbar";
 import Drawer from "../Components/menu";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useReactToPrint } from "react-to-print";
 import Dialog from "@mui/material/Dialog";
@@ -24,6 +21,7 @@ import DialogActions from "@mui/material/DialogActions";
 import Button from "@mui/material/Button";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
+import { styled } from "@mui/material/styles";
 
 const columns = [
   { id: "name", label: "Name" },
@@ -31,6 +29,18 @@ const columns = [
   { id: "role", label: "Role" },
   { id: "actions", label: "Actions", align: "center" },
 ];
+
+const StyledButton = styled(Button)({
+  backgroundColor: "#535C91",
+  color: "white",
+  width: "45%",
+  marginRight: "10px",
+  "&:hover": {
+    backgroundColor: "#405487",
+  },
+});
+
+
 
 export default function AttendanceMng() {
   const [users, setUsers] = React.useState([]);
@@ -41,7 +51,7 @@ export default function AttendanceMng() {
   const [selectedUserId, setSelectedUserId] = useState(null);
   const [successMessage, setSuccessMessage] = useState("");
   const [openSuccessSnackbar, setOpenSuccessSnackbar] = useState(false);
-  const navigate = useNavigate();
+  const [attendanceMarked, setAttendanceMarked] = useState({});
 
   React.useEffect(() => {
     fetchUsers();
@@ -70,15 +80,21 @@ export default function AttendanceMng() {
   };
 
   //pdf print function
-  const ComponentsRef = useRef();
-  const handlePrintToPdf = useReactToPrint({
-    content: () => ComponentsRef.current,
-    documentTitle: "All users",
-  });
+
 
   const markAttendance = async (userId) => {
+    const currentDate = new Date().toISOString().slice(0, 10);
+    // Check if attendance has already been marked for the user today
+    if (attendanceMarked[userId] === currentDate) {
+      setSuccessMessage("You have already marked the attendance");
+      setOpenSuccessSnackbar(true);
+      return;
+    }
+    // Proceed with marking attendance
     setSelectedUserId(userId);
     setConfirmationOpen(true);
+    // Update the attendanceMarked state
+    setAttendanceMarked(prevState => ({ ...prevState, [userId]: currentDate }));
   };
 
   const handleConfirmAttendance = async () => {
@@ -119,6 +135,8 @@ export default function AttendanceMng() {
     setOpenSuccessSnackbar(false);
   };
 
+
+
   const filteredUsers = users.filter(
     (user) =>
       `${user.f_Name} ${user.l_Name}`
@@ -127,9 +145,7 @@ export default function AttendanceMng() {
       user.user_N.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const handleViewUser = (userId) => {
-    navigate(`/viewAttendance/${userId}`);
-  };
+  
 
   return (
     <>
@@ -152,17 +168,9 @@ export default function AttendanceMng() {
               onChange={handleSearchChange}
               startAdornment={<SearchIcon fontSize="small" />}
             />
-            <Box>
-              <IconButton
-                color="primary"
-                aria-label="print"
-                onClick={handlePrintToPdf}
-              >
-                <PrintIcon />
-              </IconButton>
-            </Box>
+            
           </Box>
-          <TableContainer ref={ComponentsRef}>
+          <TableContainer>
             <Table
               stickyHeader
               aria-label="sticky table"
@@ -200,9 +208,9 @@ export default function AttendanceMng() {
                       key={row._id}
                       sx={{
                         "&:hover": {
-                          backgroundColor: "#DEDEDE", 
-                          transition: "background-color 0.3s, color 0.3s", 
-                          cursor: "pointer", 
+                          backgroundColor: "#DEDEDE",
+                          transition: "background-color 0.3s, color 0.3s",
+                          cursor: "pointer",
                         },
                         border: "none",
                         padding: "8px 16px",
@@ -240,22 +248,15 @@ export default function AttendanceMng() {
                           border: "1",
                           padding: "10px",
                           backgroundColor: "white",
-                          display: "flex",
                           width: "40%",
                         }}
                       >
-                        <button
-                          style={{ backgroundColor: "#535C91", width: "45%" }}
+                        <StyledButton
+                          variant="contained"
                           onClick={() => markAttendance(row._id)}
                         >
                           Mark Attendance
-                        </button>
-                        <button
-                          style={{ backgroundColor: "#535C91", width: "45%" }}
-                          onClick={() => handleViewUser(row._id)}
-                        >
-                          View Attendance
-                        </button>
+                        </StyledButton>
                       </TableCell>
                     </TableRow>
                   ))}

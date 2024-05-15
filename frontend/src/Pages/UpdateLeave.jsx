@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Grid } from "@mui/material";
+import {
+  Grid,
+  TextField,
+  Button,
+  Typography,
+  MenuItem,
+} from "@mui/material";
 import AppBar from "../Components/Appbar";
 import Drawer from "../Components/menu";
 import axios from "axios";
@@ -23,7 +29,7 @@ function UpdateLeave() {
       try {
         const response = await axios.get(`http://localhost:5000/leaves/${id}`);
         // If data is successfully fetched, update the inputs state
-        setInputs(response.data);
+        setInputs(response.data.leaves);
       } catch (error) {
         console.error("Error fetching leave:", error);
       }
@@ -51,7 +57,11 @@ function UpdateLeave() {
       navigate("/ActiveLeaves");
     } catch (error) {
       console.error("Error updating leave:", error);
-      if (error.response && error.response.data && error.response.data.message) {
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
         alert(`Error updating leave: ${error.response.data.message}`);
       } else {
         alert("An unexpected error occurred. Please try again later.");
@@ -59,86 +69,104 @@ function UpdateLeave() {
     }
   };
 
+  const currentDate = new Date().toISOString().split("T")[0]; // Get current date in YYYY-MM-DD format
+
   return (
     <div>
       <AppBar />
       <Drawer />
       <Grid
-        item
-        xs={12}
-        sm={8}
-        className="leave-form"
+        container
+        spacing={2}
+        justifyContent="center"
+        textAlign="center" // Center align the form
         sx={{
           maxWidth: "1000px",
-          Width: "100%",
-          alignContent: "center",
-          display: "block",
-          margin: "150px auto auto 350px",
-          backgroundColor:"#D9D9D9",
-          borderRadius:"50px"
+          margin: "150px auto auto auto",
+          backgroundColor: "#D9D9D9", // Background color for the form
+          borderRadius: "50px", // Border radius for the form
+          padding: "20px", // Add padding to the form
         }}
-      ><h1>Update your leave  </h1>
-        <form onSubmit={handleSubmit}>
-            <label>Employee ID</label>
-            <br />
-            <input
-              type="text"
+      >
+        <Grid item xs={12}>
+          <Typography variant="h4" gutterBottom>
+            Update your leave
+          </Typography>
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <form onSubmit={handleSubmit}>
+            <TextField
+              sx={{ backgroundColor: "#fff" }}
+              label="Employee ID"
               name="emp_id"
-              onChange={handleChange}
               value={inputs.emp_id}
-              required
-              style={{ borderRadius: "10px", padding: "8px", width: "100%", border:"0" }}
-            />
-            <br />
-            <br />
-            <label>Date</label>
-            <br />
-            <input
-              type="date"
-              name="date"
               onChange={handleChange}
-              value={inputs.date}
               required
-              style={{ borderRadius: "10px", padding: "8px", width: "100%",border:"0" }}
+              fullWidth
+              margin="normal"
+              disabled // Disable the input field
             />
-            <br />
-            <br />
-            <label>Type</label>
-            <br />
-            <select
+            <TextField
+              sx={{ backgroundColor: "#fff" }}
+              label="Date"
+              name="date"
+              type="date"
+              value={inputs.date}
+              onChange={handleChange}
+              required
+              fullWidth
+              variant="outlined"
+              margin="normal"
+              InputLabelProps={{ shrink: true }}
+              InputProps={{ disableUnderline: true }}
+              inputProps={{ min: currentDate }} // Set min attribute to current date
+            />
+            <TextField
+              sx={{ backgroundColor: "#fff" }}
+              select
+              label="Type"
               name="type"
               value={inputs.type}
               onChange={handleChange}
               required
-              style={{ borderRadius: "10px", padding: "8px", width: "100%" ,border:"0"}}
+              fullWidth
+              variant="outlined"
+              margin="normal"
+              InputProps={{ disableUnderline: true }}
             >
-              <option value="">Select Type</option>
-              <option value="Sick Leave">Sick leave</option>
-              <option value="Vacation Leave">Vacation leave</option>
-              <option value="Personal Leave">Personal leave</option>
-              {/* Add more options as needed */}
-            </select>
-            <br />
-            <br />
-            <label>Reason</label>
-            <br />
-            <input
-              type="text"
+              <MenuItem value="">Select Type</MenuItem>
+              <MenuItem value="Sick Leave">Sick leave</MenuItem>
+              <MenuItem value="Vacation Leave">Vacation leave</MenuItem>
+              <MenuItem value="Personal Leave">Personal leave</MenuItem>
+            </TextField>
+            <TextField
+              sx={{ backgroundColor: "#fff"}}
+              label="Reason"
               name="reason"
-              onChange={handleChange}
               value={inputs.reason}
+              onChange={handleChange}
               required
-              style={{ borderRadius: "10px", padding: "8px", width: "100%", border:"0" }}
+              fullWidth
+              multiline
+              rows={4}
+              variant="outlined"
+              margin="normal"
+              InputProps={{ disableUnderline: true }}
             />
-            <br />
-            <br />
-            <button
+            <Button
               type="submit"
-              style={{ backgroundColor:"#535C91"}}
+              variant="contained"
+              sx={{
+                mt: 2,
+                borderRadius: "15px",
+                backgroundColor: "#535C91",
+                "&:hover": { backgroundColor: "#3D446F" },
+              }}
             >
               Submit
-            </button>
+            </Button>
           </form>
+        </Grid>
       </Grid>
     </div>
   );

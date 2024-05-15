@@ -1,76 +1,74 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router';
-import { useParams } from 'react-router';
-import Menu from '../Components/menu';
-import AppBar from '../Components/Appbar';
-import { TextField, Button, Grid, Box, MenuItem } from "@mui/material";
+import Menu from "../Components/menu";
+import AppBar from "../Components/Appbar";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useParams } from "react-router";
+import { useNavigate } from "react-router";
+import {
+  Box,
+  Button,
+  FormControl,
+  Grid,
+  InputLabel,
+  MenuItem,
+  TextField,
+  Select,
+} from "@mui/material";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 
-function Updateprojects() {
+function UpdateProject() {
+  const [inputs, setInputs] = useState({});
+  const history = useNavigate();
+  const id = useParams().id;
 
-    const [inputs, setInputs] = useState({});
-    const history = useNavigate();
-    const id = useParams().id;
-
-    useEffect(()=>{
-        const fetchHandler = async ()=>{
-            await axios
-            .get(`http://localhost:5000/projects/${id}`)
-            .then((res)=> res.data)
-            .then((data)=> setInputs(data.project))
-            .catch((error) => console.log("Error fetching project:", error));
-        };
-        fetchHandler();
-    },[id]);
-
-    const sendRequest = async (requestData) => {
-        try {
-          await axios.put(`http://localhost:5000/projects/${id}`, requestData);
-          console.log("Project updated successfully!");
-        } catch (error) {
-          console.log("Error updating project:", error);
-        }
-      };
-
-    const handleChange = (e) => {
-        setInputs(prevState => ({
-            ...prevState,
-            [e.target.name]: e.target.value,
-        }));
+  useEffect(() => {
+    const fetchHandler = async () => {
+      await axios
+        .get(`http://localhost:5000/projects/${id}`)
+        .then((res) => res.data)
+        .then((data) => setInputs(data.project));
     };
-    
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log(inputs);
-      
-        const requestData = {
-          projectID: String(inputs.projectID),
-          projectName: String(inputs.projectName),
-          projectBudget: Number(inputs.projectBudget),
-          Locate: String(inputs.Locate),
-          contractor: String(inputs.contractor),
-          Employees: String(inputs.Employees),
-          Status: String(inputs.Status),
-          projectType: String(inputs.projectType),
-          description: String(inputs.description),
-          startDate: inputs.startDate ? new Date(inputs.startDate).toISOString() : null,
-          endDate: inputs.endDate ? new Date(inputs.endDate).toISOString() : null,
-        };
-      
-        sendRequest(requestData).then(() => history('/Allprojects'));
-      };
-    
-  
-    
-    return (
-        <div>
+    fetchHandler();
+  }, [id]);
+
+  const sendRequest = async () => {
+    await axios
+      .put(`http://localhost:5000/projects/${id}`, {
+        projectName: inputs.projectName,
+        projectBudget: inputs.projectBudget,
+        Locate: inputs.Locate,
+        contractor: inputs.contractor,
+        Employees: inputs.Employees,
+        Status: inputs.Status,
+        startDate: new Date(inputs.startDate).toISOString(),
+        endDate: new Date(inputs.endDate).toISOString(),
+        projectType: inputs.projectType,
+        description: inputs.description,
+      })
+      .then((res) => res.data);
+  };
+
+  const handleChange = (e) => {
+    setInputs((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(inputs);
+    sendRequest().then(() => history("/allprojects"));
+  };
+
+  return (
+    <div>
       <AppBar />
       <Menu />
-      <div style={{ marginLeft: "270px", paddingTop: "90px" }}>
+      <div style={{ marginLeft: "255px", paddingTop: "80px" }}>
         <Breadcrumbs
           arial-label="breadcrumb"
           separator={<NavigateNextIcon fontSize="small" />}
@@ -85,6 +83,7 @@ function Updateprojects() {
             Update Project
           </Typography>
         </Breadcrumbs>
+
         <Box
           sx={{
             display: "flex",
@@ -107,36 +106,27 @@ function Updateprojects() {
             <Typography align="center" gutterBottom variant="h4" component="h2">
               <strong>Update Project Details</strong>
             </Typography>
-            <br></br>
+            <br />
 
             <Grid container spacing={4} justifyContent="center">
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  label="Project ID"
-                  name="projectID"
-                  value={inputs.projectID}
-                  onChange={handleChange}
-                  variant="outlined"
-                  fullWidth
-                  required
-                />
-              </Grid>
+              {/* Add your form fields here, similar to the AddProject component */}
               <Grid item xs={12} sm={6}>
                 <TextField
                   label="Project Name"
                   name="projectName"
-                  value={inputs.projectName}
+                  value={inputs.projectName || ""}
                   onChange={handleChange}
                   variant="outlined"
                   fullWidth
                   required
                 />
               </Grid>
+
               <Grid item xs={12} sm={6}>
                 <TextField
                   label="Project Budget"
                   name="projectBudget"
-                  value={inputs.projectBudget}
+                  value={inputs.projectBudget || ""}
                   onChange={handleChange}
                   variant="outlined"
                   fullWidth
@@ -144,130 +134,138 @@ function Updateprojects() {
                   type="number"
                 />
               </Grid>
+
               <Grid item xs={12} sm={6}>
-              <TextField  //GoogleMapComponent
+                <TextField
                   label="Location"
                   name="Locate"
-                  value={inputs.Locate}
+                  value={inputs.Locate || ""}
                   onChange={handleChange}
                   variant="outlined"
                   fullWidth
                   required
                 />
               </Grid>
+
               <Grid item xs={12} sm={6}>
                 <TextField
                   label="Contractor"
                   name="contractor"
-                  value={inputs.contractor}
+                  value={inputs.contractor || ""}
                   onChange={handleChange}
                   variant="outlined"
                   fullWidth
                   required
                 />
               </Grid>
+
               <Grid item xs={12} sm={6}>
                 <TextField
-                  label="Employees"
+                  label="Maintainer"
                   name="Employees"
-                  value={inputs.Employees}
+                  value={inputs.Employees || ""}
                   onChange={handleChange}
                   variant="outlined"
                   fullWidth
                   required
                 />
+              </Grid>
+              
+              
+
+              <Grid item xs={12} sm={6}>
+                <FormControl variant="outlined" fullWidth>
+                  <InputLabel id="Status">Status</InputLabel>
+                  <Select
+                    labelId="Status"
+                    name="Status"
+                    value={inputs.Status ? inputs.Status : ''}
+                    onChange={handleChange}
+                  >
+                     <MenuItem value="In Progress">In Progress</MenuItem>
+                  <MenuItem value="Start">Start</MenuItem>
+                  <MenuItem value="Done">Done</MenuItem>
+                  <MenuItem value="End">End</MenuItem>
+                  <MenuItem value="Pause">Pause</MenuItem>
+                  </Select>
+                </FormControl>
               </Grid>
 
               <Grid item xs={12} sm={6}>
                 <TextField
                   label="Start Date"
                   name="startDate"
-                  type="date"
-                  value={inputs.startDate ? new Date(inputs.startDate).toISOString().split('T')[0] : ''}
+                  value={
+                    inputs.startDate
+                      ? new Date(inputs.startDate).toISOString().split("T")[0]
+                      : ""
+                  }
                   onChange={handleChange}
                   variant="outlined"
                   fullWidth
                   required
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
+                  type="date"
+                  
                 />
               </Grid>
+
               <Grid item xs={12} sm={6}>
                 <TextField
                   label="End Date"
                   name="endDate"
-                  type="date"
-                  value={inputs.endDate ? new Date(inputs.endDate).toISOString().split('T')[0] : ''}
+                  value={
+                    inputs.endDate
+                      ? new Date(inputs.endDate).toISOString().split("T")[0]
+                      : ""
+                  }
                   onChange={handleChange}
                   variant="outlined"
                   fullWidth
                   required
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
+                  type="date"
+                  
                 />
               </Grid>
 
               <Grid item xs={12} sm={6}>
-                <TextField
-                  label="Status"
-                  name="Status"
-                  value={inputs.Status}
-                  onChange={handleChange}
-                  variant="outlined"
-                  fullWidth
-                  required
-                  select
-                >
-                  <MenuItem value="In Progress">In Progress</MenuItem>
-                  <MenuItem value="Start">Start</MenuItem>
-                  <MenuItem value="Done">Done</MenuItem>
-                  <MenuItem value="End">End</MenuItem>
-                  <MenuItem value="Pause">Pause</MenuItem>
-                </TextField>
-              </Grid>
-
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  label="Project Type"
-                  name="projectType"
-                  value={inputs.projectType}
-                  onChange={handleChange}
-                  variant="outlined"
-                  fullWidth
-                  required
-                  select
-                >
-                  <MenuItem value="Furniture">Furniture</MenuItem>
+              <FormControl variant="outlined" fullWidth>
+                  <InputLabel id="projectType">Project Type</InputLabel>
+                  <Select
+                    labelId="project Type"
+                    name="projectType"
+                    value={inputs.projectType ? inputs.projectType : ''}
+                    onChange={handleChange}
+                  >
+                     <MenuItem value="Furniture">Furniture</MenuItem>
                   <MenuItem value="Elevator">Elevator</MenuItem>
                   <MenuItem value="Paint">Paint</MenuItem>
                   <MenuItem value="Water-Supply">Water-supply</MenuItem>
                   <MenuItem value="Tile">Tile</MenuItem>
                   <MenuItem value="Electrical">Electrical</MenuItem>
-                </TextField>
+                  </Select>
+                </FormControl>
               </Grid>
+                
+
               <Grid item xs={12} sm={6}>
                 <TextField
-                  label="Description"
-                  name="description"
-                  value={inputs.description}
+                  label="Project Description"
+                  name="projectDescription"
+                  value={inputs.description || ""}
                   onChange={handleChange}
                   variant="outlined"
                   fullWidth
                   required
-                  multiline
-                  rows={4}
                 />
               </Grid>
-              <Grid item xs={3} >
-                <Button 
+              <Grid item xs={0} sm={0}>
+                <Button
                   type="submit"
                   variant="contained"
                   color="primary"
                   fullWidth
                   sx={{
-                    mt: 7,
+                    mt: 2,
                     mb: 2,
                     height: "50px",
                     width: "150px",
@@ -282,13 +280,11 @@ function Updateprojects() {
                 </Button>
               </Grid>
             </Grid>
- 
-  
-          </Box>  
+          </Box>
         </Box>
       </div>
     </div>
   );
 }
 
-export default Updateprojects;
+export default UpdateProject;

@@ -8,8 +8,10 @@ import SearchIcon from "@mui/icons-material/Search";
 import PrintIcon from "@mui/icons-material/Print";
 import AddIcon from "@mui/icons-material/Add";
 import IconButton from "@mui/material/IconButton";
-import { confirmAlert } from 'react-confirm-alert';
-import 'react-confirm-alert/src/react-confirm-alert.css';
+import { confirmAlert } from "react-confirm-alert";
+import "react-confirm-alert/src/react-confirm-alert.css";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { useSearchParams } from "react-router-dom";
 import {
   Box,
@@ -29,7 +31,7 @@ import {
   Divider,
 } from "@mui/material";
 import MilestoneBar from "./MilestoneBar";
-import '../css/confirmAlert.css';
+import "../css/confirmAlert.css";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 
 import VisibilityIcon from "@mui/icons-material/Visibility";
@@ -80,14 +82,14 @@ export default function AllProjects() {
   const navigate = useNavigate();
   const ComponentsRef = useRef();
   const ComponentsRefsingle = useRef();
-  const [searchTerm, setSearchTerm] = React.useState('');
+  const [searchTerm, setSearchTerm] = React.useState("");
   const [searchParams] = useSearchParams();
   const projectType = searchParams.get("type");
 
   useEffect(() => {
     fetchHandler().then((data) => setProjects(data.project));
   }, []);
-  
+
   const searchFilteredProjects = projects.filter(
     (project) =>
       project.projectName.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -96,35 +98,67 @@ export default function AllProjects() {
 
   const filteredProjectsByType = projectType
     ? searchFilteredProjects.filter(
-        (project) => project.projectType.toLowerCase() === projectType.toLowerCase()
+        (project) =>
+          project.projectType.toLowerCase() === projectType.toLowerCase()
       )
     : searchFilteredProjects;
 
-  
 
   const handlePrint = useReactToPrint({
-    content: () => ComponentsRef.current,
-    documentTitle: "All Projects Report",
+    content: () => {
+        const clonedComponent = ComponentsRef.current.cloneNode(true); // Cloning the component to avoid manipulating the original DOM
+        const table = clonedComponent.querySelector('table'); // Selecting the table element
+        const actionColumnIndex = 11; // Assuming the index of the "Action" column is 9 (0-indexed)
+
+        // Hide the "Action" column header
+        const headerRow = table.querySelector('thead tr');
+        if (headerRow) {
+            const headerCell = headerRow.querySelectorAll('th')[actionColumnIndex];
+            if (headerCell) {
+                headerCell.style.display = 'none'; // Hide the "Action" column header cell
+            }
+        }
+
+        // Loop through each row and hide the "Action" column
+        table.querySelectorAll('tr').forEach(row => {
+            const cells = row.querySelectorAll('td');
+            if (cells.length > actionColumnIndex) {
+                cells[actionColumnIndex].style.display = 'none'; // Hide the "Action" column cell
+            }
+        });
+
+        return clonedComponent;
+    },
+    documentTitle: 'All Projects Report',
     onAfterPrint: () => alert("All Projects Report successfully Downloaded!"),
-  });
+});
+  
 
   const handlePrintSingle = (projectData) => {
     // Here you can generate a report for the specific vehicleData
     // For example, you can create a new window/tab with the vehicle details to print
     const reportWindow = window.open("", "_blank");
     reportWindow.document.write(
-      `<html><head><title>Project Report</title></head><body><h1>Project Details</h1><p>Project ID : ${projectData.projectID
-      }</p><p>Project Name : ${projectData.projectName}</p><p>Budget : ${projectData.projectBudget
-      }</p><p>Project location : ${projectData.Locate}</p><p>Project owner : ${projectData.contractor
-      }</p><p>Project Employees : ${projectData.Employees
+      `<html><head><title>Project Report</title></head><body><h1>Project Details</h1><p>Project ID : ${
+        projectData.projectID
+      }</p><p>Project Name : ${projectData.projectName}</p><p>Budget : ${
+        projectData.projectBudget
+      }</p><p>Project location : ${projectData.Locate}</p><p>Project owner : ${
+        projectData.contractor
+      }</p><p>Project Employees : ${
+        projectData.Employees
       }</p><p>Project Start Date : ${formatDate(
         projectData.startDate
       )}</p><p>Project End Date : ${formatDate(
         projectData.endDate
-      )}</p><p>Project Type : ${projectData.projectType
-      }</p><p>Project Status : ${projectData.Status
-      }</p><p>Project Milestone : ${projectData.milestone
-      }</p><p>Project Description : ${projectData.description
+      )}</p><p>Project Type : ${
+        projectData.projectType
+      }</p><p>Project Status : ${
+        projectData.Status
+      }</p><p>Project Milestone : ${
+        projectData.milestone
+      }</p><p>Project Description : ${
+        projectData.description
       }</p></body></html>`
     );
     reportWindow.document.close();
@@ -138,11 +172,10 @@ export default function AllProjects() {
     setSearchTerm(event.target.value);
   };
 
-  const filteredProjects = projects.filter((project) =>
-    project.projectName.toLowerCase().includes(searchTerm.toLowerCase()) || project.contractor.toLowerCase().includes(searchTerm.toLowerCase())
-    
-
-
+  const filteredProjects = projects.filter(
+    (project) =>
+      project.projectName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      project.contractor.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const handleAddClick = () => {
@@ -151,27 +184,29 @@ export default function AllProjects() {
 
   const deleteHandler = async (_id) => {
     confirmAlert({
-      title: 'Delete Project',
-      message: 'Are you sure you want to delete this project?',
+      title: "Delete Project",
+      message: "Are you sure you want to delete this project?",
       buttons: [
         {
-          label: 'Yes',
+          label: "Yes",
           onClick: async () => {
             try {
               await axios.delete(`http://localhost:5000/projects/${_id}`);
               setProjects((prevProjects) =>
                 prevProjects.filter((project) => project._id !== _id)
               );
+              toast.success("Project deleted successfully!"); // Add this line
             } catch (error) {
-              console.error('Error deleting project:', error);
+              console.error("Error deleting project:", error);
+              toast.error("An error occurred while deleting the project."); // Add this line
             }
-          }
+          },
         },
         {
-          label: 'No',
-          onClick: () => {}
-        }
-      ]
+          label: "No",
+          onClick: () => {},
+        },
+      ],
     });
   };
 
@@ -216,16 +251,29 @@ export default function AllProjects() {
             arial-label="breadcrumb"
             separator={<NavigateNextIcon fontSize="small" />}
           >
-            <Link style={{ marginLeft: "20px" }} underline="hover" key="1" color="inherit" href="/projects">
+            <Link
+              style={{ marginLeft: "20px" }}
+              underline="hover"
+              key="1"
+              color="inherit"
+              href="/projects"
+            >
               Projects
             </Link>
             <Typography key="3" color="text.primary">
               All Projects
             </Typography>
           </Breadcrumbs>
-          <br/>
-          <Paper sx={{ width: "100%", overflow: "hidden", padding: "15px",boxShadow: 'Auto' }}>
-          <Box
+          <br />
+          <Paper
+            sx={{
+              width: "100%",
+              overflow: "hidden",
+              padding: "15px",
+              boxShadow: "Auto",
+            }}
+          >
+            <Box
               sx={{
                 display: "flex",
                 alignItems: "center",
@@ -234,47 +282,44 @@ export default function AllProjects() {
             >
               <InputBase
                 sx={{ ml: 1, flex: 1 }}
-                placeholder="Search projects.."
+                placeholder="Search projects using name..."
                 value={searchTerm}
                 onChange={handleSearchChange}
                 startAdornment={<SearchIcon fontSize="small" />}
               />
-              
+
               <Box>
-              <Tooltip title="Add Project">
-                <IconButton
-                  color="primary"
-                  aria-label="add project"
-                  onClick={handleAddClick}
-                >
-                  <AddIcon />
-                </IconButton>
-              </Tooltip>
-              <Tooltip title="Print">
-                <IconButton
-                  color="primary"
-                  aria-label="print all"
-                  onClick={handlePrint}
-                >
-                  <PrintIcon />
-                </IconButton>
-              </Tooltip>
+                <Tooltip title="Add Project">
+                  <IconButton
+                    color="primary"
+                    aria-label="add project"
+                    onClick={handleAddClick}
+                  >
+                    <AddIcon />
+                  </IconButton>
+                </Tooltip>
+                <Tooltip title="Print">
+                  <IconButton
+                    color="primary"
+                    aria-label="print all"
+                    onClick={handlePrint}
+                  >
+                    <PrintIcon />
+                  </IconButton>
+                </Tooltip>
               </Box>
             </Box>
             <h1
               gutterBottom
               variant="h4"
               component="div"
-              sx={{ padding: "20px" ,textAlign: 'center'}}
+              sx={{ padding: "20px", textAlign: "center" }}
             >
               Details of Projects
             </h1>
             <Divider />
 
             <br />
-            
-           
-            
 
             <TableContainer ref={ComponentsRef}>
               <Table
@@ -294,27 +339,159 @@ export default function AllProjects() {
                       },
                     }}
                   >
-                    <TableCell  sx={{backgroundColor: '#b1c5d4',fontWeight: 'bold', textAlign: 'center',border: 'none',padding: '5px 10px','&:hover': {backgroundColor: '#b1c5d4'}}}> Project ID</TableCell>
-                    <TableCell  sx={{backgroundColor: '#b1c5d4',fontWeight: 'bold', textAlign: 'center',border: 'none',padding: '5px 10px','&:hover': {backgroundColor: '#b1c5d4'}}}>Project Name</TableCell>
-                    <TableCell  sx={{backgroundColor: '#b1c5d4',fontWeight: 'bold', textAlign: 'center',border: 'none',padding: '5px 10px','&:hover': {backgroundColor: '#b1c5d4'}}}> Budget</TableCell>
-                    <TableCell  sx={{backgroundColor: '#b1c5d4',fontWeight: 'bold', textAlign: 'center',border: 'none',padding: '5px 10px','&:hover': {backgroundColor: '#b1c5d4'}}}>Location</TableCell>
-
-                    <TableCell  sx={{backgroundColor: '#b1c5d4',fontWeight: 'bold', textAlign: 'center',border: 'none',padding: '5px 10px','&:hover': {backgroundColor: '#b1c5d4'}}}> Owner</TableCell>
-                    <TableCell  sx={{backgroundColor: '#b1c5d4',fontWeight: 'bold', textAlign: 'center',border: 'none',padding: '5px 10px','&:hover': {backgroundColor: '#b1c5d4'}}}>Employees</TableCell>
-                    <TableCell  sx={{backgroundColor: '#b1c5d4',fontWeight: 'bold', textAlign: 'center',border: 'none',padding: '5px 10px','&:hover': {backgroundColor: '#b1c5d4'}}}>Status</TableCell>
-                    <TableCell  sx={{backgroundColor: '#b1c5d4',fontWeight: 'bold', textAlign: 'center',border: 'none',padding: '5px 10px','&:hover': {backgroundColor: '#b1c5d4'}}}>Start Date</TableCell>
-                    <TableCell  sx={{backgroundColor: '#b1c5d4',fontWeight: 'bold', textAlign: 'center',border: 'none',padding: '5px 10px','&:hover': {backgroundColor: '#b1c5d4'}}}>End Date</TableCell>
-                    <TableCell  sx={{backgroundColor: '#b1c5d4',fontWeight: 'bold', textAlign: 'center',border: 'none',padding: '5px 10px','&:hover': {backgroundColor: '#b1c5d4'}}}>Type</TableCell>
-                    <TableCell  sx={{backgroundColor: '#b1c5d4',fontWeight: 'bold', textAlign: 'center',border: 'none',padding: '5px 10px','&:hover': {backgroundColor: '#b1c5d4'}}}>Milestone</TableCell>
-                    <TableCell  sx={{backgroundColor: '#b1c5d4',fontWeight: 'bold', textAlign: 'center',border: 'none',padding: '5px 10px','&:hover': {backgroundColor: '#b1c5d4'}}}>Action</TableCell>
-
-
+                    <TableCell
+                      sx={{
+                        backgroundColor: "#b1c5d4",
+                        fontWeight: "bold",
+                        textAlign: "center",
+                        border: "none",
+                        padding: "5px 10px",
+                        "&:hover": { backgroundColor: "#b1c5d4" },
+                      }}
+                    >
+                      {" "}
+                      Project ID
+                    </TableCell>
+                    <TableCell
+                      sx={{
+                        backgroundColor: "#b1c5d4",
+                        fontWeight: "bold",
+                        textAlign: "center",
+                        border: "none",
+                        padding: "5px 10px",
+                        "&:hover": { backgroundColor: "#b1c5d4" },
+                      }}
+                    >
+                      Project Name
+                    </TableCell>
+                    <TableCell
+                      sx={{
+                        backgroundColor: "#b1c5d4",
+                        fontWeight: "bold",
+                        textAlign: "center",
+                        border: "none",
+                        padding: "5px 10px",
+                        "&:hover": { backgroundColor: "#b1c5d4" },
+                      }}
+                    >
+                      {" "}
+                      Budget
+                    </TableCell>
+                    <TableCell
+                      sx={{
+                        backgroundColor: "#b1c5d4",
+                        fontWeight: "bold",
+                        textAlign: "center",
+                        border: "none",
+                        padding: "5px 10px",
+                        "&:hover": { backgroundColor: "#b1c5d4" },
+                      }}
+                    >
+                      Location
+                    </TableCell>
+                    <TableCell
+                      sx={{
+                        backgroundColor: "#b1c5d4",
+                        fontWeight: "bold",
+                        textAlign: "center",
+                        border: "none",
+                        padding: "5px 10px",
+                        "&:hover": { backgroundColor: "#b1c5d4" },
+                      }}
+                    >
+                      {" "}
+                      Owner
+                    </TableCell>
+                    <TableCell
+                      sx={{
+                        backgroundColor: "#b1c5d4",
+                        fontWeight: "bold",
+                        textAlign: "center",
+                        border: "none",
+                        padding: "5px 10px",
+                        "&:hover": { backgroundColor: "#b1c5d4" },
+                      }}
+                    >
+                      Maintainer
+                    </TableCell>
+                    <TableCell
+                      sx={{
+                        backgroundColor: "#b1c5d4",
+                        fontWeight: "bold",
+                        textAlign: "center",
+                        border: "none",
+                        padding: "5px 10px",
+                        "&:hover": { backgroundColor: "#b1c5d4" },
+                      }}
+                    >
+                      Status
+                    </TableCell>
+                    <TableCell
+                      sx={{
+                        backgroundColor: "#b1c5d4",
+                        fontWeight: "bold",
+                        textAlign: "center",
+                        border: "none",
+                        padding: "5px 10px",
+                        "&:hover": { backgroundColor: "#b1c5d4" },
+                      }}
+                    >
+                      Start Date
+                    </TableCell>
+                    <TableCell
+                      sx={{
+                        backgroundColor: "#b1c5d4",
+                        fontWeight: "bold",
+                        textAlign: "center",
+                        border: "none",
+                        padding: "5px 10px",
+                        "&:hover": { backgroundColor: "#b1c5d4" },
+                      }}
+                    >
+                      End Date
+                    </TableCell>
+                    <TableCell
+                      sx={{
+                        backgroundColor: "#b1c5d4",
+                        fontWeight: "bold",
+                        textAlign: "center",
+                        border: "none",
+                        padding: "5px 10px",
+                        "&:hover": { backgroundColor: "#b1c5d4" },
+                      }}
+                    >
+                      Type
+                    </TableCell>
+                    <TableCell
+                      sx={{
+                        backgroundColor: "#b1c5d4",
+                        fontWeight: "bold",
+                        textAlign: "center",
+                        border: "none",
+                        padding: "5px 10px",
+                        "&:hover": { backgroundColor: "#b1c5d4" },
+                      }}
+                    >
+                      Milestone
+                    </TableCell>
+                    <TableCell
+                      sx={{
+                        backgroundColor: "#b1c5d4",
+                        fontWeight: "bold",
+                        textAlign: "center",
+                        border: "none",
+                        padding: "5px 10px",
+                        "&:hover": { backgroundColor: "#b1c5d4" },
+                      }}
+                    >
+                      Action
+                    </TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   {filteredProjects
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((row) => (
+                    .map((row, index) => (
                       <TableRow
                         ref={ComponentsRefsingle}
                         key={row._id}
@@ -322,7 +499,7 @@ export default function AllProjects() {
                           "&:hover": {
                             backgroundColor: "#f5f5f5",
                           },
-                          border: 'none',
+                          border: "none",
                           padding: "8px 16px",
                         }}
                       >
@@ -334,7 +511,7 @@ export default function AllProjects() {
                             textAlign: "center",
                           }}
                         >
-                          {row.projectID}
+                          {index + 1}
                         </TableCell>
                         <TableCell
                           sx={{
@@ -440,8 +617,10 @@ export default function AllProjects() {
                             progress={calculateMilestoneProgress(row)}
                           />
                         </TableCell>
-                        
-                        <TableCell  style={{ display: "flex", justifyContent: "start" }}  className="flex-container"
+
+                        <TableCell
+                          style={{ display: "flex", justifyContent: "start" }}
+                          className="flex-container"
                           sx={{
                             border: "1px",
                             padding: "10px 10px",
@@ -450,79 +629,82 @@ export default function AllProjects() {
                           }}
                         >
                           <div>
-                           <Tooltip title="Update Project">
-                          <IconButton
-                            onClick={() =>
-                              navigate(`/Updateprojects/${row._id}`)
-                            }
-                          >
-                            <EditIcon
-                              color="primary"
-                              aria-label="edit"
-                              sx={{
-                                "&:hover": {
-                                  color: "#00008b",
-                                },
-                                color: "",
-                              }}
-                            />
-                          </IconButton>
-                          </Tooltip>
+                            <Tooltip title="Update Project">
+                              <IconButton
+                                onClick={() =>
+                                  navigate(`/Updateprojects/${row._id}`)
+                                }
+                              >
+                                <EditIcon
+                                  color="primary"
+                                  aria-label="edit"
+                                  sx={{
+                                    "&:hover": {
+                                      color: "#00008b",
+                                    },
+                                    color: "",
+                                  }}
+                                />
+                              </IconButton>
+                            </Tooltip>
                           </div>
                           <div>
-                          <Tooltip title="Delete Project">
-                          <IconButton onClick={() => deleteHandler(row._id)}>
-                            <DeleteIcon
-                              color="secondary"
-                              aria-label="delete"
-                              sx={{
-                                "&:hover": {
-                                  color: "#FF1B1B",
-                                },
-                                color: "#CF5C5C",
-                              }}
-                            />
-                          </IconButton>
-                          </Tooltip>
+                            <Tooltip title="Delete Project">
+                              <IconButton
+                                onClick={() => deleteHandler(row._id)}
+                              >
+                                <DeleteIcon
+                                  color="secondary"
+                                  aria-label="delete"
+                                  sx={{
+                                    "&:hover": {
+                                      color: "#FF1B1B",
+                                    },
+                                    color: "#CF5C5C",
+                                  }}
+                                />
+                              </IconButton>
+                            </Tooltip>
                           </div>
                           <div>
-                          <Tooltip title="Print ">
-                          <IconButton onClick={() => handlePrintSingle(row)}>
-                            <PrintIcon
-                              color="primary"
-                              aria-label="edit"
-                              sx={{
-                                "&:hover": {
-                                  color: "#00008b",
-                                },
-                                color: "",
-                              }}
-                            />
-                          </IconButton>
-                          </Tooltip>
+                            <Tooltip title="Print ">
+                              <IconButton
+                                onClick={() => handlePrintSingle(row)}
+                              >
+                                <PrintIcon
+                                  color="primary"
+                                  aria-label="edit"
+                                  sx={{
+                                    "&:hover": {
+                                      color: "#00008b",
+                                    },
+                                    color: "",
+                                  }}
+                                />
+                              </IconButton>
+                            </Tooltip>
                           </div>
-<div>
-                          <Tooltip title="View Details">
-                          <IconButton
-                            onClick={() =>
-                              navigate(`/Projectdetails/${row._id}`)
-                            }
-                          >
-                            <VisibilityIcon
-                              color="primary"
-                              aria-label="edit"
-                              sx={{
-                                "&:hover": {
-                                  color: "#00008b",
-                                },
-                                color: "",
-                              }}
-                            />
-                          </IconButton>
-                          </Tooltip>
+                          <div>
+                            <Tooltip title="View Details">
+                              <IconButton
+                                onClick={() =>
+                                  navigate(`/Projectdetails/${row._id}`)
+                                }
+                              >
+                                <VisibilityIcon
+                                  color="primary"
+                                  aria-label="edit"
+                                  sx={{
+                                    "&:hover": {
+                                      color: "#00008b",
+                                    },
+                                    color: "",
+                                  }}
+                                />
+                              </IconButton>
+                            </Tooltip>
                           </div>
                         </TableCell>
-                      
                       </TableRow>
                     ))}
                 </TableBody>
@@ -544,6 +726,17 @@ export default function AllProjects() {
           </Paper>
         </Box>
       </div>
+      <ToastContainer
+      position="top-right"
+      autoClose={3000}
+      hideProgressBar={false}
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+    />
     </>
   );
 }

@@ -26,10 +26,10 @@ function Dash() {
     <div>
       <AppBar />
       <Drawer />
+
       <div style={{ marginLeft: '270px', paddingTop: '130px', padding: '30px' }}>
-        <Typography variant="h4" gutterBottom>
-          Dashboard
-        </Typography>
+        <br></br> <br></br>
+        <h1>DASHBOARD</h1>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6} md={3}>
             <Link

@@ -5,47 +5,49 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
 .wrapper {
-  display: flex; 
+  display: flex;
 }
 
 .sidebar {
-  width: 200px; 
-  background-color: #f2f2f2; 
+  width: 200px;
+  background-color: #f2f2f2;
   padding: 20px;
 }
 
 .content {
-  flex: 1; 
+  flex: 1;
 }
 
 .container {
   max-width: 1100px;
   width: 100%;
-  margin: 0 0 0 50px; 
-  padding: 0 20px 20px 20px; 
-  align-items: left; 
+  margin: 0 0 0 50px;
+  padding: 0 20px 20px 20px;
+  align-items: left;
 }
 
 section {
   display: flex;
   flex-direction: column;
   align-items: left;
-  margin-left: 20px; 
-  margin-top: 180px; 
+  margin-left: 20px;
+  margin-top: 180px;
 }
 
 .cards {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around; 
-  margin-top: 20px; 
+  justify-content: space-around;
+  margin-top: 20px;
 }
 
 .card:hover {
@@ -53,10 +55,10 @@ section {
 }
 
 .card {
-  flex: 1; 
+  flex: 1;
   max-width: 300px;
   width: 100%;
-  margin: 10px; 
+  margin: 10px;
   background-color: #d9d9d9;
   border-radius: 25px;
   padding: 20px;
@@ -69,6 +71,16 @@ h3 {
 
 @media (max-width: 768px) {
   .container {
-    margin-top: 100px; 
+    margin-top: 100px;
   }
 }
+.empImage {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 667px; /* Adjust the width and height according to the image size */
+  height: 374px;
+  background-image: url("../images/emp.png");
+  background-repeat: no-repeat;
+}
+
