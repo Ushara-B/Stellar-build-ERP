@@ -221,7 +221,7 @@ function AddProject() {
                   label="Maintainer"
                   name="Employees"
                   value={inputs.Employees}
-                  onChange={handleChange}
+                  onChange={handleChange1}
                   variant="outlined"
                   fullWidth
                   required

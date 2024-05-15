@@ -1,6 +1,9 @@
 const User = require("../models/userModel");
 const { generateToken } = require("../middleware/auth");
 const bcrypt = require("bcryptjs");
+const crypto = require("crypto");
+require('dotenv').config();
+const nodemailer = require('nodemailer');
 
 const getAllUsers = async (req, res, next) => {
   let Users;
@@ -35,10 +38,8 @@ const addUsers = async (req, res, next) => {
   } = req.body;
 
   try {
-    // Hash the password using bcrypt
     const hashedPassword = await bcrypt.hash(pswrd, 10);
 
-    // Create a new user with the hashed password
     const users = new User({
       user_N,
       f_Name,
@@ -51,7 +52,7 @@ const addUsers = async (req, res, next) => {
       address,
       nic,
       role,
-      pswrd: hashedPassword, // Use the hashed password
+      pswrd: hashedPassword,
       contact_No,
       f_contactNo,
       bank_D,
@@ -101,14 +102,12 @@ const updateUser = async (req, res, next) => {
   } = req.body;
 
   try {
-    // Find the user by ID
     const user = await User.findById(id);
 
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    // Update user fields
     user.user_N = user_N;
     user.f_Name = f_Name;
     user.l_Name = l_Name;
@@ -124,14 +123,11 @@ const updateUser = async (req, res, next) => {
     user.f_contactNo = f_contactNo;
     user.bank_D = bank_D;
 
-    // Check if the password needs to be updated
     if (pswrd && pswrd.trim() !== '') {
-      // Hash the new password
       const hashedPassword = await bcrypt.hash(pswrd, 10);
       user.pswrd = hashedPassword;
     }
 
-    // Save the updated user
     const updatedUser = await user.save();
 
     return res.status(200).json({ updatedUser });
@@ -154,9 +150,6 @@ const deleteUser = async (req, res, next) => {
   }
   return res.status(200).json({ userD });
 };
-
-
-
 
 const login = async (req, res) => {
   const { usernameOrEmail, password } = req.body;
@@ -183,8 +176,8 @@ const login = async (req, res) => {
     return res.status(500).json({ error: "Internal server error" });
   }
 };
+
 const logout = (req, res) => {
-  // Clear the token from the client-side (e.g., remove from localStorage)
   res.status(200).json({ message: "Logout successful" });
 };
 
@@ -201,6 +194,79 @@ const getUserProfile = async (req, res) => {
   }
 };
 
+const forgotPassword = async (req, res) => {
+  const { email } = req.body;
+  try {
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ message: 'User with this email does not exist.' });
+    }
+
+    const token = crypto.randomBytes(32).toString('hex');
+    user.resetPasswordToken = token;
+    user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
+
+    await user.save();
+
+    const resetLink = `http://localhost:3000/reset-password/${token}`;
+    const transporter = nodemailer.createTransport({
+      service: 'outlook',
+      auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS,
+      },
+    });
+
+    const mailOptions = {
+      to: email,
+      from: 'stellarbuild.erp@outlook.com',
+      subject: 'Password Reset',
+      text: `You are receiving this because you  have requested the reset of the password for your account.\n\n
+             Please click on the following link, or paste this into your browser to complete the process:\n\n
+             ${resetLink}\n\n
+             If you did not request this, please ignore this email and your password will remain unchanged.\n`,
+    };
+
+    transporter.sendMail(mailOptions, (error, response) => {
+      if (error) {
+        console.error('There was an error: ', error);
+        return res.status(500).json({ message: 'Error sending email' });
+      } else {
+        res.status(200).json({ message: 'Password reset link has been sent to your email.' });
+      }
+    });
+  } catch (error) {
+    console.error('Error in forgot password:', error);
+    res.status(500).json({ message: 'Server error, please try again later.' });
+  }
+};
+
+const resetPassword = async (req, res) => {
+  const { token, password } = req.body;
+  try {
+    const user = await User.findOne({ 
+      resetPasswordToken: token,
+      resetPasswordExpires: { $gt: Date.now() },
+    });
+
+    if (!user) {
+      return res.status(400).json({ message: 'Password reset token is invalid or has expired.' });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+    user.pswrd = hashedPassword;
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpires = undefined;
+
+    await user.save();
+
+    res.status(200).json({ message: 'Password has been reset successfully.' });
+  } catch (error) {
+    console.error('Error in reset password:', error);
+    res.status(500).json({ message: 'Server error, please try again later.' });
+  }
+};
+
 exports.login = login;
 exports.logout = logout;
 exports.getUserProfile = getUserProfile;
@@ -209,3 +275,5 @@ exports.addUsers = addUsers;
 exports.getById = getById;  
 exports.updateUser = updateUser;
 exports.deleteUser = deleteUser;  
+exports.forgotPassword = forgotPassword;
+exports.resetPassword = resetPassword;

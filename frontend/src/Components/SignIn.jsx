@@ -1,38 +1,47 @@
-import * as React from 'react';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
-import Paper from '@mui/material/Paper';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import loginimg from '../Assets/loginimg.png';
-import axios from 'axios';
+import React, { useContext, useState, useEffect } from 'react';
+import { UserContext } from '../Context/UserContext';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import axios from 'axios';
+import {
+  Button, CssBaseline, TextField, FormControlLabel, Checkbox, Link, Paper, Box, Grid, Typography, createTheme, ThemeProvider
+} from '@mui/material';
+import loginimg from '../Assets/loginimg.png';
 
 const defaultTheme = createTheme();
 
 export default function SignIn() {
   const navigate = useNavigate();
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [user, setUser] = useState(null);
+  const { loginUser } = useContext(UserContext); // Destructure loginUser from context
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
+  const [credentials, setCredentials] = useState({
+    usernameOrEmail: '',
+    password: '',
+  });
+
+  useEffect(() => {
+    const savedCredentials = JSON.parse(localStorage.getItem('credentials'));
+    if (savedCredentials) {
+      setCredentials(savedCredentials);
+      setRememberMe(true);
+    }
+  }, []);
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setCredentials((prevCredentials) => ({
+      ...prevCredentials,
+      [name]: value,
+    }));
+  };
+
+  const handleRememberMeChange = (event) => {
+    setRememberMe(event.target.checked);
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    const credentials = {
-      usernameOrEmail: data.get('usernameOrEmail'),
-      password: data.get('password'),
-    };
-
     setLoading(true);
     setError('');
 
@@ -45,12 +54,21 @@ export default function SignIn() {
         // Store the JWT token in localStorage
         localStorage.setItem('token', token);
 
-        // Set the user state with the logged-in user's data
-        setUser(user);
+        const userDetails = {
+          username: user.user_N,
+          id: user._id,
+          role: user.role,
+          email: user.email,
+        };
 
-        // Reset the form fields
-        setUsername('');
-        setPassword('');
+        // Set the user state with the logged-in user's data using context
+        loginUser(userDetails);
+
+        if (rememberMe) {
+          localStorage.setItem('credentials', JSON.stringify(credentials));
+        } else {
+          localStorage.removeItem('credentials');
+        }
 
         // Redirect to the dashboard
         navigate('/dashboard');
@@ -60,24 +78,15 @@ export default function SignIn() {
     } catch (error) {
       console.error('Error logging in:', error);
       if (error.response) {
-        // The request was made and the server responded with a status code
         setError(error.response.data.error || 'An error occurred while logging in. Please try again.');
       } else if (error.request) {
-        // The request was made but no response was received
         setError('No response received from the server. Please check your internet connection.');
       } else {
-        // Something else happened while setting up the request
         setError('An error occurred while logging in. Please try again.');
       }
     } finally {
       setLoading(false);
     }
-  };
-
-  const handleLogout = () => {
-    // Remove the JWT token from localStorage
-    localStorage.removeItem('token');
-    setUser(null);
   };
 
   return (
@@ -116,6 +125,8 @@ export default function SignIn() {
                 name="usernameOrEmail"
                 autoComplete="email"
                 autoFocus
+                value={credentials.usernameOrEmail}
+                onChange={handleChange}
                 sx={{
                   borderRadius: '21px',
                   backgroundColor: 'white',
@@ -135,6 +146,8 @@ export default function SignIn() {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                value={credentials.password}
+                onChange={handleChange}
                 sx={{
                   borderRadius: '21px',
                   backgroundColor: 'white',
@@ -162,12 +175,19 @@ export default function SignIn() {
               <Grid container alignItems="center" justifyContent="space-between">
                 <Grid item>
                   <FormControlLabel
-                    control={<Checkbox value="remember" sx={{ color: '#1B1A55', '&.Mui-checked': { color: '#1B1A55' } }} />}
+                    control={
+                      <Checkbox
+                        checked={rememberMe}
+                        onChange={handleRememberMeChange}
+                        value="remember"
+                        sx={{ color: '#1B1A55', '&.Mui-checked': { color: '#1B1A55' } }}
+                      />
+                    }
                     label={<Typography variant="body2" sx={{ color: '#1B1A55' }}>Remember me</Typography>}
                   />
                 </Grid>
                 <Grid item>
-                  <Link href="#" variant="body2" sx={{ color: '#1B1A55' }}>
+                  <Link href="/forgot-password" variant="body2" sx={{ color: '#1B1A55' }}>
                     Forgot password?
                   </Link>
                 </Grid>
@@ -190,7 +210,6 @@ export default function SignIn() {
           }}
         />
       </Grid>
-      
     </ThemeProvider>
   );
 }
