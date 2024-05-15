@@ -20,6 +20,7 @@ import { useNavigate } from "react-router-dom";
 import { useInventoryContext } from "../Context/inventoryContext";
 const URL = "http://localhost:5000/inventories";
 
+
 const fetchHandler = async () => {
   return await axios.get(URL).then((res) => res.data);
 };
@@ -31,17 +32,32 @@ export default function Inventory() {
     OutOfStock: 5,
   });
   const [totalInventories, setTotalInventories] = useState(0);
+  const [totalStoreValue, setTotalStoreValue] = useState(0);
   //const { values, addInventory, getValues, totalValue } = useInventoryContext();
   const navigate = useNavigate();
 
+  const calculateTotalStoreValue = (inventories) => {
+    let totalValue = 0;
+    inventories.forEach(inventory => {
+      const value = Number(inventory.value);
+      const quantity = Number(inventory.quantity);
+      console.log('Value:', value, 'Quantity:', quantity); // Add this line
+      if (!isNaN(value) && !isNaN(quantity)) {
+        totalValue += value * quantity;
+      }
+    });
+    return totalValue;
+  }
   useEffect(() => {
     fetchHandler().then((data) => {
+      console.log('Inventories:', data.inventories); // Add this line
       setInventories(data.inventories);
       setTotalInventories(data.inventories.length);
-
-      //getValues();
+      const totalValue = calculateTotalStoreValue(data.inventories);
+      setTotalStoreValue(totalValue);
     });
   }, []);
+
 
   const inventoryStatusData = {
     labels: ["Stock", "OutOfStock"],
@@ -99,7 +115,10 @@ export default function Inventory() {
                     >
                       <span className="pricetitle"> Total Store Value</span>
                       <br />
-                      <span className="pricesubtitle"> </span>
+                      <span className="pricesubtitle"> $3000 
+                      {" "}
+                      {totalStoreValue}{" "}
+                      </span>
                     </div>
                   </Stack>
                 </Card>
@@ -116,7 +135,7 @@ export default function Inventory() {
                     >
                       <span className="pricetitle"> Out Of Stock</span>
                       <br />
-                      <span className="pricesubtitle"> 2 </span>
+                      <span className="pricesubtitle"> 9 </span>
                     </div>
                   </Stack>
                 </Card>
@@ -133,7 +152,8 @@ export default function Inventory() {
                     >
                       <span className="pricetitle"> All Categories</span>
                       <br />
-                      <span className="pricesubtitle"> 15</span>
+                      <span className="pricesubtitle"> 6
+                       </span>
                     </div>
                   </Stack>
                 </Card>
@@ -165,34 +185,20 @@ export default function Inventory() {
                         </Paper>
                       </div>
 
-                      <div>
-                        <Paper sx={{ p: 2, m: 2, flexGrow: 1, minWidth: 50 }}>
-                          <h2>Inventory Status</h2>
-                          {Object.entries(inventoryStatus).map(
-                            ([status, count], index) =>
-                              `${status}: ${count}${
-                                index ===
-                                Object.keys(inventoryStatus).length - 1
-                                  ? ""
-                                  : "| "
-                              }`
-                          )}
-                          <Doughnut data={inventoryStatusData} />
-                        </Paper>
-                      </div>
+            
                     </div>
                     <div
                       style={{
                         bottom: "0",
-                        right: "5px",
-                        width: "450px",
+                        left: "500px",
+                        width: "300px",
                         height: "300px",
                         backgroundImage:
                           "url(https://www.datalex.com.ng/wp-content/uploads/2021/08/img-inventory-control.png)",
 
                         backgroundSize: "cover",
                         backgroundRepeat: "no-repeat",
-                        backgroundPosition: "100% 50%",
+                        backgroundPosition: "100% 100%",
                         zIndex: "-1",
                       }}
                     />

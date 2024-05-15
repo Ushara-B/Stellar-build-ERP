@@ -44,7 +44,7 @@ const style = {
 
 const columns = [
   { id: "name", label: "Name", minWidth: 170 },
-  { id: "category", label: "Category", minWidth: 170 },
+  { id: "Icategory", label: "ICategory", minWidth: 170 },
   { id: "quantity", label: "Quantity", minWidth: 170 },
   { id: "value", label: "Value", minWidth: 170 },
   { id: "supplier", label: "Supplier", minWidth: 170 },
@@ -60,6 +60,8 @@ export default function ViewInventoryList() {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const ComponentsRef = useRef();
+
 
   React.useEffect(() => {
     fetchInventories();
@@ -88,11 +90,55 @@ export default function ViewInventoryList() {
   };
 
   //pdf print function
-  const ComponentsRef = useRef();
-  const handlePrintToPdf = useReactToPrint({
-    content: () => ComponentsRef.current,
-    documentTitle: "All inventory",
-  });
+  // const ComponentsRef = useRef();
+  // const handlePrintToPdf = useReactToPrint({
+  //   content: () => ComponentsRef.current,
+  //   documentTitle: "All inventory",
+  // });
+
+
+
+
+  const handlePrint = useReactToPrint({
+    content: () => {
+        const clonedComponent = ComponentsRef.current.cloneNode(true); // Cloning the component to avoid manipulating the original DOM
+        const table = clonedComponent.querySelector('table'); // Selecting the table element
+        const actionColumnIndex = 5; // Assuming the index of the "Action" column is 9 (0-indexed)
+
+        // Hide the "Action" column header
+        const headerRow = table.querySelector('thead tr');
+        if (headerRow) {
+            const headerCell = headerRow.querySelectorAll('th')[actionColumnIndex];
+            if (headerCell) {
+                headerCell.style.display = 'none'; // Hide the "Action" column header cell
+            }
+        }
+
+        // Loop through each row and hide the "Action" column
+        table.querySelectorAll('tr').forEach(row => {
+            const cells = row.querySelectorAll('td');
+            if (cells.length > actionColumnIndex) {
+                cells[actionColumnIndex].style.display = 'none'; // Hide the "Action" column cell
+            }
+        });
+
+        return clonedComponent;
+    },
+    documentTitle: 'Inventory Report',
+    onAfterPrint: () => alert("Inventory Report successfully Downloaded!"),
+});
+
+
+
+
+
+
+
+
+
+
+
+
 
   const handleViewInventory = (inventoryId) => {
     navigate(`/viewinventory/${inventoryId}`);
@@ -189,7 +235,7 @@ export default function ViewInventoryList() {
                 <IconButton
                   color="primary"
                   aria-label="print"
-                  onClick={handlePrintToPdf}
+                  onClick={handlePrint}
                 >
                   <PrintIcon />
                 </IconButton>
@@ -202,7 +248,7 @@ export default function ViewInventoryList() {
                 </IconButton>
               </Box>
             </Box>
-            <TableContainer ref={ComponentsRef}>
+            <div ref={ComponentsRef}>
               <Table
                 stickyHeader
                 aria-label="sticky table"
@@ -262,7 +308,7 @@ export default function ViewInventoryList() {
                             backgroundColor: "white",
                           }}
                         >
-                          {row.Category}
+                          {row.ICategory}
                         </TableCell>
                         <TableCell
                           sx={{
@@ -343,7 +389,7 @@ export default function ViewInventoryList() {
                     ))}
                 </TableBody>
               </Table>
-            </TableContainer>
+            </div>
             <TablePagination
               rowsPerPageOptions={[10, 25, 100]}
               component="div"
