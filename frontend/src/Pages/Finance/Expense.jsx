@@ -24,7 +24,19 @@ const Expense = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredExpenses, setFilteredExpenses] = useState([]);
   const componentRef = useRef(); // Reference to the component you want to print
-  const handlePrint = useReactToPrint({ content: () => componentRef.current }); // Function to handle printing
+  const handlePrintToPdf = useReactToPrint({
+    content: () => componentRef.current,
+    documentTitle: "Leave Summary Sheet",
+    pageStyle: `@page {
+      size: A4;
+    }
+    @media print {
+      .hide-on-print {
+        display: none;
+      }
+      
+    }`,
+  });// Function to handle printing
 
   useEffect(() => {
     getExpenses();
@@ -186,7 +198,7 @@ const Expense = () => {
               />
             </div>
           </Box>
-          <Button onClick={handlePrint}>Download Report</Button> {/* Button to trigger printing */}
+          <Button onClick={handlePrintToPdf}>Download Report</Button> {/* Button to trigger printing */}
         </main>
       </MainLayout>
     </ExpenseStyled>
