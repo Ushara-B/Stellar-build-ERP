@@ -42,10 +42,12 @@ import AddInventory from "./Pages/AddInventory";
 import Expense from "./Pages/Finance/Expense";
 import Income from "./Pages/Finance/Income";
 
+//Avishka's
 import AddLoans from "./Pages/AddLoans";
 import ViewLoans from "./Pages/ViewLoans";
 import UpdateLoan from "./Pages/UpdateLoan";
 import AllLoans from "./Pages/AllLoans";
+import LoanDashBoard from "./Pages/LoanDashBoard";
 
 import UpdateInventory from "./Pages/UpdateInventory";
 import IncomeForm from "./Pages/Finance/Form";
@@ -171,6 +173,7 @@ function App() {
               <Route path="/loan-management/addloans" element={<AddLoans />} />
               <Route path="/loan-management/updateloans/:id" element={<UpdateLoan />} />
               <Route path="/loan-management/viewloans" element={<ViewLoans />} />
+              <Route path="/loan-management/loandashboard" element={<LoanDashBoard />} />
 
               <Route path="/ActiveLeaves/:id" element={<UpdateLeave />} />
               <Route path="/UpdateLeave/:id" element={<UpdateLeave />} />
