@@ -326,7 +326,7 @@ function ProjectDashboard() {
           {Object.entries(maintainerProjects).map(([maintainer, projects]) => (
             <TableCell key={maintainer}>
               {projects.map((project) => (
-                <Typography key={project._id}> {project.projectName}</Typography>
+                <Typography key={project._id} align="center"> {project.projectName}</Typography>
               ))}
             </TableCell>
           ))}
