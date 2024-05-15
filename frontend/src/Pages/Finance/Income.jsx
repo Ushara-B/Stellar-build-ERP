@@ -24,7 +24,19 @@ const Income = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredIncomes, setFilteredIncomes] = useState([]);
   const componentRef = useRef(); // Reference to the component you want to print
-  const handlePrint = useReactToPrint({ content: () => componentRef.current }); 
+  const handlePrintToPdf = useReactToPrint({
+    content: () => componentRef.current,
+    documentTitle: "Leave Summary Sheet",
+    pageStyle: `@page {
+      size: A4;
+    }
+    @media print {
+      .hide-on-print {
+        display: none;
+      }
+      
+    }`,
+  });
 
   useEffect(() => {
     getIncomes();
@@ -183,7 +195,7 @@ const Income = () => {
               />
               </div>
             </Box>
-            <Button onClick={handlePrint}>Download Report</Button> {/* Button to trigger printing */}
+            <Button onClick={handlePrintToPdf}>Download Report</Button> {/* Button to trigger printing */}
           </main>
         </div>
          
