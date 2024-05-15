@@ -34,7 +34,30 @@ function Loans() {
     }, []);
 
     const handlePrint = useReactToPrint({
-        content: () => ComponentsRef.current,
+        content: () => {
+            const clonedComponent = ComponentsRef.current.cloneNode(true); // Cloning the component to avoid manipulating the original DOM
+            const table = clonedComponent.querySelector('table'); // Selecting the table element
+            const actionColumnIndex = 10; // Assuming the index of the "Action" column is 10 (0-indexed)
+    
+            // Hide the "Action" column header
+            const headerRow = table.querySelector('thead tr');
+            if (headerRow) {
+                const headerCell = headerRow.querySelectorAll('th')[actionColumnIndex];
+                if (headerCell) {
+                    headerCell.style.display = 'none'; // Hide the "Action" column header cell
+                }
+            }
+    
+            // Loop through each row and hide the "Action" column
+            table.querySelectorAll('tr').forEach(row => {
+                const cells = row.querySelectorAll('td');
+                if (cells.length > actionColumnIndex) {
+                    cells[actionColumnIndex].style.display = 'none'; // Hide the "Action" column cell
+                }
+            });
+    
+            return clonedComponent;
+        },
         documentTitle: 'Loan Report',
         onAfterPrint: () => alert("Loan Report successfully Downloaded!"),
     });

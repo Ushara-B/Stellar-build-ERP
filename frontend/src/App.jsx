@@ -46,6 +46,7 @@ import AddLoans from "./Pages/AddLoans";
 import ViewLoans from "./Pages/ViewLoans";
 import UpdateLoan from "./Pages/UpdateLoan";
 import AllLoans from "./Pages/AllLoans";
+import LoanDashBoard from "./Pages/LoanDashBoard";
 
 
 import UpdateInventory from "./Pages/UpdateInventory";
@@ -219,7 +220,7 @@ function App() {
           <Route path="/loan-management/addloans" element={<AddLoans />} />
           <Route path="/loan-management/upateloans/:id" element={<UpdateLoan />} />
           <Route path="/loan-management/viewloans" element={<ViewLoans />} />
-
+          <Route path="/loan-management/loandashboard" element={<LoanDashBoard />} />
 
           <Route path="/ActiveLeaves/:id"element={<UpdateLeave />}/>
           <Route path="/UpdateLeave/:id"element={<UpdateLeave />}/>
