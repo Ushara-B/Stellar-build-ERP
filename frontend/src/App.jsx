@@ -77,6 +77,7 @@ const queryClient = new QueryClient();
 
 function App() {
   return (
+
     <QueryClientProvider client={queryClient}>
       <UserProvider>
         <div>
@@ -196,6 +197,7 @@ function App() {
         </div>
       </UserProvider>
     </QueryClientProvider>
+
   );
 }
 
