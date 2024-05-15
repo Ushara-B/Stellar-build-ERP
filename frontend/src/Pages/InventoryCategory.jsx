@@ -1,21 +1,13 @@
-import { Box, Button, Grid, IconButton } from "@mui/material";
-import axios from "axios";
-import Typography from "@mui/material/Typography";
-import CloseIcon from "@mui/icons-material/Close";
-import TextField from "@mui/material/TextField";
-import { useState ,useEffect} from "react";
-
-import { create } from "@mui/material/styles/createTransitions";
-import { useNavigate } from "react-router-dom";
+// AddCategory.jsx
+import React, { useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { Box, TextField, Button, Typography } from '@mui/material';
 
 
-
-export default function InventoryCategory({ closeEvent }) {
+const InventoryCategory = ({closeEvent}) => {
   const history = useNavigate();
-  const [categories, setCategories] = useState([]);
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const [newICategory, setNewICategory] = useState('');
   const navigate = useNavigate();
   const [inputs, setInputs] = useState({
     Name: "",
@@ -27,73 +19,66 @@ export default function InventoryCategory({ closeEvent }) {
       [e.target.name]: e.target.value,
     }));
   };
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(inputs);
-    sendRequest().then(() => navigate("/addInventory"));
-  };
 
 
   const sendRequest = async () => {
-    try {
-      await axios.post(`http://localhost:5000/categories`, {
-        Name: String(inputs.Name),
-      });
-      closeEvent();
-      navigate('/addInventory');
-      alert('Successfully added category');
-    } catch (error) {
-      if (error.response && error.response.status === 409) {
-        alert('Category already exists');
-      } else {
-        alert('An error occurred');
-      }
-    }
+    await axios
+      .post(`http://localhost:5000/icategories`, {
+        Name: String(inputs.Name)
+      })
+      .then((res) => res.data);
   };
-  
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(inputs);
+    sendRequest().then(() => closeEvent());
+  };
+
+
   return (
     <>
-      <Box sx={{ m: 2 }} />
-      <Typography variant="h5" align="center">
-        Add Inventory Category
-      </Typography>
-      <br />
-      <br />
-
-      <IconButton
-        style={{ position: "absolute", top: "0", right: "0" }}
-        onClick={closeEvent}
+     
+    
+    <Box
+      sx={{ m:2}}
+    />
+      <Box
+        component="form"
+        onSubmit={handleSubmit}
+        sx={{
+          width: '80%',
+          maxWidth: 400,
+          padding: 4,
+          bgcolor: 'background.paper',
+          boxShadow: 3,
+        }}
       >
-        <CloseIcon />
-      </IconButton>
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <TextField 
-            id="outlined-basic"
-            name="Name"
-            label="Add New Category"
-            variant="outlined"
-            size="small"
-            onChange={handleChange}
-            value={inputs.Name}
-            sx={{ minWidth: "100%" }}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <Typography variant="h7" align="center">
-            <Button
-              variant="contained"
-              color="primary"
-              size="small"
-              onClick={handleSubmit}
-              
-            >
-              Submit
-            </Button>
-          </Typography>
-        </Grid>
-      </Grid>
-      
+        <Typography align="center" gutterBottom variant="h4" component="h2">
+          Add New Category
+        </Typography>
+        <br />
+        <TextField
+          label="Category Name"
+          value={inputs.Name}
+          onChange={handleChange}
+          variant="outlined"
+          fullWidth
+          
+        />
+        <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          fullWidth
+          sx={{ mt: 3 }}
+        >
+          Add Category
+        </Button>
+      </Box>
+    
     </>
   );
-}
+};
+
+export default InventoryCategory;

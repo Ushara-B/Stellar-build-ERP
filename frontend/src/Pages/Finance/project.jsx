@@ -7,8 +7,9 @@ import Menu from '../../Components/menu';
 import { GlobalStyle } from '../../Styles/globalStyle';
 import { InnerLayout } from '../../Styles/Layout';
 import {  Container, Grid } from '@mui/material';
-import Card from '../../Components/Finance/card';
 import ProjectChart from '../../Components/Finance/projectChart';
+import Card from '../../Components/Finance/card';
+
 
 
 const URL = "http://localhost:5000/projects";
@@ -25,6 +26,9 @@ const fetchIncomes = async () => {
 const fetchExpenses = async () => {
   return await axios.get("http://localhost:5000/finance/get-expenses").then((res) => res.data);
 };
+
+
+
 
 
 function Project() {
