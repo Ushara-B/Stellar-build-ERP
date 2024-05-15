@@ -30,11 +30,11 @@ const getAllLoans = async (req, res, next) => {
 //data insert part
 const addLoan = async (req, res, next) => {
 
-    const {loanId, BorrowersName, LoanAmount, InterestRate, Period, StartingDate, EndDate, TotalInstallments, PaidInstallments, Notes,  LoanStatus } = req.body;
+    const { BorrowersName, LoanAmount, InterestRate, Period, StartingDate, EndDate, TotalInstallments, PaidInstallments, Notes,  LoanStatus } = req.body;
     let loan;
 
     try {
-        loan = new Loan({loanId, BorrowersName, LoanAmount, InterestRate, Period, StartingDate, EndDate, TotalInstallments, PaidInstallments, Notes,  LoanStatus});
+        loan = new Loan({ BorrowersName, LoanAmount, InterestRate, Period, StartingDate, EndDate, TotalInstallments, PaidInstallments, Notes,  LoanStatus});
         await loan.save();
     }catch(err){
         console.log(err);
@@ -74,13 +74,13 @@ const getById = async (req, res, next) => {
 const updateLoan = async (req, res, next ) => {
 
     const id = req.params.id;
-    const {loanId, BorrowersName, LoanAmount, InterestRate, Period, StartingDate, EndDate, TotalInstallments, PaidInstallments, Notes, LoanStatus } = req.body;
+    const { BorrowersName, LoanAmount, InterestRate, Period, StartingDate, EndDate, TotalInstallments, PaidInstallments, Notes, LoanStatus } = req.body;
 
     let loans;
 
     try {
         loans = await Loan.findByIdAndUpdate(id, 
-            {loanId:loanId, BorrowersName:BorrowersName, LoanAmount:LoanAmount, InterestRate:InterestRate, Period:Period, StartingDate:StartingDate, EndDate:EndDate, TotalInstallments:TotalInstallments, PaidInstallments:PaidInstallments, Notes:Notes,  LoanStatus:LoanStatus});
+            { BorrowersName:BorrowersName, LoanAmount:LoanAmount, InterestRate:InterestRate, Period:Period, StartingDate:StartingDate, EndDate:EndDate, TotalInstallments:TotalInstallments, PaidInstallments:PaidInstallments, Notes:Notes,  LoanStatus:LoanStatus});
         loans = await loans.save();
     }catch(err){
         console.log(err);

@@ -5,11 +5,6 @@ const Schema = mongoose.Schema; // add karapu mongoose eka schema ekata assign k
 
 const loanSchema = new Schema({
 
-    loanId:{ 
-        type: String, // dataType
-        required:true,//validate
-    },
-
     BorrowersName:{//total amount of the loan
         type: String, // dataType
         required:true,//validate
