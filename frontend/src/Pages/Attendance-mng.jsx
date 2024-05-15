@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, {  useState } from "react";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -13,7 +13,6 @@ import Box from "@mui/material/Box";
 import AppBar from "../Components/Appbar";
 import Drawer from "../Components/menu";
 import axios from "axios";
-import { useReactToPrint } from "react-to-print";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
@@ -78,8 +77,6 @@ export default function AttendanceMng() {
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
   };
-
-  //pdf print function
 
 
   const markAttendance = async (userId) => {
