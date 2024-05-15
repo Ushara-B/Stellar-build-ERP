@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const bcrypt = require("bcryptjs");
 
 const userSchema = new Schema({
   user_N: { type: String, required: true, unique: true },
@@ -18,8 +17,8 @@ const userSchema = new Schema({
   contact_No: { type: String, required: true },
   f_contactNo: { type: String, required: true },
   bank_D: { type: String, required: true },
+  resetPasswordToken: { type: String },
+  resetPasswordExpires: { type: Date },
 });
-
-
 
 module.exports = mongoose.model("userModel", userSchema);
