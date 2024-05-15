@@ -17,6 +17,7 @@ import ActiveLeaves from "./Pages/ActiveLeaves";
 import UpdateLeave from "./Pages/UpdateLeave";
 import Login from "./Pages/Login";
 
+
 import AddVehicle from "./Pages/AddVehicle";
 import Vehicles from './Pages/Vehicles';
 import Vehicle from './Pages/ViewVehicle';
@@ -70,6 +71,7 @@ import SHome from "../src/Components/SHome";
 import AddSupplier from "../src/Components/Supplier/Add-Supplier/AddSupplier";
 import SupplierDetails from "../src/Components/Supplier/Supplier/SupplierDetails";
 import SupplierUpdateDetails from "../src/Components/Supplier/Supplier/UpdateDetails";
+
 
 
 
@@ -235,6 +237,7 @@ function App() {
           <Route path="/add-supplier" element={<AddSupplier />} />
           <Route path="/supplier-details" element={<SupplierDetails />} />
           <Route path="/updatesuplier/:id" element={<SupplierUpdateDetails/>} />
+          
           
 
         </Routes>

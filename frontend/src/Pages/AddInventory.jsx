@@ -9,7 +9,6 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import InventoryCategory from "./InventoryCategory";
 import AddCategory from "./InventoryCategory";
 
 import {
@@ -33,11 +32,21 @@ const style = {
   p: 4,
 };
 
+const categories = [
+  { id: 1, title: "Stuctural Components" },
+  { id: 2, title: "Concrete and Masorry" },
+  { id: 3, title: "Dry wall/ Wall finishing" },
+  { id: 4, title: "Elecrical Component" },
+  { id: 5, title: "Safty Equiepment" },
+  { id: 6, title: "Flooring and Tile" },
+  // Add more categories as needed
+];
+
 function AddInventory() {
   const history = useNavigate();
   const navigate = useNavigate();
-  const [selectedICategory, setSelectedICategory] = useState('');
-  const [icategories, setCategories] = useState([]);
+  const [selectedICategory, setSelectedICategory] = useState("");
+  const [ICategory, setICategory] = useState([]);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -48,15 +57,14 @@ function AddInventory() {
     Value: "",
     Supplier: "",
   });
-  
 
-  const handleChange = (e) => {
-    setInputs((prevState) => ({
-      ...prevState,
-      [e.target.name]: e.target.value,
-    }));
+  const handleChange = (event) => {
+    setICategory(event.target.value);
+    setInputs({ ...inputs, [event.target.name]: event.target.value });
+    console.log(inputs);
   };
 
+  console.log(categories);
   
 
   const sendRequest = async () => {
@@ -71,45 +79,25 @@ function AddInventory() {
       .then((res) => res.data);
   };
 
-  useEffect(() => {
-    // Fetch the categories when the component mounts
-    axios
-      .get('http://localhost:5000/icategories')
-      .then((res) => {
-        setCategories(res.data.ICategories);
-      })
-      .catch((err) => {
-        console.error(err);
-        
-      });
-  }, []);
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(inputs, selectedICategory);
     sendRequest().then(() => history("/viewInventoryList"));
   };
 
-  const selectedICategoryObj = icategories?.find(icategory=> icategory._id === selectedICategory);
-
-  const selectedCategoryName = selectedICategoryObj?.Name || 'No category selected';
-
-  
-
   return (
     <>
-    <div>
-      
-      <Modal
-        open={open}
-        //onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>
-          <AddCategory closeEvent={handleClose} />
-        </Box>
-      </Modal>
-    </div>
+      <div>
+        <Modal
+          open={open}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={style}>
+            <AddCategory closeEvent={handleClose} />
+          </Box>
+        </Modal>
+      </div>
       <div>
         <AppBar />
         <Menu />
@@ -158,32 +146,26 @@ function AddInventory() {
                   onInput={(e) => e.target.setCustomValidity("")}
                 />
               </Grid>
-
-              <Grid item xs={5}>
-                <FormControl variant="outlined" fullWidth>
-                  <InputLabel id="Category-label">Category</InputLabel>
-                  <Select 
-                  labelId="Category-label"
-                  value={selectedICategory}
-                  onChange={(e) => setSelectedICategory(e.target.value)}
-                >
-                 {icategories?.map(icategory => (
-                    <MenuItem key={icategory._id} value={icategory._id}>
-                      {icategory.Name}
-                    </MenuItem>
-                  ))}
+              <Grid item xs={6}>
+                <FormControl fullWidth>
+                  <InputLabel id="category-label">Category</InputLabel>
+                  <Select
+                    labelId="category-label"
+                    id="category-select"
+                    name="ICategory"
+                    value={inputs.ICategory}
+                    onChange={handleChange}
+                    label="Category"
+                  >
+                    {categories.map((category) => (
+                      <MenuItem key={category.id} value={category.title}>
+                        {category.title}
+                      </MenuItem>
+                    ))}
                   </Select>
                 </FormControl>
               </Grid>
-              <Grid item xs={1}>
-                <IconButton
-                  color="primary"
-                  aria-label="Add category"
-                  onClick={handleOpen}
-                >
-                  <AddIcon />
-                </IconButton>
-              </Grid>
+
               <Grid item xs={6}>
                 <TextField
                   label="Quantity"
