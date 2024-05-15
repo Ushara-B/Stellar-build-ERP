@@ -49,9 +49,7 @@ import UpdateLoan from "./Pages/UpdateLoan";
 import AllLoans from "./Pages/AllLoans";
 
 
-import UpdateInventory from "./Pages/UpdateInventory";
-import  IncomeForm from "./Pages/Finance/Form";
-import  ExpenseForm from "./Pages/Finance/expenseForm";
+
 import FinanceDashboard from "../src/Pages/Finance/finDashboard";
 import UpdateExpense from "./Pages/Finance/updateExpense";
 import UpdateIncome from "./Pages/Finance/updateIncome";
