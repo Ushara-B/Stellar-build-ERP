@@ -46,7 +46,6 @@ function AddInventory() {
   const history = useNavigate();
   const navigate = useNavigate();
   const [selectedICategory, setSelectedICategory] = useState("");
-  const [ICategory, setICategory] = useState([]);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -59,7 +58,7 @@ function AddInventory() {
   });
 
   const handleChange = (event) => {
-    setICategory(event.target.value);
+    
     setInputs({ ...inputs, [event.target.name]: event.target.value });
     console.log(inputs);
   };
@@ -147,25 +146,25 @@ function AddInventory() {
                 />
               </Grid>
               <Grid item xs={6}>
-                <FormControl fullWidth>
-                  <InputLabel id="category-label">Category</InputLabel>
-                  <Select
-                    labelId="category-label"
-                    id="category-select"
-                    name="ICategory"
-                    value={inputs.ICategory}
-                    onChange={handleChange}
-                    label="Category"
-                  >
-                    {categories.map((category) => (
-                      <MenuItem key={category.id} value={category.title}>
-                        {category.title}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
+                <TextField
+                  label="Category"
+                  name="ICategory"
+                  value={inputs.ICategory}
+                  onChange={handleChange}
+                  variant="outlined"
+                  fullWidth
+                  placeholder="Enter category here"
+                  required
+                  min="1"
+                  max="10000"
+                  onInvalid={(e) => {
+                    e.target.setCustomValidity(
+                      "Please enter a number between 1 and 10000."
+                    );
+                  }}
+                  onInput={(e) => e.target.setCustomValidity("")}
+                />
               </Grid>
-
               <Grid item xs={6}>
                 <TextField
                   label="Quantity"

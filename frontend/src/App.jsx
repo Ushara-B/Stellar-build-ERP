@@ -163,7 +163,7 @@ function App() {
           <Route path = '/viewinventorylist' element = {<ViewInventoryList/>}/>
           <Route path = '/inventory' element = {<Inventory/>}/>
           <Route path = '/addinventory' element = {<AddInventory/>}/>
-          <Route path="/Updateinventory/:id" element={<UpdateInventory />} />
+          
 
           <Route
             path="/employee-management/Attendance"
@@ -202,8 +202,7 @@ function App() {
           <Route path="/finance/income" element={<Income />} />
 
           <Route path="/inventorycategory" element={<InventoryCategory />} />
-          <Route path="/finance/incomeform" element={<IncomeForm />} />
-          <Route path="/finance/expenseform" element={<ExpenseForm />} />
+          
 
           <Route path="/ActiveLeaves/:id" element={<UpdateLeave />} />
           <Route path="/UpdateLeave/:id" element={<UpdateLeave />} />
