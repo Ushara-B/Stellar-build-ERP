@@ -51,6 +51,20 @@ function Form() {
     const handleSubmit = async e => {
         e.preventDefault();
         try {
+
+            const currentDate = new Date();
+            if (date > currentDate) {
+                setError('Selected date cannot be in the future.');
+                return;
+            }
+
+            if (!/^\d+$/.test(amount)) {
+                setError('Amount should contain only numbers.');
+                return;
+            }
+    
+    
+
             await addExpense(inputState);
             setInputState({
                 title: '',
@@ -83,7 +97,7 @@ function Form() {
                     type="text" 
                     value={title}
                     name={'title'} 
-                    placeholder="Salary Title"
+                    placeholder=" Title"
                     onChange={handleInput('title')}
                 />
             </div>
@@ -91,7 +105,7 @@ function Form() {
                 <input value={amount}  
                     type="text" 
                     name={'amount'} 
-                    placeholder={'Salary Amount'}
+                    placeholder={' Amount'}
                     onChange={handleInput('amount')} 
                 />
             </div>

@@ -18,13 +18,6 @@ const fetchProjects = async () => {
   return await axios.get(URL).then((res) => res.data);
 };
 
-const fetchIncomes = async () => {
-  return await axios.get(IURL).then((res) => res.data);
-};
-
-const fetchExpenses = async () => {
-  return await axios.get("http://localhost:5000/finance/get-expenses").then((res) => res.data);
-};
 
 
 function Project() {
