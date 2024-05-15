@@ -69,7 +69,7 @@ import SupplierDetails from "../src/Components/Supplier/Supplier/SupplierDetails
 import SupplierUpdateDetails from "../src/Components/Supplier/Supplier/UpdateDetails";
 
 import ForgotPassword from '../src/Components/fogetPassword';
-import ResetPassword from '../src/Components/resetPassword';
+import ResetPassword from '../src/Components/ResetPassword';
 
 const queryClient = new QueryClient();
 
