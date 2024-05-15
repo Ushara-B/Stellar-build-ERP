@@ -1,16 +1,6 @@
-import Menu from "../Components/menu";
-import AppBar from "../Components/Appbar";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import IconButton from "@mui/material/IconButton";
-import AddIcon from "@mui/icons-material/Add";
-import Typography from "@mui/material/Typography";
-import Modal from "@mui/material/Modal";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import AddCategory from "./InventoryCategory";
-
 import {
   Grid,
   TextField,
@@ -18,7 +8,16 @@ import {
   InputLabel,
   Select,
   MenuItem,
+  IconButton,
+  Typography,
+  Modal,
+  Box,
+  Button,
 } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
+import AppBar from "../Components/Appbar";
+import Menu from "../Components/menu";
+import AddCategory from "./InventoryCategory";
 
 const style = {
   position: "absolute",
@@ -33,17 +32,16 @@ const style = {
 };
 
 const categories = [
-  { id: 1, title: "Stuctural Components" },
-  { id: 2, title: "Concrete and Masorry" },
-  { id: 3, title: "Dry wall/ Wall finishing" },
-  { id: 4, title: "Elecrical Component" },
-  { id: 5, title: "Safty Equiepment" },
+  { id: 1, title: "Structural Components" },
+  { id: 2, title: "Concrete and Masonry" },
+  { id: 3, title: "Dry Wall/Wall Finishing" },
+  { id: 4, title: "Electrical Components" },
+  { id: 5, title: "Safety Equipment" },
   { id: 6, title: "Flooring and Tile" },
   // Add more categories as needed
 ];
 
 function AddInventory() {
-  const history = useNavigate();
   const navigate = useNavigate();
   const [selectedICategory, setSelectedICategory] = useState("");
   const [open, setOpen] = useState(false);
@@ -58,30 +56,32 @@ function AddInventory() {
   });
 
   const handleChange = (event) => {
-    
     setInputs({ ...inputs, [event.target.name]: event.target.value });
-    console.log(inputs);
   };
 
-  console.log(categories);
-  
+  const handleICategoryChange = (event) => {
+    setSelectedICategory(event.target.value);
+    setInputs({ ...inputs, ICategory: event.target.value });
+  };
 
   const sendRequest = async () => {
-    await axios
-      .post(`http://localhost:5000/inventories`, {
+    try {
+      const response = await axios.post(`http://localhost:5000/inventories`, {
         Name: String(inputs.Name),
         ICategory: String(inputs.ICategory),
         Quantity: String(inputs.Quantity),
         Value: Number(inputs.Value),
         Supplier: String(inputs.Supplier),
-      })
-      .then((res) => res.data);
+      });
+      return response.data;
+    } catch (error) {
+      console.error("Error submitting form data:", error);
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(inputs, selectedICategory);
-    sendRequest().then(() => history("/viewInventoryList"));
+    sendRequest().then(() => navigate("/viewInventoryList"));
   };
 
   return (
@@ -89,6 +89,7 @@ function AddInventory() {
       <div>
         <Modal
           open={open}
+          onClose={handleClose}
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
@@ -100,7 +101,6 @@ function AddInventory() {
       <div>
         <AppBar />
         <Menu />
-
         <Box
           sx={{
             marginLeft: "255px",
@@ -136,7 +136,7 @@ function AddInventory() {
                   fullWidth
                   placeholder="Enter Name here"
                   required
-                  pattern="[A-Za-z]+"
+                  pattern="[A-Za-z ]+"
                   onInvalid={(e) => {
                     e.target.setCustomValidity(
                       "Only letter characters are allowed."
@@ -146,24 +146,24 @@ function AddInventory() {
                 />
               </Grid>
               <Grid item xs={6}>
-                <TextField
-                  label="Category"
-                  name="ICategory"
-                  value={inputs.ICategory}
-                  onChange={handleChange}
-                  variant="outlined"
-                  fullWidth
-                  placeholder="Enter category here"
-                  required
-                  min="1"
-                  max="10000"
-                  onInvalid={(e) => {
-                    e.target.setCustomValidity(
-                      "Please enter a number between 1 and 10000."
-                    );
-                  }}
-                  onInput={(e) => e.target.setCustomValidity("")}
-                />
+                <FormControl fullWidth variant="outlined">
+                  <InputLabel id="category-label">Category</InputLabel>
+                  <Select
+                    labelId="category-label"
+                    id="Icategory"
+                    value={selectedICategory}
+                    onChange={handleICategoryChange}
+                    label="ICategory"
+                    name="ICategory"
+                    required
+                  >
+                    {categories.map((category) => (
+                      <MenuItem key={category.id} value={category.title}>
+                        {category.title}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
               </Grid>
               <Grid item xs={6}>
                 <TextField
@@ -175,8 +175,8 @@ function AddInventory() {
                   fullWidth
                   placeholder="Enter quantity here"
                   required
-                  min="1"
-                  max="10000"
+                  type="number"
+                  inputProps={{ min: "1", max: "10000" }}
                   onInvalid={(e) => {
                     e.target.setCustomValidity(
                       "Please enter a number between 1 and 10000."
@@ -195,6 +195,7 @@ function AddInventory() {
                   fullWidth
                   placeholder="Enter value here"
                   required
+                  type="number"
                 />
               </Grid>
               <Grid item xs={6}>

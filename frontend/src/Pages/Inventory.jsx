@@ -115,7 +115,7 @@ export default function Inventory() {
                     >
                       <span className="pricetitle"> Total Store Value</span>
                       <br />
-                      <span className="pricesubtitle"> 
+                      <span className="pricesubtitle"> $3000 
                       {" "}
                       {totalStoreValue}{" "}
                       </span>
@@ -135,7 +135,7 @@ export default function Inventory() {
                     >
                       <span className="pricetitle"> Out Of Stock</span>
                       <br />
-                      <span className="pricesubtitle"> 2 </span>
+                      <span className="pricesubtitle"> 9 </span>
                     </div>
                   </Stack>
                 </Card>
@@ -152,7 +152,7 @@ export default function Inventory() {
                     >
                       <span className="pricetitle"> All Categories</span>
                       <br />
-                      <span className="pricesubtitle"> {" "}
+                      <span className="pricesubtitle"> 6
                        </span>
                     </div>
                   </Stack>
