@@ -55,6 +55,9 @@ function UpdateExpense() {
     const handleSubmit = async e => {
         e.preventDefault();
         try {
+
+           
+
             await axios.put(`http://localhost:5000/finance/update-expense/${id}`, inputState);
             alert("expense Updated Successfully");
             history("/finance/expense"); // Redirect to desired path after successful update
@@ -112,15 +115,15 @@ function UpdateExpense() {
             </div>
             <div className="selects input-control">
                 <select required value={inputState.category} name="category" id="category" onChange={handleInput('category')}>
-                    <option value="" disabled>Select Category</option>
-                    <option value="salary">Salary</option>
-                    <option value="freelancing">Freelancing</option>
-                    <option value="investments">Investments</option>
-                    <option value="stocks">Stocks</option>
-                    <option value="bitcoin">Bitcoin</option>
-                    <option value="bank">Bank Transfer</option>
-                    <option value="youtube">Youtube</option>
-                    <option value="other">Other</option>
+                <option value=""  disabled >Select Category</option>
+                    <option value="Labor">Labor Cost</option>
+                    <option value="Material">Material Cost</option>
+                    <option value="Machinery">Machinery Cost</option>
+                    <option value="Subcontractors">Subcontractors Cost</option>
+                    <option value="Overhead">Overhead Cost</option>
+                    <option value="Travel">Travel</option>  
+                    <option value="Insurance">Insurance</option>  
+                    <option value="Loans">Loans</option> 
                 </select>
             </div>
             <div className="input-control">

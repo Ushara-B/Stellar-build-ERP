@@ -46,7 +46,7 @@ const ViewInventory = () => {
                 <Typography variant="subtitle1" gutterBottom>
                   Category:
                 </Typography>
-                <Typography variant="body1">{inventory.Category}</Typography>
+                <Typography variant="body1">{inventory.ICategory}</Typography>
               </Grid>
               <Grid item xs={6}>
                 <Typography variant="subtitle1" gutterBottom>

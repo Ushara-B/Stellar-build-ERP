@@ -1,15 +1,23 @@
-import Menu from "../Components/menu";
-import AppBar from "../Components/Appbar";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import IconButton from "@mui/material/IconButton";
+import {
+  Grid,
+  TextField,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  IconButton,
+  Typography,
+  Modal,
+  Box,
+  Button,
+} from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import Typography from "@mui/material/Typography";
-import Modal from "@mui/material/Modal";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import InventoryCategory from "./InventoryCategory";
+import AppBar from "../Components/Appbar";
+import Menu from "../Components/menu";
+import AddCategory from "./InventoryCategory";
 
 const style = {
   position: "absolute",
@@ -23,167 +31,209 @@ const style = {
   p: 4,
 };
 
+const categories = [
+  { id: 1, title: "Structural Components" },
+  { id: 2, title: "Concrete and Masonry" },
+  { id: 3, title: "Dry Wall/Wall Finishing" },
+  { id: 4, title: "Electrical Components" },
+  { id: 5, title: "Safety Equipment" },
+  { id: 6, title: "Flooring and Tile" },
+  // Add more categories as needed
+];
+
 function AddInventory() {
-  const history = useNavigate();
   const navigate = useNavigate();
-  const [categories, setCategories] = useState([]);
+  const [selectedICategory, setSelectedICategory] = useState("");
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [inputs, setInputs] = useState({
     Name: "",
-    Category: "",
+    ICategory: "",
     Quantity: "",
     Value: "",
     Supplier: "",
   });
 
-  const handleChange = (e) => {
-    setInputs((prevState) => ({
-      ...prevState,
-      [e.target.name]: e.target.value,
-    }));
+  const handleChange = (event) => {
+    setInputs({ ...inputs, [event.target.name]: event.target.value });
+  };
+
+  const handleICategoryChange = (event) => {
+    setSelectedICategory(event.target.value);
+    setInputs({ ...inputs, ICategory: event.target.value });
+  };
+
+  const sendRequest = async () => {
+    try {
+      const response = await axios.post(`http://localhost:5000/inventories`, {
+        Name: String(inputs.Name),
+        ICategory: String(inputs.ICategory),
+        Quantity: String(inputs.Quantity),
+        Value: Number(inputs.Value),
+        Supplier: String(inputs.Supplier),
+      });
+      return response.data;
+    } catch (error) {
+      console.error("Error submitting form data:", error);
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(inputs);
-    sendRequest().then(() => history("/viewInventoryList"));
+    sendRequest().then(() => navigate("/viewInventoryList"));
   };
-
-  const sendRequest = async () => {
-    await axios
-      .post(`http://localhost:5000/inventories`, {
-        Name: String(inputs.Name),
-        Category: String(inputs.Category),
-        Quantity: String(inputs.Quantity),
-        Value: Number(inputs.Value),
-        Supplier: String(inputs.Supplier),
-      })
-      .then((res) => res.data);
-  };
-  useEffect(() => {
-    // Fetch the categories when the component mounts
-    axios
-      .get("http://localhost:5000/categories")
-      .then((res) => {
-        console.log(res.data); // Log the response data to the console
-        setCategories(res.data);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  }, []);
 
   return (
     <>
       <div>
         <Modal
           open={open}
-          //onClose={handleClose}
+          onClose={handleClose}
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
           <Box sx={style}>
-            <InventoryCategory closeEvent={handleClose} />
+            <AddCategory closeEvent={handleClose} />
           </Box>
         </Modal>
       </div>
       <div>
         <AppBar />
         <Menu />
-
-        <div style={{ marginLeft: "255px", paddingTop: "80px" }}>
-          <h1 style={{ textAlign: "center" }}>Add New Inventory Details</h1>
-          <form onSubmit={handleSubmit}>
-            <label>Name</label>
-            <br />
-            <input
-              type="text"
-              name="Name"
-              onChange={handleChange}
-              value={inputs.Name}
-              placeholder="Enter Name here"
-              required
-              pattern="[A-Za-z]+"
-              onInvalid={(e) => {
-                e.target.setCustomValidity(
-                  "Only letter characters are allowed."
-                );
-              }}
-              onInput={(e) => e.target.setCustomValidity("")}
-            />
-            <br />
-            <br />
-            <label>
-              Category
-              <IconButton
-                color="primary"
-                aria-label="Add category"
-                onClick={handleOpen}
-              >
-                <AddIcon />
-              </IconButton>
-            </label>
-            <input
-              type="text"
-              name="Category"
-              onChange={handleChange}
-              value={inputs.Category}
-              select
-              required
-            />
-            <br />
-            <br />
-            <label>Quantity</label>
-            <br />
-            <input
-              type="number"
-              name="Quantity"
-              onChange={handleChange}
-              value={inputs.Quantity}
-              placeholder="Enter quantity here"
-              required
-              min="1"
-              max="10000"
-              onInvalid={(e) => {
-                e.target.setCustomValidity(
-                  "Please enter a number between 1 and 10000."
-                );
-              }}
-              onInput={(e) => e.target.setCustomValidity("")}
-            />
-            <br />
-            <br />
-            <label>Value (Unit Price)</label>
-            <br />
-            <input
-              type="text"
-              name="Value"
-              onChange={handleChange}
-              value={inputs.Value}
-              placeholder="Enter value here"
-              required
-            />
-            <br />
-            <br />
-            <label>Supplier</label>
-            <br />
-            <input
-              type="text"
-              name="Supplier"
-              onChange={handleChange}
-              value={inputs.Supplier}
-              placeholder="Enter Supplier Name here"
-              required
-            />
-            <br />
-            <br />
-            <div></div>
-
-            <button>Submit</button>
-          </form>
-        </div>
+        <Box
+          sx={{
+            marginLeft: "255px",
+            paddingTop: "80px",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            minHeight: "100vh",
+          }}
+        >
+          <Box
+            component="form"
+            onSubmit={handleSubmit}
+            sx={{
+              width: "80%",
+              maxWidth: 800,
+              padding: 4,
+              bgcolor: "background.paper",
+              boxShadow: 3,
+            }}
+          >
+            <Typography variant="h4" gutterBottom>
+              Add New Inventory Details
+            </Typography>
+            <Grid container spacing={3}>
+              <Grid item xs={6}>
+                <TextField
+                  label="Name"
+                  name="Name"
+                  value={inputs.Name}
+                  onChange={handleChange}
+                  variant="outlined"
+                  fullWidth
+                  placeholder="Enter Name here"
+                  required
+                  pattern="[A-Za-z ]+"
+                  onInvalid={(e) => {
+                    e.target.setCustomValidity(
+                      "Only letter characters are allowed."
+                    );
+                  }}
+                  onInput={(e) => e.target.setCustomValidity("")}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <FormControl fullWidth variant="outlined">
+                  <InputLabel id="category-label">Category</InputLabel>
+                  <Select
+                    labelId="category-label"
+                    id="Icategory"
+                    value={selectedICategory}
+                    onChange={handleICategoryChange}
+                    label="ICategory"
+                    name="ICategory"
+                    required
+                  >
+                    {categories.map((category) => (
+                      <MenuItem key={category.id} value={category.title}>
+                        {category.title}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  label="Quantity"
+                  name="Quantity"
+                  value={inputs.Quantity}
+                  onChange={handleChange}
+                  variant="outlined"
+                  fullWidth
+                  placeholder="Enter quantity here"
+                  required
+                  type="number"
+                  inputProps={{ min: "1", max: "10000" }}
+                  onInvalid={(e) => {
+                    e.target.setCustomValidity(
+                      "Please enter a number between 1 and 10000."
+                    );
+                  }}
+                  onInput={(e) => e.target.setCustomValidity("")}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  label="Value (Unit Price)"
+                  name="Value"
+                  value={inputs.Value}
+                  onChange={handleChange}
+                  variant="outlined"
+                  fullWidth
+                  placeholder="Enter value here"
+                  required
+                  type="number"
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  label="Supplier"
+                  name="Supplier"
+                  value={inputs.Supplier}
+                  onChange={handleChange}
+                  variant="outlined"
+                  fullWidth
+                  placeholder="Enter Supplier Name here"
+                  required
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <Button
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  fullWidth
+                  sx={{
+                    mt: 7,
+                    mb: 2,
+                    height: "50px",
+                    width: "150px",
+                    borderRadius: "21px",
+                    backgroundColor: "#1B1A55",
+                    "&:hover": {
+                      backgroundColor: "#16155d",
+                    },
+                  }}
+                >
+                  Submit
+                </Button>
+              </Grid>
+            </Grid>
+          </Box>
+        </Box>
       </div>
     </>
   );

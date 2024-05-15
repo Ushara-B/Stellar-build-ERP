@@ -51,6 +51,20 @@ function Form() {
     const handleSubmit = async e => {
         e.preventDefault();
         try {
+
+            const currentDate = new Date();
+            if (date > currentDate) {
+                setError('Selected date cannot be in the future.');
+                return;
+            }
+
+            if (!/^\d+$/.test(amount)) {
+                setError('Amount should contain only numbers.');
+                return;
+            }
+    
+    
+
             await addExpense(inputState);
             setInputState({
                 title: '',
@@ -83,7 +97,7 @@ function Form() {
                     type="text" 
                     value={title}
                     name={'title'} 
-                    placeholder="Salary Title"
+                    placeholder=" Title"
                     onChange={handleInput('title')}
                 />
             </div>
@@ -91,7 +105,7 @@ function Form() {
                 <input value={amount}  
                     type="text" 
                     name={'amount'} 
-                    placeholder={'Salary Amount'}
+                    placeholder={' Amount'}
                     onChange={handleInput('amount')} 
                 />
             </div>
@@ -115,20 +129,20 @@ function Form() {
                 <option  className="history-item" key={project._id}>{project.projectName}</option>
           // Replace 'id' and 'name' with your actual project properties
                  ))}
-                  
+                    <option value="other" >Other</option>
                 </select>
             </div> 
             <div className="selects input-control">
                 <select required value={category} name="category" id="category" onChange={handleInput('category')}>
                     <option value=""  disabled >Select Category</option>
-                    <option value="salary">Salary</option>
-                    <option value="freelancing">Freelancing</option>
-                    <option value="investments">Investiments</option>
-                    <option value="stocks">Stocks</option>
-                    <option value="bitcoin">Bitcoin</option>
-                    <option value="bank">Bank Transfer</option>  
-                    <option value="youtube">Youtube</option>  
-                    <option value="other">Other</option>  
+                    <option value="Labor Cost">Labor Cost</option>
+                    <option value=">Material Cost">Material Cost</option>
+                    <option value="Machinery Cost">Machinery Cost</option>
+                    <option value="Subcontractors Cost">Subcontractors Cost</option>
+                    <option value="Overhead Cost">Overhead Cost</option>
+                    <option value="Travel">Travel</option>  
+                    <option value="Insurance">Insurance</option>  
+                    <option value="Loans">Loans</option>  
                 </select>
             </div>
             <div className="input-control">

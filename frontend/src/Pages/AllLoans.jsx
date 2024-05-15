@@ -34,7 +34,30 @@ function Loans() {
     }, []);
 
     const handlePrint = useReactToPrint({
-        content: () => ComponentsRef.current,
+        content: () => {
+            const clonedComponent = ComponentsRef.current.cloneNode(true); // Cloning the component to avoid manipulating the original DOM
+            const table = clonedComponent.querySelector('table'); // Selecting the table element
+            const actionColumnIndex = 10; // Assuming the index of the "Action" column is 10 (0-indexed)
+    
+            // Hide the "Action" column header
+            const headerRow = table.querySelector('thead tr');
+            if (headerRow) {
+                const headerCell = headerRow.querySelectorAll('th')[actionColumnIndex];
+                if (headerCell) {
+                    headerCell.style.display = 'none'; // Hide the "Action" column header cell
+                }
+            }
+    
+            // Loop through each row and hide the "Action" column
+            table.querySelectorAll('tr').forEach(row => {
+                const cells = row.querySelectorAll('td');
+                if (cells.length > actionColumnIndex) {
+                    cells[actionColumnIndex].style.display = 'none'; // Hide the "Action" column cell
+                }
+            });
+    
+            return clonedComponent;
+        },
         documentTitle: 'Loan Report',
         onAfterPrint: () => alert("Loan Report successfully Downloaded!"),
     });
@@ -148,7 +171,7 @@ function Loans() {
                         backgroundColor: "#b1c5d4",
                       },
                     }}>
-                                        <TableCell  sx={{backgroundColor: '#b1c5d4',fontWeight: 'bold',border: 'none',padding: '5px 10px','&:hover': {backgroundColor: '#b1c5d4'}}}>Loan ID</TableCell>
+                                      
                                         <TableCell sx={{backgroundColor: '#b1c5d4',fontWeight: 'bold',border: 'none',padding: '5px 10px','&:hover': {backgroundColor: '#b1c5d4'}}}>Borrowers Name</TableCell>
                                         <TableCell sx={{backgroundColor: '#b1c5d4',fontWeight: 'bold',border: 'none',padding: '5px 10px','&:hover': {backgroundColor: '#b1c5d4'}}}>Loan Amount</TableCell>
                                         <TableCell sx={{backgroundColor: '#b1c5d4',fontWeight: 'bold',border: 'none',padding: '5px 10px','&:hover': {backgroundColor: '#b1c5d4'}}}>Interest Rate Of Loan</TableCell>
@@ -168,7 +191,7 @@ function Loans() {
                                 <TableBody>
                                     {loans.map((loan) => (
                                         <TableRow key={loan._id}>
-                                            <TableCell sx={{ border: '1px', padding: '5px 10px', backgroundColor: 'white', textAlign: 'center' }}>{loan.loanId}</TableCell>
+                                           
 
                                             <TableCell sx={{ border: '1px', padding: '5px 10px', backgroundColor: 'white', textAlign: 'center' }}>{loan.BorrowersName}</TableCell>
 
@@ -186,18 +209,16 @@ function Loans() {
 
                                             <TableCell sx={{ border: '1px', padding: '5px 10px', backgroundColor: 'white', textAlign: 'center' }}>{loan.PaidInstallments}</TableCell>
 
-                                             <TableCell sx={{ border: '1px', padding: '5px 10px', backgroundColor: 'white', textAlign: 'center' }}>{loan.Notes}</TableCell>
+                                            <TableCell sx={{ border: '1px', padding: '5px 10px', backgroundColor: 'white', textAlign: 'center' }}>{loan.Notes}</TableCell>
 
                                             <TableCell sx={{ border: '1px', padding: '5px 10px', backgroundColor: 'white', textAlign: 'center' }}>{loan.LoanStatus}</TableCell>
-
-
 
                                             <TableCell sx={{ border: '1px', padding: '5px 10px', backgroundColor: 'white', textAlign: 'center'}}>
 
                                            
 
 
-                                                <IconButton onClick={() => navigate(`/loan-management/upateloans/${loan._id}`)} >
+                                                <IconButton onClick={() => navigate(`/loan-management/updateloans/${loan._id}`)} >
                                                 <EditIcon
                                                     color="primary"
                                                     aria-label="edit"
