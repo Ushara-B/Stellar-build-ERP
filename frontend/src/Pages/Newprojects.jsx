@@ -13,7 +13,6 @@ import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
 function AddProject() {
   const history = useNavigate();
   const [inputs, setInputs] = useState({
-    
     projectName: "",
     projectBudget: "",
     Locate: "",
@@ -47,27 +46,29 @@ function AddProject() {
 
   const fetchEmployers = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/users?role=Employer');
+      const response = await axios.get(
+        "http://localhost:5000/users?role=Employer"
+      );
       setEmployers(response.data.Users);
     } catch (error) {
-      console.error('Error fetching employers:', error);
+      console.error("Error fetching employers:", error);
     }
   };
 
-const handleChange1 = (e) => {
-  const { name, value } = e.target;
-  if (name === "Employees") {
-    setInputs((prevState) => ({
-      ...prevState,
-      [name]: typeof value === "string" ? value.split(",") : value,
-    }));
-  } else {
-    setInputs((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  }
-};
+  const handleChange1 = (e) => {
+    const { name, value } = e.target;
+    if (name === "Employees") {
+      setInputs((prevState) => ({
+        ...prevState,
+        [name]: typeof value === "string" ? value.split(",") : value,
+      }));
+    } else {
+      setInputs((prevState) => ({
+        ...prevState,
+        [name]: value,
+      }));
+    }
+  };
 
   const handleChange = (e) => {
     setInputs((prevState) => ({
@@ -170,7 +171,6 @@ const handleChange1 = (e) => {
             <br></br>
 
             <Grid container spacing={4} justifyContent="center">
-          
               <Grid item xs={12} sm={6}>
                 <TextField
                   label="Project Name"
@@ -221,7 +221,7 @@ const handleChange1 = (e) => {
                   label="Maintainer"
                   name="Employees"
                   value={inputs.Employees}
-                  onChange={handleChange}
+                  onChange={handleChange1}
                   variant="outlined"
                   fullWidth
                   required
@@ -240,42 +240,41 @@ const handleChange1 = (e) => {
               </Grid>
 
               <Grid item xs={12} sm={6}>
-  <TextField
-    label="Start Date"
-    name="startDate"
-    type="date"
-    value={inputs.startDate}
-    onChange={handleChange}
-    variant="outlined"
-    fullWidth
-    required
-    InputLabelProps={{
-      shrink: true,
-    }}
-    inputProps={{
-      min: new Date().toISOString().split('T')[0], // Set min attribute to today's date
-    }}
-  />
-</Grid>
-<Grid item xs={12} sm={6}>
-  <TextField
-    label="End Date"
-    name="endDate"
-    type="date"
-    value={inputs.endDate}
-    onChange={handleChange}
-    variant="outlined"
-    fullWidth
-    required
-    InputLabelProps={{
-      shrink: true,
-    }}
-    inputProps={{
-      min: inputs.startDate, // Set min attribute to the value of start date
-    }}
-  />
-</Grid>
-
+                <TextField
+                  label="Start Date"
+                  name="startDate"
+                  type="date"
+                  value={inputs.startDate}
+                  onChange={handleChange}
+                  variant="outlined"
+                  fullWidth
+                  required
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  inputProps={{
+                    min: new Date().toISOString().split("T")[0], // Set min attribute to today's date
+                  }}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  label="End Date"
+                  name="endDate"
+                  type="date"
+                  value={inputs.endDate}
+                  onChange={handleChange}
+                  variant="outlined"
+                  fullWidth
+                  required
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  inputProps={{
+                    min: inputs.startDate, // Set min attribute to the value of start date
+                  }}
+                />
+              </Grid>
 
               <Grid item xs={12} sm={6}>
                 <TextField

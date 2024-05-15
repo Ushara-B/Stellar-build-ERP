@@ -28,6 +28,15 @@ import Swal from "sweetalert2";
 
 
 
+const categories = [
+  { id: 1, title: "Stuctural Components" },
+  { id: 2, title: "Concrete and Masorry" },
+  { id: 3, title: "Dry wall/ Wall finishing" },
+  { id: 4, title: "Elecrical Component" },
+  { id: 5, title: "Safty Equiepment" },
+  { id: 6, title: "Flooring and Tile" },
+  // Add more categories as needed
+];
 
 
 const style = {
@@ -44,7 +53,7 @@ const style = {
 
 const columns = [
   { id: "name", label: "Name", minWidth: 170 },
-  { id: "category", label: "Category", minWidth: 170 },
+  { id: "icategory", label: "ICategory", minWidth: 170 },
   { id: "quantity", label: "Quantity", minWidth: 170 },
   { id: "value", label: "Value", minWidth: 170 },
   { id: "supplier", label: "Supplier", minWidth: 170 },
@@ -60,6 +69,7 @@ export default function ViewInventoryList() {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  
 
   React.useEffect(() => {
     fetchInventories();
@@ -68,7 +78,18 @@ export default function ViewInventoryList() {
   const fetchInventories = async () => {
     try {
       const response = await axios.get("http://localhost:5000/inventories");
-      setInventories(response.data.inventories);
+      const inventoriesWithCategoryTitles = response.data.inventories.map(
+        (inventory) => {
+          const category = categories.find(
+            (cat) => cat.id === inventory.ICategory
+          );
+          return {
+            ...inventory,
+            ICategory: category ? category.title : "Unknown",
+          };
+        }
+      );
+      setInventories(inventoriesWithCategoryTitles);
     } catch (error) {
       console.error("Error fetching inventory:", error);
     }
@@ -86,6 +107,7 @@ export default function ViewInventoryList() {
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
   };
+  
 
   //pdf print function
   const ComponentsRef = useRef();
@@ -262,7 +284,7 @@ export default function ViewInventoryList() {
                             backgroundColor: "white",
                           }}
                         >
-                          {row.Category}
+                          {row.ICategory}
                         </TableCell>
                         <TableCell
                           sx={{

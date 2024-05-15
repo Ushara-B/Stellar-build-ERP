@@ -1,4 +1,10 @@
+import React from 'react';
+import { UserProvider } from './Context/UserContext';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { QueryClient, QueryClientProvider } from 'react-query';
+
+
+
 import Dash from "./Pages/Dash";
 import AllUsers from "./Pages/AllUsers";
 import AddUsers from "./Pages/AddUsers";
@@ -16,6 +22,7 @@ import LeaveForm from "./Pages/LeaveForm";
 import ActiveLeaves from "./Pages/ActiveLeaves";
 import UpdateLeave from "./Pages/UpdateLeave";
 import Login from "./Pages/Login";
+
 
 import AddVehicle from "./Pages/AddVehicle";
 import Vehicles from './Pages/Vehicles';
@@ -49,9 +56,7 @@ import AllLoans from "./Pages/AllLoans";
 import LoanDashBoard from "./Pages/LoanDashBoard";
 
 
-import UpdateInventory from "./Pages/UpdateInventory";
-import  IncomeForm from "./Pages/Finance/Form";
-import  ExpenseForm from "./Pages/Finance/expenseForm";
+
 import FinanceDashboard from "../src/Pages/Finance/finDashboard";
 import UpdateExpense from "./Pages/Finance/updateExpense";
 import UpdateIncome from "./Pages/Finance/updateIncome";
@@ -73,9 +78,16 @@ import SupplierDetails from "../src/Components/Supplier/Supplier/SupplierDetails
 import SupplierUpdateDetails from "../src/Components/Supplier/Supplier/UpdateDetails";
 
 
+const queryClient = new QueryClient();
+
+
+
 
 function App() {
   return (
+
+   
+      <UserProvider>
     <div>
       <BrowserRouter>
         <Routes>
@@ -237,10 +249,12 @@ function App() {
           <Route path="/supplier-details" element={<SupplierDetails />} />
           <Route path="/updatesuplier/:id" element={<SupplierUpdateDetails/>} />
           
+          
 
         </Routes>
       </BrowserRouter>
     </div>
+    </UserProvider>
   );
 }
 
