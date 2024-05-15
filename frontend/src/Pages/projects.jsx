@@ -282,7 +282,7 @@ function ProjectDashboard() {
           <div>
   <Paper sx={{ p: 2, m: 2, flexGrow: 1, minWidth: 50 }}>
     <h2 style={{ textAlign: "center" }}>Project Milestone Progress</h2>
-    <div style={{ height: "477px", width: "700px" }}>
+    <div style={{ height: "440px", width: "700px" }}>
       <Bar data={milestoneChartData} options={barChartOptions} />
     </div>
   </Paper>
@@ -299,13 +299,17 @@ function ProjectDashboard() {
                 <Typography key={project._id}>
                   {project.projectName} : Ending on{" "}
                   {formatDate(project.endDate)}
+                  <br/>
+                  <br/>
+                  
                 </Typography>
               ))}
             </Paper>
+            <br/>
           </div>
           <div>
           <Paper sx={{ p: 2, m: 2, flexGrow: 1, minWidth: 50 }}>
-  <h2 style={{ textAlign: "center" }}>Maintainers and Their Projects</h2>
+  <h2 style={{ textAlign: "center" }}>Maintainer and Their Projects</h2>
   <TableContainer>
     <Table>
       <TableHead>
@@ -322,7 +326,7 @@ function ProjectDashboard() {
           {Object.entries(maintainerProjects).map(([maintainer, projects]) => (
             <TableCell key={maintainer}>
               {projects.map((project) => (
-                <Typography key={project._id}> {project.projectName}</Typography>
+                <Typography key={project._id} align="center"> {project.projectName}</Typography>
               ))}
             </TableCell>
           ))}
