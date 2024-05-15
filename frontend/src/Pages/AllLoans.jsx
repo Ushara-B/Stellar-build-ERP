@@ -218,7 +218,7 @@ function Loans() {
                                            
 
 
-                                                <IconButton onClick={() => navigate(`/loan-management/upateloans/${loan._id}`)} >
+                                                <IconButton onClick={() => navigate(`/loan-management/updateloans/${loan._id}`)} >
                                                 <EditIcon
                                                     color="primary"
                                                     aria-label="edit"

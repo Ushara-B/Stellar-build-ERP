@@ -71,7 +71,7 @@ import SupplierDetails from "../src/Components/Supplier/Supplier/SupplierDetails
 import SupplierUpdateDetails from "../src/Components/Supplier/Supplier/UpdateDetails";
 
 import ForgotPassword from '../src/Components/fogetPassword';
-import ResetPassword from '../src/Components/resetPassword';
+import ResetPassword from '../src/Components/ResetPassword';
 
 const queryClient = new QueryClient();
 
@@ -173,6 +173,7 @@ function App() {
               <Route path="/loan-management/addloans" element={<AddLoans />} />
               <Route path="/loan-management/updateloans/:id" element={<UpdateLoan />} />
               <Route path="/loan-management/viewloans" element={<ViewLoans />} />
+              <Route path="/loan-management/loandashboard" element={<LoanDashBoard />} />
 
               <Route path="/ActiveLeaves/:id" element={<UpdateLeave />} />
               <Route path="/UpdateLeave/:id" element={<UpdateLeave />} />
