@@ -79,15 +79,14 @@ export default function NestedList() {
       window.location.href = '/viewvehicles';
     }else if (menuName === 'Vehicle Management' && subMenuName === 'Assign Drivers'){
       window.location.href = '/assigndriver';
-    
+    }else if (menuName === 'Inventory' && subMenuName === 'Inventory Category'){
+      window.location.href = '/inventorycategory';
     }else if (menuName === 'Inventory' && subMenuName === 'Add Inventory'){
     window.location.href = '/addinventory';
     }else if (menuName === 'Inventory' && subMenuName === 'View inventory list'){
     window.location.href = '/viewinventorylist';
     }else if (menuName === 'Inventory'){
     window.location.href = '/inventory';
-    }else if (menuName === 'Inventory'&& subMenuName === 'Add Inventory CAtegory'){
-      window.location.href = '/Inventory'
     }else if (menuName === 'User Management' && subMenuName === 'View users'){
     window.location.href = '/allusers';
     }else if (menuName === 'User Management' && subMenuName === 'Add users'){
@@ -107,7 +106,6 @@ export default function NestedList() {
       window.location.href = '/add-supplier';
     }else if (menuName === 'Contact' && subMenuName === 'Add Clients'){
       window.location.href = '/add-client';
-    
 
 
 

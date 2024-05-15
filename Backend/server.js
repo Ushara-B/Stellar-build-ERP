@@ -13,7 +13,6 @@ const  loanrouter = require("./routes/loanRoute");
 const payslipRoute = require("./routes/payslipRoute")
 const ClientRoute = require("./routes/ClientRoute")
 const SupplierRoute = require("./routes/SupplierRoute")
-const inventorycategoryroute = require("./routes/inventoryCategoryRoute")
 
 
 const app = express();
@@ -43,7 +42,6 @@ app.use("/leaves", leaveRouter);
 app.use("/attendance", attendanceRouter);
 app.use("/Loan", loanrouter);
 app.use("/PaySlip", payslipRoute)
-app.use("/icategories", inventorycategoryroute);
 
 app.use('/clients', ClientRoute);
 app.use('/suppliers', SupplierRoute);

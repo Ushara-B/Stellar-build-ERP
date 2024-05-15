@@ -1,5 +1,5 @@
 
-const Inventory = require("../models/InventoryModel");
+const Inventory = require("../models/inventoryModel");
 
 const getAllInventory = async (req, res , next) => {
     let inventories;
@@ -30,11 +30,11 @@ const getAllInventory = async (req, res , next) => {
 //data insert--
 const addInventory = async (req, res, next) =>{
 
-    const {Name, ICategory, Quantity, Value, Supplier} = req.body;
+    const {Name, Category, Quantity, Value, Supplier} = req.body;
 
     let inventories;
     try{
-        inventories = new Inventory ({Name, ICategory, Quantity, Value, Supplier});
+        inventories = new Inventory ({Name, Category, Quantity, Value, Supplier});
         await inventories.save();
     }catch (err) {
         console.log(err);
@@ -73,12 +73,12 @@ const getById = async (req, res, next) => {
 //update inventory details
 const updateInventory = async (req, res, next) => {
     const id = req.params.id;
-    const {Name, ICategory, Quantity, Value, Supplier} = req.body;
+    const {Name, Category, Quantity, Value, Supplier} = req.body;
 
     let inventories;
 
     try {
-        inventories = await Inventory.findByIdAndUpdate(id, {Name, ICategory, Quantity, Value, Supplier});
+        inventories = await Inventory.findByIdAndUpdate(id, {Name, Category, Quantity, Value, Supplier});
         inventories = await Inventory.save();
     }catch (err){
         console.log(err);
@@ -95,12 +95,12 @@ const updateInventory = async (req, res, next) => {
 //delete inventory details
 const deleteInventory = async (req, res, next) => {
     const id = req.params.id;
-    const {Name, ICategory, Quantity, Value, Supplier} = req.body;
+    const {Name, Category, Quantity, Value, Supplier} = req.body;
 
     let inventories;
 
     try {
-        inventories = await Inventory.findByIdAndDelete(id, {Name, ICategory, Quantity, Value, Supplier});
+        inventories = await Inventory.findByIdAndDelete(id, {Name, Category, Quantity, Value, Supplier});
         inventories = await Inventory.save();
     }catch (err){
         console.log(err);
@@ -108,7 +108,7 @@ const deleteInventory = async (req, res, next) => {
     
     //not inventories not available
     if (!inventories){
-        return res.status(404).json({message:"Cannot delete the inventory"});
+        return res.status(404).json({message:"Cannot delete the user"});
     }
     return res.status(200).json({inventories});
 
