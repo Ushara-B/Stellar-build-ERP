@@ -31,7 +31,7 @@ const projectSchema = new SchemaProject({
    
  
     Employees: {
-        type: String,
+        type: [String],
         required: true,
         trim:true,
         maxLength:50

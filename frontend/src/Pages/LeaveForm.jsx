@@ -19,6 +19,7 @@ function LeaveForm() {
     type: "",
     reason: "",
   });
+  const [successMessage, setSuccessMessage] = useState("");
 
   const handleChange = (e) => {
     setInputs((prevState) => ({
@@ -27,20 +28,28 @@ function LeaveForm() {
     }));
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    sendRequest();
+    try {
+      await sendRequest();
+      setSuccessMessage("Leave submitted successfully!");
+      setTimeout(() => {
+        setSuccessMessage("");
+        history("/ActiveLeaves");
+      }, 3000);
+    } catch (error) {
+      console.error("Error submitting leave:", error);
+    }
   };
 
-    const sendRequest = async () => {
-      await axios.post("http://localhost:5000/leaves", {
-        emp_id: inputs.emp_id,
-        date: inputs.date,
-        type: inputs.type,
-        reason: inputs.reason,
-      });
-      history("/ActiveLeaves");
-    };
+  const sendRequest = async () => {
+    await axios.post("http://localhost:5000/leaves", {
+      emp_id: inputs.emp_id,
+      date: inputs.date,
+      type: inputs.type,
+      reason: inputs.reason,
+    });
+  };
 
   const currentDate = new Date().toISOString().split("T")[0]; // Get current date in YYYY-MM-DD format
 
@@ -138,6 +147,11 @@ function LeaveForm() {
               Submit
             </Button>
           </form>
+          {successMessage && (
+            <Typography sx={{ mt: 2, color: "green" }}>
+              {successMessage}
+            </Typography>
+          )}
         </Grid>
       </Grid>
     </div>
