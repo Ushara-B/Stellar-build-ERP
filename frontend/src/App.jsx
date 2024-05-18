@@ -73,6 +73,7 @@ import SupplierUpdateDetails from "../src/Components/Supplier/Supplier/UpdateDet
 import ForgotPassword from '../src/Components/fogetPassword';
 import ResetPassword from '../src/Components/ResetPassword';
 
+
 const queryClient = new QueryClient();
 
 function App() {
@@ -96,10 +97,7 @@ function App() {
               <Route path="/ActiveLeaves" element={<ActiveLeaves />} />
               <Route path="/updateLeave" element={<UpdateLeave />} />
               <Route path="/projects" element={<Projects />} />
-              <Route path="/vehicle" element={<VehicleDash />} />
-              <Route path="/addvehicle" element={<AddVehicle />} />
-              <Route path="/viewvehicles" element={<Vehicles />} />
-              <Route path="/viewvehicles/:id" element={<UpdateVehicles />} />
+       
               <Route path="/allusers" element={<AllUsers />} />
               <Route path="/allprojects" element={<Allprojects />} />
               <Route path="/Newprojects" element={<Newprojects />} />
@@ -112,11 +110,8 @@ function App() {
               <Route path="/ActiveLeaves" element={<ActiveLeaves />} />
               <Route path="/updateLeave" element={<UpdateLeave />} />
               <Route path="/projects" element={<Projects />} />
-              <Route path="/vehicle" element={<VehicleDash />} />
-              <Route path="/addvehicle" element={<AddVehicle />} />
-              <Route path="/viewvehicles" element={<Vehicles />} />
-              <Route path="/viewvehicle/:id" element={<Vehicle />} />
-              <Route path="/viewvehicles/:id" element={<UpdateVehicles />} />
+              
+              
               <Route path="/allusers" element={<AllUsers />} />
               <Route path="/allprojects" element={<Allprojects />} />
               <Route path="/Newprojects" element={<Newprojects />} />
@@ -131,11 +126,14 @@ function App() {
               <Route path="/ActiveLeaves" element={<ActiveLeaves />} />
               <Route path="/updateLeave" element={<UpdateLeave />} />
               <Route path="/projects" element={<Projects />} />
+
               <Route path="/vehicle" element={<VehicleDash />} />
               <Route path="/addvehicle" element={<AddVehicle />} />
               <Route path="/viewvehicles" element={<Vehicles />} />
               <Route path="/viewvehicle/:id" element={<Vehicle />} />
               <Route path="/viewvehicles/:id" element={<UpdateVehicles />} />
+              <Route path='/assignDriver' element={<AssignDriver />} />
+
               <Route path="/allusers" element={<AllUsers />} />
               <Route path="/allprojects" element={<Allprojects />} />
               <Route path="/Newprojects" element={<Newprojects />} />
