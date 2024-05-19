@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from 'react-query';
 
 import Dash from "./Pages/Dash";
+import updateInventory from "./Pages/UpdateInventory";
 import AllUsers from "./Pages/AllUsers";
 import AddUsers from "./Pages/AddUsers";
 import ViewUser from "./Pages/ViewUser";
@@ -67,6 +68,7 @@ import SHome from "../src/Components/SHome";
 import AddSupplier from "../src/Components/Supplier/Add-Supplier/AddSupplier";
 import SupplierDetails from "../src/Components/Supplier/Supplier/SupplierDetails";
 import SupplierUpdateDetails from "../src/Components/Supplier/Supplier/UpdateDetails";
+import UpdateSuppllier from "../src/Components/Supplier/Supplier/SupplierDetails";
 
 import ForgotPassword from '../src/Components/fogetPassword';
 import ResetPassword from '../src/Components/resetPassword';
@@ -91,6 +93,7 @@ function App() {
               <Route path="/employee-management/Attendance" element={<Attendance />} />
               <Route path="/LeaveForm" element={<LeaveForm />} />
               <Route path="/ActiveLeaves" element={<ActiveLeaves />} />
+              <Route path="/updateinventory/:id" element={<UpdateInventory />} />
               <Route path="/updateLeave" element={<UpdateLeave />} />
               <Route path="/projects" element={<Projects />} />
               <Route path="/vehicle" element={<VehicleDash />} />
@@ -151,6 +154,8 @@ function App() {
               <Route path="/finance" element={<FinanceDashboard />} />
               <Route path="/user-profile" element={<UserProfile />} />
               <Route path="/userdash" element={<UserDash />} />
+
+              <Route path="/updatesuplier" element={<UpdateSuppllier/>} />
 
               <Route path="/finance/expense" element={<Expense />} />
               <Route path="/finance/income" element={<Income />} />
