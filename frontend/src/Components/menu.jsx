@@ -82,15 +82,15 @@ export default function NestedList() {
     }else if (menuName === 'Inventory' && subMenuName === 'Inventory Category'){
       window.location.href = '/inventorycategory';
     }else if (menuName === 'Inventory' && subMenuName === 'Add Inventory'){
-    window.location.href = '/addinventory';
+      window.location.href = '/addinventory';
     }else if (menuName === 'Inventory' && subMenuName === 'View inventory list'){
-    window.location.href = '/viewinventorylist';
+      window.location.href = '/viewinventorylist';
     }else if (menuName === 'Inventory'){
-    window.location.href = '/inventory';
+      window.location.href = '/inventory';
     }else if (menuName === 'User Management' && subMenuName === 'View users'){
-    window.location.href = '/allusers';
+      window.location.href = '/allusers';
     }else if (menuName === 'User Management' && subMenuName === 'Add users'){
-    window.location.href = '/adduser';
+      window.location.href = '/adduser';
     }else if (menuName === 'Loans Management' && subMenuName === 'Loan Dashboard'){
       window.location.href = '/loan-management/loandashboard';
     }else if (menuName === 'Loans Management' && subMenuName === 'Add loans'){
@@ -98,16 +98,15 @@ export default function NestedList() {
     }else if (menuName === 'Loans Management' && subMenuName === 'View loans'){
       window.location.href = '/loan-management';
     }else if (menuName === 'Employee Management' && subMenuName === 'PaySlip'){
-    window.location.href = '/PaySlip';
-
+      window.location.href = '/PaySlip';
     }else if (menuName === 'Financial' && subMenuName === 'Financial Dashboard'){
-    window.location.href = '/finance';
+      window.location.href = '/finance';
     }else if (menuName === 'Financial' && subMenuName === 'Expenses'){
-    window.location.href = '/finance/expense';
+      window.location.href = '/finance/expense';
     }else if (menuName === 'Financial' && subMenuName === 'Incomes'){
-    window.location.href = '/finance/income';
-  }else if (menuName === 'Financial' && subMenuName === 'Projects'){
-    window.location.href = '/finance/project';
+      window.location.href = '/finance/income';
+    }else if (menuName === 'Financial' && subMenuName === 'Projects'){
+      window.location.href = '/finance/project';
     }else if (menuName === 'Contact' && subMenuName === 'Add Suppliers'){
       window.location.href = '/add-supplier';
     }else if (menuName === 'Contact' && subMenuName === 'Add Clients'){
