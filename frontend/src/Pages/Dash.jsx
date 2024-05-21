@@ -129,8 +129,8 @@ function Dash() {
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
             <Link
-              to="/loan-management"
-              onClick={() => handleTileClick('/loan-management')}
+              to="/loan-management/loandashboard"
+              onClick={() => handleTileClick('/loan-management/loandashboard')}
               component={TileWrapper}
               style={{ textDecoration: 'none', color: 'inherit' }}
             >
