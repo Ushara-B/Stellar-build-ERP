@@ -88,8 +88,8 @@ function App() {
               <Route index element={<Login />} />
               <Route path="/dashboard" element={<Dash />} />
               <Route path="/login" element={<Login />} />
-              <Route path="/user/addusers" element={<AddUsers />} />
-              <Route path="/user/allusers" element={<AllUsers />} />
+              <Route path="/user/addusers" element={<AddUsers/>} />
+              <Route path="/allusers" element={<AllUsers/>} />
               <Route path="*" element={<NoPages />} />
 
               <Route path="/employee-management" element={<EmpManagement />} />
