@@ -9,6 +9,7 @@ function ResetPassword() {
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
+  const [debugInfo, setDebugInfo] = useState(''); // New state for debugging information
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -16,13 +17,29 @@ function ResetPassword() {
       const response = await axios.post('http://localhost:5000/users/reset-password', { token, password });
       setMessage(response.data.message);
       setError('');
+      setDebugInfo(''); // Clear debugging information on success
+
       if (response.status === 200) {
         navigate('/login');
       }
-    } catch (error) {
-      console.log(error);
-      setMessage('');
+    } catch (err) {
+      console.error(err);
+
+      // Extract detailed error information
+      const errorMessage = err.response?.data?.message || 'Unknown error occurred.';
+      const errorStatus = err.response?.status || 'No status code received.';
+      const errorDetails = err.message || 'No additional error details.';
+
       setError('Error: Unable to reset password.');
+      setMessage('');
+
+      // Populate debugInfo with detailed error information
+      setDebugInfo(
+        `Debug Info:
+        Status: ${errorStatus}
+        Error Message: ${errorMessage}
+        Details: ${errorDetails}`
+      );
     }
   };
 
@@ -68,6 +85,11 @@ function ResetPassword() {
         </form>
         {message && <Alert severity="success">{message}</Alert>}
         {error && <Alert severity="error">{error}</Alert>}
+        {debugInfo && (
+          <Alert severity="info" sx={{ mt: 2, whiteSpace: 'pre-wrap' }}>
+            {debugInfo}
+          </Alert>
+        )}
       </Box>
     </Container>
   );
