@@ -107,13 +107,13 @@ const UserProfile = () => {
   }
 
   return (
-    <Container maxWidth="md" sx={{ mt: 5 }}>
+    <Container maxWidth="md" sx={{ mt: 5, paddingTop: "100px" }} >
       <Paper elevation={3} sx={{ p: 4, backgroundColor: '#f7f9fc' }}>
-        <Box sx={{ display: 'flex', alignItems: 'center', mb: 4 }}>
-          <Avatar
+        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', mb: 4 }}>
+          <Avatar style={{ backgroundColor: '#535CA1' }}
             alt={userDetails.username}
             src="/static/images/avatar/1.jpg"
-            sx={{ width: 100, height: 100, mr: 4 }}
+            sx={{ width: 100, height: 100, mr: 4, backgroundColor: '#535C91', placeItems: 'center' }}
           />
           <Typography variant="h4" gutterBottom>
             {userDetails.username}

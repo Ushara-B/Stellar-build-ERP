@@ -210,7 +210,9 @@ const forgotPassword = async (req, res) => {
 
     const resetLink = `http://localhost:3000/reset-password/${token}`;
     const transporter = nodemailer.createTransport({
-      service: 'outlook',
+      host: "smtp.gmail.com", 
+      port: 587, // Port 587 for TLS
+      secure: false, 
       auth: {
       user: process.env.EMAIL_USER,
       pass: process.env.EMAIL_PASS,
@@ -219,7 +221,7 @@ const forgotPassword = async (req, res) => {
 
     const mailOptions = {
       to: email,
-      from: 'stellarbuild.erp@outlook.com',
+      from: process.env.EMAIL_USER,
       subject: 'Password Reset',
       text: `You are receiving this because you  have requested the reset of the password for your account.\n\n
              Please click on the following link, or paste this into your browser to complete the process:\n\n
